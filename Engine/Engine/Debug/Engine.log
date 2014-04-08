@@ -1,0 +1,220 @@
+﻿Build started 4/8/2014 2:43:14 PM.
+     1>Project "C:\Users\Anthony\Dropbox\Programming\C++\Neumont\GameDev\Engine\Engine\Engine.vcxproj" on node 2 (Rebuild target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\Users\Anthony\Dropbox\Programming\C++\Neumont\GameDev\LevelEditor\..\GameSolution\Core\include /IC:\Users\Anthony\Dropbox\Programming\C++\Neumont\GameDev\Engine\Engine\../../MiddleWare/NeumontTools/include /IC:\Users\Anthony\Dropbox\Programming\C++\Neumont\GameDev\Engine\Engine\../../MiddleWare/Qt/include /IC:\Users\Anthony\Dropbox\Programming\C++\Neumont\GameDev\Engine\Engine\../../MiddleWare/glm /IC:\Users\Anthony\Dropbox\Programming\C++\Neumont\GameDev\Engine\Engine\../../MiddleWare/glew/include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D ENGINE_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt AutoProfilerManager.cpp BinaryToShapeLoader.cpp BufferManager.cpp Camera.cpp DebugMenuManager.cpp DebugShapeManager.cpp DebugSlider.cpp DebugSlider_mock.cpp DebugTimer.cpp dllmain.cpp GeometryInfo.cpp LinkedSlider.cpp LogManager.cpp MyRandom.cpp NUShapeEditor.cpp Renderable.cpp Renderer.cpp ShaderProgram.cpp ShaderUniformPram.cpp Timer.cpp
+         Timer.cpp
+         ShaderUniformPram.cpp
+         ShaderProgram.cpp
+     1>c:\users\anthony\dropbox\programming\c++\neumont\gamedev\middleware\qt\include\qtcore\qvariant.h(417): warning C4251: 'QVariant::d' : struct 'QVariant::Private' needs to have dll-interface to be used by clients of class 'QVariant'
+                 c:\users\anthony\dropbox\programming\c++\neumont\gamedev\middleware\qt\include\qtcore\qvariant.h(352) : see declaration of 'QVariant::Private'
+     1>c:\users\anthony\dropbox\programming\c++\neumont\gamedev\middleware\qt\include\qtcore\qtextstream.h(261): warning C4251: 'QTextStream::d_ptr' : class 'QScopedPointer<T>' needs to have dll-interface to be used by clients of class 'QTextStream'
+                 with
+                 [
+                     T=QTextStreamPrivate
+                 ]
+         Renderer.cpp
+     1>c:\users\anthony\dropbox\programming\c++\neumont\gamedev\middleware\neumonttools\include\vertex.h(12): warning C4251: 'Neumont::Vertex::position' : struct 'glm::detail::tvec3<T>' needs to have dll-interface to be used by clients of struct 'Neumont::Vertex'
+                 with
+                 [
+                     T=glm::mediump_float
+                 ]
+     1>c:\users\anthony\dropbox\programming\c++\neumont\gamedev\middleware\neumonttools\include\vertex.h(13): warning C4251: 'Neumont::Vertex::color' : struct 'glm::detail::tvec4<T>' needs to have dll-interface to be used by clients of struct 'Neumont::Vertex'
+                 with
+                 [
+                     T=glm::mediump_float
+                 ]
+     1>c:\users\anthony\dropbox\programming\c++\neumont\gamedev\middleware\neumonttools\include\vertex.h(14): warning C4251: 'Neumont::Vertex::normal' : struct 'glm::detail::tvec3<T>' needs to have dll-interface to be used by clients of struct 'Neumont::Vertex'
+                 with
+                 [
+                     T=glm::mediump_float
+                 ]
+     1>c:\users\anthony\dropbox\programming\c++\neumont\gamedev\middleware\neumonttools\include\vertex.h(15): warning C4251: 'Neumont::Vertex::uv' : struct 'glm::detail::tvec2<T>' needs to have dll-interface to be used by clients of struct 'Neumont::Vertex'
+                 with
+                 [
+                     T=glm::mediump_float
+                 ]
+     1>c:\users\anthony\dropbox\programming\c++\neumont\gamedev\engine\engine\renderable.h(26): warning C4251: 'Renderable::whereMat' : struct 'glm::detail::tmat4x4<T>' needs to have dll-interface to be used by clients of class 'Renderable'
+                 with
+                 [
+                     T=glm::lowp_float
+                 ]
+     1>c:\users\anthony\dropbox\programming\c++\neumont\gamedev\engine\engine\renderable.h(27): warning C4251: 'Renderable::rotation' : struct 'glm::detail::tmat3x3<T>' needs to have dll-interface to be used by clients of class 'Renderable'
+                 with
+                 [
+                     T=glm::lowp_float
+                 ]
+         Renderable.cpp
+     1>c:\users\anthony\dropbox\programming\c++\neumont\gamedev\middleware\neumonttools\include\vertex.h(12): warning C4251: 'Neumont::Vertex::position' : struct 'glm::detail::tvec3<T>' needs to have dll-interface to be used by clients of struct 'Neumont::Vertex'
+                 with
+                 [
+                     T=glm::mediump_float
+                 ]
+     1>c:\users\anthony\dropbox\programming\c++\neumont\gamedev\middleware\neumonttools\include\vertex.h(13): warning C4251: 'Neumont::Vertex::color' : struct 'glm::detail::tvec4<T>' needs to have dll-interface to be used by clients of struct 'Neumont::Vertex'
+                 with
+                 [
+                     T=glm::mediump_float
+                 ]
+     1>c:\users\anthony\dropbox\programming\c++\neumont\gamedev\middleware\neumonttools\include\vertex.h(14): warning C4251: 'Neumont::Vertex::normal' : struct 'glm::detail::tvec3<T>' needs to have dll-interface to be used by clients of struct 'Neumont::Vertex'
+                 with
+                 [
+                     T=glm::mediump_float
+                 ]
+     1>c:\users\anthony\dropbox\programming\c++\neumont\gamedev\middleware\neumonttools\include\vertex.h(15): warning C4251: 'Neumont::Vertex::uv' : struct 'glm::detail::tvec2<T>' needs to have dll-interface to be used by clients of struct 'Neumont::Vertex'
+                 with
+                 [
+                     T=glm::mediump_float
+                 ]
+     1>c:\users\anthony\dropbox\programming\c++\neumont\gamedev\engine\engine\renderable.h(26): warning C4251: 'Renderable::whereMat' : struct 'glm::detail::tmat4x4<T>' needs to have dll-interface to be used by clients of class 'Renderable'
+                 with
+                 [
+                     T=glm::lowp_float
+                 ]
+     1>c:\users\anthony\dropbox\programming\c++\neumont\gamedev\engine\engine\renderable.h(27): warning C4251: 'Renderable::rotation' : struct 'glm::detail::tmat3x3<T>' needs to have dll-interface to be used by clients of class 'Renderable'
+                 with
+                 [
+                     T=glm::lowp_float
+                 ]
+         NUShapeEditor.cpp
+     1>c:\users\anthony\dropbox\programming\c++\neumont\gamedev\middleware\neumonttools\include\vertex.h(12): warning C4251: 'Neumont::Vertex::position' : struct 'glm::detail::tvec3<T>' needs to have dll-interface to be used by clients of struct 'Neumont::Vertex'
+                 with
+                 [
+                     T=glm::mediump_float
+                 ]
+     1>c:\users\anthony\dropbox\programming\c++\neumont\gamedev\middleware\neumonttools\include\vertex.h(13): warning C4251: 'Neumont::Vertex::color' : struct 'glm::detail::tvec4<T>' needs to have dll-interface to be used by clients of struct 'Neumont::Vertex'
+                 with
+                 [
+                     T=glm::mediump_float
+                 ]
+     1>c:\users\anthony\dropbox\programming\c++\neumont\gamedev\middleware\neumonttools\include\vertex.h(14): warning C4251: 'Neumont::Vertex::normal' : struct 'glm::detail::tvec3<T>' needs to have dll-interface to be used by clients of struct 'Neumont::Vertex'
+                 with
+                 [
+                     T=glm::mediump_float
+                 ]
+     1>c:\users\anthony\dropbox\programming\c++\neumont\gamedev\middleware\neumonttools\include\vertex.h(15): warning C4251: 'Neumont::Vertex::uv' : struct 'glm::detail::tvec2<T>' needs to have dll-interface to be used by clients of struct 'Neumont::Vertex'
+                 with
+                 [
+                     T=glm::mediump_float
+                 ]
+         MyRandom.cpp
+         LogManager.cpp
+         LinkedSlider.cpp
+         GeometryInfo.cpp
+     1>c:\users\anthony\dropbox\programming\c++\neumont\gamedev\middleware\neumonttools\include\vertex.h(12): warning C4251: 'Neumont::Vertex::position' : struct 'glm::detail::tvec3<T>' needs to have dll-interface to be used by clients of struct 'Neumont::Vertex'
+                 with
+                 [
+                     T=glm::mediump_float
+                 ]
+     1>c:\users\anthony\dropbox\programming\c++\neumont\gamedev\middleware\neumonttools\include\vertex.h(13): warning C4251: 'Neumont::Vertex::color' : struct 'glm::detail::tvec4<T>' needs to have dll-interface to be used by clients of struct 'Neumont::Vertex'
+                 with
+                 [
+                     T=glm::mediump_float
+                 ]
+     1>c:\users\anthony\dropbox\programming\c++\neumont\gamedev\middleware\neumonttools\include\vertex.h(14): warning C4251: 'Neumont::Vertex::normal' : struct 'glm::detail::tvec3<T>' needs to have dll-interface to be used by clients of struct 'Neumont::Vertex'
+                 with
+                 [
+                     T=glm::mediump_float
+                 ]
+     1>c:\users\anthony\dropbox\programming\c++\neumont\gamedev\middleware\neumonttools\include\vertex.h(15): warning C4251: 'Neumont::Vertex::uv' : struct 'glm::detail::tvec2<T>' needs to have dll-interface to be used by clients of struct 'Neumont::Vertex'
+                 with
+                 [
+                     T=glm::mediump_float
+                 ]
+         dllmain.cpp
+         DebugTimer.cpp
+         DebugSlider_mock.cpp
+         DebugSlider.cpp
+         DebugShapeManager.cpp
+     1>c:\users\anthony\dropbox\programming\c++\neumont\gamedev\middleware\neumonttools\include\vertex.h(12): warning C4251: 'Neumont::Vertex::position' : struct 'glm::detail::tvec3<T>' needs to have dll-interface to be used by clients of struct 'Neumont::Vertex'
+                 with
+                 [
+                     T=glm::mediump_float
+                 ]
+     1>c:\users\anthony\dropbox\programming\c++\neumont\gamedev\middleware\neumonttools\include\vertex.h(13): warning C4251: 'Neumont::Vertex::color' : struct 'glm::detail::tvec4<T>' needs to have dll-interface to be used by clients of struct 'Neumont::Vertex'
+                 with
+                 [
+                     T=glm::mediump_float
+                 ]
+     1>c:\users\anthony\dropbox\programming\c++\neumont\gamedev\middleware\neumonttools\include\vertex.h(14): warning C4251: 'Neumont::Vertex::normal' : struct 'glm::detail::tvec3<T>' needs to have dll-interface to be used by clients of struct 'Neumont::Vertex'
+                 with
+                 [
+                     T=glm::mediump_float
+                 ]
+     1>c:\users\anthony\dropbox\programming\c++\neumont\gamedev\middleware\neumonttools\include\vertex.h(15): warning C4251: 'Neumont::Vertex::uv' : struct 'glm::detail::tvec2<T>' needs to have dll-interface to be used by clients of struct 'Neumont::Vertex'
+                 with
+                 [
+                     T=glm::mediump_float
+                 ]
+     1>c:\users\anthony\dropbox\programming\c++\neumont\gamedev\engine\engine\renderable.h(26): warning C4251: 'Renderable::whereMat' : struct 'glm::detail::tmat4x4<T>' needs to have dll-interface to be used by clients of class 'Renderable'
+                 with
+                 [
+                     T=glm::lowp_float
+                 ]
+     1>c:\users\anthony\dropbox\programming\c++\neumont\gamedev\engine\engine\renderable.h(27): warning C4251: 'Renderable::rotation' : struct 'glm::detail::tmat3x3<T>' needs to have dll-interface to be used by clients of class 'Renderable'
+                 with
+                 [
+                     T=glm::lowp_float
+                 ]
+     1>c:\users\anthony\dropbox\programming\c++\neumont\gamedev\engine\engine\debugshapemanager.h(18): warning C4251: 'DebugShapeManager::UP' : struct 'glm::detail::tvec3<T>' needs to have dll-interface to be used by clients of class 'DebugShapeManager'
+                 with
+                 [
+                     T=glm::mediump_float
+                 ]
+     1>c:\users\anthony\dropbox\programming\c++\neumont\gamedev\engine\engine\debugshapemanager.h(35): warning C4251: 'DebugShapeManager::shapes' : class 'std::vector<_Ty>' needs to have dll-interface to be used by clients of class 'DebugShapeManager'
+                 with
+                 [
+                     _Ty=DebugShapeManager::DebugShapeData *
+                 ]
+         DebugMenuManager.cpp
+         Camera.cpp
+         BufferManager.cpp
+         BinaryToShapeLoader.cpp
+     1>c:\users\anthony\dropbox\programming\c++\neumont\gamedev\middleware\neumonttools\include\vertex.h(12): warning C4251: 'Neumont::Vertex::position' : struct 'glm::detail::tvec3<T>' needs to have dll-interface to be used by clients of struct 'Neumont::Vertex'
+                 with
+                 [
+                     T=glm::mediump_float
+                 ]
+     1>c:\users\anthony\dropbox\programming\c++\neumont\gamedev\middleware\neumonttools\include\vertex.h(13): warning C4251: 'Neumont::Vertex::color' : struct 'glm::detail::tvec4<T>' needs to have dll-interface to be used by clients of struct 'Neumont::Vertex'
+                 with
+                 [
+                     T=glm::mediump_float
+                 ]
+     1>c:\users\anthony\dropbox\programming\c++\neumont\gamedev\middleware\neumonttools\include\vertex.h(14): warning C4251: 'Neumont::Vertex::normal' : struct 'glm::detail::tvec3<T>' needs to have dll-interface to be used by clients of struct 'Neumont::Vertex'
+                 with
+                 [
+                     T=glm::mediump_float
+                 ]
+     1>c:\users\anthony\dropbox\programming\c++\neumont\gamedev\middleware\neumonttools\include\vertex.h(15): warning C4251: 'Neumont::Vertex::uv' : struct 'glm::detail::tvec2<T>' needs to have dll-interface to be used by clients of struct 'Neumont::Vertex'
+                 with
+                 [
+                     T=glm::mediump_float
+                 ]
+         AutoProfilerManager.cpp
+         Generating Code...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Anthony\Dropbox\Programming\C++\Neumont\GameDev\LevelEditor\Debug\Engine.dll" /INCREMENTAL /NOLOGO /LIBPATH:C:\Users\Anthony\Dropbox\Programming\C++\Neumont\GameDev\Engine\Engine\../../MiddleWare/NeumontTools/lib /LIBPATH:C:\Users\Anthony\Dropbox\Programming\C++\Neumont\GameDev\Engine\Engine\../../MiddleWare/Qt/lib /LIBPATH:C:\Users\Anthony\Dropbox\Programming\C++\Neumont\GameDev\Engine\Engine\../../MiddleWare/glew/lib NeumontTools.lib opengl32.lib QtOpenGLd4.lib QtGuid4.lib QtCored4.lib glew32.lib glew32d.lib glew32s.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Anthony\Dropbox\Programming\C++\Neumont\GameDev\LevelEditor\Debug\Engine.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Anthony\Dropbox\Programming\C++\Neumont\GameDev\LevelEditor\Debug\Engine.lib" /MACHINE:X86 /DLL Debug\AutoProfilerManager.obj
+         Debug\BinaryToShapeLoader.obj
+         Debug\BufferManager.obj
+         Debug\Camera.obj
+         Debug\DebugMenuManager.obj
+         Debug\DebugShapeManager.obj
+         Debug\DebugSlider.obj
+         Debug\DebugSlider_mock.obj
+         Debug\DebugTimer.obj
+         Debug\dllmain.obj
+         Debug\GeometryInfo.obj
+         Debug\LinkedSlider.obj
+         Debug\LogManager.obj
+         Debug\MyRandom.obj
+         Debug\NUShapeEditor.obj
+         Debug\Renderable.obj
+         Debug\Renderer.obj
+         Debug\ShaderProgram.obj
+         Debug\ShaderUniformPram.obj
+         Debug\Timer.obj
+            Creating library C:\Users\Anthony\Dropbox\Programming\C++\Neumont\GameDev\LevelEditor\Debug\Engine.lib and object C:\Users\Anthony\Dropbox\Programming\C++\Neumont\GameDev\LevelEditor\Debug\Engine.exp
+         Engine.vcxproj -> C:\Users\Anthony\Dropbox\Programming\C++\Neumont\GameDev\LevelEditor\Debug\Engine.dll
+     1>Done Building Project "C:\Users\Anthony\Dropbox\Programming\C++\Neumont\GameDev\Engine\Engine\Engine.vcxproj" (Rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:16.51

@@ -16,7 +16,12 @@ GeometryInfo  * Renderer::addGeometry( const Neumont::Vertex* verts, uint numVer
 	return &geoInfo[id];
 }
 GeometryInfo  * Renderer::addGeometry( Neumont::ShapeData& toAdd, GLuint indexingMode) {
-	return addGeometry(toAdd.verts,toAdd.numVerts,toAdd.indices,toAdd.numIndices,indexingMode);
+	GeometryInfo * ret = addGeometry(toAdd.verts,toAdd.numVerts,toAdd.indices,toAdd.numIndices,indexingMode);
+	ret -> NU_VertexStreamedPosition(1);
+	ret -> NU_VertexStreamedColor(2);
+	ret -> NU_VertexStreamedNormal(3);
+	ret -> NU_VertexStreamedUv(4);
+	return ret;
 }
 Renderable    * Renderer::addRenderable(GeometryInfo * whatGeometry, ShaderProgram * howShaders, GLuint textureID) {
 	int id = numOfRenderables++;
