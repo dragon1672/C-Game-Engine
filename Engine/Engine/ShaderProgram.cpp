@@ -111,11 +111,23 @@ void ShaderProgram::saveUniform(const char* name, ParameterType parameterType, c
 	prams[numOfPrams++].init(this,name,parameterType,value);
 }
 
+void ShaderProgram::resetPassdown() {
+	hasPassedDataDown = false;
+}
+bool ShaderProgram::hasPassedDown() {
+	return hasPassedDataDown;
+}
 void ShaderProgram::passSavedUniforms() {
-	for (int i = 0; i < numOfPrams; i++)
+	if(!hasPassedDown()) {
+		passSavedUniforms_FORCE();
+	}
+}
+void ShaderProgram::passSavedUniforms_FORCE() {
+	for (uint i = 0; i < numOfPrams; i++)
 	{
 		prams[i].sendData();
 	}
+	hasPassedDataDown = true;
 }
 
 bool ShaderProgram::complileShader(const char * code, GLuint id, bool debug) {
@@ -163,6 +175,7 @@ bool ShaderProgram::isCurrentProgram() {
 void ShaderProgram::useProgram() {
 	if(!isCurrentProgram()) {
 		//qDebug() << "Regestering Shader Program  from " << currentProgram << " to " << programID << " into pipeline";
+		passSavedUniforms();
 		currentProgram = programID;
 		glUseProgram(programID);
 	}

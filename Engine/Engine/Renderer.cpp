@@ -31,10 +31,9 @@ ShaderProgram * Renderer::addShader(const char * vertexShader, const char * frag
 	ret->buildBasicProgram(vertexShader,fragShader);
 	return ret;
 }
-void            Renderer::passDataDownAllShaders() {
-	for (int i = 0; i < numOfShaders; i++)
-	{
-		allShaderProgs[i].passSavedUniforms();
+void            Renderer::resetAllShaderPassDowns() {
+	for (uint i = 0; i < numOfShaders; i++) {
+		allShaderProgs[i].resetPassdown();
 	}
 }
 uint            Renderer::getNumOfShaders()      { return numOfShaders;     }

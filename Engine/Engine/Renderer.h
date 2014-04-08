@@ -32,7 +32,8 @@ public:
 
 	ShaderProgram * addShader();
 	ShaderProgram * addShader(const char * vertexShader, const char * fragShader);
-	void passDataDownAllShaders(); // might bite me in the butt later
+	void resetAllShaderPassDowns();
+	void passDataDownAllShaders();
 
 	uint getNumOfShaders();
 	uint getNumOfRenderables();
