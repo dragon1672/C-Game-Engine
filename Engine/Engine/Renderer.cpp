@@ -10,6 +10,12 @@ void            Renderer::init() {
 	numOfGeoInfo = 0;
 	mainShader = addShader();
 }
+void            Renderer::reset() {
+	//wipe renderables
+	//clear geo from hardware
+	//clear geo infos
+	//clear shaders
+}
 GeometryInfo  * Renderer::addGeometry( const Neumont::Vertex* verts, uint numVerts,  ushort* indices, uint numIndices, GLuint indexingMode) {
 	int id = numOfGeoInfo++;
 	geoInfo[id].init(verts,numVerts,indices,numIndices,indexingMode);
@@ -28,6 +34,14 @@ Renderable    * Renderer::addRenderable(GeometryInfo * whatGeometry, ShaderProgr
 	myRenderables[id].init(whatGeometry,howShaders,true,textureID);
 	return &myRenderables[id];
 }
+void			Renderer::resetRenderables() {
+	for (int i = 0; i < numOfRenderables; i++)
+	{
+		myRenderables[i].reset();
+	}
+	numOfRenderables = 0;
+}
+
 ShaderProgram * Renderer::addShader() {
 	return &allShaderProgs[numOfShaders++];
 }
@@ -82,4 +96,10 @@ void            Renderer::draw(GeometryInfo& toDraw) {
 	glBindBuffer(toDraw.bufferInformation.bufferID,GL_ARRAY_BUFFER);
 	glBindBuffer(toDraw.bufferInformation.bufferID,GL_ELEMENT_ARRAY_BUFFER);
 	glDrawElements(toDraw.indexingMode,toDraw.numIndices,GL_UNSIGNED_SHORT,(void*)toDraw.indicesOffset());
+}
+
+void             Renderer::drawPrep(int width, int height) {
+	glClearColor(.1f,.1f,.1f,1);
+	glViewport(0,0,width,height);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }

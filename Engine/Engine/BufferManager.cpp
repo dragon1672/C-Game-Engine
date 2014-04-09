@@ -63,6 +63,11 @@ BufferManager::BufferInfo * BufferManager::addBuffer(int size) {
 #endif
 	return ret;
 }
+
+void BufferManager::deleteBuffer(uint bufferID) {
+	glDeleteBuffers(1,&bufferID);
+}
+
 BufferManager::BufferInfo BufferManager::storeData(BufferInfo * buff, uint size, const void * data) {
 #ifdef _DEBUG
 	qDebug() << "Storing in Buffer ( " << buff->bufferID << " ) " << size << " / " << buff->remainingSpace << " bytes of data";

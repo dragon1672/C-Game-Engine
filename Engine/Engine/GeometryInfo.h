@@ -22,7 +22,7 @@ public:
 	void init(uint vertSize, const void * verts, uint numVerts, ushort* indices, uint numIndices, uint indexingMode);
 	//template<class TVert>
 	void init(const Neumont::Vertex * verts, uint numVerts, ushort* indices, uint numIndices, uint indexingMode);
-
+	void reset();
 
 	void addStreamedParameter(uint layoutLocation, ParameterType parameterType, uint bufferOffset, uint bufferStride);
 	//Vertex Data

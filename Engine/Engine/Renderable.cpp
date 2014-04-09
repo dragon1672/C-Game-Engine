@@ -7,6 +7,9 @@ void Renderable::init(GeometryInfo * whatGeo, ShaderProgram * howShader, bool vi
 	this->textureID = textureID;
 	numUniformParameters = 0;
 }
+void Renderable::reset() {
+	numUniformParameters = 0;
+}
 
 void Renderable::addUniformParameter(const char * name, ParameterType parameterType, const float * value) {
 	uniformParameters[numUniformParameters++].init(howShader,name,parameterType,value);

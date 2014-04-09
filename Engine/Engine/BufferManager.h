@@ -27,6 +27,7 @@ public:
 	BufferInfo addData(uint size,  const void * data);
 	BufferInfo addData(uint size1, const void * data1, uint size2, const void * data2);
 
+	void deleteBuffer(uint bufferID);
 private:
 	//add buffer and returns a pointer to that buffer
 	BufferManager::BufferInfo * addBuffer(int size = defaultBufferSize);

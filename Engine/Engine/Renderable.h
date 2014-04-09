@@ -28,6 +28,7 @@ public:
 	uint textureID;
 
 	void init(GeometryInfo * whatGeo, ShaderProgram * howShader, bool visible, uint textureID=-1);
+	void reset();
 
 	void addUniformParameter(const char * name, ParameterType parameterType, const float * value);
 	void addUniformParameter(const char * name, ParameterType parameterType, const int * value);
