@@ -24,7 +24,6 @@ public:
 	GeometryInfo * whatGeo;
 	ShaderProgram * howShader;
 	glm::mat4 whereMat;
-	glm::mat3 rotation;
 	bool visible;
 	uint textureID;
 

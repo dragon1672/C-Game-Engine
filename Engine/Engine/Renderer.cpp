@@ -17,10 +17,10 @@ GeometryInfo  * Renderer::addGeometry( const Neumont::Vertex* verts, uint numVer
 }
 GeometryInfo  * Renderer::addGeometry( Neumont::ShapeData& toAdd, GLuint indexingMode) {
 	GeometryInfo * ret = addGeometry(toAdd.verts,toAdd.numVerts,toAdd.indices,toAdd.numIndices,indexingMode);
-	ret -> NU_VertexStreamedPosition(1);
-	ret -> NU_VertexStreamedColor(2);
-	ret -> NU_VertexStreamedNormal(3);
-	ret -> NU_VertexStreamedUv(4);
+	ret -> NU_VertexStreamedPosition(0);
+	ret -> NU_VertexStreamedColor(1);
+	ret -> NU_VertexStreamedNormal(2);
+	ret -> NU_VertexStreamedUv(3);
 	return ret;
 }
 Renderable    * Renderer::addRenderable(GeometryInfo * whatGeometry, ShaderProgram * howShaders, GLuint textureID) {
@@ -71,7 +71,8 @@ uint            Renderer::addTexture(const char* fileName) {
 }
 void            Renderer::draw(Renderable& toDraw) {
 	if(toDraw.visible) {
-		toDraw.howShader->isCurrentProgram();
+		toDraw.howShader->useProgram();
+		toDraw.howShader->passSavedUniforms_try();
 		toDraw.passUniformsDownDown();
 		draw(*toDraw.whatGeo);
 	}
