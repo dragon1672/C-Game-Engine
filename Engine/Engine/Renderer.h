@@ -28,12 +28,13 @@ public:
 	GeometryInfo * addGeometry( Neumont::ShapeData& toAdd, GLuint indexingMode);
 	GeometryInfo * addGeometry( const Neumont::Vertex* verts, uint numVerts,  ushort* indices, uint numIndices, GLuint indexingMode);
 
-	Renderable* addRenderable(GeometryInfo * whatGeometry, ShaderProgram * howShaders, GLuint textureID=-1);
+	Renderable* addRenderable(GeometryInfo * whatGeometry, ShaderProgram * howShaders, GLuint textureID);
 
 	ShaderProgram * addShader();
 	ShaderProgram * addShader(const char * vertexShader, const char * fragShader);
-	void resetAllShaderPassDowns();
-	void passDataDownAllShaders();
+	void passDataDownAllShaders_force();
+	void passDataDownAllShaders_try();
+	void resetAllShaders_validPush();
 
 	uint getNumOfShaders();
 	uint getNumOfRenderables();

@@ -36,9 +36,22 @@ ShaderProgram * Renderer::addShader(const char * vertexShader, const char * frag
 	ret->buildBasicProgram(vertexShader,fragShader);
 	return ret;
 }
-void            Renderer::resetAllShaderPassDowns() {
-	for (uint i = 0; i < numOfShaders; i++) {
-		allShaderProgs[i].resetPassdown();
+void           Renderer::passDataDownAllShaders_force() {
+	for (int i = 0; i < numOfShaders; i++)
+	{
+		allShaderProgs[i].passSavedUniforms_force();
+	}
+}
+void            Renderer::passDataDownAllShaders_try() {
+	for (int i = 0; i < numOfShaders; i++)
+	{
+		allShaderProgs[i].passSavedUniforms_try();
+	}
+}
+void            Renderer::resetAllShaders_validPush() {
+	for (int i = 0; i < numOfShaders; i++)
+	{
+		allShaderProgs[i].resetValidPush();
 	}
 }
 uint            Renderer::getNumOfShaders()      { return numOfShaders;     }
@@ -58,7 +71,7 @@ uint            Renderer::addTexture(const char* fileName) {
 }
 void            Renderer::draw(Renderable& toDraw) {
 	if(toDraw.visible) {
-		toDraw.howShader->useProgram();
+		toDraw.howShader->isCurrentProgram();
 		toDraw.passUniformsDownDown();
 		draw(*toDraw.whatGeo);
 	}

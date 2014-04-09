@@ -20,10 +20,10 @@ private:
 	uint numOfPrams;
 
 	GLuint programID;
-	bool hasPassedDataDown;
 
 	static std::string file2str(const char * filePath);
 	static bool validFile(const char * filePath);
+	bool validPush;
 public:
 	void startup();
 	void shutdown();
@@ -39,10 +39,10 @@ public:
 	void saveUniform(const char* name, ParameterType parameterType, const int   * value);
 	void saveUniform(const char* name, ParameterType parameterType, const bool  * value);
 
-	void resetPassdown(); //hasPassedDataDown
-	bool hasPassedDown();
-	void passSavedUniforms();
-	void passSavedUniforms_FORCE();
+	void passSavedUniforms_try();
+	void passSavedUniforms_force();
+	bool getValidPush();
+	void resetValidPush();
 
 	bool complileShader(const char * code, GLuint id, bool debug);
 	void link();
