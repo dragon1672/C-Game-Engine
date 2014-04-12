@@ -11,9 +11,6 @@
 
 #include "ParameterType.h"
 
-//template struct DLL_SHARED glm::detail::tmat3x3<float>;
-//template struct DLL_SHARED glm::detail::tmat4x4<float>;
-
 typedef unsigned int uint;
 
 class ENGINE_SHARED Renderable {

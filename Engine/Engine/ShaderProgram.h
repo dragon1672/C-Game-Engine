@@ -13,6 +13,7 @@
 
 class ENGINE_SHARED ShaderProgram {
 private:
+	static int numOfTextures;
 	static const int MAX_POSSIBLE_PROGRAM_FILES = 10;
 	static GLuint currentProgram;
 	

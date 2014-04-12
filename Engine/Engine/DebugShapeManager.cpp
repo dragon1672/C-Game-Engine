@@ -7,8 +7,8 @@
 #include "NUShapeEditor.h"
 
 glm::vec3 DebugShapeManager::UP(0,1,0);
-void      DebugShapeManager::init(Renderer * theRenderer, float * viewMatrix) {
-	myRenderer = theRenderer;
+void      DebugShapeManager::init(float * viewMatrix) {
+	myRenderer.init();
 	this->viewMatrix = viewMatrix;
 
 	//makin some shapes
@@ -56,30 +56,30 @@ void      DebugShapeManager::init(Renderer * theRenderer, float * viewMatrix) {
 
 	
 	//send data down
-	GEO_sphere = theRenderer->addGeometry(NUSphere,GL_TRIANGLES);
+	GEO_sphere = myRenderer.addGeometry(NUSphere,GL_TRIANGLES);
 	GEO_sphere->NU_VertexStreamedPosition(0);
 	GEO_sphere->NU_VertexStreamedColor(1);
-	GEO_cube   = theRenderer->addGeometry(NUCube,  GL_TRIANGLES);
+	GEO_cube   = myRenderer.addGeometry(NUCube,  GL_TRIANGLES);
 	GEO_cube->NU_VertexStreamedPosition(0);
 	GEO_cube->NU_VertexStreamedColor(1);
-	GEO_line   = theRenderer->addGeometry(NULine,  GL_LINES);
+	GEO_line   = myRenderer.addGeometry(NULine,  GL_LINES);
 	GEO_line->NU_VertexStreamedPosition(0);
 	GEO_line->NU_VertexStreamedColor(1);
 #ifdef useArrowForVec
-	this->GEO_vector = myRenderer->addGeometry(NUShapeEditor::scaleToRange(NUShapeEditor::noNegY(NUShapeEditor::rotate(Neumont::ShapeGenerator::makeArrow(),90,0,0))),GL_TRIANGLES);
+	this->GEO_vector = myRenderer.addGeometry(NUShapeEditor::scaleToRange(NUShapeEditor::noNegY(NUShapeEditor::rotate(Neumont::ShapeGenerator::makeArrow(),90,0,0))),GL_TRIANGLES);
 	GEO_vector->NU_VertexStreamedPosition(0);
 	GEO_vector->NU_VertexStreamedColor(1);
 #else
 	GEO_vector = GEO_line;
 #endif
-	GEO_point  = theRenderer->addGeometry(NUPoint, GL_LINES);
+	GEO_point  = myRenderer.addGeometry(NUPoint, GL_LINES);
 	GEO_point->NU_VertexStreamedPosition(0);
 	GEO_point->NU_VertexStreamedColor(1);
 
 	initShaders();
 }
 void      DebugShapeManager::initShaders() {
-	debugShapeShader = myRenderer->addShader("../Shaders/PassThroughVertexShader.glsl","../Shaders/PassThroughFragShader.glsl");
+	debugShapeShader = myRenderer.addShader("../Shaders/PassThroughVertexShader.glsl","../Shaders/PassThroughFragShader.glsl");
 	debugShapeShader->saveUniform("viewTransform",ParameterType::PT_MAT4,viewMatrix);
 }
 void      DebugShapeManager::addUnitSphere(glm::mat4& transform,                    glm::vec4& color, float lifetime, bool depthTest) {
@@ -172,7 +172,7 @@ void      DebugShapeManager::draw() {
 		for (unsigned int j = 0; j < shapes[i]->prams.size(); j++) {
 			shapes[i]->prams[j].sendData();
 		}
-		myRenderer->draw(*(shapes[i]->whatGeo));
+		myRenderer.draw(*(shapes[i]->whatGeo));
 	}
 }
 #endif

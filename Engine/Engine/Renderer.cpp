@@ -74,12 +74,6 @@ uint            Renderer::getNumOfGeo()          { return numOfGeoInfo;     }
 ShaderProgram * Renderer::getShader(uint index) { return &allShaderProgs[index]; }
 Renderable    * Renderer::getRenderable(uint index) { return &myRenderables[index];  }
 GeometryInfo  * Renderer::getGeometry(uint index) { return &geoInfo[index];        }
-void            Renderer::addStreamedParameter(GeometryInfo * geoID, uint layoutLocation, ParameterType parameterType, uint bufferOffset, uint bufferStride) {
-	geoID->addStreamedParameter(layoutLocation,parameterType,bufferOffset,bufferStride);
-}
-void            Renderer::addRenderableUniformParameter(Renderable* renderable, const char* name, ParameterType parameterType, const float* value) {
-	renderable->addUniformParameter(name,parameterType,value);
-}
 uint            Renderer::addTexture(const char* fileName) {
 	return ShaderProgram::load2DTexture(fileName);
 }

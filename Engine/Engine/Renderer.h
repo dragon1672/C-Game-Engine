@@ -45,12 +45,6 @@ public:
 	Renderable* getRenderable(uint index);
 	GeometryInfo* getGeometry(uint index);
 
-	//not required
-	void addStreamedParameter(GeometryInfo * geoID, uint layoutLocation, ParameterType parameterType, uint bufferOffset, uint bufferStride);
-
-	//not required
-	void addRenderableUniformParameter(Renderable* renderable, const char* name, ParameterType parameterType, const float* value);
-
 	uint addTexture(const char* fileName);
 	void draw(GeometryInfo& toDraw);
 	void draw(Renderable& toDraw);

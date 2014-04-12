@@ -34,7 +34,7 @@ private:
 	};
 	std::vector<DebugShapeData *> shapes;
 
-	Renderer      * myRenderer;
+	Renderer        myRenderer;
 	float         * viewMatrix;
 	ShaderProgram * debugShapeShader;
 	GeometryInfo  * GEO_sphere;
@@ -46,7 +46,7 @@ private:
 	glm::vec3 noZeros(glm::vec3 vec);
 	glm::mat4 span2Points(glm::vec3 start, glm::vec3 end);
 public:
-	void init(Renderer * theRenderer, float * viewMatrix);
+	void init(float * viewMatrix);
 
 	void initShaders();
 
@@ -61,7 +61,7 @@ public:
 	void draw();
 #else
 	public:
-	void init(Renderer * theRenderer, float * viewMatrix) {}
+	void init(float * viewMatrix) {}
 
 	void initShaders();
 

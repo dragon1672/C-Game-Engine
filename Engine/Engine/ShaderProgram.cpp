@@ -11,6 +11,7 @@
 
 
 GLuint ShaderProgram::currentProgram;
+int ShaderProgram::numOfTextures = 0;
 
 struct CodeBlock { // used to store shader code
 	GLuint id;
@@ -219,9 +220,7 @@ GLuint ShaderProgram::load2DTexture(QString fileName) {
 	QString filePath = /**/QCoreApplication::applicationDirPath() + /**/fileName;
 	QFile tempFile(filePath);
 	if(tempFile.exists()) {
-		static uint textureID = 0;
-
-		uint ID = textureID++;
+		uint ID = numOfTextures++;
 
 		GLuint bufferID;
 
