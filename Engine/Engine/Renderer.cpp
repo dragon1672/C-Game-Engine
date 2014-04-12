@@ -35,7 +35,7 @@ Renderable    * Renderer::addRenderable(GeometryInfo * whatGeometry, ShaderProgr
 	return &myRenderables[id];
 }
 void			Renderer::resetRenderables() {
-	for (int i = 0; i < numOfRenderables; i++)
+	for (uint i = 0; i < numOfRenderables; i++)
 	{
 		myRenderables[i].reset();
 	}
@@ -51,19 +51,19 @@ ShaderProgram * Renderer::addShader(const char * vertexShader, const char * frag
 	return ret;
 }
 void           Renderer::passDataDownAllShaders_force() {
-	for (int i = 0; i < numOfShaders; i++)
+	for (uint i = 0; i < numOfShaders; i++)
 	{
 		allShaderProgs[i].passSavedUniforms_force();
 	}
 }
 void            Renderer::passDataDownAllShaders_try() {
-	for (int i = 0; i < numOfShaders; i++)
+	for (uint i = 0; i < numOfShaders; i++)
 	{
 		allShaderProgs[i].passSavedUniforms_try();
 	}
 }
 void            Renderer::resetAllShaders_validPush() {
-	for (int i = 0; i < numOfShaders; i++)
+	for (uint i = 0; i < numOfShaders; i++)
 	{
 		allShaderProgs[i].resetValidPush();
 	}
