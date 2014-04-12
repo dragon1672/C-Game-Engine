@@ -1,14 +1,18 @@
 #pragma once
 
 #include <glm/glm.hpp>
+#include <glm/gtx/projection.hpp>
 #include <vector>
 #include "ExportHeader.h"
 #include "DebugShapeManager.h"
+#include "Ray.h"
 
 struct ENGINE_SHARED Node {
-	DebugShapeManager::DebugShapeData * data;
+	static const int radius=1;
+	DebugShapeManager::DebugShapeData * rednerable;
 	glm::vec3 pos;
 	bool isActive;
-	Node* connectedNodes[50];
-	int numOfConnections;
+
+	bool doesRayHit(Ray& ray); //cheap
+	bool tryIntersectionVector(Ray& ray, glm::vec3& ret); //uses sqrt
 };

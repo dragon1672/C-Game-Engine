@@ -105,6 +105,7 @@
     <ClInclude Include="myAssert.h" />
     <ClInclude Include="MyRandom.h" />
     <ClInclude Include="Node.h" />
+    <ClInclude Include="NodeConnection.h" />
     <ClInclude Include="NodeManager.h" />
     <ClInclude Include="NUShapeEditor.h" />
     <ClInclude Include="ParameterType.h" />
@@ -139,6 +140,7 @@
     <ClCompile Include="LinkedSlider.cpp" />
     <ClCompile Include="LogManager.cpp" />
     <ClCompile Include="MyRandom.cpp" />
+    <ClCompile Include="Node.cpp" />
     <ClCompile Include="NodeManager.cpp" />
     <ClCompile Include="NUShapeEditor.cpp" />
     <ClCompile Include="Renderable.cpp" />
