@@ -16,6 +16,7 @@ class ENGINE_SHARED DebugShapeManager {
 #ifdef _DEBUG
 private:
 	static glm::vec3 UP;
+public:
 	struct DebugShapeData {
 		GeometryInfo * whatGeo;
 		glm::mat4 transform;
@@ -32,6 +33,7 @@ private:
 			toAdd.init(theOne,"enableOverrideColor",	ParameterType::PT_BOOLEAN,&enableOverrideColor);	prams.push_back(toAdd);
 		}
 	};
+private:
 	std::vector<DebugShapeData *> shapes;
 
 	Renderer        myRenderer;
@@ -50,11 +52,11 @@ public:
 
 	void initShaders();
 
-	void addUnitSphere(glm::mat4& transform,                    glm::vec4& color, float lifetime=std::numeric_limits<float>::infinity(), bool depthTest=true);
-	void addUnitCube  (glm::mat4& transform,                    glm::vec4& color, float lifetime=std::numeric_limits<float>::infinity(), bool depthTest=true);
-	void addUnitVector(glm::vec3& tail,      glm::vec3& vector, glm::vec4& color, float lifetime=std::numeric_limits<float>::infinity(), bool depthTest=true);
-	void addLine      (glm::vec3& start,     glm::vec3& end,    glm::vec4& color, float lifetime=std::numeric_limits<float>::infinity(), bool depthTest=true);
-	void addPoint     (glm::vec3& pos,                                            float lifetime=std::numeric_limits<float>::infinity(), bool depthTest=true);
+	DebugShapeData * addUnitSphere(glm::mat4& transform,                    glm::vec4& color, float lifetime=std::numeric_limits<float>::infinity(), bool depthTest=true);
+	DebugShapeData * addUnitCube  (glm::mat4& transform,                    glm::vec4& color, float lifetime=std::numeric_limits<float>::infinity(), bool depthTest=true);
+	DebugShapeData * addUnitVector(glm::vec3& tail,      glm::vec3& vector, glm::vec4& color, float lifetime=std::numeric_limits<float>::infinity(), bool depthTest=true);
+	DebugShapeData * addLine      (glm::vec3& start,     glm::vec3& end,    glm::vec4& color, float lifetime=std::numeric_limits<float>::infinity(), bool depthTest=true);
+	DebugShapeData * addPoint     (glm::vec3& pos,                                            float lifetime=std::numeric_limits<float>::infinity(), bool depthTest=true);
 	
 	void update(float dt);
 
