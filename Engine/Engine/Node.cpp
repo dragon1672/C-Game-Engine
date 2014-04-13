@@ -15,7 +15,7 @@ bool Node::tryIntersectionVector(Ray& ray, glm::vec3& ret) {
 	glm::vec3 raytoCircle = pos - ray.origin;
 	glm::vec3 rayExtended = glm::proj(raytoCircle,ray.direction);
 
-	float raytoCircleLengthSquared = glm::dot(pos,pos); // returns length squared
+	float raytoCircleLengthSquared = glm::dot(raytoCircle,raytoCircle); // returns length squared
 	float rayExtendedLengthSquared = glm::dot(rayExtended,rayExtended); // returns length squared
 	float collisionLengthSquared = raytoCircleLengthSquared - rayExtendedLengthSquared;
 	float radiusLengthSquared = radius*radius;
