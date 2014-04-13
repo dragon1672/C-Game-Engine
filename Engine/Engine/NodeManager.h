@@ -20,8 +20,7 @@ public:
 public:
 	Node nodes[100];
 	uint numOfNodes;
-	NodeConnection connections[100];
-	uint numOfConnections;
+	std::vector<NodeConnection> connections;
 
 	Node * currentSelectedNode;
 	DebugShapeManager * debugShapes;
@@ -35,12 +34,38 @@ public:
 	NodeSelection getNodesSelected(Ray& click);
 	Node * getNodeClicked(Ray& click);
 	void selectNode(Node * toSelect) {
-		currentSelectedNode->rednerable->overrideColor = UnSelectedColor;
+		setAllConnections(false);
+		setAllNodeColors(UnSelectedColor);
 		currentSelectedNode = toSelect;
 		currentSelectedNode->rednerable->overrideColor = SelectedColor;
+		for (uint i = 0; i < connections.size(); i++)
+		{
+			if(connections[i].from == currentSelectedNode)
+				connections[i].renderable -> overrideColor = ConnectedNodeColor;
+		}
 	}
 	void deleteNode(Node * toDel) {
-
+		//delete all connections
+		for (uint i = 0; i < connections.size(); i++)
+		{
+			if(connections[i].from == toDel || connections[i].to == toDel) {
+				connections.erase(connections.begin() + i);
+				i--;
+			}
+		}
+		toDel->isActive = false;
+	}
+	void setAllNodeColors(glm::vec4& colorToSet) {
+		for (uint i = 0; i < numOfNodes; i++)
+		{
+			nodes[i].rednerable->overrideColor = colorToSet;
+		}
+	}
+	void setAllConnections(bool state = false) {
+		for (uint i = 0; i < connections.size(); i++)
+		{
+			connections[i].renderable->draw = state;
+		}
 	}
 	void manageClick(Ray& click) {
 		Node * selectedNode = getNodeClicked(click);

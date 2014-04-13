@@ -17,6 +17,7 @@ Node * NodeManager::getNextNode() {
 	}
 	Node * ret = &nodes[numOfNodes++];
 	ret->rednerable = debugShapes->addUnitCube(glm::mat4(),UnSelectedColor);
+	ret->rednerable->enableOverrideColor = false;
 	return ret;
 }
 
@@ -36,7 +37,7 @@ void NodeManager::addNodeOnPlane(Ray& ray, glm::vec3 planePos,glm::vec3 planeNor
 NodeManager::NodeSelection NodeManager::getNodesSelected(Ray& click) {
 	NodeSelection ret;
 	ret.numOfNodes = 0;
-	for(int i=0;i<numOfNodes;i++) {
+	for(uint i=0;i<numOfNodes;i++) {
 		if(nodes[i].isActive) {
 			if(nodes[i].doesRayHit(click)) {
 				ret.nodes[numOfNodes++] = &nodes[i];
@@ -48,7 +49,7 @@ NodeManager::NodeSelection NodeManager::getNodesSelected(Ray& click) {
 
 Node * NodeManager::getNodeClicked(Ray& click) {
 	Node * ret = nullptr;
-	for (int i = 0; i < numOfNodes && ret != nullptr; i++)
+	for (uint i = 0; i < numOfNodes && ret != nullptr; i++)
 	{
 		if(nodes[i].isActive) {
 			if(nodes[i].doesRayHit(click)) {

@@ -174,10 +174,12 @@ void      DebugShapeManager::draw() {
 	debugShapeShader -> useProgram();
 	debugShapeShader -> passSavedUniforms_force();
 	for (unsigned int i = 0; i < shapes.size(); i++) {
-		for (unsigned int j = 0; j < shapes[i]->prams.size(); j++) {
-			shapes[i]->prams[j].sendData();
+		if(shapes[i]->draw) {
+			for (unsigned int j = 0; j < shapes[i]->prams.size(); j++) {
+				shapes[i]->prams[j].sendData();
+			}
+			myRenderer.draw(*(shapes[i]->whatGeo));
 		}
-		myRenderer.draw(*(shapes[i]->whatGeo));
 	}
 }
 #endif

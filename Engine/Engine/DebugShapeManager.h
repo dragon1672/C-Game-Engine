@@ -25,7 +25,9 @@ public:
 		bool ignoreDepthTest;
 		bool enableOverrideColor;
 		std::vector<ShaderUniformPram> prams;
+		bool draw;
 		inline void init(ShaderProgram * theOne) {
+			draw = true;
 			ShaderUniformPram toAdd;
 			toAdd.init(theOne,"model2WorldTransform",	ParameterType::PT_MAT4,&transform[0][0]);			prams.push_back(toAdd);
 			toAdd.init(theOne,"overrideColor",			ParameterType::PT_VEC4,&overrideColor[0]);			prams.push_back(toAdd);
