@@ -39,7 +39,9 @@ public:
 		currentSelectedNode = toSelect;
 		currentSelectedNode->rednerable->overrideColor = SelectedColor;
 	}
-	void deleteNode(Node * toDel);
+	void deleteNode(Node * toDel) {
+
+	}
 	void manageClick(Ray& click) {
 		Node * selectedNode = getNodeClicked(click);
 		if(selectedNode==nullptr) {

@@ -45,16 +45,6 @@ NodeManager::NodeSelection NodeManager::getNodesSelected(Ray& click) {
 	}
 	return ret;
 }
-void NodeManager::deleteNode(Node * toDel) {
-	for(int i=0;i<numOfNodes;i++) {
-		if(nodes[i].isActive) {
-			nodes[i].removeNodeFromConnections(toDel);
-			if(&nodes[i] == toDel) {
-				nodes[i].isActive = false;
-			}
-		}
-	}
-}
 
 Node * NodeManager::getNodeClicked(Ray& click) {
 	Node * ret = nullptr;
