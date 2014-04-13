@@ -26,6 +26,10 @@ public:
 		bool enableOverrideColor;
 		std::vector<ShaderUniformPram> prams;
 		bool draw;
+		inline void kill() {
+			draw = false;
+			lifetime = -1;
+		}
 		inline void init(ShaderProgram * theOne) {
 			draw = true;
 			ShaderUniformPram toAdd;

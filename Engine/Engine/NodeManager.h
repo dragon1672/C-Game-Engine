@@ -29,6 +29,7 @@ public:
 	Node * getNextNode();
 public:
 	inline void init(DebugShapeManager * debugShapes) {
+		numOfNodes = 0;
 		this->debugShapes = debugShapes;
 	}
 
@@ -51,6 +52,7 @@ public:
 		for (uint i = 0; i < connections.size(); i++)
 		{
 			if(connections[i].from == toDel || connections[i].to == toDel) {
+				connections[i].renderable->kill();
 				connections.erase(connections.begin() + i);
 				i--;
 			}
@@ -69,12 +71,25 @@ public:
 			connections[i].renderable->draw = state;
 		}
 	}
-	void manageClick(Ray& click) {
+	void addOrSelectClick(Ray& click) {
 		Node * selectedNode = getNodeClicked(click);
 		if(selectedNode==nullptr) {
 			addNodeOnPlane(click,glm::vec3(0,0,0),glm::vec3(0,1,0));
 		} else {
 			selectNode(selectedNode);
+		}
+	}
+	void connectClick(Ray& click) {
+		if(currentSelectedNode != nullptr) {
+			Node * selectedNode = getNodeClicked(click);
+			if(selectedNode!=nullptr) {
+				NodeConnection toAdd;
+				toAdd.from = currentSelectedNode;
+				toAdd.to = selectedNode;
+				glm::vec3 vectorPointer = selectedNode->pos - currentSelectedNode->pos;
+				toAdd.renderable = debugShapes->addUnitVector(currentSelectedNode->pos,vectorPointer,glm::vec4(0,1,1,1));
+				connections.push_back(toAdd);
+			}
 		}
 	}
 	/*

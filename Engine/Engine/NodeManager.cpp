@@ -12,7 +12,7 @@ Node * NodeManager::getNextNode() {
 		}
 	}
 	Node * ret = &nodes[numOfNodes++];
-	ret->rednerable = debugShapes->addUnitCube(glm::mat4(),UnSelectedColor);
+	ret->rednerable = debugShapes->addUnitSphere(glm::mat4(),UnSelectedColor);
 	ret->rednerable->enableOverrideColor = false;
 	return ret;
 }
@@ -26,7 +26,9 @@ void NodeManager::addNodeOnPlane(Ray& ray, glm::vec3 planePos,glm::vec3 planeNor
 		float distance = neumorator/denominator;
 		if(distance >= 0) {
 			glm::vec3 positionToPlace = ray.origin + ray.direction * distance;
-			getNextNode()->pos = positionToPlace;
+			Node * temp = getNextNode();
+			temp ->pos = positionToPlace;
+			temp->rednerable->transform = glm::translate(positionToPlace);
 		}
 	}
 }
