@@ -8,11 +8,13 @@
 
 typedef unsigned int uint;
 
+
+#define UnSelectedColor glm::vec4(0,0,1,1)
+#define SelectedColor glm::vec4(1,0,0,1)
+#define ConnectedNodeColor glm::vec4(0,1,0,1)
+
 class ENGINE_SHARED NodeManager {
 public:
-	static glm::vec4 UnSelectedColor;
-	static glm::vec4 SelectedColor;
-	static glm::vec4 ConnectedNodeColor;
 	struct ENGINE_SHARED NodeSelection {
 		Node* nodes[10];
 		uint numOfNodes;

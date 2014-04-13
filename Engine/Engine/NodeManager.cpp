@@ -1,9 +1,5 @@
 #include "NodeManager.h"
-
-glm::vec4 NodeManager::UnSelectedColor(0,0,1,1);
-glm::vec4 NodeManager::SelectedColor(1,0,0,1);
-glm::vec4 NodeManager::ConnectedNodeColor(0,1,0,1);
-
+#include <glm/gtx/transform.hpp>
 
 
 
