@@ -47,7 +47,7 @@ NodeManager::NodeSelection NodeManager::getNodesSelected(Ray& click) {
 
 Node * NodeManager::getNodeClicked(Ray& click) {
 	Node * ret = nullptr;
-	for (uint i = 0; i < numOfNodes && ret != nullptr; i++)
+	for (uint i = 0; i < numOfNodes && ret == nullptr; i++)
 	{
 		if(nodes[i].isActive) {
 			if(nodes[i].doesRayHit(click)) {
@@ -87,7 +87,7 @@ void NodeManager::setAllNodeColors(glm::vec4& colorToSet) {
 		nodes[i].rednerable->overrideColor = colorToSet;
 	}
 }
-void NodeManager::setAllConnections(bool state = false) {
+void NodeManager::setAllConnections(bool state) {
 	for (uint i = 0; i < connections.size(); i++)
 	{
 		connections[i].renderable->draw = state;
