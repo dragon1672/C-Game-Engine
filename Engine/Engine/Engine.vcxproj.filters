@@ -1,0 +1,252 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Debug">
+      <UniqueIdentifier>{dffcf33b-a464-4ada-a455-d10ac1b3793d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Debug\Logging">
+      <UniqueIdentifier>{514147d6-d2f0-4a71-8bf0-19cfad9077e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Debug\Profiling">
+      <UniqueIdentifier>{bd8d342f-a40a-4b5b-9f6b-86ad1cff8b4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Debug\Renderer">
+      <UniqueIdentifier>{55bdd403-acc6-4f91-bd78-9bdcc24608ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MiddleWare">
+      <UniqueIdentifier>{4efbdd45-3354-4d83-bb19-31be0a4dc6bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MiddleWare\NeumontTools">
+      <UniqueIdentifier>{53047217-6b53-4ac9-ad9c-0ee9c33dfbd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MiddleWare\Renderer">
+      <UniqueIdentifier>{9f2cdf06-5ed3-4285-aafb-c69d161ac56a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools">
+      <UniqueIdentifier>{f143dd15-048a-4074-9417-3b6d42f9f884}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools\MyMath">
+      <UniqueIdentifier>{f5275839-8e32-4986-b8ee-4d17e166cbd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Debug\Renderer\MenuControllers">
+      <UniqueIdentifier>{091ad312-f2fc-43f1-b88d-4faa85896f2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MiddleWare\QT">
+      <UniqueIdentifier>{a58dcced-01b9-4f19-8319-b864ce410f0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MiddleWare\Renderer\GEO">
+      <UniqueIdentifier>{b4d19738-a187-468d-b050-2db07f3df394}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MiddleWare\Renderer\Shaders">
+      <UniqueIdentifier>{84296eaa-6ae7-4a94-934b-ee5775cd0d63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pathing">
+      <UniqueIdentifier>{e3f5ac1d-3265-4bc4-84e2-6622b9b21834}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Matrix2D.h">
+      <Filter>Tools\MyMath</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix3D.h">
+      <Filter>Tools\MyMath</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector 2.h">
+      <Filter>Tools\MyMath</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3D.h">
+      <Filter>Tools\MyMath</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="MyRandom.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="AutoProfileManager.h">
+      <Filter>Debug\Profiling</Filter>
+    </ClInclude>
+    <ClInclude Include="AutoProfileManagerMacros.h">
+      <Filter>Debug\Profiling</Filter>
+    </ClInclude>
+    <ClInclude Include="AutoProfiler.h">
+      <Filter>Debug\Profiling</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugShapeManager.h">
+      <Filter>Debug\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugMenuManager.h">
+      <Filter>Debug\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="BoolToggleController.h">
+      <Filter>Debug\Renderer\MenuControllers</Filter>
+    </ClInclude>
+    <ClInclude Include="SlideFloatController.h">
+      <Filter>Debug\Renderer\MenuControllers</Filter>
+    </ClInclude>
+    <ClInclude Include="SlideVectorController.h">
+      <Filter>Debug\Renderer\MenuControllers</Filter>
+    </ClInclude>
+    <ClInclude Include="WatchFloatController.h">
+      <Filter>Debug\Renderer\MenuControllers</Filter>
+    </ClInclude>
+    <ClInclude Include="WatchVectorController.h">
+      <Filter>Debug\Renderer\MenuControllers</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugMemHeader.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugTimer.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="LinkedSlider.h">
+      <Filter>MiddleWare\QT</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugSlider.h">
+      <Filter>MiddleWare\QT</Filter>
+    </ClInclude>
+    <ClInclude Include="NUShapeEditor.h">
+      <Filter>MiddleWare\NeumontTools</Filter>
+    </ClInclude>
+    <ClInclude Include="myAssert.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="LogData.h">
+      <Filter>Debug\Logging</Filter>
+    </ClInclude>
+    <ClInclude Include="LogManager.h">
+      <Filter>Debug\Logging</Filter>
+    </ClInclude>
+    <ClInclude Include="ProfileCategory.h">
+      <Filter>Debug\Profiling</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderable.h">
+      <Filter>MiddleWare\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>MiddleWare\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="SquareMatrix.h">
+      <Filter>Tools\MyMath</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="SingleKeyManager.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="ParameterType.h">
+      <Filter>MiddleWare\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="ExportHeader.h" />
+    <ClInclude Include="BinaryToShapeLoader.h">
+      <Filter>MiddleWare\Renderer\GEO</Filter>
+    </ClInclude>
+    <ClInclude Include="BufferManager.h">
+      <Filter>MiddleWare\Renderer\GEO</Filter>
+    </ClInclude>
+    <ClInclude Include="GeometryInfo.h">
+      <Filter>MiddleWare\Renderer\GEO</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderProgram.h">
+      <Filter>MiddleWare\Renderer\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderUniformPram.h">
+      <Filter>MiddleWare\Renderer\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Ray.h">
+      <Filter>Pathing</Filter>
+    </ClInclude>
+    <ClInclude Include="Node.h">
+      <Filter>Pathing</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeManager.h">
+      <Filter>Pathing</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeConnection.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="LogManager.cpp">
+      <Filter>Debug\Logging</Filter>
+    </ClCompile>
+    <ClCompile Include="AutoProfilerManager.cpp">
+      <Filter>Debug\Profiling</Filter>
+    </ClCompile>
+    <ClCompile Include="MyRandom.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="LinkedSlider.cpp">
+      <Filter>MiddleWare\QT</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugMenuManager.cpp">
+      <Filter>Debug\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugShapeManager.cpp">
+      <Filter>Debug\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="NUShapeEditor.cpp">
+      <Filter>MiddleWare\NeumontTools</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderable.cpp">
+      <Filter>MiddleWare\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>MiddleWare\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="DebugSlider_mock.cpp">
+      <Filter>MiddleWare\QT</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugSlider.cpp">
+      <Filter>MiddleWare\QT</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugTimer.cpp">
+      <Filter>Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="BinaryToShapeLoader.cpp">
+      <Filter>MiddleWare\Renderer\GEO</Filter>
+    </ClCompile>
+    <ClCompile Include="BufferManager.cpp">
+      <Filter>MiddleWare\Renderer\GEO</Filter>
+    </ClCompile>
+    <ClCompile Include="GeometryInfo.cpp">
+      <Filter>MiddleWare\Renderer\GEO</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderProgram.cpp">
+      <Filter>MiddleWare\Renderer\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderUniformPram.cpp">
+      <Filter>MiddleWare\Renderer\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="NodeManager.cpp">
+      <Filter>Pathing</Filter>
+    </ClCompile>
+    <ClCompile Include="Node.cpp">
+      <Filter>Pathing</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Matrix3D.inl">
+      <Filter>Tools\MyMath</Filter>
+    </None>
+    <None Include="Matrix2D.inl">
+      <Filter>Tools\MyMath</Filter>
+    </None>
+    <None Include="Vector 2.inl">
+      <Filter>Tools\MyMath</Filter>
+    </None>
+    <None Include="Vector3D.inl">
+      <Filter>Tools\MyMath</Filter>
+    </None>
+  </ItemGroup>
+</Project>
