@@ -57,3 +57,60 @@ Node * NodeManager::getNodeClicked(Ray& click) {
 	}
 	return ret;
 }
+
+void NodeManager::selectNode(Node * toSelect) {
+	setAllConnections(false);
+	setAllNodeColors(UnSelectedColor);
+	currentSelectedNode = toSelect;
+	currentSelectedNode->rednerable->overrideColor = SelectedColor;
+	for (uint i = 0; i < connections.size(); i++)
+	{
+		if(connections[i].from == currentSelectedNode)
+			connections[i].renderable -> overrideColor = ConnectedNodeColor;
+	}
+}
+void NodeManager::deleteNode(Node * toDel) {
+	//delete all connections
+	for (uint i = 0; i < connections.size(); i++)
+	{
+		if(connections[i].from == toDel || connections[i].to == toDel) {
+			connections[i].renderable->kill();
+			connections.erase(connections.begin() + i);
+			i--;
+		}
+	}
+	toDel->isActive = false;
+}
+void NodeManager::setAllNodeColors(glm::vec4& colorToSet) {
+	for (uint i = 0; i < numOfNodes; i++)
+	{
+		nodes[i].rednerable->overrideColor = colorToSet;
+	}
+}
+void NodeManager::setAllConnections(bool state = false) {
+	for (uint i = 0; i < connections.size(); i++)
+	{
+		connections[i].renderable->draw = state;
+	}
+}
+void NodeManager::addOrSelectClick(Ray& click) {
+	Node * selectedNode = getNodeClicked(click);
+	if(selectedNode==nullptr) {
+		addNodeOnPlane(click,glm::vec3(0,0,0),glm::vec3(0,1,0));
+	} else {
+		selectNode(selectedNode);
+	}
+}
+void NodeManager::connectClick(Ray& click) {
+	if(currentSelectedNode != nullptr) {
+		Node * selectedNode = getNodeClicked(click);
+		if(selectedNode!=nullptr) {
+			NodeConnection toAdd;
+			toAdd.from = currentSelectedNode;
+			toAdd.to = selectedNode;
+			glm::vec3 vectorPointer = selectedNode->pos - currentSelectedNode->pos;
+			toAdd.renderable = debugShapes->addUnitVector(currentSelectedNode->pos,vectorPointer,glm::vec4(0,1,1,1));
+			connections.push_back(toAdd);
+		}
+	}
+}
