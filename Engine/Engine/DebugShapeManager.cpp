@@ -12,7 +12,7 @@ void      DebugShapeManager::init(float * viewMatrix) {
 	this->viewMatrix = viewMatrix;
 
 	//makin some shapes
-	Neumont::ShapeData NUSphere = NUShapeEditor::scaleToRange(NUShapeEditor::setColor(glm::vec4(1,1,1,1),Neumont::ShapeGenerator::makeSphere(15)));
+	Neumont::ShapeData NUSphere = NUShapeEditor::scaleToRange(Neumont::ShapeGenerator::makeSphere(15));
 	Neumont::ShapeData NUCube   = NUShapeEditor::scaleToRange(NUShapeEditor::setColor(glm::vec4(1,1,1,1),Neumont::ShapeGenerator::makeCube()));
 	Neumont::ShapeData NULine;
 	
