@@ -82,7 +82,7 @@ void      DebugShapeManager::initShaders() {
 	debugShapeShader = myRenderer.addShader("../Shaders/PassThroughVertexShader.glsl","../Shaders/PassThroughFragShader.glsl");
 	debugShapeShader->saveUniform("viewTransform",ParameterType::PT_MAT4,viewMatrix);
 }
-DebugShapeManager::DebugShapeData * DebugShapeManager::addUnitSphere(glm::mat4& transform,                    glm::vec4& color, float lifetime, bool depthTest) {
+DebugShapeManager::DebugShapeData * DebugShapeManager::addUnitSphere(glm::mat4& transform,                    glm::vec4& color,               float lifetime, bool depthTest) {
 	DebugShapeData * toAdd = new DebugShapeData();
 	toAdd->whatGeo = GEO_sphere;
 	toAdd->transform = transform;
@@ -94,7 +94,7 @@ DebugShapeManager::DebugShapeData * DebugShapeManager::addUnitSphere(glm::mat4& 
 	shapes.push_back(toAdd);
 	return toAdd;
 }
-DebugShapeManager::DebugShapeData * DebugShapeManager::addUnitCube  (glm::mat4& transform,                    glm::vec4& color, float lifetime, bool depthTest) {
+DebugShapeManager::DebugShapeData * DebugShapeManager::addUnitCube  (glm::mat4& transform,                    glm::vec4& color,               float lifetime, bool depthTest) {
 	DebugShapeData * toAdd = new DebugShapeData();
 	toAdd->whatGeo = GEO_cube;
 	toAdd->transform = transform;
@@ -106,10 +106,10 @@ DebugShapeManager::DebugShapeData * DebugShapeManager::addUnitCube  (glm::mat4& 
 	shapes.push_back(toAdd);
 	return toAdd;
 }
-DebugShapeManager::DebugShapeData * DebugShapeManager::addUnitVector(glm::vec3& tail,      glm::vec3& vector, glm::vec4& color, float lifetime, bool depthTest) {
+DebugShapeManager::DebugShapeData * DebugShapeManager::addUnitVector(glm::vec3& tail,      glm::vec3& vector, glm::vec4& color, float offset, float lifetime, bool depthTest) {
 	DebugShapeData * toAdd = new DebugShapeData();
 	toAdd->whatGeo = GEO_vector;
-	toAdd->transform = span2Points(tail, tail + vector);
+	toAdd->transform = span2Points(tail, tail + vector, offset);
 	toAdd->overrideColor = color;
 	toAdd->lifetime = lifetime;
 	toAdd->ignoreDepthTest = !depthTest;
@@ -118,10 +118,10 @@ DebugShapeManager::DebugShapeData * DebugShapeManager::addUnitVector(glm::vec3& 
 	shapes.push_back(toAdd);
 	return toAdd;
 }
-DebugShapeManager::DebugShapeData * DebugShapeManager::addLine      (glm::vec3& start,     glm::vec3& end,    glm::vec4& color, float lifetime, bool depthTest) {
+DebugShapeManager::DebugShapeData * DebugShapeManager::addLine      (glm::vec3& start,     glm::vec3& end,    glm::vec4& color, float offset, float lifetime, bool depthTest) {
 	DebugShapeData * toAdd = new DebugShapeData();
 	toAdd->whatGeo = GEO_line;
-	toAdd->transform = span2Points(start, end);
+	toAdd->transform = span2Points(start, end, offset);
 	toAdd->overrideColor = color;
 	toAdd->lifetime = lifetime;
 	toAdd->ignoreDepthTest = !depthTest;
@@ -130,7 +130,7 @@ DebugShapeManager::DebugShapeData * DebugShapeManager::addLine      (glm::vec3& 
 	shapes.push_back(toAdd);
 	return toAdd;
 }
-DebugShapeManager::DebugShapeData * DebugShapeManager::addPoint     (glm::vec3& pos,                                            float lifetime, bool depthTest) {
+DebugShapeManager::DebugShapeData * DebugShapeManager::addPoint     (glm::vec3& pos,                                                          float lifetime, bool depthTest) {
 	DebugShapeData * toAdd = new DebugShapeData();
 	toAdd->whatGeo = GEO_point;
 	toAdd->transform = glm::translate(pos);
@@ -149,9 +149,11 @@ glm::vec3 DebugShapeManager::noZeros(glm::vec3 vec) {
 	}
 	return vec;
 }
-glm::mat4 DebugShapeManager::span2Points(glm::vec3 start, glm::vec3 end) {
-	glm::vec3 tail = start;
+glm::mat4 DebugShapeManager::span2Points(glm::vec3 start, glm::vec3 end, float offset) {
 	glm::vec3 newUp = glm::normalize(end - start);
+	start += offset * newUp;
+	end   -= offset * newUp;
+	glm::vec3 tail = start;
 	float scale = glm::length(end - start);
 
 	glm::mat4 ret = glm::translate(tail);
