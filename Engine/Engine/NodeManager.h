@@ -38,6 +38,7 @@ public:
 	NodeSelection getNodesSelected(Ray& click);
 	Node * getNodeClicked(Ray& click);
 	void selectNode(Node * toSelect);
+	void cleanupNodes();
 	void deleteNode(Node * toDel);
 	void deleteNodeSelectedNode();
 	void setAllNodeColors(glm::vec4& colorToSet);

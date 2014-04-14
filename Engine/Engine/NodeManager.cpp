@@ -8,11 +8,13 @@ Node * NodeManager::getNextNode() {
 	{
 		if(!nodes[i].isActive) {
 			nodes[i].isActive = true;
+			nodes[i].rednerable->draw = true;
 			nodes[i].rednerable -> overrideColor = UnSelectedColor;
 			return &nodes[i];
 		}
 	}
 	Node * ret = &nodes[numOfNodes++];
+	ret->isActive = true;
 	ret->rednerable = debugShapes->addUnitSphere(glm::mat4(),UnSelectedColor);
 	ret->rednerable->enableOverrideColor = false;
 	return ret;
@@ -80,12 +82,22 @@ void NodeManager::deleteNode(Node * toDel) {
 	toDel->rednerable->draw = false;
 	toDel->isActive = false;
 }
+void NodeManager::cleanupNodes() {
+	int index = numOfNodes-1;
+	while(!nodes[index].isActive) {
+		numOfNodes--;
+		index = numOfNodes-1;
+		nodes[index].rednerable->kill();
+		if(index<=0) return;
+	}
+}
 void NodeManager::deleteNodeSelectedNode() {
 	if(currentSelectedNode!=nullptr) {
 		deleteNode(currentSelectedNode);
 		setAllConnections(false);
 		currentSelectedNode = nullptr;
 	}
+	cleanupNodes();
 }
 void NodeManager::setAllNodeColors(glm::vec4& colorToSet) {
 	for (uint i = 0; i < numOfNodes; i++)
