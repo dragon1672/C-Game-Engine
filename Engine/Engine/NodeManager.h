@@ -31,6 +31,7 @@ public:
 	inline void init(DebugShapeManager * debugShapes) {
 		numOfNodes = 0;
 		this->debugShapes = debugShapes;
+		currentSelectedNode = nullptr;
 	}
 
 	void addNodeOnPlane(Ray& ray, glm::vec3 planePos,glm::vec3 planeNorm);
@@ -38,20 +39,12 @@ public:
 	Node * getNodeClicked(Ray& click);
 	void selectNode(Node * toSelect);
 	void deleteNode(Node * toDel);
+	void deleteNodeSelectedNode();
 	void setAllNodeColors(glm::vec4& colorToSet);
 	void setAllConnections(bool state = false);
+	void activateAllConnections();
+	void activateConnections(Node * startWith);
 	void addOrSelectClick(Ray& click);
 	void connectClick(Ray& click);
-	/*
-		hide all connections
-		reset all node colors
-		delete connects based off node
-		activate connects based off from node
-		activate all connections
-		ensure that that renderable is only created on new node
-		ensure that renderable display bool and node display bool are synced properly
-
-		shift click will add connection, click selects/add new node
-		switch interaction click to Lclick and cam to RClick
-	//*/
+	bool validConnections(NodeConnection& toAdd);
 };
