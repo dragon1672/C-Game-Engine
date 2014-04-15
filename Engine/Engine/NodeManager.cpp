@@ -3,7 +3,7 @@
 
 
 
-Node * NodeManager::getNextNode() {
+EditorNode * NodeManager::getNextNode() {
 	for (uint i = 0; i < numOfNodes; i++)
 	{
 		if(!nodes[i].isActive) {
@@ -13,7 +13,7 @@ Node * NodeManager::getNextNode() {
 			return &nodes[i];
 		}
 	}
-	Node * ret = &nodes[numOfNodes++];
+	EditorNode * ret = &nodes[numOfNodes++];
 	ret->isActive = true;
 	ret->rednerable = debugShapes->addUnitSphere(glm::mat4(),UnSelectedColor);
 	ret->rednerable->enableOverrideColor = false;
@@ -29,7 +29,7 @@ void NodeManager::addNodeOnPlane(Ray& ray, glm::vec3 planePos,glm::vec3 planeNor
 		float distance = neumorator/denominator;
 		if(distance >= 0) {
 			glm::vec3 positionToPlace = ray.origin + ray.direction * distance;
-			Node * temp = getNextNode();
+			EditorNode * temp = getNextNode();
 			temp ->pos = positionToPlace;
 			temp->rednerable->transform = glm::translate(positionToPlace);
 		}
@@ -48,8 +48,8 @@ NodeManager::NodeSelection NodeManager::getNodesSelected(Ray& click) {
 	return ret;
 }
 
-Node * NodeManager::getNodeClicked(Ray& click) {
-	Node * ret = nullptr;
+EditorNode * NodeManager::getNodeClicked(Ray& click) {
+	EditorNode * ret = nullptr;
 	for (uint i = 0; i < numOfNodes && ret == nullptr; i++)
 	{
 		if(nodes[i].isActive) {
@@ -61,14 +61,14 @@ Node * NodeManager::getNodeClicked(Ray& click) {
 	return ret;
 }
 
-void NodeManager::selectNode(Node * toSelect) {
+void NodeManager::selectNode(EditorNode * toSelect) {
 	setAllConnections(false);
 	setAllNodeColors(UnSelectedColor);
 	currentSelectedNode = toSelect;
 	currentSelectedNode->rednerable->overrideColor = SelectedColor;
 	activateConnections(currentSelectedNode);
 }
-void NodeManager::deleteNode(Node * toDel) {
+void NodeManager::deleteNode(EditorNode * toDel) {
 	//delete all connections
 	for (uint i = 0; i < connections.size(); i++)
 	{
@@ -118,7 +118,7 @@ void NodeManager::activateAllConnections() {
 		connections[i].to -> rednerable -> overrideColor = ConnectedNodeColor;
 	}
 }
-void NodeManager::activateConnections(Node * startWith) {
+void NodeManager::activateConnections(EditorNode * startWith) {
 	for (uint i = 0; i < connections.size(); i++)
 	{
 		if(connections[i].from == startWith) {
@@ -128,7 +128,7 @@ void NodeManager::activateConnections(Node * startWith) {
 	}
 }
 void NodeManager::addOrSelectClick(Ray& click) {
-	Node * selectedNode = getNodeClicked(click);
+	EditorNode * selectedNode = getNodeClicked(click);
 	if(selectedNode==nullptr) {
 		addNodeOnPlane(click,glm::vec3(0,0,0),glm::vec3(0,1,0));
 	} else {
@@ -137,9 +137,9 @@ void NodeManager::addOrSelectClick(Ray& click) {
 }
 void NodeManager::connectClick(Ray& click) {
 	if(currentSelectedNode != nullptr) {
-		Node * selectedNode = getNodeClicked(click);
+		EditorNode * selectedNode = getNodeClicked(click);
 		if(selectedNode!=nullptr && selectedNode != currentSelectedNode) {
-			NodeConnection toAdd;
+			EditorNodeConnection toAdd;
 			toAdd.from = currentSelectedNode;
 			toAdd.to = selectedNode;
 			if(validConnections(toAdd)) {
@@ -151,7 +151,7 @@ void NodeManager::connectClick(Ray& click) {
 		}
 	}
 }
-bool NodeManager::validConnections(NodeConnection& toAdd) {
+bool NodeManager::validConnections(EditorNodeConnection& toAdd) {
 	bool valid = true;
 	for (uint i = 0; i < connections.size() && valid; i++)
 	{

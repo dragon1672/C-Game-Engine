@@ -161,13 +161,19 @@
     <ClInclude Include="Ray.h">
       <Filter>Pathing</Filter>
     </ClInclude>
-    <ClInclude Include="Node.h">
-      <Filter>Pathing</Filter>
-    </ClInclude>
     <ClInclude Include="NodeManager.h">
       <Filter>Pathing</Filter>
     </ClInclude>
-    <ClInclude Include="NodeConnection.h">
+    <ClInclude Include="EditorNode.h">
+      <Filter>Pathing</Filter>
+    </ClInclude>
+    <ClInclude Include="GameNode.h">
+      <Filter>Pathing</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorNodeConnection.h">
+      <Filter>Pathing</Filter>
+    </ClInclude>
+    <ClInclude Include="GameNodeConnection.h">
       <Filter>Pathing</Filter>
     </ClInclude>
   </ItemGroup>
@@ -233,7 +239,7 @@
     <ClCompile Include="NodeManager.cpp">
       <Filter>Pathing</Filter>
     </ClCompile>
-    <ClCompile Include="Node.cpp">
+    <ClCompile Include="EditorNode.cpp">
       <Filter>Pathing</Filter>
     </ClCompile>
   </ItemGroup>

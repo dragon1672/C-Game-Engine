@@ -95,7 +95,11 @@
     <ClInclude Include="DebugShapeManager.h" />
     <ClInclude Include="DebugSlider.h" />
     <ClInclude Include="DebugTimer.h" />
+    <ClInclude Include="EditorNode.h" />
+    <ClInclude Include="EditorNodeConnection.h" />
     <ClInclude Include="ExportHeader.h" />
+    <ClInclude Include="GameNode.h" />
+    <ClInclude Include="GameNodeConnection.h" />
     <ClInclude Include="GeometryInfo.h" />
     <ClInclude Include="LinkedSlider.h" />
     <ClInclude Include="LogData.h" />
@@ -104,8 +108,6 @@
     <ClInclude Include="Matrix3D.h" />
     <ClInclude Include="myAssert.h" />
     <ClInclude Include="MyRandom.h" />
-    <ClInclude Include="Node.h" />
-    <ClInclude Include="NodeConnection.h" />
     <ClInclude Include="NodeManager.h" />
     <ClInclude Include="NUShapeEditor.h" />
     <ClInclude Include="ParameterType.h" />
@@ -136,11 +138,11 @@
     <ClCompile Include="DebugSlider_mock.cpp" />
     <ClCompile Include="DebugTimer.cpp" />
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="EditorNode.cpp" />
     <ClCompile Include="GeometryInfo.cpp" />
     <ClCompile Include="LinkedSlider.cpp" />
     <ClCompile Include="LogManager.cpp" />
     <ClCompile Include="MyRandom.cpp" />
-    <ClCompile Include="Node.cpp" />
     <ClCompile Include="NodeManager.cpp" />
     <ClCompile Include="NUShapeEditor.cpp" />
     <ClCompile Include="Renderable.cpp" />
