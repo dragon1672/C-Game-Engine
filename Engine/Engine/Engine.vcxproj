@@ -101,6 +101,7 @@
     <ClInclude Include="GameNode.h" />
     <ClInclude Include="GameNodeConnection.h" />
     <ClInclude Include="GeometryInfo.h" />
+    <ClInclude Include="LevelFileHeader.h" />
     <ClInclude Include="LinkedSlider.h" />
     <ClInclude Include="LogData.h" />
     <ClInclude Include="LogManager.h" />

@@ -43,6 +43,9 @@
     <Filter Include="Pathing">
       <UniqueIdentifier>{e3f5ac1d-3265-4bc4-84e2-6622b9b21834}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Pathing\File Saving">
+      <UniqueIdentifier>{e6c30ab1-ae29-430d-976d-1267070507d5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Matrix2D.h">
@@ -173,6 +176,9 @@
       <Filter>Pathing</Filter>
     </ClInclude>
     <ClInclude Include="uint.h" />
+    <ClInclude Include="LevelFileHeader.h">
+      <Filter>Pathing\File Saving</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LogManager.cpp">
