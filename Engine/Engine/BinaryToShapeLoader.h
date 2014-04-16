@@ -4,6 +4,9 @@
 #include <ShapeData.h>
 #pragma warning(pop)
 #include "ExportHeader.h"
+#include "unsigned.h"
+
+typedef char byte;
 
 class ENGINE_SHARED BinaryToShapeLoader {
 public:

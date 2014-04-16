@@ -1,11 +1,11 @@
 #pragma once
 
-#include "uint.h"
+#include "unsigned.h"
 
 struct header {
 	uint numOfNodes;
 	uint numOfConnections;
-	uint startOfBinaryData;
-	uint startOfNodeData;
-	uint startOfonnectionData;
+	uint startOfBinaryData;		// 0
+	uint startOfNodeData;		// numOfNodes * sizeof(GameNode)
+	uint startOfConnectionData;	// numOfConnections * sizeof(GameConnection)
 };
