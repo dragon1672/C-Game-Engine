@@ -23,10 +23,10 @@ Neumont::ShapeData BinaryToShapeLoader::loadFromFile(const char * fileName) {
 	input.close();
 	int offset = 0;
 
-	int vertexOffset = *(int *)(bytes+offset);	offset += sizeof(int);	vertexOffset;
-	int vertexSize   = *(int *)(bytes+offset);	offset += sizeof(int);
-	int indiceOffset = *(int *)(bytes+offset);	offset += sizeof(int);	indiceOffset;
-	int indiceSize   = *(int *)(bytes+offset);	offset += sizeof(int);
+	int vertexOffset = *reinterpret_cast<int *>(bytes+offset);	offset += sizeof(int);	vertexOffset;
+	int vertexSize   = *reinterpret_cast<int *>(bytes+offset);	offset += sizeof(int);
+	int indiceOffset = *reinterpret_cast<int *>(bytes+offset);	offset += sizeof(int);	indiceOffset;
+	int indiceSize   = *reinterpret_cast<int *>(bytes+offset);	offset += sizeof(int);
 	int numOfVerts   = vertexSize / (sizeof(float) * 3 + sizeof(float) * 2 + sizeof(float) * 3); // 3F pos, 2F UV, 3F norm
 	int numOfindices = indiceSize/(sizeof (ushort)*3) * 3;
 
@@ -35,20 +35,20 @@ Neumont::ShapeData BinaryToShapeLoader::loadFromFile(const char * fileName) {
 
 	for (int i = 0; i < numOfVerts; i++) {
 		verts[i].color = WHITE;
-		float posX  = *(float *)(bytes+offset);	offset += sizeof(float);
-		float posY  = *(float *)(bytes+offset);	offset += sizeof(float);
-		float posZ  = *(float *)(bytes+offset);	offset += sizeof(float);
-		float UvX   = *(float *)(bytes+offset);	offset += sizeof(float);
-		float UvY   = *(float *)(bytes+offset);	offset += sizeof(float);
-		float normX = *(float *)(bytes+offset);	offset += sizeof(float);
-		float normY = *(float *)(bytes+offset);	offset += sizeof(float);
-		float normZ = *(float *)(bytes+offset);	offset += sizeof(float);
+		float posX  = *reinterpret_cast<float *>(bytes+offset);	offset += sizeof(float);
+		float posY  = *reinterpret_cast<float *>(bytes+offset);	offset += sizeof(float);
+		float posZ  = *reinterpret_cast<float *>(bytes+offset);	offset += sizeof(float);
+		float UvX   = *reinterpret_cast<float *>(bytes+offset);	offset += sizeof(float);
+		float UvY   = *reinterpret_cast<float *>(bytes+offset);	offset += sizeof(float);
+		float normX = *reinterpret_cast<float *>(bytes+offset);	offset += sizeof(float);
+		float normY = *reinterpret_cast<float *>(bytes+offset);	offset += sizeof(float);
+		float normZ = *reinterpret_cast<float *>(bytes+offset);	offset += sizeof(float);
 		verts[i].position= glm::vec3(posX,posY,posZ);
 		verts[i].uv = glm::vec2(UvX,UvY);
 		verts[i].normal = glm::vec3(normX,normY,normZ);
 	}
 	for (int i = 0; i < numOfindices; i++) {
-		indicees[i] = *(ushort *)(bytes+offset);	offset += sizeof(ushort);
+		indicees[i] = *reinterpret_cast<ushort *>(bytes+offset);	offset += sizeof(ushort);
 	}
 
 	delete [] bytes;

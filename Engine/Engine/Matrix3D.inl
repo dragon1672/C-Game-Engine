@@ -80,5 +80,5 @@ inline Vector2D operator* (const Matrix3D& left, const Vector2D& right) {
 	return Vector2D(ret.getX(),ret.getY());
 }
 Matrix3D::operator float*() {
-	return (float*)matrix;
+	return reinterpret_cast<float*>(matrix);
 }

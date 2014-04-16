@@ -18,13 +18,13 @@ void Renderable::addUniformParameter(const char * name, ParameterType parameterT
 	uniformParameters[numUniformParameters++].init(howShader,name,parameterType,value);
 }
 void Renderable::saveWhereMat(const char * uniformName) {
-	addUniformParameter(uniformName,ParameterType::PT_MAT4,(float*)&whereMat[0]);
+	addUniformParameter(uniformName,ParameterType::PT_MAT4,reinterpret_cast<float*>(&whereMat[0]));
 }
 void Renderable::saveTexture(const char * uniformName) {
-	addUniformParameter(uniformName,ParameterType::PT_TEXTURE,(int*)&textureID);
+	addUniformParameter(uniformName,ParameterType::PT_TEXTURE,reinterpret_cast<int*>(&textureID));
 }
 void Renderable::saveVisable(const char * uniformName) {
-	addUniformParameter(uniformName,ParameterType::PT_BOOLEAN,(int*)&visible);
+	addUniformParameter(uniformName,ParameterType::PT_BOOLEAN,reinterpret_cast<int*>(&visible));
 }
 
 void Renderable::passUniformsDownDown() {
