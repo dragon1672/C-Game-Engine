@@ -8,5 +8,4 @@ struct header {
 	uint startOfBinaryData;
 	uint startOfNodeData;
 	uint startOfonnectionData;
-	inline 
 };
