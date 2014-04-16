@@ -5,7 +5,7 @@
 #include "GameNode.h"
 
 struct GameNodeConnection {
-	GameNode * from;
 	GameNode * to;
 	float cost;
+
 };

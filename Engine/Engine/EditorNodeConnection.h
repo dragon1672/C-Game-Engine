@@ -6,7 +6,6 @@
 #include "EditorNode.h"
 
 struct EditorNodeConnection {
-	EditorNode * from;
 	EditorNode * to;
 	float cost;
 	DebugShapeManager::DebugShapeData * renderable;

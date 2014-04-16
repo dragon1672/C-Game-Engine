@@ -122,6 +122,7 @@
     <ClInclude Include="SlideVectorController.h" />
     <ClInclude Include="SquareMatrix.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="uint.h" />
     <ClInclude Include="Vector 2.h" />
     <ClInclude Include="Vector3D.h" />
     <ClInclude Include="WatchFloatController.h" />

@@ -1,6 +1,45 @@
 #include "EditorNode.h"
+#include "EditorNodeConnection.h"
 
-
+void EditorNode::shutdown() {
+	while(connections.size()>0) {
+		connections[0]->renderable->kill();
+		delete connections[0];
+		connections.erase(connections.begin() + 0);
+	}
+	rednerable->kill();
+}
+void EditorNode::removeNode(EditorNode * idtoRemove) {
+	for (uint i = 0; i < connections.size(); i++)
+	{
+		if(connections[i]->to == idtoRemove) { // remove the connection
+			connections[i]->renderable->kill();
+			delete connections[i];
+			connections.erase(connections.begin() + i);
+		}
+	}
+}
+void EditorNode::activateConnections(glm::vec4 color) {
+	for (uint i = 0; i < connections.size(); i++)
+	{
+		connections[i] -> renderable->draw = true;
+		connections[i] -> to -> rednerable -> overrideColor = color;
+	}
+}
+bool EditorNode::validConnection(EditorNode * toConnect) {
+	bool valid = (toConnect != this) && (toConnect != nullptr);
+	for (uint i = 0; i < connections.size() && valid; i++)
+	{
+		valid = connections[i]->to != toConnect;
+	}
+	return valid;
+}
+void EditorNode::setConnectionState(bool state) {
+	for (uint i = 0; i < connections.size(); i++)
+	{
+		connections[i]->renderable->draw = state;
+	}
+}
 bool EditorNode::doesRayHit(Ray& ray) {
 	glm::vec3 raytoCircle_C = pos - ray.origin;
 	glm::vec3 rayExtended_A = glm::proj(raytoCircle_C,ray.direction);

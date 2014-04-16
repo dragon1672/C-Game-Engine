@@ -176,6 +176,7 @@
     <ClInclude Include="GameNodeConnection.h">
       <Filter>Pathing</Filter>
     </ClInclude>
+    <ClInclude Include="uint.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LogManager.cpp">
