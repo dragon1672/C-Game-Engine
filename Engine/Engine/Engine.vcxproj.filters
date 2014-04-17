@@ -175,8 +175,11 @@
     <ClInclude Include="GameNodeConnection.h">
       <Filter>Pathing</Filter>
     </ClInclude>
-    <ClInclude Include="uint.h" />
     <ClInclude Include="LevelFileHeader.h">
+      <Filter>Pathing\File Saving</Filter>
+    </ClInclude>
+    <ClInclude Include="unsigned.h" />
+    <ClInclude Include="LevelSerializer.h">
       <Filter>Pathing\File Saving</Filter>
     </ClInclude>
   </ItemGroup>
