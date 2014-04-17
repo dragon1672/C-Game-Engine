@@ -12,6 +12,7 @@ typedef char myByte;
 #define  RIC_BYTE(a) reinterpret_cast<myByte*>(a)
 
 class LevelSerializer {
+public:
 	//must be deleted
 	static myByte * loadFile(const char * filename, int& sizeResult) {
 		std::ifstream input( filename , std::ios::binary | std::ios::in);
@@ -26,7 +27,7 @@ class LevelSerializer {
 
 		return bytes;
 	}
-	void writeFile(const char * levelBinary, NodeManager& nodeManager, const char * outfile) {
+	static void writeFile(const char * levelBinary, NodeManager& nodeManager, const char * outfile) {
 		LevelFileHeader myHeader;
 
 		int sizeOfFile;
@@ -39,7 +40,7 @@ class LevelSerializer {
 		myHeader.startOfConnectionData = myHeader.startOfNodeData       + myHeader.numOfNodes       * sizeof(GameNode);
 		myHeader.endOfFile             = myHeader.startOfConnectionData + myHeader.numOfConnections * sizeof(GameNodeConnection);
 
-		std::ofstream out(outfile, std::ios::out | std::ios::in | std::ios::binary );
+		std::ofstream out(outfile, std::ios::binary );
 
 		out.write(RIC_BYTE(&myHeader), sizeof(myHeader)); // write header 
 
@@ -56,7 +57,7 @@ class LevelSerializer {
 				uint numOfConnections;				// size: 4
 				GameNodeConnection * connections;	// size: 4
 			*/
-			out.write(RIC_BYTE(&(nodeManager.nodes[i]->pos)),sizeof(nodeManager.nodes[i]->pos));			//WRITTING:	(1/3) POS
+			out.write(RIC_BYTE(&(nodeManager.nodes[i]->pos[0])),sizeof(nodeManager.nodes[i]->pos));			//WRITTING:	(1/3) POS
 			uint numOfConnections = nodeManager.nodes.size();
 			out.write(RIC_BYTE(&numOfConnections),sizeof(numOfConnections));								//WRITTING: (2/3) numOfConnections
 			
@@ -71,19 +72,20 @@ class LevelSerializer {
 				*/
 				EditorNodeConnection currentConnection = *(nodeManager.nodes[i]->connections[j]); // copy data
 				int id = nodeManager.getNodeId(currentConnection.to);
-				int nodeOffsetInFile = myHeader.startOfNodeData + id * sizeof(GameNode);
+				int nodeOffsetInFile = (id > 0) ? myHeader.startOfNodeData + id * sizeof(GameNode) : myHeader.endOfFile;
 				currentConnection.to = reinterpret_cast<EditorNode*>(nodeOffsetInFile); // change pointer to point in file
 				allConnetions.push_back(currentConnection);
 			}
-			for (int i = 0; i < allConnetions.size(); i++)
-			{
-				/* ----GameNodeConnection----	// totalSize: 8
-					GameNode * to;				// size: 4
-					float cost;					// size: 4
-				*/
-				out.write(RIC_BYTE(allConnetions[i].to),    sizeof(allConnetions[i].to));	//WRITTING: (1/2) pointer
-				out.write(RIC_BYTE(&allConnetions[i].cost), sizeof(allConnetions[i].cost));	//WRITTING: (2/2) float cost
-			}
 		}
+		for (int i = 0; i < allConnetions.size(); i++)
+		{
+			/* ----GameNodeConnection----	// totalSize: 8
+				GameNode * to;				// size: 4
+				float cost;					// size: 4
+			*/
+			out.write(RIC_BYTE(&allConnetions[i].to),    sizeof(allConnetions[i].to));	//WRITTING: (1/2) pointer
+			out.write(RIC_BYTE(&allConnetions[i].cost), sizeof(allConnetions[i].cost));	//WRITTING: (2/2) float cost
+		}
+		out.close();
 	}
 };
