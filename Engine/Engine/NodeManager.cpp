@@ -49,7 +49,7 @@ void NodeManager::selectNode(EditorNode * toSelect) {
 void NodeManager::deleteNode(EditorNode * toDel) {
 	//delete all connections
 	numOfConnections -= toDel->shutdown();
-	for (int i = 0; i < nodes.size(); i++)
+	for (uint i = 0; i < nodes.size(); i++)
 	{
 		if(nodes[i] == toDel) {
 			nodes.erase(nodes.begin() + i);

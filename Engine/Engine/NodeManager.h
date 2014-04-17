@@ -27,7 +27,7 @@ public:
 	}
 
 	int getNodeId(EditorNode * toFind) {
-		for (int i = 0; i < nodes.size(); i++)
+		for (uint i = 0; i < nodes.size(); i++)
 		{
 			if(nodes[i] == toFind) return i;
 		}
