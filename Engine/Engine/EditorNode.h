@@ -6,7 +6,7 @@
 #include "ExportHeader.h"
 #include "DebugShapeManager.h"
 #include "Ray.h"
-#include "uint.h"
+#include "unsigned.h"
 
 struct EditorNodeConnection;
 
