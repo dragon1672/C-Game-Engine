@@ -26,6 +26,14 @@ public:
 		numOfConnections = 0;
 	}
 
+	int getNodeId(EditorNode * toFind) {
+		for (int i = 0; i < nodes.size(); i++)
+		{
+			if(nodes[i] == toFind) return i;
+		}
+		return -1;
+	}
+
 	void addNodeOnPlane(Ray& ray, glm::vec3 planePos,glm::vec3 planeNorm);
 	EditorNode * getNodeClicked(Ray& click);
 	void selectNode(EditorNode * toSelect);

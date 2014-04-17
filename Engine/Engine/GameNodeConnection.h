@@ -7,5 +7,4 @@
 struct GameNodeConnection {
 	GameNode * to;
 	float cost;
-
 };
