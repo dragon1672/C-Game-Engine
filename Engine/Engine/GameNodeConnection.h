@@ -2,8 +2,8 @@
 
 #include "ExportHeader.h"
 #include <glm/glm.hpp>
-#include "GameNode.h"
 
+struct GameNode;
 struct GameNodeConnection {
 	GameNode * to;
 	float cost;

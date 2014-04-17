@@ -4,7 +4,8 @@
 #include <glm/gtx/projection.hpp>
 #include "ExportHeader.h"
 #include "Ray.h"
-#include "GameNodeConnection.h"
+
+struct GameNodeConnection;
 
 typedef unsigned int uint;
 
