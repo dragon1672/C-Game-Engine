@@ -6,9 +6,10 @@
 #include "ExportHeader.h"
 #include "unsigned.h"
 
-typedef char byte;
+typedef char myByte;
 
 class ENGINE_SHARED BinaryToShapeLoader {
 public:
 	static Neumont::ShapeData loadFromFile(const char * filePath);
+	static Neumont::ShapeData loadFromFile(myByte * byteData, uint offset);
 };

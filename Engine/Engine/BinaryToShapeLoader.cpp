@@ -7,19 +7,28 @@
 
 
 #define WHITE glm::vec4(1,1,1,1)
-
 Neumont::ShapeData BinaryToShapeLoader::loadFromFile(const char * fileName) {
+	//understand da file
 	std::ifstream input( fileName , std::ios::binary | std::ios::in);
 	assert(input.good()); 
 	input.seekg(0, std::ios::end);
 	int fileSize = (int)input.tellg();
 	input.seekg(0, std::ios::beg);
 	
-	byte * bytes = new byte[fileSize];
+	//copy da file
+	myByte * bytes = new myByte[fileSize];
 	input.read(bytes, fileSize);
 	input.close();
-	int offset = 0;
 
+	//load da data
+	Neumont::ShapeData ret = loadFromFile(bytes,0);
+
+	//delete da copy of the file
+	delete [] bytes;
+
+	return ret;
+}
+Neumont::ShapeData BinaryToShapeLoader::loadFromFile(myByte * bytes, uint offset) {
 	int vertexOffset = *reinterpret_cast<int *>(bytes+offset);	offset += sizeof(int);
 	int vertexSize   = *reinterpret_cast<int *>(bytes+offset);	offset += sizeof(int);
 	int indiceOffset = *reinterpret_cast<int *>(bytes+offset);	offset += sizeof(int);
@@ -47,8 +56,6 @@ Neumont::ShapeData BinaryToShapeLoader::loadFromFile(const char * fileName) {
 	for (int i = 0; i < numOfindices; i++) {
 		indicees[i] = *reinterpret_cast<ushort *>(bytes+offset);	offset += sizeof(ushort);
 	}
-
-	delete [] bytes;
 
 	Neumont::ShapeData ret;
 	ret.indices = indicees;
