@@ -48,7 +48,7 @@ void NodeManager::selectNode(EditorNode * toSelect) {
 }
 void NodeManager::deleteNode(EditorNode * toDel) {
 	//delete all connections
-	toDel->shutdown();
+	numOfConnections -= toDel->shutdown();
 	for (int i = 0; i < nodes.size(); i++)
 	{
 		if(nodes[i] == toDel) {
@@ -59,7 +59,7 @@ void NodeManager::deleteNode(EditorNode * toDel) {
 
 	for (uint i = 0; i < nodes.size(); i++)
 	{
-		nodes[i]->removeNode(toDel);
+		numOfConnections -= nodes[i]->removeNode(toDel);
 	}
 	toDel->rednerable->draw = false;
 	delete toDel;
@@ -108,6 +108,7 @@ void NodeManager::connectClick(Ray& click) {
 			glm::vec3 vectorPointer = selectedNode->pos - currentSelectedNode->pos;
 			toAdd->renderable = debugShapes->addUnitVector(currentSelectedNode->pos,vectorPointer,glm::vec4(0,1,1,1),1);
 			currentSelectedNode->connections.push_back(toAdd);
+			numOfConnections++;
 		}
 	}
 }

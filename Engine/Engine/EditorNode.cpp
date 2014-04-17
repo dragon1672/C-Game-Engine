@@ -1,23 +1,29 @@
 #include "EditorNode.h"
 #include "EditorNodeConnection.h"
 
-void EditorNode::shutdown() {
+int  EditorNode::shutdown() {
+	int connectionsDeleted = connections.size();
 	while(connections.size()>0) {
 		connections[0]->renderable->kill();
 		delete connections[0];
 		connections.erase(connections.begin() + 0);
 	}
 	rednerable->kill();
+	return connectionsDeleted;
 }
-void EditorNode::removeNode(EditorNode * idtoRemove) {
+int  EditorNode::removeNode(EditorNode * idtoRemove) {
+	int connectionsDeleted = 0;
 	for (uint i = 0; i < connections.size(); i++)
 	{
 		if(connections[i]->to == idtoRemove) { // remove the connection
 			connections[i]->renderable->kill();
 			delete connections[i];
 			connections.erase(connections.begin() + i);
+			connectionsDeleted++;
+			i--;
 		}
 	}
+	return connectionsDeleted;
 }
 void EditorNode::activateConnections(glm::vec4 color) {
 	for (uint i = 0; i < connections.size(); i++)

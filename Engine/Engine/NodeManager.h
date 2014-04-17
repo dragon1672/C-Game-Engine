@@ -14,6 +14,7 @@
 class ENGINE_SHARED NodeManager {
 public:
 	std::vector<EditorNode *> nodes;
+	int numOfConnections; // used to make saving easier
 
 	EditorNode * currentSelectedNode;
 	EditorNode * getNextNode();
@@ -22,6 +23,7 @@ public:
 	inline void init(DebugShapeManager * debugShapes) {
 		this->debugShapes = debugShapes;
 		currentSelectedNode = nullptr;
+		numOfConnections = 0;
 	}
 
 	void addNodeOnPlane(Ray& ray, glm::vec3 planePos,glm::vec3 planeNorm);
