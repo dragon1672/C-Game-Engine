@@ -101,7 +101,7 @@ void NodeManager::activateAllConnections() {
 void NodeManager::addOrSelectClick(Ray& click) {
 	EditorNode * selectedNode = getNodeClicked(click);
 	if(selectedNode==nullptr) {
-		addNodeOnPlane(click,glm::vec3(0,0,0),glm::vec3(0,1,0));
+		addNodeOnPlane(click,glm::vec3(0,.25,0),glm::vec3(0,1,0));
 	} else {
 		selectNode(selectedNode);
 	}
