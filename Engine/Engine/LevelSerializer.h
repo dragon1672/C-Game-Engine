@@ -9,7 +9,8 @@
 
 typedef char myByte;
 
-#define  RIC_BYTE(a) reinterpret_cast<myByte*>(&a), sizeof(a)
+#define RIC_BYTE(a) reinterpret_cast<myByte*>(&a), sizeof(a)
+#define RIC(type,value) reinterpret_cast<type>(value)
 
 class LevelSerializer {
 public:
@@ -42,15 +43,15 @@ public:
 
 		std::ofstream out(outfile, std::ios::binary );
 
-		out.write(RIC_BYTE(&myHeader), sizeof(myHeader)); // write header 
+		out.write(RIC_BYTE(myHeader)); // write header 
 
-		out.write(RIC_BYTE(levelObject),sizeOfFile); // write level binary data
+		out.write(RIC(myByte*, levelObject),sizeOfFile); // write level binary data
 		delete levelObject; // cleaning up
 
 		std::vector<EditorNodeConnection> allConnetions; // save when scanning nodes to save easier
 		int currentConnetionOffset = myHeader.startOfConnectionData; // tracks previous connetion offsets to calculate offset
 
-		for (int i = 0; i < nodeManager.nodes.size(); i++)
+		for (uint i = 0; i < nodeManager.nodes.size(); i++)
 		{
 			/* ----GameNode----						// total Size: 20
 				glm::vec3 pos;						// size: 4*3
@@ -78,7 +79,7 @@ public:
 				allConnetions.push_back(currentConnection);
 			}
 		}
-		for (int i = 0; i < allConnetions.size(); i++)
+		for (uint i = 0; i < allConnetions.size(); i++)
 		{
 			/* ----GameNodeConnection----	// totalSize: 8
 				GameNode * to;				// size: 4
