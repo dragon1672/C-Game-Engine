@@ -9,7 +9,7 @@
 
 typedef char myByte;
 
-#define  RIC_BYTE(a) reinterpret_cast<myByte*>(a)
+#define  RIC_BYTE(a) reinterpret_cast<myByte*>(&a), sizeof(a)
 
 class LevelSerializer {
 public:
@@ -57,11 +57,12 @@ public:
 				uint numOfConnections;				// size: 4
 				GameNodeConnection * connections;	// size: 4
 			*/
-			out.write(RIC_BYTE(&(nodeManager.nodes[i]->pos[0])),sizeof(nodeManager.nodes[i]->pos));			//WRITTING:	(1/3) POS
+			out.write(RIC_BYTE((nodeManager.nodes[i]->pos[0])));			//WRITTING:	(1/3) POS
 			uint numOfConnections = nodeManager.nodes.size();
-			out.write(RIC_BYTE(&numOfConnections),sizeof(numOfConnections));								//WRITTING: (2/3) numOfConnections
+			out.write(RIC_BYTE(numOfConnections));							//WRITTING: (2/3) numOfConnections
 			
-			out.write(RIC_BYTE(&currentConnetionOffset),sizeof(currentConnetionOffset));					//WRITTING: (3/3) Connection File Pointer
+			out.write(RIC_BYTE(currentConnetionOffset));					//WRITTING: (3/3) Connection File Pointer
+
 			currentConnetionOffset += nodeManager.nodes[i]->connections.size() * sizeof(GameNodeConnection); // update with size of current node's connections
 
 			for (uint j = 0; j < nodeManager.nodes[i]->connections.size(); j++) // adding connection data
@@ -83,8 +84,8 @@ public:
 				GameNode * to;				// size: 4
 				float cost;					// size: 4
 			*/
-			out.write(RIC_BYTE(&allConnetions[i].to),    sizeof(allConnetions[i].to));	//WRITTING: (1/2) pointer
-			out.write(RIC_BYTE(&allConnetions[i].cost), sizeof(allConnetions[i].cost));	//WRITTING: (2/2) float cost
+			out.write(RIC_BYTE(allConnetions[i].to)  );	//WRITTING: (1/2) pointer
+			out.write(RIC_BYTE(allConnetions[i].cost));	//WRITTING: (2/2) float cost
 		}
 		out.close();
 	}
