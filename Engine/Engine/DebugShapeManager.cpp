@@ -66,7 +66,33 @@ void      DebugShapeManager::init(float * viewMatrix) {
 	GEO_line->NU_VertexStreamedPosition(0);
 	GEO_line->NU_VertexStreamedColor(1);
 #ifdef useArrowForVec
-	this->GEO_vector = myRenderer.addGeometry(NUShapeEditor::scaleToRange(NUShapeEditor::noNegY(NUShapeEditor::rotate(Neumont::ShapeGenerator::makeArrow(),90,0,0))),GL_TRIANGLES);
+	Neumont::ShapeData NUArrow;
+	NUArrow.numVerts = 4;
+	NUArrow.numIndices = 6;
+	NUArrow.verts = new Neumont::Vertex[NUArrow.numVerts];
+	NUArrow.indices = new ushort[NUArrow.numIndices];
+	
+	NUArrow.verts  [0].color    = glm::vec4(1,1,1,1);
+	NUArrow.verts  [0].position = glm::vec3(0,0,0);
+
+	NUArrow.verts  [1].position = glm::vec3(0,1,0);
+	NUArrow.verts  [1].color    = glm::vec4(2,2,2,1);
+
+	NUArrow.verts  [2].position = glm::vec3(+0.25,.75,0);
+	NUArrow.verts  [2].color    = glm::vec4(1,1,1,1);
+
+	NUArrow.verts  [3].position = glm::vec3(-0.25,.75,0);
+	NUArrow.verts  [3].color    = glm::vec4(1,1,1,1);
+
+	NUArrow.indices[0] = 0;
+	NUArrow.indices[1] = 1;
+	NUArrow.indices[2] = 1;
+	NUArrow.indices[3] = 2;
+	NUArrow.indices[4] = 1;
+	NUArrow.indices[5] = 3;
+
+	GEO_vector = myRenderer.addGeometry(NUArrow,GL_LINES);
+	//GEO_vector = myRenderer.addGeometry(NUShapeEditor::scaleToRange(NUShapeEditor::noNegY(NUShapeEditor::rotate(Neumont::ShapeGenerator::makeArrow(),90,0,0))),GL_TRIANGLES);
 	GEO_vector->NU_VertexStreamedPosition(0);
 	GEO_vector->NU_VertexStreamedColor(1);
 #else
