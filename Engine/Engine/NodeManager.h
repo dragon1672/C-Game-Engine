@@ -39,6 +39,7 @@ public:
 	void selectNode(EditorNode * toSelect);
 	void deleteNode(EditorNode * toDel);
 	void deleteNodeSelectedNode();
+	void deleteAll();
 	void setAllNodeColors(glm::vec4& colorToSet);
 	void setAllConnections(bool state = false);
 	void activateAllConnections();

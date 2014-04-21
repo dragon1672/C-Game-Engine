@@ -72,6 +72,14 @@ void NodeManager::deleteNodeSelectedNode() {
 		setAllNodeColors(UnSelectedColor);
 	}
 }
+void NodeManager::deleteAll() {
+	setAllConnections(false);
+	currentSelectedNode = nullptr;
+	setAllNodeColors(UnSelectedColor);
+	while(nodes.size() > 0) {
+		deleteNode(nodes[0]);
+	}
+}
 void NodeManager::setAllNodeColors(glm::vec4& colorToSet) {
 	for (uint i = 0; i < nodes.size(); i++)
 	{
