@@ -5,6 +5,7 @@
 #include <glm\glm.hpp>
 #pragma warning(pop)
 
+#define GET_DATA(type, offset) *reinterpret_cast<type *>(bytes+offset);	offset += sizeof(type);
 
 #define WHITE glm::vec4(1,1,1,1)
 Neumont::ShapeData BinaryToShapeLoader::loadFromFile(const char * fileName) {
@@ -29,10 +30,10 @@ Neumont::ShapeData BinaryToShapeLoader::loadFromFile(const char * fileName) {
 	return ret;
 }
 Neumont::ShapeData BinaryToShapeLoader::loadFromFile(myByte * bytes, uint offset) {
-	int vertexOffset = *reinterpret_cast<int *>(bytes+offset);	offset += sizeof(int);
-	int vertexSize   = *reinterpret_cast<int *>(bytes+offset);	offset += sizeof(int);
-	int indiceOffset = *reinterpret_cast<int *>(bytes+offset);	offset += sizeof(int);
-	int indiceSize   = *reinterpret_cast<int *>(bytes+offset);	offset += sizeof(int);
+	int vertexOffset = GET_DATA(int,offset);
+	int vertexSize   = GET_DATA(int,offset);
+	int indiceOffset = GET_DATA(int,offset);
+	int indiceSize   = GET_DATA(int,offset);
 	int numOfVerts   = vertexSize / (sizeof(float) * 3 + sizeof(float) * 2 + sizeof(float) * 3); // 3F pos, 2F UV, 3F norm
 	int numOfindices = indiceSize/(sizeof (ushort)*3) * 3;
 
@@ -41,14 +42,14 @@ Neumont::ShapeData BinaryToShapeLoader::loadFromFile(myByte * bytes, uint offset
 
 	for (int i = 0; i < numOfVerts; i++) {
 		verts[i].color = WHITE;
-		float posX  = *reinterpret_cast<float *>(bytes+offset);	offset += sizeof(float);
-		float posY  = *reinterpret_cast<float *>(bytes+offset);	offset += sizeof(float);
-		float posZ  = *reinterpret_cast<float *>(bytes+offset);	offset += sizeof(float);
-		float UvX   = *reinterpret_cast<float *>(bytes+offset);	offset += sizeof(float);
-		float UvY   = *reinterpret_cast<float *>(bytes+offset);	offset += sizeof(float);
-		float normX = *reinterpret_cast<float *>(bytes+offset);	offset += sizeof(float);
-		float normY = *reinterpret_cast<float *>(bytes+offset);	offset += sizeof(float);
-		float normZ = *reinterpret_cast<float *>(bytes+offset);	offset += sizeof(float);
+		float posX  = GET_DATA(float,offset);
+		float posY  = GET_DATA(float,offset);
+		float posZ  = GET_DATA(float,offset);
+		float UvX   = GET_DATA(float,offset);
+		float UvY   = GET_DATA(float,offset);
+		float normX = GET_DATA(float,offset);
+		float normY = GET_DATA(float,offset);
+		float normZ = GET_DATA(float,offset);
 		verts[i].position= glm::vec3(posX,posY,posZ);
 		verts[i].uv = glm::vec2(UvX,UvY);
 		verts[i].normal = glm::vec3(normX,normY,normZ);
