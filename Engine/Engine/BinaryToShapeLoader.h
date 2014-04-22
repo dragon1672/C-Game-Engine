@@ -11,5 +11,5 @@ typedef char myByte;
 class ENGINE_SHARED BinaryToShapeLoader {
 public:
 	static Neumont::ShapeData loadFromFile(const char * filePath);
-	static Neumont::ShapeData loadFromFile(myByte * byteData, uint offset);
+	static Neumont::ShapeData loadFromBinary(myByte * byteData);
 };

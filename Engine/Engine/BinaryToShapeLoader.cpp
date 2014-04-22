@@ -22,14 +22,15 @@ Neumont::ShapeData BinaryToShapeLoader::loadFromFile(const char * fileName) {
 	input.close();
 
 	//load da data
-	Neumont::ShapeData ret = loadFromFile(bytes,0);
+	Neumont::ShapeData ret = loadFromBinary(bytes);
 
 	//delete da copy of the file
 	delete [] bytes;
 
 	return ret;
 }
-Neumont::ShapeData BinaryToShapeLoader::loadFromFile(myByte * bytes, uint offset) {
+Neumont::ShapeData BinaryToShapeLoader::loadFromBinary(myByte * bytes) {
+	uint offset = 0;
 	int vertexOffset = GET_DATA(int,offset);
 	int vertexSize   = GET_DATA(int,offset);
 	int indiceOffset = GET_DATA(int,offset);
