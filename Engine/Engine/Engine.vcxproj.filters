@@ -46,6 +46,9 @@
     <Filter Include="Pathing\File Saving">
       <UniqueIdentifier>{e6c30ab1-ae29-430d-976d-1267070507d5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Pathing\A%2a">
+      <UniqueIdentifier>{2aea2aab-2cb4-4146-b7e5-e02567a68382}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Matrix2D.h">
@@ -181,6 +184,9 @@
     <ClInclude Include="unsigned.h" />
     <ClInclude Include="LevelSerializer.h">
       <Filter>Pathing\File Saving</Filter>
+    </ClInclude>
+    <ClInclude Include="AStarNode.h">
+      <Filter>Pathing\A%2a</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
