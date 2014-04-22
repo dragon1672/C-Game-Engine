@@ -160,9 +160,6 @@
     <ClInclude Include="ShaderUniformPram.h">
       <Filter>MiddleWare\Renderer\Shaders</Filter>
     </ClInclude>
-    <ClInclude Include="Ray.h">
-      <Filter>Pathing</Filter>
-    </ClInclude>
     <ClInclude Include="NodeManager.h">
       <Filter>Pathing</Filter>
     </ClInclude>
@@ -187,6 +184,15 @@
     </ClInclude>
     <ClInclude Include="AStarNode.h">
       <Filter>Pathing\A%2a</Filter>
+    </ClInclude>
+    <ClInclude Include="AStarPath.h">
+      <Filter>Pathing\A%2a</Filter>
+    </ClInclude>
+    <ClInclude Include="AStar.h">
+      <Filter>Pathing\A%2a</Filter>
+    </ClInclude>
+    <ClInclude Include="Ray.h">
+      <Filter>Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
