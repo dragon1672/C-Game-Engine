@@ -6,6 +6,8 @@
 #include "ExportHeader.h"
 #include "EditorNodeConnection.h"
 #include "unsigned.h"
+#include "GameNode.h"
+#include "GameNodeConnection.h"
 
 #define UnSelectedColor glm::vec4(0,0,1,1)
 #define SelectedColor glm::vec4(1,0,0,1)
@@ -26,15 +28,9 @@ public:
 		numOfConnections = 0;
 	}
 
-	int getNodeId(EditorNode * toFind) {
-		for (uint i = 0; i < nodes.size(); i++)
-		{
-			if(nodes[i] == toFind) return i;
-		}
-		return -1;
-	}
-
+	int getNodeId(EditorNode * toFind);
 	void addNodeOnPlane(Ray& ray, glm::vec3 planePos,glm::vec3 planeNorm);
+	void addNode(glm::vec3 pos);
 	EditorNode * getNodeClicked(Ray& click);
 	void selectNode(EditorNode * toSelect);
 	void deleteNode(EditorNode * toDel);
@@ -45,4 +41,8 @@ public:
 	void activateAllConnections();
 	void addOrSelectClick(Ray& click);
 	void connectClick(Ray& click);
+	void addConnection(uint fromID, uint toID);
+	void addConnection(EditorNode * fromNode, EditorNode * toNode);
+
+	void importNodesAndConnections(GameNode * gameNodes, uint nodeCount);
 };

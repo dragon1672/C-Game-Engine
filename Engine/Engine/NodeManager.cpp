@@ -11,6 +11,18 @@ EditorNode * NodeManager::getNextNode() {
 	return ret;
 }
 
+int NodeManager::getNodeId(EditorNode * toFind) {
+		for (uint i = 0; i < nodes.size(); i++)
+	{
+		if(nodes[i] == toFind) return i;
+	}
+	return -1;
+}
+void NodeManager::addNode(glm::vec3 pos) {
+	EditorNode * temp = getNextNode();
+	temp ->pos = pos;
+	temp->rednerable->transform = glm::translate(pos);
+}
 void NodeManager::addNodeOnPlane(Ray& ray, glm::vec3 planePos,glm::vec3 planeNorm) {
 	float denominator = glm::dot(ray.direction,planeNorm);
 	if(denominator != 0)
@@ -19,10 +31,7 @@ void NodeManager::addNodeOnPlane(Ray& ray, glm::vec3 planePos,glm::vec3 planeNor
 		float neumorator = glm::dot(planePointToRayOrigin, planeNorm);
 		float distance = neumorator/denominator;
 		if(distance >= 0) {
-			glm::vec3 positionToPlace = ray.origin + ray.direction * distance;
-			EditorNode * temp = getNextNode();
-			temp ->pos = positionToPlace;
-			temp->rednerable->transform = glm::translate(positionToPlace);
+			addNode(ray.origin + ray.direction * distance);
 		}
 	}
 }
@@ -110,13 +119,34 @@ void NodeManager::connectClick(Ray& click) {
 	if(currentSelectedNode != nullptr) {
 		EditorNode * selectedNode = getNodeClicked(click);
 		if(currentSelectedNode->validConnection(selectedNode)) {
-			EditorNodeConnection * toAdd = new EditorNodeConnection;
-			toAdd->to = selectedNode;
-			selectedNode->rednerable->overrideColor = ConnectedNodeColor;
-			glm::vec3 vectorPointer = selectedNode->pos - currentSelectedNode->pos;
-			toAdd->renderable = debugShapes->addUnitVector(currentSelectedNode->pos,vectorPointer,glm::vec4(0,1,1,1),1);
-			currentSelectedNode->connections.push_back(toAdd);
-			numOfConnections++;
+			addConnection(currentSelectedNode,selectedNode);
+		}
+	}
+}
+void NodeManager::addConnection(uint fromID, uint toID) {
+	EditorNode * fromNode = nodes[fromID];
+	EditorNode * toNode = nodes[toID];
+	addConnection(fromNode, toNode);
+}
+void NodeManager::addConnection(EditorNode * fromNode, EditorNode * toNode) {
+	EditorNodeConnection * toAdd = new EditorNodeConnection;
+	toAdd->to = toNode;
+	toNode->rednerable->overrideColor = ConnectedNodeColor;
+	glm::vec3 vectorPointer = toNode->pos - fromNode->pos;
+	toAdd->renderable = debugShapes->addUnitVector(fromNode->pos,vectorPointer,glm::vec4(0,1,1,1),1);
+	fromNode->connections.push_back(toAdd);
+	numOfConnections++;
+}
+void NodeManager::importNodesAndConnections(GameNode * gameNodes, uint nodeCount) {
+	deleteAll();
+	for (uint i = 0; i < nodeCount; i++)
+	{
+		addNode(gameNodes->pos);
+		for (uint j = 0; j < gameNodes[i].numOfConnections; j++)
+		{
+			uint fromID = i;
+			uint toID = gameNodes[i].connections[j].to - gameNodes;
+			addConnection(fromID,toID);
 		}
 	}
 }
