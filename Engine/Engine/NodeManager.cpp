@@ -139,7 +139,9 @@ void NodeManager::addConnection(EditorNode * fromNode, EditorNode * toNode) {
 	numOfConnections++;
 }
 void NodeManager::importNodesAndConnections(GameNode * gameNodes, uint nodeCount) {
-	deleteAll();
+	int indexOffset = nodes.size();
+	//requires 2 sets because all nodes have to exist to make connections
+	//Since nodes are all pointers and created by "new" the pointer can't be calculated before they are created :(
 	for (uint i = 0; i < nodeCount; i++)
 	{
 		addNode(gameNodes[i].pos);
@@ -148,8 +150,8 @@ void NodeManager::importNodesAndConnections(GameNode * gameNodes, uint nodeCount
 	{
 		for (uint j = 0; j < gameNodes[i].numOfConnections; j++)
 		{
-			uint fromID = i;
-			uint toID = gameNodes[i].connections[j].to - gameNodes;
+			uint fromID = i + indexOffset;
+			uint toID = gameNodes[i].connections[j].to - gameNodes + indexOffset;
 			addConnection(fromID,toID);
 		}
 	}
