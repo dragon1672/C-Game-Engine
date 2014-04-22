@@ -142,7 +142,7 @@ void NodeManager::importNodesAndConnections(GameNode * gameNodes, uint nodeCount
 	deleteAll();
 	for (uint i = 0; i < nodeCount; i++)
 	{
-		addNode(gameNodes->pos);
+		addNode(gameNodes[i].pos);
 	}
 	for (uint i = 0; i < nodeCount; i++)
 	{
@@ -156,4 +156,5 @@ void NodeManager::importNodesAndConnections(GameNode * gameNodes, uint nodeCount
 			addConnection(fromID,toID);
 		}
 	}
+	activateAllConnections();
 }
