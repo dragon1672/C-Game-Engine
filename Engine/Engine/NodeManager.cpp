@@ -149,9 +149,6 @@ void NodeManager::importNodesAndConnections(GameNode * gameNodes, uint nodeCount
 		for (uint j = 0; j < gameNodes[i].numOfConnections; j++)
 		{
 			uint fromID = i;
-			GameNode currentNode = gameNodes[i];
-			GameNodeConnection currentCOnnection = currentNode.connections[j];
-			GameNode * dest = currentCOnnection.to;
 			uint toID = gameNodes[i].connections[j].to - gameNodes;
 			addConnection(fromID,toID);
 		}
