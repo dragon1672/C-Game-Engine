@@ -11,6 +11,7 @@ typedef char myByte;
 
 #define RIC_BYTE(a) reinterpret_cast<myByte*>(&a), sizeof(a)
 #define RIC(type,value) reinterpret_cast<type>(value)
+#define POINTER_FIX(toFix, finalType, source) toFix = RIC(finalType,source + (int)toFix)
 
 class LevelSerializer {
 public:
@@ -89,5 +90,26 @@ public:
 			out.write(RIC_BYTE(allConnetions[i].cost));	//WRITTING: (2/2) float cost
 		}
 		out.close();
+	}
+	//returns level data
+	static myByte * readFile(const char * filename, NodeManager& nodeManager) {
+		int fileSize;
+		myByte * file = loadFile(filename,fileSize);
+		LevelFileHeader * header = RIC(LevelFileHeader *, file);
+		myByte * levelBinary = file + header->startOfBinaryData;
+
+		GameNode * gameNodes = RIC(GameNode *,file + header->startOfNodeData);
+		for (uint i = 0; i < header->numOfNodes; i++)
+		{
+			POINTER_FIX(gameNodes[i].connections,GameNodeConnection *,file);
+			for (int j = 0; j < gameNodes[i].numOfConnections; j++)
+			{
+				POINTER_FIX(gameNodes[i].connections[j].to,GameNode *,file);
+			}
+		}
+
+		nodeManager.importNodesAndConnections(gameNodes,header->numOfNodes);
+
+		return levelBinary;
 	}
 };
