@@ -102,7 +102,7 @@ public:
 		for (uint i = 0; i < header->numOfNodes; i++)
 		{
 			POINTER_FIX(gameNodes[i].connections,GameNodeConnection *,file);
-			for (int j = 0; j < gameNodes[i].numOfConnections; j++)
+			for (uint j = 0; j < gameNodes[i].numOfConnections; j++)
 			{
 				POINTER_FIX(gameNodes[i].connections[j].to,GameNode *,file);
 			}
