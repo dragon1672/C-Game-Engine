@@ -12,7 +12,7 @@ EditorNode * NodeManager::getNextNode() {
 }
 
 int NodeManager::getNodeId(EditorNode * toFind) {
-		for (uint i = 0; i < nodes.size(); i++)
+	for (uint i = 0; i < nodes.size(); i++)
 	{
 		if(nodes[i] == toFind) return i;
 	}
@@ -131,6 +131,7 @@ void NodeManager::addConnection(uint fromID, uint toID) {
 void NodeManager::addConnection(EditorNode * fromNode, EditorNode * toNode) {
 	EditorNodeConnection * toAdd = new EditorNodeConnection;
 	toAdd->to = toNode;
+	toAdd->cost = glm::length(toNode->pos - fromNode->pos);
 	toNode->rednerable->overrideColor = ConnectedNodeColor;
 	glm::vec3 vectorPointer = toNode->pos - fromNode->pos;
 	toAdd->renderable = debugShapes->addUnitVector(fromNode->pos,vectorPointer,glm::vec4(0,1,1,1),1);
@@ -142,9 +143,15 @@ void NodeManager::importNodesAndConnections(GameNode * gameNodes, uint nodeCount
 	for (uint i = 0; i < nodeCount; i++)
 	{
 		addNode(gameNodes->pos);
+	}
+	for (uint i = 0; i < nodeCount; i++)
+	{
 		for (uint j = 0; j < gameNodes[i].numOfConnections; j++)
 		{
 			uint fromID = i;
+			GameNode currentNode = gameNodes[i];
+			GameNodeConnection currentCOnnection = currentNode.connections[j];
+			GameNode * dest = currentCOnnection.to;
 			uint toID = gameNodes[i].connections[j].to - gameNodes;
 			addConnection(fromID,toID);
 		}

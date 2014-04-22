@@ -58,8 +58,8 @@ public:
 				uint numOfConnections;				// size: 4
 				GameNodeConnection * connections;	// size: 4
 			*/
-			out.write(RIC_BYTE((nodeManager.nodes[i]->pos[0])));			//WRITTING:	(1/3) POS
-			uint numOfConnections = nodeManager.nodes.size();
+			out.write(RIC_BYTE((nodeManager.nodes[i]->pos)));			//WRITTING:	(1/3) POS
+			uint numOfConnections = nodeManager.nodes[i]->connections.size();
 			out.write(RIC_BYTE(numOfConnections));							//WRITTING: (2/3) numOfConnections
 			
 			out.write(RIC_BYTE(currentConnetionOffset));					//WRITTING: (3/3) Connection File Pointer
@@ -74,7 +74,7 @@ public:
 				*/
 				EditorNodeConnection currentConnection = *(nodeManager.nodes[i]->connections[j]); // copy data
 				int id = nodeManager.getNodeId(currentConnection.to);
-				int nodeOffsetInFile = (id > 0) ? myHeader.startOfNodeData + id * sizeof(GameNode) : myHeader.endOfFile;
+				int nodeOffsetInFile = (id >= 0) ? myHeader.startOfNodeData + id * sizeof(GameNode) : myHeader.endOfFile;
 				currentConnection.to = reinterpret_cast<EditorNode*>(nodeOffsetInFile); // change pointer to point in file
 				allConnetions.push_back(currentConnection);
 			}
