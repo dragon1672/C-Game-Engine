@@ -188,11 +188,11 @@
     <ClInclude Include="AStarPath.h">
       <Filter>Pathing\A%2a</Filter>
     </ClInclude>
-    <ClInclude Include="AStar.h">
-      <Filter>Pathing\A%2a</Filter>
-    </ClInclude>
     <ClInclude Include="Ray.h">
       <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="AStarPathGenerator.h">
+      <Filter>Pathing\A%2a</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

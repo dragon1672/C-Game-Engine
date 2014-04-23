@@ -8,9 +8,12 @@ namespace AStar {
 		std::vector<GameNode *> nodes;
 		GameNode * currentDestination;
 
+		bool validPath; // false if invalid path
+
 		GameNode * popCurrentConnection() {
-			currentDestination = nodes[0];
-			nodes.erase(nodes.begin() + 0);
+			int id = nodes.size() - 1;
+			currentDestination = nodes[id];
+			nodes.erase(nodes.begin() + id);
 			return currentDestination;
 		}
 		bool isComplete() {

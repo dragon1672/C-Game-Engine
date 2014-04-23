@@ -118,8 +118,14 @@ void NodeManager::addOrSelectClick(Ray& click) {
 void NodeManager::connectClick(Ray& click) {
 	if(currentSelectedNode != nullptr) {
 		EditorNode * selectedNode = getNodeClicked(click);
-		if(currentSelectedNode->validConnection(selectedNode)) {
-			addConnection(currentSelectedNode,selectedNode);
+		int existingConnectionID = currentSelectedNode->getConnectionId(selectedNode);
+		if(selectedNode!=nullptr) {
+			if(existingConnectionID < 0) {
+				addConnection(currentSelectedNode,selectedNode);
+			} else {
+				currentSelectedNode->deleteConnection(existingConnectionID);
+				selectedNode->rednerable->overrideColor = UnSelectedColor;
+			}
 		}
 	}
 }

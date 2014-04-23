@@ -83,7 +83,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="AStar.h" />
+    <ClInclude Include="AStarPathGenerator.h" />
     <ClInclude Include="AStarNode.h" />
     <ClInclude Include="AStarPath.h" />
     <ClInclude Include="AutoProfileManager.h" />

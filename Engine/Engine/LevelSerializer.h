@@ -59,7 +59,7 @@ public:
 				uint numOfConnections;				// size: 4
 				GameNodeConnection * connections;	// size: 4
 			*/
-			out.write(RIC_BYTE((nodeManager.nodes[i]->pos)));			//WRITTING:	(1/3) POS
+			out.write(RIC_BYTE((nodeManager.nodes[i]->pos)));				//WRITTING:	(1/3) POS
 			uint numOfConnections = nodeManager.nodes[i]->connections.size();
 			out.write(RIC_BYTE(numOfConnections));							//WRITTING: (2/3) numOfConnections
 			

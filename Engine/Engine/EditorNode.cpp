@@ -16,9 +16,7 @@ int  EditorNode::removeNode(EditorNode * idtoRemove) {
 	for (uint i = 0; i < connections.size(); i++)
 	{
 		if(connections[i]->to == idtoRemove) { // remove the connection
-			connections[i]->renderable->kill();
-			delete connections[i];
-			connections.erase(connections.begin() + i);
+			deleteConnection(i);
 			connectionsDeleted++;
 			i--;
 		}
@@ -32,6 +30,7 @@ void EditorNode::activateConnections(glm::vec4 color) {
 		connections[i] -> to -> rednerable -> overrideColor = color;
 	}
 }
+
 bool EditorNode::validConnection(EditorNode * toConnect) {
 	bool valid = (toConnect != this) && (toConnect != nullptr);
 	for (uint i = 0; i < connections.size() && valid; i++)
@@ -40,6 +39,22 @@ bool EditorNode::validConnection(EditorNode * toConnect) {
 	}
 	return valid;
 }
+
+int EditorNode::getConnectionId(EditorNode * toConnect) {
+	for (uint i = 0; i < connections.size(); i++)
+	{
+		if(connections[i]->to == toConnect) return i;
+			
+	}
+	return -1;
+}
+
+void EditorNode::deleteConnection(uint id) {
+	connections[id]->renderable->kill();
+	delete connections[id];
+	connections.erase(connections.begin() + id);
+}
+
 void EditorNode::setConnectionState(bool state) {
 	for (uint i = 0; i < connections.size(); i++)
 	{
