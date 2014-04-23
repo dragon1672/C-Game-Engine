@@ -3,9 +3,10 @@
 #include "AStarPath.h"
 #include "GameNode.h"
 #include "GameNodeConnection.h"
+#include "ExportHeader.h"
 
 namespace AStar {
-	class PathGenerator {
+	class ENGINE_SHARED PathGenerator {
 		GameNode * start;
 		GameNode * end;
 		GameNode * gameNodes;

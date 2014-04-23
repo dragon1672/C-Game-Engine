@@ -4,7 +4,7 @@
 #include "ExportHeader.h"
 
 namespace AStar {
-	struct Node {
+	struct ENGINE_SHARED Node {
 		Node * parent; // links to parent node
 		GameNode * node;
 

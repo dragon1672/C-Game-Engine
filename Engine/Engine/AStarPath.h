@@ -2,9 +2,10 @@
 
 #include "AStarNode.h"
 #include <vector>
+#include "ExportHeader.h"
 
 namespace AStar {
-	struct Path {
+	struct ENGINE_SHARED Path {
 		std::vector<GameNode *> nodes;
 		GameNode * currentDestination;
 
