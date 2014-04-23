@@ -11,14 +11,7 @@ namespace AStar {
 
 		bool validPath; // false if invalid path
 
-		GameNode * popCurrentConnection() {
-			int id = nodes.size() - 1;
-			currentDestination = nodes[id];
-			nodes.erase(nodes.begin() + id);
-			return currentDestination;
-		}
-		bool isComplete() {
-			return nodes.size() > 0;
-		}
+		GameNode * popCurrentConnection();
+		bool isComplete();
 	};
 }

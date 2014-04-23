@@ -134,6 +134,9 @@
     <ClInclude Include="WatchVectorController.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AStarNode.cpp" />
+    <ClCompile Include="AStarPath.cpp" />
+    <ClCompile Include="AStarPathGenerator.cpp" />
     <ClCompile Include="AutoProfilerManager.cpp" />
     <ClCompile Include="BinaryToShapeLoader.cpp" />
     <ClCompile Include="BufferManager.cpp" />

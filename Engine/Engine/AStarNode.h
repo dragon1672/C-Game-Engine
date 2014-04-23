@@ -17,28 +17,13 @@ namespace AStar {
 			init(heuristicValue,node,parent);
 		}
 
-		void init(float heuristicValue, GameNode * node, Node * parent=nullptr) {
-			this->parent = parent;
-			this->node = node;
-			this->heuristicValue = heuristicValue;
-			calculateValuesFromParent();
-		}
+		void init(float heuristicValue, GameNode * node, Node * parent=nullptr);
 
-		void setParent(Node * parent, float connectionCost) {
-			this->parent = parent;
-			calculateValuesFromParent(connectionCost);
-		}
+		void setParent(Node * parent, float connectionCost);
 
-		void calculateValuesFromParent(float cost) {
-			costSoFar = (parent == nullptr)? parent->costSoFar + cost : 0;
-			estimatedTotalCost = costSoFar + heuristicValue;
-		}
-		bool isCheaper(Node * that) {
-			return this->estimatedTotalCost < that->estimatedTotalCost;
-		}
+		void calculateValuesFromParent(float cost);
+		bool isCheaper(Node * that);
 		//to be used in comparing a new guy
-		Node clone() {
-			return Node(heuristicValue,node,parent);
-		}
+		Node clone();
 	};
 }
