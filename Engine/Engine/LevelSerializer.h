@@ -93,6 +93,17 @@ public:
 	}
 	//returns level data
 	static myByte * readFile(const char * filename, NodeManager& nodeManager) {
+		myByte* levelBinary;
+		GameNode * gameNodes;
+		uint numOfNodes;
+
+		readFile(filename,levelBinary,gameNodes,numOfNodes);
+
+		nodeManager.importNodesAndConnections(gameNodes,numOfNodes);
+
+		return levelBinary;
+	}
+	static void readFile(const char * filename, myByte*& out_levelBinary, GameNode*& out_GameNodes, uint& out_numOfNodes) {
 		int fileSize;
 		myByte * file = loadFile(filename,fileSize);
 		LevelFileHeader * header = RIC(LevelFileHeader *, file);
@@ -107,9 +118,8 @@ public:
 				POINTER_FIX(gameNodes[i].connections[j].to,GameNode *,file);
 			}
 		}
-
-		nodeManager.importNodesAndConnections(gameNodes,header->numOfNodes);
-
-		return levelBinary;
+		out_GameNodes = gameNodes;
+		out_numOfNodes = header->numOfNodes;
+		out_levelBinary = levelBinary;
 	}
 };
