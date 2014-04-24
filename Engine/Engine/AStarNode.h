@@ -12,7 +12,10 @@ namespace AStar {
 		float estimatedTotalCost;
 		float heuristicValue;
 
-		Node() {}
+		Node() {
+			parent = nullptr;
+			node = nullptr;
+		}
 		Node(float heuristicValue, GameNode * node, Node * parent=nullptr) {
 			init(heuristicValue,node,parent);
 		}
