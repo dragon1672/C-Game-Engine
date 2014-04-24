@@ -1,13 +1,13 @@
 #include "AStarPath.h"
 
 namespace AStar {
-	GameNode * Path::popCurrentConnection() {
-		int id = nodes.size() - 1;
-		currentDestination = nodes[id];
-		nodes.erase(nodes.begin() + id);
+	glm::vec3 Path::popCurrentConnection() {
+		int id = positions.size() - 1;
+		currentDestination = positions[id];
+		positions.erase(positions.begin() + id);
 		return currentDestination;
 	}
 	bool Path::isComplete() {
-		return nodes.size() > 0;
+		return positions.size() > 0;
 	}
 }

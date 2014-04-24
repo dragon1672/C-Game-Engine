@@ -52,7 +52,7 @@ namespace AStar {
 		ret.validPath = true;
 		Node * currentNode = endSeed;
 		do {
-			ret.nodes.push_back(currentNode->node);
+			ret.positions.push_back(currentNode->node->pos);
 		} while(currentNode->parent != nullptr);
 		return ret;
 	}

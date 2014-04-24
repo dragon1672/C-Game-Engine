@@ -6,12 +6,12 @@
 
 namespace AStar {
 	struct ENGINE_SHARED Path {
-		std::vector<GameNode *> nodes;
-		GameNode * currentDestination;
+		std::vector<glm::vec3> positions;
+		glm::vec3 currentDestination;
 
 		bool validPath; // false if invalid path
 
-		GameNode * popCurrentConnection();
+		glm::vec3 popCurrentConnection();
 		bool isComplete();
 	};
 }
