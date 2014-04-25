@@ -2,12 +2,15 @@
 
 
 namespace AStar {
+	void PathGenerator::init(GameNode * nodes, uint numOfGameNodes) {
+			pathingNodes = new Node[numOfGameNodes];
+			this->gameNodes = nodes;
+			this->numOfGameNodes = numOfGameNodes;
+		}
 	Node * PathGenerator::convertToNode(GameNode * gNode) {
 		uint id = gNode - gameNodes;
-		if(pathingNodes[id].node == nullptr) {
-			pathingNodes[id].init(glm::length(end->pos - gNode->pos),gNode);
-		}
-		return &pathingNodes[id];
+		pathingNodes[id].init(glm::length(end->pos - gNode->pos),gNode);
+		return &(pathingNodes[id]);
 	}
 
 	//inits Node data and returns if valid Node
@@ -33,7 +36,7 @@ namespace AStar {
 		int cheapestId = -1;
 		for (uint i = 0; i < openList.size(); i++)
 		{
-			if(cheapestId<0 && openList[cheapestId]->estimatedTotalCost < openList[i]->estimatedTotalCost) {
+			if(cheapestId<0 || openList[cheapestId]->estimatedTotalCost > openList[i]->estimatedTotalCost) {
 				cheapestId = i;
 			}
 		}
@@ -43,12 +46,20 @@ namespace AStar {
 
 		return ret;
 	}
+	void PathGenerator::updateValues() {
+		for (uint i = 0; i < numOfGameNodes; i++)
+		{
+			convertToNode(&gameNodes[i]);
+		}
+	}
 	Path PathGenerator::genPath(Node * endSeed) {
 		Path ret;
 		ret.validPath = true;
 		Node * currentNode = endSeed;
 		do {
 			ret.positions.push_back(currentNode->node->pos);
+			currentNode = currentNode->parent;
+			if(currentNode==nullptr) break;
 		} while(currentNode->parent != nullptr);
 		return ret;
 	}
@@ -56,6 +67,7 @@ namespace AStar {
 	Path PathGenerator::getPath(GameNode * start, GameNode * end) {
 		this->start = start;
 		this->end = end;
+		updateValues();
 		//init open list
 		openList.clear();
 		openList.push_back(convertToNode(start));

@@ -14,7 +14,7 @@ namespace AStar {
 	}
 
 	void Node::calculateValuesFromParent(float cost) {
-		costSoFar = (parent == nullptr)? parent->costSoFar + cost : 0;
+		costSoFar = (parent != nullptr)? parent->costSoFar + cost : 0;
 		estimatedTotalCost = costSoFar + heuristicValue;
 	}
 	bool Node::isCheaper(Node * that) {

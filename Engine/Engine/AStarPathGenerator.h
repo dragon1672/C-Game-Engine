@@ -22,10 +22,9 @@ namespace AStar {
 
 		Node * popCheapestNode();
 		Path genPath(Node * endSeed);
+		void updateValues();
 	public:
-		void init(GameNode * nodes, uint numOfGameNodes) {
-			pathingNodes = new Node[numOfGameNodes];
-		}
+		void init(GameNode * nodes, uint numOfGameNodes);
 		//generates and returns path
 		Path getPath(GameNode * start, GameNode * end);
 	};

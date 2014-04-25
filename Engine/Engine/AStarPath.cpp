@@ -8,6 +8,6 @@ namespace AStar {
 		return currentDestination;
 	}
 	bool Path::isComplete() {
-		return positions.size() > 0;
+		return positions.size() <= 0;
 	}
 }
