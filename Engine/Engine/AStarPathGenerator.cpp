@@ -9,28 +9,57 @@ namespace AStar {
 		}
 	Node * PathGenerator::convertToNode(GameNode * gNode) {
 		uint id = gNode - gameNodes;
-		pathingNodes[id].init(glm::length(end->pos - gNode->pos),gNode);
+		glm::vec3 diff = end->pos - gNode->pos;
+		pathingNodes[id].init(glm::length(diff),gNode);
 		return &(pathingNodes[id]);
 	}
 
 	//inits Node data and returns if valid Node
 	void PathGenerator::processNode(Node * toProcess, Node * parentNode, float connectionCost) {
+		if(toProcess->node == start) return;
 		if(toProcess->parent != nullptr)
 		{
 			Node possibleReplacement = toProcess->clone();
 			possibleReplacement.setParent(parentNode,connectionCost);
 
 
-			if(toProcess->isCheaper(&possibleReplacement)) {
-				return; // nothing to do here
-			} else {
+			if(possibleReplacement.isCheaper(toProcess)) {
 				toProcess->setParent(parentNode,connectionCost); // also calculates
+			} else {
+				return ;// not optimal to recalculate
 			}
 		} else {
 			toProcess->setParent(parentNode,connectionCost); // also calcuates
 		}
 		openList.push_back(toProcess);
 	}
+	/*
+	PathNode* nodeToUpdate = &pathNodes[connectionIndex];
+
+	//find the cost by seeing if the node has been processed or not
+	if(nodeToUpdate->proccesed())
+	{
+		PathNode temp = *nodeToUpdate;
+		temp.parrent = currentNode;
+		temp.costSoFar = currentNode->costSoFar + concs->cost;
+		if(nodeToUpdate->totalEstimatedCost() > temp.totalEstimatedCost())
+		{
+			nodeToUpdate->costSoFar = temp.costSoFar;
+			nodeToUpdate->parrent = temp.parrent;
+			//add connection to open list
+			openList.push(&pathNodes[connectionIndex]);
+		}
+		//node hasn't changed so don't put it on openList ( no else)
+	}
+	else
+	{
+		nodeToUpdate->costSoFar = currentNode->costSoFar + concs->cost;
+		nodeToUpdate->parrent = currentNode;
+		//add connection to open list
+		openList.push(&pathNodes[connectionIndex]);
+	}
+}
+	//*/
 
 	Node * PathGenerator::popCheapestNode() {
 		int cheapestId = -1;
@@ -63,6 +92,17 @@ namespace AStar {
 		} while(currentNode->parent != nullptr);
 		return ret;
 	}
+	void getToNullparent(Node* seed) {
+		int steps = 0;
+		Node * currentNode = seed;
+		do {
+			steps++;
+			currentNode = currentNode->parent;
+			if(currentNode==nullptr) break;
+		} while(currentNode->parent != nullptr);
+		int one = 1;
+		one++;
+	}
 	//generates and returns path
 	Path PathGenerator::getPath(GameNode * start, GameNode * end) {
 		this->start = start;
@@ -72,18 +112,22 @@ namespace AStar {
 		openList.clear();
 		openList.push_back(convertToNode(start));
 
+		Node * endNode = &pathingNodes[numOfGameNodes-1];
+
 		while(openList.size() > 0) {
 			Node * processingParent = popCheapestNode(); // removes nodes for open
 				
 			//if end is found
-			if(processingParent->node == end) {
+			if(processingParent->node == end || endNode->parent != nullptr) {
 				return genPath(processingParent);
 			}
 			//process connections
 			for (int i = 0; i < processingParent->node->numOfConnections; i++)
 			{
-				Node * currentNode = convertToNode(processingParent->node->connections[i].to);
-				processNode(currentNode,processingParent, processingParent->node->connections[i].cost);
+				uint nodeID = processingParent->node->connections[i].to - gameNodes;
+				processNode(&pathingNodes[nodeID],processingParent, processingParent->node->connections[i].cost);
+				Node * temp = &pathingNodes[nodeID];
+				getToNullparent(temp);
 			}
 		}
 		//invalid path
