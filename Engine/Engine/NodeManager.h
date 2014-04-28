@@ -45,4 +45,5 @@ public:
 	void addConnection(EditorNode * fromNode, EditorNode * toNode);
 
 	void importNodesAndConnections(GameNode * gameNodes, uint nodeCount);
+	GameNode * exportToGameNode(int& numOfNodes);
 };

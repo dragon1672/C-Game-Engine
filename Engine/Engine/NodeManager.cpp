@@ -1,6 +1,8 @@
 #include "NodeManager.h"
 #include <glm/gtx/transform.hpp>
 
+#define RIC_BYTE(a) reinterpret_cast<char*>(&a), sizeof(a)
+#define RIC(type,value) reinterpret_cast<type>(value)
 
 EditorNode * NodeManager::getNextNode() {
 
@@ -162,4 +164,30 @@ void NodeManager::importNodesAndConnections(GameNode * gameNodes, uint nodeCount
 		}
 	}
 	activateAllConnections();
+}
+GameNode * NodeManager::exportToGameNode(int& numOfNodes) {
+	int fileSize = nodes.size() * sizeof(GameNode);
+	int connectionOffset = fileSize;
+	fileSize += numOfConnections * sizeof(GameNodeConnection);
+
+	char * buffer = new char[fileSize];
+	GameNode * ret = reinterpret_cast<GameNode *>(buffer);
+	GameNodeConnection * connections = reinterpret_cast<GameNodeConnection *>(buffer + connectionOffset);
+
+	for (uint i = 0; i < nodes.size(); i++)
+	{
+		ret[i].pos = nodes[i]->pos;
+		ret[i].numOfConnections = nodes[i]->connections.size();
+		ret[i].connections = &connections[connectionOffset];
+
+		connectionOffset += ret[i].numOfConnections;
+
+		for (uint j = 0; j < nodes[i]->connections.size(); j++) // adding connection data
+		{
+			connections[connectionOffset].cost = nodes[i]->connections[j]->cost;
+			
+			int id = getNodeId(nodes[i]->connections[j]->to);
+			connections[connectionOffset].to = &ret[id];
+		}
+	}
 }
