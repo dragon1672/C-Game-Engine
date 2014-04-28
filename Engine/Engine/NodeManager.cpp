@@ -228,20 +228,21 @@ GameNode * NodeManager::exportToGameNode(int& numOfNodes) {
 	GameNode * ret = reinterpret_cast<GameNode *>(buffer);
 	GameNodeConnection * connections = reinterpret_cast<GameNodeConnection *>(buffer + connectionOffset);
 
+	int currentConnectionOffset = 0;
+
 	for (uint i = 0; i < nodes.size(); i++)
 	{
 		ret[i].pos = nodes[i]->pos;
 		ret[i].numOfConnections = nodes[i]->connections.size();
-		ret[i].connections = &connections[connectionOffset];
-
-		connectionOffset += ret[i].numOfConnections;
+		ret[i].connections = &connections[currentConnectionOffset];
 
 		for (uint j = 0; j < nodes[i]->connections.size(); j++) // adding connection data
 		{
-			connections[connectionOffset].cost = nodes[i]->connections[j]->cost;
+			connections[currentConnectionOffset].cost = nodes[i]->connections[j]->cost;
 			
 			int id = getNodeId(nodes[i]->connections[j]->to);
-			connections[connectionOffset].to = &ret[id];
+			connections[currentConnectionOffset].to = &ret[id];
+			currentConnectionOffset++;
 		}
 	}
 	return ret;

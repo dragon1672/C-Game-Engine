@@ -3,10 +3,14 @@
 
 namespace AStar {
 	void PathGenerator::init(GameNode * nodes, uint numOfGameNodes) {
-			pathingNodes = new Node[numOfGameNodes];
-			this->gameNodes = nodes;
-			this->numOfGameNodes = numOfGameNodes;
+		if(pathingNodes!=nullptr) {
+			delete [] pathingNodes;
 		}
+		pathingNodes = new Node[numOfGameNodes];
+		this->gameNodes = nodes;
+		this->numOfGameNodes = numOfGameNodes;
+		openList.clear();
+	}
 	Node * PathGenerator::convertToNode(GameNode * gNode) {
 		uint id = gNode - gameNodes;
 		glm::vec3 diff = end->pos - gNode->pos;
