@@ -191,4 +191,5 @@ GameNode * NodeManager::exportToGameNode(int& numOfNodes) {
 			connections[connectionOffset].to = &ret[id];
 		}
 	}
+	return ret;
 }
