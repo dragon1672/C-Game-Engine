@@ -81,6 +81,20 @@ namespace AStar {
 			convertToNode(&gameNodes[i]);
 		}
 	}
+	GameNode * PathGenerator::findClosestNode(glm::vec3& pos) {
+		GameNode * ret = nullptr;
+		float currentDist;
+		for (int i = 0; i < numOfGameNodes; i++)
+		{
+			float testingDistance = glm::length(gameNodes[i].pos - pos);
+			if(testingDistance < currentDist || ret == nullptr) {
+				currentDist = testingDistance;
+				ret = &gameNodes[i];
+			}
+		}
+		return ret;
+	}
+			
 	Path PathGenerator::genPath(Node * endSeed) {
 		Path ret;
 		ret.validPath = true;
@@ -133,6 +147,14 @@ namespace AStar {
 		//invalid path
 		Path ret;
 		ret.validPath = false;
+		return ret;
+	}
+	Path PathGenerator::getPath(glm::vec3 start, glm::vec3 end) {
+		GameNode * startNode = findClosestNode(start);
+		GameNode * endNode   = findClosestNode(end);
+		Path ret = getPath(startNode,endNode);
+		ret.positions.insert(ret.positions.begin(),end);
+		ret.positions.push_back(start);
 		return ret;
 	}
 }
