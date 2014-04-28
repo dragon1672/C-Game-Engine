@@ -12,6 +12,18 @@ EditorNode * NodeManager::getNextNode() {
 	ret->rednerable->enableOverrideColor = false;
 	return ret;
 }
+uint NodeManager::getOffset(GameNode* startOfArray) {
+	static int offset = 0;
+	if(startOfArray[offset].pos != nodes[0]->pos) {
+		for (int i = 1; i < nodes.size(); i++)
+		{
+			offset = i;
+			if(startOfArray[offset].pos != nodes[0]->pos) return offset;
+		}
+		offset = -1;
+	}
+	return offset;
+}
 
 int NodeManager::getNodeId(EditorNode * toFind) {
 	for (uint i = 0; i < nodes.size(); i++)
@@ -48,6 +60,29 @@ EditorNode * NodeManager::getNodeClicked(Ray& click) {
 		}
 	}
 	return ret;
+}
+EditorNode * NodeManager::findNode(GameNode * toFind, GameNode * startOfArray) {
+	int index = toFind - startOfArray;
+	int offset = getOffset(startOfArray);
+	if(nodes[offset + index]->pos == toFind->pos) {
+		return nodes[offset + index];
+	} else {
+		return findNode(toFind);
+	}
+}
+EditorNode * NodeManager::findNode(GameNode* toFind) {
+	for(uint i=0; i<nodes.size(); i++) {
+		if(nodes[i]->pos == toFind->pos)
+			return nodes[i];
+	}
+	return nullptr;
+}
+EditorNode * NodeManager::findNode(glm::vec3& pos) {
+	for(uint i=0; i<nodes.size(); i++) {
+		if(nodes[i]->pos == pos)
+			return nodes[i];
+	}
+	return nullptr;
 }
 
 void NodeManager::selectNode(EditorNode * toSelect) {
@@ -146,6 +181,24 @@ void NodeManager::addConnection(EditorNode * fromNode, EditorNode * toNode) {
 	fromNode->connections.push_back(toAdd);
 	numOfConnections++;
 }
+
+void NodeManager::hilightPath(AStar::Path& lePath,glm::vec4& nextNodeColor, glm::vec4& finalNodeColor, glm::vec4& pathNodeColor) {
+
+	EditorNode * firstNode = findNode(lePath.currentDestination);
+	firstNode->rednerable->overrideColor = nextNodeColor;
+	for (int i = lePath.positions.size()-1; i >= 0; i--)
+	{
+		EditorNode * currentNode = findNode(lePath.positions[i]);
+		currentNode->rednerable->overrideColor = pathNodeColor;
+		if(i>0) {
+			glm::vec3& nextPos = lePath.positions[i-1];
+			currentNode->activateConnection(nextPos,pathNodeColor);
+		}
+	}
+	EditorNode * lastNode = findNode(lePath.positions[0]);
+	firstNode->rednerable->overrideColor = finalNodeColor;
+}
+
 void NodeManager::importNodesAndConnections(GameNode * gameNodes, uint nodeCount) {
 	int indexOffset = nodes.size();
 	//requires 2 sets because all nodes have to exist to make connections

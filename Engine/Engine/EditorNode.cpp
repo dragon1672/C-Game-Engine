@@ -23,11 +23,21 @@ int  EditorNode::removeNode(EditorNode * idtoRemove) {
 	}
 	return connectionsDeleted;
 }
-void EditorNode::activateConnections(glm::vec4 color) {
+void EditorNode::activateConnections(glm::vec4& color) {
 	for (uint i = 0; i < connections.size(); i++)
 	{
 		connections[i] -> renderable->draw = true;
 		connections[i] -> to -> rednerable -> overrideColor = color;
+	}
+}
+void EditorNode::activateConnection(glm::vec3& nodePos, glm::vec4& color) {
+	for (uint i = 0; i < connections.size(); i++)
+	{
+		if(connections[i] -> to -> pos == nodePos) {
+			connections[i] -> renderable->draw = true;
+			connections[i] -> to -> rednerable -> overrideColor = color;
+			return; // we are done here
+		}
 	}
 }
 

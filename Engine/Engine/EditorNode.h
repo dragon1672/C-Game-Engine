@@ -19,7 +19,8 @@ struct ENGINE_SHARED EditorNode {
 	DebugShapeManager::DebugShapeData * rednerable;
 	int  shutdown(); // returns numberOfConnections deleted
 	int  removeNode(EditorNode * idtoRemove); // returns numberOfConnections deleted
-	void activateConnections(glm::vec4 color);
+	void activateConnections(glm::vec4& color);
+	void activateConnection(glm::vec3& nodePos, glm::vec4& color);
 	bool validConnection(EditorNode * toConnect);
 	int getConnectionId(EditorNode * toConnect);
 	void deleteConnection(uint id);
