@@ -49,6 +49,9 @@
     <Filter Include="Pathing\A%2a">
       <UniqueIdentifier>{2aea2aab-2cb4-4146-b7e5-e02567a68382}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Pathing\A%2a\Debug">
+      <UniqueIdentifier>{7d5dc8eb-559a-47b1-8d5b-caf966ede166}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Matrix2D.h">
@@ -194,6 +197,9 @@
     <ClInclude Include="AStarPathGenerator.h">
       <Filter>Pathing\A%2a</Filter>
     </ClInclude>
+    <ClInclude Include="AStarDebugPath.h">
+      <Filter>Pathing\A%2a\Debug</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LogManager.cpp">
@@ -268,6 +274,9 @@
     </ClCompile>
     <ClCompile Include="AStarNode.cpp">
       <Filter>Pathing\A%2a</Filter>
+    </ClCompile>
+    <ClCompile Include="AStarDebugPath.cpp">
+      <Filter>Pathing\A%2a\Debug</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
