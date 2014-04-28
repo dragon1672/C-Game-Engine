@@ -166,6 +166,7 @@ void NodeManager::importNodesAndConnections(GameNode * gameNodes, uint nodeCount
 	activateAllConnections();
 }
 GameNode * NodeManager::exportToGameNode(int& numOfNodes) {
+	numOfNodes = nodes.size();
 	int fileSize = nodes.size() * sizeof(GameNode);
 	int connectionOffset = fileSize;
 	fileSize += numOfConnections * sizeof(GameNodeConnection);
