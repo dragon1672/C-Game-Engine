@@ -27,5 +27,6 @@ struct ENGINE_SHARED EditorNode {
 	void setConnectionState(bool state);
 	
 	bool doesRayHit(Ray& ray); //cheap
+	static bool doesRayHit(Ray& ray, glm::vec3 orgin, float radius);
 	bool tryIntersectionVector(Ray& ray, glm::vec3& ret); //uses sqrt
 };

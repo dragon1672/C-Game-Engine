@@ -32,6 +32,7 @@ public:
 	}
 
 	int getNodeId(EditorNode * toFind);
+	static glm::vec3 rayPlaneIntersection(Ray& ray, glm::vec3 planePos,glm::vec3 planeNorm);
 	void addNodeOnPlane(Ray& ray, glm::vec3 planePos,glm::vec3 planeNorm);
 	void addNode(glm::vec3 pos);
 	EditorNode * getNodeClicked(Ray& click);

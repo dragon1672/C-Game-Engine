@@ -37,6 +37,19 @@ void NodeManager::addNode(glm::vec3 pos) {
 	temp ->pos = pos;
 	temp->rednerable->transform = glm::translate(pos);
 }
+glm::vec3 NodeManager::rayPlaneIntersection(Ray& ray, glm::vec3 planePos,glm::vec3 planeNorm) {
+	float denominator = glm::dot(ray.direction,planeNorm);
+	if(denominator != 0)
+	{
+		glm::vec3 planePointToRayOrigin = planePos- ray.origin;
+		float neumorator = glm::dot(planePointToRayOrigin, planeNorm);
+		float distance = neumorator/denominator;
+		if(distance >= 0) {
+			return (ray.origin + ray.direction * distance);
+		}
+	}
+	return glm::vec3();
+}
 void NodeManager::addNodeOnPlane(Ray& ray, glm::vec3 planePos,glm::vec3 planeNorm) {
 	float denominator = glm::dot(ray.direction,planeNorm);
 	if(denominator != 0)
