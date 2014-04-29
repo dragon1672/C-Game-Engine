@@ -55,3 +55,16 @@ glm::vec3 AStar::DEBUG::DebugPath::popCurrentConnection() {
 
 	return ret;
 }
+void AStar::DEBUG::DebugPath::setVisability(bool newState) {
+	if(currentNodeRenderable != nullptr) {
+		currentNodeRenderable->draw = newState;
+	}
+	for (int i = 0; i < NodeRenderables.size(); i++)
+	{
+		NodeRenderables[i]->draw = newState;
+	}
+	for (int i = 0; i < ConnectionRenderables.size(); i++)
+	{
+		ConnectionRenderables[i]->draw = newState;
+	}
+}

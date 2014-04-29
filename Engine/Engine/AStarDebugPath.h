@@ -25,6 +25,7 @@ namespace AStar {
 			void drawPath(DebugShapeManager& shapeManager);
 
 			glm::vec3 popCurrentConnection(); // override
+			void setVisability(bool newState);
 #else
 			void drawPath(DebugShapeManager& shapeManager, glm::vec3& currentPos) {}
 #endif

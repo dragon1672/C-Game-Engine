@@ -157,6 +157,20 @@ void NodeManager::activateAllConnections() {
 		nodes[i]->activateConnections(ConnectedNodeColor);
 	}
 }
+void NodeManager::setAllVisability(bool state) {
+	for (int i = 0; i < nodes.size(); i++)
+	{
+		nodes[i]->setConnectionState(state);
+		nodes[i]->rednerable->draw = state;
+	}
+}
+void NodeManager::show() {
+	setAllVisability(true);
+}
+
+void NodeManager::hide() {
+	setAllVisability(false);
+}
 void NodeManager::addOrSelectClick(Ray& click) {
 	EditorNode * selectedNode = getNodeClicked(click);
 	if(selectedNode==nullptr) {

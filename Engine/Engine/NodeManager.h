@@ -47,6 +47,9 @@ public:
 	void setAllNodeColors(glm::vec4& colorToSet);
 	void setAllConnections(bool state = false);
 	void activateAllConnections();
+	void setAllVisability(bool state);
+	void show();
+	void hide();
 	void addOrSelectClick(Ray& click);
 	void connectClick(Ray& click);
 	void addConnection(uint fromID, uint toID);
