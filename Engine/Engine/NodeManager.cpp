@@ -243,7 +243,8 @@ void NodeManager::importNodesAndConnections(GameNode * gameNodes, uint nodeCount
 			addConnection(fromID,toID);
 		}
 	}
-	activateAllConnections();
+	setAllConnections(false);
+	//activateAllConnections();
 }
 GameNode * NodeManager::exportToGameNode(int& numOfNodes) {
 	numOfNodes = nodes.size();
