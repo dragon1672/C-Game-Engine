@@ -7,6 +7,7 @@
 
 namespace AStar {
 	class ENGINE_SHARED PathGenerator {
+	protected:
 		GameNode * gameNodes;
 		uint numOfGameNodes;
 		Node * pathingNodes;

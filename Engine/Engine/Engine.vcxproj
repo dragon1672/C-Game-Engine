@@ -84,6 +84,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AStarDebugPath.h" />
+    <ClInclude Include="AStarDebugPathGenerator.h" />
     <ClInclude Include="AStarPathGenerator.h" />
     <ClInclude Include="AStarNode.h" />
     <ClInclude Include="AStarPath.h" />

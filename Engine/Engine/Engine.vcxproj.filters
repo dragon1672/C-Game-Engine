@@ -200,6 +200,9 @@
     <ClInclude Include="AStarDebugPath.h">
       <Filter>Pathing\A%2a\Debug</Filter>
     </ClInclude>
+    <ClInclude Include="AStarDebugPathGenerator.h">
+      <Filter>Pathing\A%2a\Debug</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LogManager.cpp">

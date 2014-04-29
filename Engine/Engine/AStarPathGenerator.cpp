@@ -91,7 +91,7 @@ namespace AStar {
 		for (int i = 0; i < numOfGameNodes; i++)
 		{
 			float testingDistance = glm::length(gameNodes[i].pos - pos);
-			if(testingDistance < currentDist || ret == nullptr) {
+			if(ret == nullptr || testingDistance < currentDist)  {
 				currentDist = testingDistance;
 				ret = &gameNodes[i];
 			}
