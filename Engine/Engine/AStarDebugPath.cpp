@@ -1,9 +1,9 @@
 #include "AStarDebugPath.h"
 #include <glm/gtx/transform.hpp>
 
-#define CURRENT_NODE_COLOR glm::vec4(0,1,0,1)
-#define FINAL_NODE_COLOR glm::vec4(1,1,1,1)
-#define PATH_NODE_COLOR glm::vec4(1,1,0,1)
+#define CURRENT_NODE_COLOR glm::vec4(1,1,0,1)
+#define FINAL_NODE_COLOR glm::vec4(0,1,0,1)
+#define PATH_NODE_COLOR glm::vec4(1,0,0,1)
 #define LINE_COLOR  glm::vec4(1,1,1,1)
 
 void AStar::DEBUG::DebugPath::drawPath(DebugShapeManager& shapeManager) {
@@ -30,9 +30,13 @@ void AStar::DEBUG::DebugPath::drawPath(DebugShapeManager& shapeManager) {
 			ConnectionRenderables.push_back(shapeManager.addUnitVector(positions[i+1],leVec,LINE_COLOR,false));
 		}
 	}
-	NodeRenderables[0]->overrideColor = FINAL_NODE_COLOR;
-	glm::vec3 leVec = positions[positions.size()-1] - currentDestination;
-	ConnectionRenderables.push_back(shapeManager.addUnitVector(currentDestination,leVec,LINE_COLOR,false));
+	if(NodeRenderables.size() > 0) {
+		NodeRenderables[0]->overrideColor = FINAL_NODE_COLOR;
+	}
+	if(positions.size() > 0) {
+		glm::vec3 leVec = positions[positions.size()-1] - currentDestination;
+		ConnectionRenderables.push_back(shapeManager.addUnitVector(currentDestination,leVec,LINE_COLOR,false));
+	}
 	currentNodeRenderable->transform = glm::translate(currentDestination);
 }
 glm::vec3 AStar::DEBUG::DebugPath::popCurrentConnection() {

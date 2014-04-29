@@ -10,9 +10,9 @@
 #include "GameNodeConnection.h"
 #include "AStarPath.h"
 
-#define UnSelectedColor glm::vec4(0,0,1,1)
+#define UnSelectedColor glm::vec4(0,0,0,1)
 #define SelectedColor glm::vec4(1,0,0,1)
-#define ConnectedNodeColor glm::vec4(0,1,0,1)
+#define ConnectedNodeColor glm::vec4(0,0,1,1)
 
 class ENGINE_SHARED NodeManager {
 public:
