@@ -52,17 +52,17 @@ private:
 	GeometryInfo  * GEO_point;
 
 	glm::vec3 noZeros(glm::vec3 vec);
-	glm::mat4 span2Points(glm::vec3 start, glm::vec3 end, float offset);
 public:
+	static glm::mat4 span2Points(glm::vec3 start, glm::vec3 end, float offset);
 	void init(float * viewMatrix);
 
 	void initShaders();
 
-	DebugShapeData * addUnitSphere(glm::mat4& transform,                    glm::vec4& color,                   float lifetime=std::numeric_limits<float>::infinity(), bool depthTest=true);
-	DebugShapeData * addUnitCube  (glm::mat4& transform,                    glm::vec4& color,                   float lifetime=std::numeric_limits<float>::infinity(), bool depthTest=true);
-	DebugShapeData * addLine      (glm::vec3& start,     glm::vec3& end,    glm::vec4& color, float offset = 0, float lifetime=std::numeric_limits<float>::infinity(), bool depthTest=true);
-	DebugShapeData * addUnitVector(glm::vec3& tail,      glm::vec3& vector, glm::vec4& color, float offset = 0, float lifetime=std::numeric_limits<float>::infinity(), bool depthTest=true);
-	DebugShapeData * addPoint     (glm::vec3& pos,                                                              float lifetime=std::numeric_limits<float>::infinity(), bool depthTest=true);
+	DebugShapeData * addUnitSphere(glm::mat4& transform,                    glm::vec4& color,                   bool depthTest=true, float lifetime=std::numeric_limits<float>::infinity());
+	DebugShapeData * addUnitCube  (glm::mat4& transform,                    glm::vec4& color,                   bool depthTest=true, float lifetime=std::numeric_limits<float>::infinity());
+	DebugShapeData * addLine      (glm::vec3& start,     glm::vec3& end,    glm::vec4& color, float offset = 0, bool depthTest=true, float lifetime=std::numeric_limits<float>::infinity());
+	DebugShapeData * addUnitVector(glm::vec3& tail,      glm::vec3& vector, glm::vec4& color, float offset = 0, bool depthTest=true, float lifetime=std::numeric_limits<float>::infinity());
+	DebugShapeData * addPoint     (glm::vec3& pos,                                                              bool depthTest=true, float lifetime=std::numeric_limits<float>::infinity());
 	
 	void update(float dt);
 
@@ -73,11 +73,11 @@ public:
 
 	void initShaders();
 
-	void addUnitSphere(glm::mat4& transform,                    glm::vec4& color, float lifetime=std::numeric_limits<float>::infinity(), bool depthTest=true) {}
-	void addUnitCube  (glm::mat4& transform,                    glm::vec4& color, float lifetime=std::numeric_limits<float>::infinity(), bool depthTest=true) {}
-	void addUnitVector(glm::vec3& tail,      glm::vec3& vector, glm::vec4& color, float lifetime=std::numeric_limits<float>::infinity(), bool depthTest=true) {}
-	void addLine      (glm::vec3& start,     glm::vec3& end,    glm::vec4& color, float lifetime=std::numeric_limits<float>::infinity(), bool depthTest=true) {}
-	void addPoint     (glm::vec3& pos,                                            float lifetime=std::numeric_limits<float>::infinity(), bool depthTest=true) {}
+	void addUnitSphere(glm::mat4& transform,                    glm::vec4& color, bool depthTest=true, float lifetime=std::numeric_limits<float>::infinity()) {}
+	void addUnitCube  (glm::mat4& transform,                    glm::vec4& color, bool depthTest=true, float lifetime=std::numeric_limits<float>::infinity()) {}
+	void addUnitVector(glm::vec3& tail,      glm::vec3& vector, glm::vec4& color, bool depthTest=true, float lifetime=std::numeric_limits<float>::infinity()) {}
+	void addLine      (glm::vec3& start,     glm::vec3& end,    glm::vec4& color, bool depthTest=true, float lifetime=std::numeric_limits<float>::infinity()) {}
+	void addPoint     (glm::vec3& pos,                                            bool depthTest=true, float lifetime=std::numeric_limits<float>::infinity()) {}
 public:
 	
 	void update(float dt) {}
