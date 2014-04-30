@@ -110,11 +110,11 @@ void     LevelSerializer::readFile (const char * filename, myByte*& out_levelBin
 	input.read(RIC(myByte*,out_GameNodes),nodeAndConnectionSize);
 	input.close();
 
-	GameNodeConnection* temp = RIC(GameNodeConnection*,out_GameNodes + 28);
+	GameNodeConnection* temp = RIC(GameNodeConnection*,out_GameNodes + meHeader.numOfNodes);
 	
 	for (uint i = 0; i < meHeader.numOfNodes; i++)
 	{
-		POINTER_FIX(out_GameNodes[i].connections,GameNodeConnection *,out_GameNodes+1);
+		POINTER_FIX(out_GameNodes[i].connections,GameNodeConnection *,out_GameNodes);
 		for (uint j = 0; j < out_GameNodes[i].numOfConnections; j++)
 		{
 			POINTER_FIX(out_GameNodes[i].connections[j].to,GameNode *,out_GameNodes);
