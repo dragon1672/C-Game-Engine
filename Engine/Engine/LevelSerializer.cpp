@@ -2,7 +2,7 @@
 
 #define RIC_BYTE(a) reinterpret_cast<myByte*>(&a), sizeof(a)
 #define RIC(type,value) reinterpret_cast<type>(value)
-#define POINTER_FIX(toFix, finalType, source) toFix = RIC(finalType,source + (int)toFix)
+#define POINTER_FIX(toFix, finalType, source) toFix = RIC(finalType,RIC(myByte*,source) + (int)toFix)
 
 myByte * LevelSerializer::loadFile (const char * filename, int& sizeResult) {
 	std::ifstream input( filename , std::ios::binary | std::ios::in);
@@ -38,7 +38,7 @@ void     LevelSerializer::writeFile(const char * levelBinary, NodeManager& nodeM
 	delete levelObject; // cleaning up
 
 	std::vector<EditorNodeConnection> allConnetions; // save when scanning nodes to save easier
-	int currentConnetionOffset = myHeader.startOfConnectionData; // tracks previous connetion offsets to calculate offset
+	int currentConnetionOffset = myHeader.startOfConnectionData - myHeader.startOfNodeData; // tracks previous connetion offsets to calculate offset
 
 	for (uint i = 0; i < nodeManager.nodes.size(); i++)
 	{
@@ -63,7 +63,7 @@ void     LevelSerializer::writeFile(const char * levelBinary, NodeManager& nodeM
 			*/
 			EditorNodeConnection currentConnection = *(nodeManager.nodes[i]->connections[j]); // copy data
 			int id = nodeManager.getNodeId(currentConnection.to);
-			int nodeOffsetInFile = (id >= 0) ? myHeader.startOfNodeData + id * sizeof(GameNode) : myHeader.endOfFile;
+			int nodeOffsetInFile = (id >= 0) ? id * sizeof(GameNode) : -1;
 			currentConnection.to = reinterpret_cast<EditorNode*>(nodeOffsetInFile); // change pointer to point in file
 			allConnetions.push_back(currentConnection);
 		}
@@ -91,8 +91,41 @@ myByte * LevelSerializer::readFile (const char * filename, NodeManager& nodeMana
 	return levelBinary;
 }
 void     LevelSerializer::readFile (const char * filename, myByte*& out_levelBinary, GameNode*& out_GameNodes, uint& out_numOfNodes) {
+	std::ifstream input( filename , std::ios::binary | std::ios::in);
+	assert(input.good()); 
+	input.seekg(0, std::ios::end);
+	int fileSize = (int)input.tellg();
+	input.seekg(0, std::ios::beg);
+
+	LevelFileHeader meHeader;
+	input.read(RIC_BYTE(meHeader)); // read header
+
+	int levelSize = meHeader.startOfNodeData - meHeader.startOfBinaryData; // because node data is right after node data
+	out_levelBinary = new myByte[levelSize];
+	input.read(out_levelBinary,levelSize);
+
+	out_numOfNodes = meHeader.numOfNodes;
+	int nodeAndConnectionSize = meHeader.numOfNodes * sizeof(GameNode) + meHeader.numOfConnections * sizeof(GameNodeConnection);
+	out_GameNodes = RIC(GameNode *,new myByte[nodeAndConnectionSize]);
+	input.read(RIC(myByte*,out_GameNodes),nodeAndConnectionSize);
+	input.close();
+
+	GameNodeConnection* temp = RIC(GameNodeConnection*,out_GameNodes + 28);
+	
+	for (uint i = 0; i < meHeader.numOfNodes; i++)
+	{
+		POINTER_FIX(out_GameNodes[i].connections,GameNodeConnection *,out_GameNodes+1);
+		for (uint j = 0; j < out_GameNodes[i].numOfConnections; j++)
+		{
+			POINTER_FIX(out_GameNodes[i].connections[j].to,GameNode *,out_GameNodes);
+		}
+	}
+}
+
+/*
+void     readFile_old_First_version (const char * filename, myByte*& out_levelBinary, GameNode*& out_GameNodes, uint& out_numOfNodes) {
 	int fileSize;
-	myByte * file = loadFile(filename,fileSize);
+	myByte * file = LevelSerializer::loadFile(filename,fileSize);
 	LevelFileHeader * header = RIC(LevelFileHeader *, file);
 	myByte * levelBinary = file + header->startOfBinaryData;
 
@@ -109,3 +142,4 @@ void     LevelSerializer::readFile (const char * filename, myByte*& out_levelBin
 	out_numOfNodes = header->numOfNodes;
 	out_levelBinary = levelBinary;
 }
+//*/

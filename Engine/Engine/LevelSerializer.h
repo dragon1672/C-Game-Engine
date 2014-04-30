@@ -6,15 +6,15 @@
 #include "LevelFileHeader.h"
 #include "GameNode.h"
 #include "GameNodeConnection.h"
+#include "ExportHeader.h"
 
 typedef char myByte;
 
-class LevelSerializer {
-public:
+namespace LevelSerializer {
 	//must be deleted
-	static myByte * loadFile(const char * filename, int& sizeResult);
-	static void writeFile(const char * levelBinary, NodeManager& nodeManager, const char * outfile);
+	ENGINE_SHARED myByte * loadFile(const char * filename, int& sizeResult);
+	ENGINE_SHARED void     writeFile(const char * levelBinary, NodeManager& nodeManager, const char * outfile);
 	//returns level data
-	static myByte * readFile(const char * filename, NodeManager& nodeManager);
-	static void readFile(const char * filename, myByte*& out_levelBinary, GameNode*& out_GameNodes, uint& out_numOfNodes);
-};
+	ENGINE_SHARED myByte * readFile(const char * filename, NodeManager& nodeManager);
+	ENGINE_SHARED void     readFile(const char * filename, myByte*& out_levelBinary, GameNode*& out_GameNodes, uint& out_numOfNodes);
+}
