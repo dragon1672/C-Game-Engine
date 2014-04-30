@@ -152,6 +152,7 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="EditorNode.cpp" />
     <ClCompile Include="GeometryInfo.cpp" />
+    <ClCompile Include="LevelSerializer.cpp" />
     <ClCompile Include="LinkedSlider.cpp" />
     <ClCompile Include="LogManager.cpp" />
     <ClCompile Include="MyRandom.cpp" />

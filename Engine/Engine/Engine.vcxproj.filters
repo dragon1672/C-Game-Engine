@@ -281,6 +281,9 @@
     <ClCompile Include="AStarDebugPath.cpp">
       <Filter>Pathing\A%2a\Debug</Filter>
     </ClCompile>
+    <ClCompile Include="LevelSerializer.cpp">
+      <Filter>Pathing\File Saving</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Matrix3D.inl">
