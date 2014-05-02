@@ -218,11 +218,8 @@
     <ClInclude Include="State.h">
       <Filter>3DGameEntity\Inheritence\States</Filter>
     </ClInclude>
-    <ClInclude Include="FetchingFlagState.h">
-      <Filter>3DGameEntity\Inheritence\States</Filter>
-    </ClInclude>
-    <ClInclude Include="RunningToHomeBaseState.h">
-      <Filter>3DGameEntity\Inheritence\States</Filter>
+    <ClInclude Include="Flag.h">
+      <Filter>3DGameEntity\Inheritence</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -305,6 +302,10 @@
     <ClCompile Include="LevelSerializer.cpp">
       <Filter>Pathing\File Saving</Filter>
     </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>3DGameEntity\Inheritence</Filter>
+    </ClCompile>
+    <ClCompile Include="Flag.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Matrix3D.inl">

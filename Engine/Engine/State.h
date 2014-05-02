@@ -2,9 +2,7 @@
 
 #include "ExportHeader.h"
 
-class Character;
-
-class ENGINE_SHARED State {
-public:
-	virtual void update(Character * c) = 0;
+enum ENGINE_SHARED State {
+	RunningToHomeBaseState,
+	FetchingFlagState,
 };

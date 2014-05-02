@@ -110,17 +110,6 @@ namespace AStar {
 		} while(currentNode->parent != nullptr);
 		return ret;
 	}
-	void getToNullparent(Node* seed) {
-		int steps = 0;
-		Node * currentNode = seed;
-		do {
-			steps++;
-			currentNode = currentNode->parent;
-			if(currentNode==nullptr) break;
-		} while(currentNode->parent != nullptr);
-		int one = 1;
-		one++;
-	}
 	//generates and returns path
 	Path PathGenerator::getPath(GameNode * start, GameNode * end) {
 		this->start = start;
@@ -145,7 +134,6 @@ namespace AStar {
 				uint nodeID = processingParent->node->connections[i].to - gameNodes;
 				processNode(&pathingNodes[nodeID],processingParent, processingParent->node->connections[i].cost);
 				Node * temp = &pathingNodes[nodeID];
-				getToNullparent(temp);
 			}
 		}
 		//invalid path
@@ -154,11 +142,16 @@ namespace AStar {
 		return ret;
 	}
 	Path PathGenerator::getPath(glm::vec3 start, glm::vec3 end) {
-		GameNode * startNode = findClosestNode(start);
-		GameNode * endNode   = findClosestNode(end);
-		Path ret = getPath(startNode,endNode);
-		ret.positions.insert(ret.positions.begin(),end);
-		ret.positions.push_back(start);
+		Path ret;
+		if(start != end) {
+			GameNode * startNode = findClosestNode(start);
+			GameNode * endNode   = findClosestNode(end);
+			ret = getPath(startNode,endNode);
+			ret.positions.insert(ret.positions.begin(),end);
+			ret.positions.push_back(start);
+		} else {
+			ret.validPath = false;
+		}
 		return ret;
 	}
 }

@@ -26,8 +26,11 @@ namespace AStar {
 
 			glm::vec3 popCurrentConnection(); // override
 			void setVisability(bool newState);
+			void resetGraphics(DebugShapeManager& shapeManager);
 #else
 			void drawPath(DebugShapeManager& shapeManager, glm::vec3& currentPos) {}
+			void setVisability(bool newState) {}
+			void resetGraphics() {}
 #endif
 		};
 	}
