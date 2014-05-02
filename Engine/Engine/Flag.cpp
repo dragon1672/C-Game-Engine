@@ -8,7 +8,7 @@ void Flag::update(float dt) {
 	changedPosLastFrame = false;
 	if(transformMat != nullptr) {
 		if((0 >= timeSinceLastMove || timeSinceLastMove > 5) && holder == nullptr) {
-			pos = Random::glmRand::randomFloatVectorInBox(30,0,30);
+			pos = Random::glmRand::randomFloatVectorInBoxRanged(30,0,100);
 			timeSinceLastMove = 0;
 			changedPosLastFrame = true;
 		}

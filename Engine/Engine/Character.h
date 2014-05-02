@@ -28,6 +28,10 @@ public:
 	Flag * meFlag;
 	glm::vec3 homeBasePos;
 
+	float speedMultiplyer;
+	bool debugPath;
+	bool lastDebugPath;
+
 	bool hasFlag;
 	State myState;
 private:
@@ -38,6 +42,9 @@ public:
 		hasFlag = false;
 		meFlag = nullptr;
 		transformMat = nullptr;
+		speedMultiplyer = 1;
+		debugPath = true;
+		lastDebugPath = true;
 	}
 	void init(glm::mat4 * transformMat, Flag* meFlagOfAwesome, glm::vec3 homeBasePos, AStar::PathGenerator& pather, DebugShapeManager& shaper);
 

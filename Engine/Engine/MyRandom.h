@@ -20,6 +20,7 @@ namespace Random {
 	ENGINE_SHARED Vector2D randomIntVector  (int   low, int   high);
 	namespace glmRand {
 		ENGINE_SHARED glm::vec3 randomUnitVector();
+		ENGINE_SHARED glm::vec3 randomFloatVectorInBoxRanged(float width, float height, float depth = 0);
 		ENGINE_SHARED glm::vec3 randomFloatVectorInBox(float width, float height, float depth = 0);
 		ENGINE_SHARED glm::vec3 randomIntVectorInBox  (int   width, int   height, int   depth = 0);
 		ENGINE_SHARED glm::vec3 randomFloatVector(float low, float high);

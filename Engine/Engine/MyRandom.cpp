@@ -43,6 +43,9 @@ Vector2D Random::randomIntVector(int   low, int   high) {
 glm::vec3 Random::glmRand::randomUnitVector() {
 	return glm::normalize(glm::vec3(randomFloat(-1,1),randomFloat(-1,1),randomFloat(-1,1)));
 }
+glm::vec3 Random::glmRand::randomFloatVectorInBoxRanged(float width, float height, float depth) {
+	return glm::vec3(randomFloat(-width,width),randomFloat(-height,height),randomFloat(-depth,depth));
+}
 glm::vec3 Random::glmRand::randomFloatVectorInBox(float width, float height, float depth) {
 	return glm::vec3(randomFloat(0,width),randomFloat(0,height),randomFloat(0,depth));
 }
