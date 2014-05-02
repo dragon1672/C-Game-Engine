@@ -57,20 +57,20 @@ void Character::newFlagPos(glm::vec3 newPos) {
 void Character::update(float dt) {
 	if(meFlag->hasChangedPos()) {
 		newFlagPos(meFlag->pos);
-	}
-
-	glm::vec3 path2Dest = currentDestination - pos;
-	glm::vec3 movement = direction * speed * dt;
-	if(glm::dot(path2Dest,path2Dest) <= glm::dot(movement,movement)) { // destination will be reached within the tick
-		pos = currentDestination;
-		prepForNextDest();
 	} else {
-		pos += movement;
+		glm::vec3 path2Dest = currentDestination - pos;
+		glm::vec3 movement = direction * speed * dt;
+		if(glm::dot(path2Dest,path2Dest) <= glm::dot(movement,movement)) { // destination will be reached within the tick
+			pos = currentDestination;
+			prepForNextDest();
+		} else {
+			pos += movement;
+		}
+		if(hasFlag) {
+			meFlag->pos = pos + glm::vec3(0,2,0) - 2.0f * direction;
+		}
+		(*transformMat) = glm::translate(pos+ glm::vec3(0,3,0)) * glm::orientation(direction,glm::vec3(1,0,0));
 	}
-	if(hasFlag) {
-		meFlag->pos = pos + glm::vec3(0,3,0);
-	}
-	(*transformMat) = glm::translate(pos+ glm::vec3(0,3,0)) * glm::orientation(direction,glm::vec3(1,0,0));
 }
 glm::mat4x4 Character::getWorld2View() {
 	glm::vec3 pos = this->pos;
