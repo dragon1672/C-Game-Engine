@@ -90,7 +90,8 @@ namespace AStar {
 		float currentDist;
 		for (int i = 0; i < numOfGameNodes; i++)
 		{
-			float testingDistance = glm::length(gameNodes[i].pos - pos);
+			glm::vec3 vecBetween = gameNodes[i].pos - pos;
+			float testingDistance = glm::dot(vecBetween,vecBetween);
 			if(ret == nullptr || testingDistance < currentDist)  {
 				currentDist = testingDistance;
 				ret = &gameNodes[i];
@@ -119,13 +120,11 @@ namespace AStar {
 		openList.clear();
 		openList.push_back(convertToNode(start));
 
-		Node * endNode = &pathingNodes[numOfGameNodes-1];
-
 		while(openList.size() > 0) {
 			Node * processingParent = popCheapestNode(); // removes nodes for open
 				
 			//if end is found
-			if(processingParent->node == end || endNode->parent != nullptr) {
+			if(processingParent->node == end) {
 				return genPath(processingParent);
 			}
 			//process connections

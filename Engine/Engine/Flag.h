@@ -23,6 +23,7 @@ public:
 	void init(glm::mat4 * transformMat);
 	bool hasChangedPos();
 	void update(float dt);
+	void reset();
 private:
 	bool changedPosLastFrame;
 	glm::mat4 * transformMat;

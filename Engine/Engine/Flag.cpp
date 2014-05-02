@@ -8,9 +8,7 @@ void Flag::update(float dt) {
 	changedPosLastFrame = false;
 	if(transformMat != nullptr) {
 		if((0 >= timeSinceLastMove || timeSinceLastMove > 5) && holder == nullptr) {
-			pos = Random::glmRand::randomFloatVectorInBoxRanged(30,0,100);
-			timeSinceLastMove = 0;
-			changedPosLastFrame = true;
+			reset();
 		}
 		timeSinceLastMove += dt;
 		if(holder != nullptr) {
@@ -18,4 +16,10 @@ void Flag::update(float dt) {
 		}
 		*transformMat = glm::translate(pos) * glm::rotate(angle,glm::vec3(0,1,0));
 	}
+}
+void Flag::reset() {
+	holder = nullptr;
+	pos = Random::glmRand::randomFloatVectorInBoxRanged(30,0,100);
+	timeSinceLastMove = 0;
+	changedPosLastFrame = true;
 }

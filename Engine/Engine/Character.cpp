@@ -30,10 +30,10 @@ void Character::reset() {
 		meFlag->holder = this;
 		meFlag->timeSinceLastMove = std::numeric_limits<float>::infinity();
 	} else if(myState==State::FetchingFlagState) {
+		meFlag->reset();
 		changePath(pather->getPath(pos,meFlag->pos));
 		finalDestination = meFlag->pos;
 		hasFlag = false;
-		meFlag->holder = nullptr;
 	}
 }
 void Character::changePath(AStar::Path& newOne) {
