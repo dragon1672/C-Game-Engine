@@ -55,12 +55,6 @@
     <Filter Include="3DGameEntity">
       <UniqueIdentifier>{94418a5a-d7be-4420-96b3-6641899060c5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="3DGameEntity\Inheritence">
-      <UniqueIdentifier>{4bd64aff-e58c-42f4-bb06-27727201d18f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="3DGameEntity\Inheritence\States">
-      <UniqueIdentifier>{4dc96920-3d47-43ce-871d-6c8e1f02bac4}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Matrix2D.h">
@@ -212,15 +206,6 @@
     <ClInclude Include="AStarDebugPathGenerator.h">
       <Filter>Pathing\A%2a\Debug</Filter>
     </ClInclude>
-    <ClInclude Include="Character.h">
-      <Filter>3DGameEntity\Inheritence</Filter>
-    </ClInclude>
-    <ClInclude Include="State.h">
-      <Filter>3DGameEntity\Inheritence\States</Filter>
-    </ClInclude>
-    <ClInclude Include="Flag.h">
-      <Filter>3DGameEntity\Inheritence</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LogManager.cpp">
@@ -302,10 +287,6 @@
     <ClCompile Include="LevelSerializer.cpp">
       <Filter>Pathing\File Saving</Filter>
     </ClCompile>
-    <ClCompile Include="Character.cpp">
-      <Filter>3DGameEntity\Inheritence</Filter>
-    </ClCompile>
-    <ClCompile Include="Flag.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Matrix3D.inl">

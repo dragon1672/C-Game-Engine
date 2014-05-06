@@ -95,7 +95,6 @@
     <ClInclude Include="BoolToggleController.h" />
     <ClInclude Include="BufferManager.h" />
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="Character.h" />
     <ClInclude Include="DebugMemHeader.h" />
     <ClInclude Include="DebugMenuManager.h" />
     <ClInclude Include="DebugShapeManager.h" />
@@ -104,7 +103,6 @@
     <ClInclude Include="EditorNode.h" />
     <ClInclude Include="EditorNodeConnection.h" />
     <ClInclude Include="ExportHeader.h" />
-    <ClInclude Include="Flag.h" />
     <ClInclude Include="GameNode.h" />
     <ClInclude Include="GameNodeConnection.h" />
     <ClInclude Include="GeometryInfo.h" />
@@ -130,7 +128,6 @@
     <ClInclude Include="SlideFloatController.h" />
     <ClInclude Include="SlideVectorController.h" />
     <ClInclude Include="SquareMatrix.h" />
-    <ClInclude Include="State.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="unsigned.h" />
     <ClInclude Include="Vector 2.h" />
@@ -147,7 +144,6 @@
     <ClCompile Include="BinaryToShapeLoader.cpp" />
     <ClCompile Include="BufferManager.cpp" />
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="Character.cpp" />
     <ClCompile Include="DebugMenuManager.cpp" />
     <ClCompile Include="DebugShapeManager.cpp" />
     <ClCompile Include="DebugSlider.cpp" />
@@ -155,7 +151,6 @@
     <ClCompile Include="DebugTimer.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="EditorNode.cpp" />
-    <ClCompile Include="Flag.cpp" />
     <ClCompile Include="GeometryInfo.cpp" />
     <ClCompile Include="LevelSerializer.cpp" />
     <ClCompile Include="LinkedSlider.cpp" />
