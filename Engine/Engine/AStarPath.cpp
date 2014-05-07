@@ -7,7 +7,7 @@ namespace AStar {
 			currentDestination = positions[id];
 			positions.erase(positions.begin() + id);
 		}
-			return currentDestination;
+		return currentDestination;
 	}
 	bool Path::isComplete() {
 		return positions.size() <= 0;
