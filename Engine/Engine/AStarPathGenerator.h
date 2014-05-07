@@ -26,7 +26,7 @@ namespace AStar {
 		void updateValues();
 		GameNode * findClosestNode(glm::vec3& pos);
 	public:
-		PathGenerator() { pathingNodes = nullptr; }
+		PathGenerator() : pathingNodes(nullptr) { }
 		void init(GameNode * nodes, uint numOfGameNodes);
 		//generates and returns path
 		Path getPath(GameNode * start, GameNode * end);
