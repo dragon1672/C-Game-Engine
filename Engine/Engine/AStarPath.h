@@ -13,5 +13,10 @@ namespace AStar {
 
 		glm::vec3 popCurrentConnection();
 		bool isComplete();
+		void addNewPath(Path& toAdd) {
+			while(!toAdd.isComplete()) {
+				positions.insert(positions.begin(),toAdd.popCurrentConnection());
+			}
+		}
 	};
 }
