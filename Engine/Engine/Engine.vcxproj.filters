@@ -52,7 +52,7 @@
     <Filter Include="Pathing\A%2a\Debug">
       <UniqueIdentifier>{7d5dc8eb-559a-47b1-8d5b-caf966ede166}</UniqueIdentifier>
     </Filter>
-    <Filter Include="3DGameEntity">
+    <Filter Include="Physics">
       <UniqueIdentifier>{94418a5a-d7be-4420-96b3-6641899060c5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -205,6 +205,9 @@
     </ClInclude>
     <ClInclude Include="AStarDebugPathGenerator.h">
       <Filter>Pathing\A%2a\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
