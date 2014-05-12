@@ -119,6 +119,7 @@
     <ClInclude Include="NodeManager.h" />
     <ClInclude Include="NUShapeEditor.h" />
     <ClInclude Include="ParameterType.h" />
+    <ClInclude Include="Particle.h" />
     <ClInclude Include="ProfileCategory.h" />
     <ClInclude Include="Ray.h" />
     <ClInclude Include="Renderable.h" />
