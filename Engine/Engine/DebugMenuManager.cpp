@@ -11,9 +11,9 @@ void DebugMenuManager::init() {
 	vecSlideCol = new QVBoxLayout();
 
 	setLayout(mainLayout);
+	mainLayout->addLayout(boolCol);
 	mainLayout->addLayout(floatWatchCol);
 	mainLayout->addLayout(floatSlideCol);
-	mainLayout->addLayout(boolCol);
 	mainLayout->addLayout(vecWatchCol);
 	mainLayout->addLayout(vecSlideCol);
 }
