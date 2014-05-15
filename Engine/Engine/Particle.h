@@ -1,6 +1,7 @@
 #pragma once
 
 #include <glm/glm.hpp>
+#include <math.h>
 
 struct Particle {
 public:
@@ -9,23 +10,24 @@ public:
 	glm::vec3 momentum;
 	float mass;
 	float drag;
-	bool conserveMomentum;
-	float acc;
+	glm::vec3 totalForce; // reset and calculated each tick from forces registered
+	std::vector<glm::vec3 *> allForces;
 
-	void init(float acceleration, float drag, float mass=1, bool conserveMomentum=false) {
-		this->acc = acceleration;
+	void init(float drag, float mass=1) {
 		this->drag = drag;
 		this->mass = mass;
-		this->conserveMomentum = conserveMomentum;
 	}
 
-	void update(glm::vec3& accDir, float dt) {
-		if(conserveMomentum) {
-			vel = momentum / mass;
-		}
-		vel += accDir * acc * dt;
-		vel *= drag;
-		momentum = vel * mass;
+	//adds and resets total force
+	void addTotalForce(float dt) {
+		glm::vec3 acc = totalForce / mass;
+		vel += acc * dt;
+		totalForce = glm::vec3();
+	}
+	void update(float dt) {
+		addTotalForce(dt);
 		pos += vel * dt;
+		vel *= pow(drag,dt); // drag!!
+		momentum = vel * mass;
 	}
 };

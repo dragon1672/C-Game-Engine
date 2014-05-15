@@ -55,6 +55,9 @@
     <Filter Include="Physics">
       <UniqueIdentifier>{94418a5a-d7be-4420-96b3-6641899060c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Physics\ForceGens">
+      <UniqueIdentifier>{de58a93a-78c0-4214-8fbb-164f450c14d2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Matrix2D.h">
@@ -208,6 +211,18 @@
     </ClInclude>
     <ClInclude Include="Particle.h">
       <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleForceRegistry.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleForceGenerator.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="GravityForceGenerator.h">
+      <Filter>Physics\ForceGens</Filter>
+    </ClInclude>
+    <ClInclude Include="VectorBoundForceGenerator.h">
+      <Filter>Physics\ForceGens</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
