@@ -101,6 +101,7 @@
     <ClInclude Include="DebugShapeManager.h" />
     <ClInclude Include="DebugSlider.h" />
     <ClInclude Include="DebugTimer.h" />
+    <ClInclude Include="DragForceGenerator.h" />
     <ClInclude Include="EditorNode.h" />
     <ClInclude Include="EditorNodeConnection.h" />
     <ClInclude Include="ExportHeader.h" />
