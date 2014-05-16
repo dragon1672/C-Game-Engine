@@ -164,6 +164,7 @@
     <ClCompile Include="MyRandom.cpp" />
     <ClCompile Include="NodeManager.cpp" />
     <ClCompile Include="NUShapeEditor.cpp" />
+    <ClCompile Include="Particle.cpp" />
     <ClCompile Include="Renderable.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
