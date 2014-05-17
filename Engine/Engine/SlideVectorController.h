@@ -30,6 +30,7 @@ namespace DebugMenuControllers {
 		}
 		inline void updateGUItoModel() {
 			// not required
+			updateModeltoGUI();
 		}
 		inline void updateModeltoGUI() {
 			xSlider->setBoundValue(&data->x);
