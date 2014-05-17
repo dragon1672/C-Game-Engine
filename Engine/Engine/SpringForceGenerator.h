@@ -26,6 +26,24 @@ public:
 		}
 		springs[leParticle].push_back(&anchor);
 	}
+	void removeSpring(Particle& leParticle, glm::vec3& anchor) {
+		removeSpring(&leParticle,&anchor);
+	}
+	void removeSpring(Particle * leParticle, glm::vec3 * anchor) {
+		auto id = springs.find(leParticle);
+		if (id != springs.end()) {
+			std::vector<glm::vec3*> data = springs[leParticle];
+			springs.erase(leParticle);
+			for (int i = 0; i < data.size(); i++)
+			{
+				if(data[i] == anchor) {
+					data.erase(data.begin() + i);
+					i--;
+				}
+			}
+			springs.emplace(leParticle,data);
+		}
+	}
 	
 	//override
 	void updateForce(Particle * toUpdate) {
