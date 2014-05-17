@@ -230,6 +230,9 @@
     <ClInclude Include="SpringForceGenerator.h">
       <Filter>Physics\ForceGens</Filter>
     </ClInclude>
+    <ClInclude Include="CheapSpringForce.h">
+      <Filter>Physics\ForceGens</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LogManager.cpp">
