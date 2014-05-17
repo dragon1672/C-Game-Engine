@@ -15,10 +15,12 @@ public:
 	}
 	void updateForce(Particle * ctxt) {
 		float velLength = glm::length(ctxt->vel);ctxt->vel;
-		glm::vec3 normVel = ctxt->vel / velLength;
-		lowForce  = -normVel * low * velLength;
-		highForce = -normVel * high * velLength * velLength;
-		glm::vec3 drag = (lowForce) + (highForce);
-		ctxt->totalForce += drag;
+		if(velLength > 0) {
+			glm::vec3 normVel = ctxt->vel / velLength;
+			lowForce  = -normVel * low * velLength;
+			highForce = -normVel * high * velLength * velLength;
+			glm::vec3 drag = (lowForce) + (highForce);
+			ctxt->totalForce += drag;
+		}
 	}
 };

@@ -11,6 +11,9 @@ class ParticleForceRegistry {
 	};
 	std::vector<ParticleForcePair> pairs;
 public:
+	void add(Particle& particle, ParticleForceGenerator& forceGen) {
+		add(&particle,&forceGen);
+	}
 	void add(Particle * particle, ParticleForceGenerator * forceGen) {
 		ParticleForcePair toAdd = {particle,forceGen};
 		pairs.push_back(toAdd);

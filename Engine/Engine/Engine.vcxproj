@@ -133,6 +133,7 @@
     <ClInclude Include="SingleKeyManager.h" />
     <ClInclude Include="SlideFloatController.h" />
     <ClInclude Include="SlideVectorController.h" />
+    <ClInclude Include="SpringForceGenerator.h" />
     <ClInclude Include="SquareMatrix.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="unsigned.h" />

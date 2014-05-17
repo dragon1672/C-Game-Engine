@@ -227,6 +227,9 @@
     <ClInclude Include="DragForceGenerator.h">
       <Filter>Physics\ForceGens</Filter>
     </ClInclude>
+    <ClInclude Include="SpringForceGenerator.h">
+      <Filter>Physics\ForceGens</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LogManager.cpp">

@@ -16,9 +16,13 @@ namespace DebugMenuControllers {
 		inline void init(const char * name, float * toWatch, float min, float max) {
 			data = toWatch;
 			label->setText(name);
+			float floatData = *toWatch;
+			slider->setBoundValue(toWatch);
 			slider->setMin(min);
 			slider->setMax(max);
+			*toWatch = floatData;
 			updateModeltoGUI();
+
 		}
 		inline void updateGUItoModel() {
 			// not required
