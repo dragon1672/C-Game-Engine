@@ -242,6 +242,9 @@
     <ClInclude Include="ButtonInfo.h">
       <Filter>MiddleWare\QT</Filter>
     </ClInclude>
+    <ClInclude Include="ParticleContact.h">
+      <Filter>Physics\Collision</Filter>
+    </ClInclude>
     <ClInclude Include="FastDelegate.h">
       <Filter>MiddleWare</Filter>
     </ClInclude>

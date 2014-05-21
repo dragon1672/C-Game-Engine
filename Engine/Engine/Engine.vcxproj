@@ -126,6 +126,7 @@
     <ClInclude Include="NUShapeEditor.h" />
     <ClInclude Include="ParameterType.h" />
     <ClInclude Include="Particle.h" />
+    <ClInclude Include="ParticleContact.h" />
     <ClInclude Include="ParticleForceGenerator.h" />
     <ClInclude Include="ParticleForceRegistry.h" />
     <ClInclude Include="ProfileCategory.h" />

@@ -24,7 +24,7 @@ signals:
 public:
 	DebugSlider(
 	float min = -10.0f, float max = 10.0f, 
-	bool textOnLeft = false, float granularity = 40.0);
+	bool textOnLeft = false, float granularity = 100.0);
 	float value() const;
 	void setValue(float newValue);
 	void setMin(float newMin);
