@@ -30,12 +30,12 @@ public:
 		particleMovement[0] = movePerIMass * (1/particle[0]->mass);
 		if (particle[1] != nullptr) {
 			particleMovement[1] = movePerIMass * -particle[1]->mass;
-			particle[1]->pos = particle[1]->pos + particleMovement[1];
+			particle[1]->pos += particleMovement[1];
 		} else {
 			particleMovement[1] = glm::vec3();
 		}
 		// Apply the penetration resolution.
-		particle[0]->pos = particle[0]->pos + particleMovement[0];
+		particle[0]->pos += particleMovement[0];
 	}
 
 	float calculateSeparatingVelocity() const {
@@ -43,7 +43,8 @@ public:
 
 		if (particle[1]) relativeVelocity -= particle[1]->vel;
 
-		return glm::dot(relativeVelocity, contactNormal);
+		float ret = glm::dot(relativeVelocity, contactNormal);
+		return ret;
 	}
 private:
 	void resolveVelocity(float dt) {
@@ -62,7 +63,7 @@ private:
 		// their inverse mass (i.e., those with lower inverse mass [higher
 		// actual mass] get less change in velocity).
 		float totalInverseMass = (1/particle[0]->mass);
-		if (particle[1]) totalInverseMass += (1/particle[1]->mass);
+		if (particle[1]!= nullptr) totalInverseMass += (1/particle[1]->mass);
 		// If all particles have infinite mass, then impulses have no effect.
 		if (totalInverseMass <= 0) return;
 		// Calculate the impulse to apply.
@@ -71,11 +72,11 @@ private:
 		glm::vec3 impulsePerIMass = contactNormal * impulse;
 		// Apply impulses: they are applied in the direction of the contact,
 		// and are proportional to the inverse mass.
-		particle[0]->vel = (particle[0]->vel + impulsePerIMass * (1/particle[0]->mass));
+		particle[0]->vel += impulsePerIMass * (1/particle[0]->mass);
 
 		if (particle[1] != nullptr) {
 			// Particle 1 goes in the opposite direction
-			particle[1]->vel = particle[1]->vel + impulsePerIMass * -(1/particle[1]->mass);
+			particle[1]->vel += impulsePerIMass * -(1/particle[1]->mass);
 		}
 	}
 };
