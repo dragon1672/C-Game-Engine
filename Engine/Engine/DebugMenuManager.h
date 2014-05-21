@@ -12,6 +12,7 @@
 #include "BoolToggleController.h"
 #include "WatchVectorController.h"
 #include "SlideVectorController.h"
+#include "ButtonInfo.h"
 #include <vector>
 
 class ENGINE_SHARED DebugMenuManager : public QWidget {
@@ -22,6 +23,7 @@ class ENGINE_SHARED DebugMenuManager : public QWidget {
 	std::vector<DebugMenuControllers::BoolToggleController  *> bools;			QVBoxLayout * boolCol;
 	std::vector<DebugMenuControllers::WatchVectorController *> vecWatchers;		QVBoxLayout * vecWatchCol;
 	std::vector<DebugMenuControllers::SlideVectorController *> vecSliders;		QVBoxLayout * vecSlideCol;
+	std::vector<ButtonInfo *> buttons;											QVBoxLayout * buttonCol;
 public:
 	void init();
 	void update();
@@ -30,6 +32,7 @@ public:
 	void toggleBool (char * name, bool& toWatch);
 	void watchVector(char * name, glm::vec3& toWatch);
 	void slideVector(char * name, glm::vec3& toWatch, float min, float max);
+	void button(char * name, BASIC_CALLBACK callback);
 #else
 public:
 	void init() {}

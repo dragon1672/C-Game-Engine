@@ -24,9 +24,12 @@ namespace DebugMenuControllers {
 			data = toWatch;
 			label->setText(name);
 			updateModeltoGUI();
+			glm::vec3 tempSave = *toWatch;
 			xSlider->setMin(lowRange);	xSlider->setMinimumWidth(30);	xSlider->setMax(highRange);
 			ySlider->setMin(lowRange);	ySlider->setMinimumWidth(30);	ySlider->setMax(highRange);
 			zSlider->setMin(lowRange);	zSlider->setMinimumWidth(30);	zSlider->setMax(highRange);
+			*toWatch = tempSave;
+			updateModeltoGUI();
 		}
 		inline void updateGUItoModel() {
 			// not required

@@ -67,11 +67,20 @@ void DebugMenuManager::slideVector(char * name, glm::vec3& toWatch, float min, f
 	vecSliders.push_back(toAdd);
 
 	QHBoxLayout * newRow = new QHBoxLayout();
-	newRow->addWidget((toAdd->label));
-	newRow->addWidget((toAdd->xSlider));
-	newRow->addWidget((toAdd->ySlider));
-	newRow->addWidget((toAdd->zSlider));
+	newRow->addWidget(toAdd->label);
+	newRow->addWidget(toAdd->xSlider);
+	newRow->addWidget(toAdd->ySlider);
+	newRow->addWidget(toAdd->zSlider);
 	vecSlideCol->addLayout(newRow);
+}
+void DebugMenuManager::button(char * name, BASIC_CALLBACK callback) {
+	auto * toAdd = new ButtonInfo();
+	toAdd->init(name,callback);
+	buttons.push_back(toAdd);
+
+	QHBoxLayout * newRow = new QHBoxLayout();
+	newRow->addWidget(toAdd->button);
+	buttonCol->addLayout(newRow);
 }
 
 #endif
