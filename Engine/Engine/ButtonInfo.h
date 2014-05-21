@@ -1,15 +1,14 @@
 #pragma once
 
 #include <Qt/qpushbutton.h>
-
-typedef void BASIC_CALLBACK();
+#include "FastDelegate.h"
 
 class ButtonInfo : public QObject {
 	Q_OBJECT
 public:
 	QPushButton* button;
-	BASIC_CALLBACK myDelegate;
-	void init(const char * text, BASIC_CALLBACK myDelegate) {
+	fastdelegate::FastDelegate0<> myDelegate;
+	void init(const char * text, fastdelegate::FastDelegate0<> myDelegate) {
 		button = new QPushButton(text);
 		this->myDelegate = myDelegate;
 		QObject::connect(button, SIGNAL(clicked()), this, SLOT(buttonClicked())); 

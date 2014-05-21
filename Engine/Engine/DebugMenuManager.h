@@ -32,7 +32,7 @@ public:
 	void toggleBool (char * name, bool& toWatch);
 	void watchVector(char * name, glm::vec3& toWatch);
 	void slideVector(char * name, glm::vec3& toWatch, float min, float max);
-	void button(char * name, BASIC_CALLBACK callback);
+	void button(char * name, fastdelegate::FastDelegate0<> callback);
 #else
 public:
 	void init() {}

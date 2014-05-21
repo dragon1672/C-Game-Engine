@@ -95,6 +95,8 @@
     <ClInclude Include="BinaryToShapeLoader.h" />
     <ClInclude Include="BoolToggleController.h" />
     <ClInclude Include="BufferManager.h" />
+    <ClInclude Include="ButtonController.h" />
+    <ClInclude Include="ButtonInfo.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CheapSpringForce.h" />
     <ClInclude Include="DebugMemHeader.h" />
@@ -106,6 +108,7 @@
     <ClInclude Include="EditorNode.h" />
     <ClInclude Include="EditorNodeConnection.h" />
     <ClInclude Include="ExportHeader.h" />
+    <ClInclude Include="FastDelegate.h" />
     <ClInclude Include="GameNode.h" />
     <ClInclude Include="GameNodeConnection.h" />
     <ClInclude Include="GeometryInfo.h" />
@@ -152,6 +155,7 @@
     <ClCompile Include="AutoProfilerManager.cpp" />
     <ClCompile Include="BinaryToShapeLoader.cpp" />
     <ClCompile Include="BufferManager.cpp" />
+    <ClCompile Include="ButtonInfo_mock.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="DebugMenuManager.cpp" />
     <ClCompile Include="DebugShapeManager.cpp" />

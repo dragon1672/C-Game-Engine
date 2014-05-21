@@ -58,6 +58,9 @@
     <Filter Include="Physics\ForceGens">
       <UniqueIdentifier>{de58a93a-78c0-4214-8fbb-164f450c14d2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Physics\Collision">
+      <UniqueIdentifier>{3e157b2a-3879-4612-8b9d-d151ceb6192f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Matrix2D.h">
@@ -233,6 +236,15 @@
     <ClInclude Include="CheapSpringForce.h">
       <Filter>Physics\ForceGens</Filter>
     </ClInclude>
+    <ClInclude Include="ButtonController.h">
+      <Filter>Debug\Renderer\MenuControllers</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonInfo.h">
+      <Filter>MiddleWare\QT</Filter>
+    </ClInclude>
+    <ClInclude Include="FastDelegate.h">
+      <Filter>MiddleWare</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LogManager.cpp">
@@ -316,6 +328,9 @@
     </ClCompile>
     <ClCompile Include="Particle.cpp">
       <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonInfo_mock.cpp">
+      <Filter>MiddleWare\QT</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

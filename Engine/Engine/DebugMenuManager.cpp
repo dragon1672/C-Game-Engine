@@ -9,8 +9,10 @@ void DebugMenuManager::init() {
 	boolCol = new QVBoxLayout();
 	vecWatchCol = new QVBoxLayout();
 	vecSlideCol = new QVBoxLayout();
+	buttonCol = new QVBoxLayout();
 
 	setLayout(mainLayout);
+	mainLayout->addLayout(buttonCol);
 	mainLayout->addLayout(boolCol);
 	mainLayout->addLayout(floatWatchCol);
 	mainLayout->addLayout(floatSlideCol);
@@ -73,7 +75,7 @@ void DebugMenuManager::slideVector(char * name, glm::vec3& toWatch, float min, f
 	newRow->addWidget(toAdd->zSlider);
 	vecSlideCol->addLayout(newRow);
 }
-void DebugMenuManager::button(char * name, BASIC_CALLBACK callback) {
+void DebugMenuManager::button(char * name, fastdelegate::FastDelegate0<> callback) {
 	auto * toAdd = new ButtonInfo();
 	toAdd->init(name,callback);
 	buttons.push_back(toAdd);
