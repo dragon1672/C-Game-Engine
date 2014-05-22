@@ -27,10 +27,23 @@ class ENGINE_SHARED DebugMenuManager : public QWidget {
 public:
 	void init();
 	void update();
+	void watch(char * name, float& toWatch);							// float
+	void watch(char * name, glm::vec3& toWatch);						// vector
+	void edit (char * name, float& toWatch, float min, float max);		// float
+	
+	// vector
+	void edit (char * name, glm::vec3& toWatch, float min, float max);
+	void edit (char * name, glm::vec3& toWatch, float xRange, float yRange, float zRange);
+	void edit (char * name, glm::vec3& toWatch, float xMin, float xMax, float yMin, float yMax, float zMin, float zMax);
+	
+	void edit (char * name, bool& toWatch);								// bool
+	void edit (char * name, fastdelegate::FastDelegate0<> callback);	// button
 	void watchFloat (char * name, float& toWatch);
 	void slideFloat (char * name, float& toWatch, float min, float max);
 	void toggleBool (char * name, bool& toWatch);
 	void watchVector(char * name, glm::vec3& toWatch);
+	void slideVector(char * name, glm::vec3& toWatch, float xRange, float yRange, float zRange);
+	void slideVector(char * name, glm::vec3& toWatch, float xMin, float xMax, float yMin, float yMax, float zMin, float zMax);
 	void slideVector(char * name, glm::vec3& toWatch, float min, float max);
 	void button(char * name, fastdelegate::FastDelegate0<> callback);
 #else

@@ -15,7 +15,7 @@ public:
 		float * boundFloat=nullptr,
 		float min = 0.0f, float max = 1.0f, 
 		bool textOnLeft = false,
-		float granularity = 40.0)
+		float granularity = 100.0)
 			: DebugSlider(min, max,textOnLeft,granularity)
 	{
 			boundValue = boundFloat;

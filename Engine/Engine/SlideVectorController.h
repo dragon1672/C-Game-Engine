@@ -20,14 +20,14 @@ namespace DebugMenuControllers {
 			zSlider = new LinkedSlider();
 		}
 
-		inline void init(const char * name, glm::vec3 * toWatch, float lowRange, float highRange) {
+		inline void init(const char * name, glm::vec3 * toWatch, float xMin, float xMax, float yMin, float yMax, float zMin, float zMax) {
 			data = toWatch;
 			label->setText(name);
 			updateModeltoGUI();
 			glm::vec3 tempSave = *toWatch;
-			xSlider->setMin(lowRange);	xSlider->setMinimumWidth(30);	xSlider->setMax(highRange);
-			ySlider->setMin(lowRange);	ySlider->setMinimumWidth(30);	ySlider->setMax(highRange);
-			zSlider->setMin(lowRange);	zSlider->setMinimumWidth(30);	zSlider->setMax(highRange);
+			xSlider->setMin(xMin);	xSlider->setMinimumWidth(30);	xSlider->setMax(xMax);
+			ySlider->setMin(yMin);	ySlider->setMinimumWidth(30);	ySlider->setMax(yMax);
+			zSlider->setMin(zMin);	zSlider->setMinimumWidth(30);	zSlider->setMax(zMax);
 			*toWatch = tempSave;
 			updateModeltoGUI();
 		}

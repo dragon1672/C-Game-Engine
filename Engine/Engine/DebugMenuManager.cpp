@@ -26,6 +26,30 @@ void DebugMenuManager::update() {
 	for (unsigned int i = 0; i < vecWatchers.size();   i++) { vecWatchers[i]->update();            }
 	for (unsigned int i = 0; i < vecSliders.size();    i++) { vecSliders[i]->updateGUItoModel();   }
 }
+void DebugMenuManager::watch(char * name, float& toWatch) {
+	watchFloat(name, toWatch);
+}
+void DebugMenuManager::watch(char * name, glm::vec3& toWatch) {
+	watchVector(name,toWatch);
+}
+void DebugMenuManager::edit (char * name, float& toWatch, float min, float max) {
+	slideFloat(name,toWatch,min,max);
+}
+void DebugMenuManager::edit (char * name, glm::vec3& toWatch, float min, float max) {
+	slideVector(name,toWatch,min,max);
+}
+void DebugMenuManager::edit (char * name, glm::vec3& toWatch, float xRange, float yRange, float zRange) {
+	slideVector(name,toWatch,xRange,yRange,zRange);
+}
+void DebugMenuManager::edit (char * name, glm::vec3& toWatch, float xMin, float xMax, float yMin, float yMax, float zMin, float zMax) {
+	slideVector(name,toWatch,xMin,xMax,yMin,yMax,zMin,zMax);
+}
+void DebugMenuManager::edit (char * name, bool& toWatch) {
+	toggleBool(name,toWatch);
+}
+void DebugMenuManager::edit (char * name, fastdelegate::FastDelegate0<> callback) {
+	button(name,callback);
+}
 void DebugMenuManager::watchFloat (char * name, float& toWatch)	  {
 	DebugMenuControllers::WatchFloatController * toAdd = new DebugMenuControllers::WatchFloatController();
 	toAdd->init(name,&toWatch);
@@ -64,8 +88,14 @@ void DebugMenuManager::watchVector(char * name, glm::vec3& toWatch) {
 	vecWatchCol->addLayout(newRow);
 }
 void DebugMenuManager::slideVector(char * name, glm::vec3& toWatch, float min, float max) {
+	slideVector(name,toWatch,min,max,min,max,min,max);
+}
+void DebugMenuManager::slideVector(char * name, glm::vec3& toWatch, float xRange, float yRange, float zRange) {
+	slideVector(name,toWatch,-xRange,xRange,-yRange,yRange,-zRange,zRange);
+}
+void DebugMenuManager::slideVector(char * name, glm::vec3& toWatch, float xMin, float xMax, float yMin, float yMax, float zMin, float zMax) {
 	DebugMenuControllers::SlideVectorController * toAdd = new DebugMenuControllers::SlideVectorController();
-	toAdd->init(name,&toWatch,min,max);
+	toAdd->init(name,&toWatch,xMin,xMax,yMin,yMax,zMin,zMax);
 	vecSliders.push_back(toAdd);
 
 	QHBoxLayout * newRow = new QHBoxLayout();
