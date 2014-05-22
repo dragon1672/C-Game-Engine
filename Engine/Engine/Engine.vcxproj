@@ -99,6 +99,8 @@
     <ClInclude Include="ButtonInfo.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CheapSpringForce.h" />
+    <ClInclude Include="CollisionEngine.h" />
+    <ClInclude Include="CollisionMassCircles.h" />
     <ClInclude Include="DebugMemHeader.h" />
     <ClInclude Include="DebugMenuManager.h" />
     <ClInclude Include="DebugShapeManager.h" />

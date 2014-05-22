@@ -248,6 +248,12 @@
     <ClInclude Include="FastDelegate.h">
       <Filter>MiddleWare</Filter>
     </ClInclude>
+    <ClInclude Include="CollisionEngine.h">
+      <Filter>Physics\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionMassCircles.h">
+      <Filter>Physics\Collision</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LogManager.cpp">
