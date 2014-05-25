@@ -9,11 +9,14 @@ namespace DebugMenuControllers {
 		QLabel * label;
 		float * data;
 		LinkedSlider * slider;
+		bool doubleLink;
+
 		SlideFloatController() {
 			label = new QLabel();
 			slider = new LinkedSlider();
 		}
-		inline void init(const char * name, float * toWatch, float min, float max) {
+		inline void init(const char * name, float * toWatch, float min, float max, bool doubleLink) {
+			this->doubleLink = doubleLink;
 			data = toWatch;
 			label->setText(name);
 			float floatData = *toWatch;

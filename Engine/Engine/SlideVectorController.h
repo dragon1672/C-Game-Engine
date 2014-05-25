@@ -12,6 +12,7 @@ namespace DebugMenuControllers {
 		LinkedSlider * ySlider;
 		LinkedSlider * zSlider;
 		glm::vec3 * data;
+		bool doubleLink;
 
 		SlideVectorController() {
 			label   = new QLabel();
@@ -20,8 +21,9 @@ namespace DebugMenuControllers {
 			zSlider = new LinkedSlider();
 		}
 
-		inline void init(const char * name, glm::vec3 * toWatch, float xMin, float xMax, float yMin, float yMax, float zMin, float zMax) {
+		inline void init(const char * name, glm::vec3 * toWatch, float xMin, float xMax, float yMin, float yMax, float zMin, float zMax, bool doubleLink) {
 			data = toWatch;
+			this->doubleLink = doubleLink;
 			label->setText(name);
 			updateModeltoGUI();
 			glm::vec3 tempSave = *toWatch;
@@ -32,8 +34,9 @@ namespace DebugMenuControllers {
 			updateModeltoGUI();
 		}
 		inline void updateGUItoModel() {
-			// not required
-			updateModeltoGUI();
+			if(doubleLink) {
+				updateModeltoGUI();
+			}
 		}
 		inline void updateModeltoGUI() {
 			xSlider->setBoundValue(&data->x);
