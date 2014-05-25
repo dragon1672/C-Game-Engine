@@ -101,6 +101,7 @@
     <ClInclude Include="CheapSpringForce.h" />
     <ClInclude Include="CollisionEngine.h" />
     <ClInclude Include="CollisionMassCircles.h" />
+    <ClInclude Include="CollisionMassWall.h" />
     <ClInclude Include="DebugMemHeader.h" />
     <ClInclude Include="DebugMenuManager.h" />
     <ClInclude Include="DebugShapeManager.h" />
