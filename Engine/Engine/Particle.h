@@ -18,4 +18,5 @@ public:
 	//adds and resets total force
 	void addTotalForce(float dt);
 	void update(float dt);
+	glm::vec3 getAcc();
 };
