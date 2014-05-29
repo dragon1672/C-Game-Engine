@@ -21,8 +21,9 @@ public:
 	void update() {
 		glm::vec3 diff = particle->pos - wall->origin;
 		glm::vec3 correctDiff = glm::proj(diff,wall->direction);
+		float lengthToPlane = glm::length(correctDiff);
 		float rad = (particle->mass/2);
-		pen = rad - glm::length(correctDiff);
+		pen = rad - lengthToPlane;
 		vel = glm::proj(particle->vel,wall->direction);
 	}
 	bool hasCollided() {

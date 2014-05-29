@@ -4,6 +4,7 @@
 #include <math.h>
 #include "ExportHeader.h"
 
+
 struct ENGINE_SHARED Particle {
 public:
 	static glm::vec3 resetTotalForceValue;
@@ -15,8 +16,9 @@ public:
 	glm::vec3 totalForce; // reset and calculated each tick from forces registered
 
 	void init(float drag, float mass=1);
-	//adds and resets total force
-	void addTotalForce(float dt);
 	void update(float dt);
 	glm::vec3 getAcc();
+	void addForce(glm::vec3& toAdd);
+	void addAcc(glm::vec3& toAdd);
+	void clearForce();
 };

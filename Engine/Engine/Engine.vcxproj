@@ -100,6 +100,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CheapSpringForce.h" />
     <ClInclude Include="CollisionEngine.h" />
+    <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="CollisionMassCircles.h" />
     <ClInclude Include="CollisionMassWall.h" />
     <ClInclude Include="DebugMemHeader.h" />

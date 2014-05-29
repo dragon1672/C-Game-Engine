@@ -26,7 +26,7 @@ public:
 	}
 	bool hasCollided() {
 		return circleCollide(particles[0]->pos,particles[0]->mass/2,particles[1]->pos,particles[1]->mass/2)
-			&& glm::dot(vels[0] - vels[1],collisionNorm);
+			&& glm::dot(vels[0] - vels[1],collisionNorm) <= 0;
 	}
 	float getPenetration() {
 		return pen;

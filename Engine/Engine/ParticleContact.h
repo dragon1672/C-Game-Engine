@@ -33,6 +33,9 @@ public:
 		}
 		particle[0]->pos += particleMovement[0];
 	}
+	float getSign(float val) const {
+		return (val < 0)? -1 : 1;
+	}
 	glm::vec3 getVel(int index) const {
 		return particle[index] != nullptr ? glm::proj(particle[index]->vel,contactNormal) : glm::vec3();
 	}
@@ -45,10 +48,11 @@ public:
 		return ret;
 	}
 	void resolveVelocity(float dt) {
-		if(particle[1] != nullptr) particle[1]->totalForce -= getForce(1);
 		float separatingVelocity = calculateSeparatingVelocity();
 		float newSepVelocity = -separatingVelocity * restitution;
 		
+		if(separatingVelocity > 0) return;
+
 		//for resting collision
 		glm::vec3 accCollision = particle[0]->getAcc() - ((particle[1]!=nullptr) ? particle[1]->getAcc() : glm::vec3());
 		float projectedAcc = glm::dot(accCollision,contactNormal) * dt;
@@ -56,7 +60,6 @@ public:
 			newSepVelocity += restitution * projectedAcc;
 			newSepVelocity = MAX(newSepVelocity,0);
 		}
-		particle[0]->totalForce -= getForce(0);
 
 		float deltaVelocity = newSepVelocity - separatingVelocity;
 		float totalInverseMass = (1/particle[0]->mass);

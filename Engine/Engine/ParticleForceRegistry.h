@@ -2,6 +2,7 @@
 
 #include "ParticleForceGenerator.h"
 #include <vector>
+#include "unsigned.h"
 
 class ParticleForceRegistry {
 	struct ParticleForcePair
@@ -19,7 +20,7 @@ public:
 		pairs.push_back(toAdd);
 	}
 	void remove(Particle * particle, ParticleForceGenerator * forceGen) {
-		for (int i = 0; i < pairs.size(); i++)
+		for (uint i = 0; i < pairs.size(); i++)
 		{
 			if(pairs[i].forceGen == forceGen && pairs[i].particle == particle) {
 				pairs.erase(pairs.begin() + i);
@@ -31,7 +32,7 @@ public:
 		pairs.clear();
 	}
 	void updateForces() {
-		for (int i = 0; i < pairs.size(); i++)
+		for (uint i = 0; i < pairs.size(); i++)
 		{
 			pairs[i].forceGen->updateForce(pairs[i].particle);
 		}

@@ -257,6 +257,9 @@
     <ClInclude Include="CollisionMassWall.h">
       <Filter>Physics\Collision</Filter>
     </ClInclude>
+    <ClInclude Include="CollisionManager.h">
+      <Filter>Physics\Collision</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LogManager.cpp">

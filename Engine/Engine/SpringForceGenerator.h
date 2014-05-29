@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include "ParticleForceGenerator.h"
 #include <vector>
+#include "unsigned.h"
 
 class SpringForceGenerator : public ParticleForceGenerator {
 public:
@@ -33,7 +34,7 @@ public:
 		auto id = springs.find(leParticle);
 		if (id != springs.end()) {
 			std::vector<glm::vec3*>& data = springs[leParticle];
-			for (int i = 0; i < data.size(); i++)
+			for (uint i = 0; i < data.size(); i++)
 			{
 				if(data[i] == anchor) {
 					data.erase(data.begin() + i);
@@ -52,7 +53,7 @@ public:
 		auto id = springs.find(toUpdate);
 		if (id != springs.end()) {
 			std::vector<glm::vec3 *>& anchors = springs[toUpdate];
-			for (int i = 0; i < anchors.size(); i++)
+			for (uint i = 0; i < anchors.size(); i++)
 			{
 				glm::vec3 anchor = *anchors[i];
 				glm::vec3 diff = anchor - toUpdate->pos;
