@@ -32,7 +32,7 @@ public:
 
 			vels[0] = glm::proj(a->vel,collisionNorm);
 			vels[1] = glm::proj(b->vel,collisionNorm);
-			valid = glm::dot(vels[0] - vels[1],collisionNorm) <= 0;
+			valid = true;//glm::dot(vels[0] - vels[1],collisionNorm) <= 0;
 			if(valid || eitherLengthZero(vels[0],vels[1])) {
 				outPram.particle[0] = a;
 				outPram.particle[1] = b;
@@ -51,8 +51,10 @@ public:
 		float rad = (a->mass/2);
 		float pen = rad - glm::length(correctDiff);
 		glm::vec3 vel = glm::proj(a->vel,b->direction);
+		
+		float temp = glm::dot(vel,b->direction);
 
-		valid = pen >= 0 && glm::dot(vel,b->direction) <= 0;
+		valid = pen >= 0;
 		if(glm::dot(diff,b->direction) < 0) { // beyond wall
 			pen = lengthToPlane + rad;
 			valid = true;
