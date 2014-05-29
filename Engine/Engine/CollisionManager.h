@@ -18,7 +18,8 @@ public:
 	bool circleCollide(Particle * a, Particle * b) {
 		glm::vec3 diff = a->pos - b->pos;
 		float rads = a->mass/2 + b->mass/2;
-		return glm::dot(diff,diff) <= rads * rads;
+		float lengthSquared = glm::dot(diff,diff);
+		return lengthSquared <= rads * rads;
 	}
 	bool collide(Particle * a, Particle * b, ParticleContact& outPram) {
 		bool valid = false;

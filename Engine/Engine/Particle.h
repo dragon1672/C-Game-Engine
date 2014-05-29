@@ -11,6 +11,7 @@ public:
 	glm::vec3 vel;
 	glm::vec3 pos;
 	glm::vec3 momentum;
+	glm::vec3 acc;
 	float mass;
 	float drag;
 	glm::vec3 totalForce; // reset and calculated each tick from forces registered

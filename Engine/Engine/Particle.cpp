@@ -9,7 +9,7 @@ void Particle::init(float drag, float mass) {
 }
 
 glm::vec3 Particle::getAcc() {
-	return totalForce / mass;
+	return acc;
 }
 void Particle::addForce(glm::vec3& toAdd) {
 	totalForce += toAdd;
@@ -22,8 +22,10 @@ void Particle::clearForce() {
 }
 
 void Particle::update(float dt) {
-	vel += getAcc() * dt;
+	acc = totalForce / mass;
+	vel += acc * dt;
 	pos += vel * dt;
 	vel *= (drag != 1) ? pow(drag,dt) : 1; // drag!!
 	momentum = vel * mass;
+	clearForce();
 }
