@@ -6,8 +6,15 @@
 #include "unsigned.h"
 
 class SpringForceGenerator : public ParticleForceGenerator {
+	struct Spring {
+		float springRestLength;
+		glm::vec3 * anchor;
+	};
+	struct SpringConnections {
+		std::vector<Spring> springs;
+	};
 public:
-	std::unordered_map<Particle *,std::vector<glm::vec3 *>> springs;
+	std::unordered_map<Particle *,SpringConnections> springs;
 
 	float springConstent;
 	float springRestLength;
@@ -17,15 +24,16 @@ public:
 		springRestLength = restLength;
 	}
 
-	void addSpring(Particle& leParticle, glm::vec3& anchor) {
-		addSpring(&leParticle,anchor);
+	void addSpring(Particle& leParticle, glm::vec3& anchor, float overrideRestlength = -1) {
+		addSpring(&leParticle,anchor,overrideRestlength);
 	}
-	void addSpring(Particle * leParticle, glm::vec3& anchor) {
+	void addSpring(Particle * leParticle, glm::vec3& anchor, float overrideRestlength = -1) {
 		auto id = springs.find(leParticle);
 		if (id == springs.end()) {
-			springs.emplace(leParticle,std::vector<glm::vec3*>());
+			springs.emplace(leParticle,SpringConnections());
 		}
-		springs[leParticle].push_back(&anchor);
+		Spring toAdd = { overrideRestlength, &anchor };
+		springs[leParticle].springs.push_back(toAdd);
 	}
 	void removeSpring(Particle& leParticle, glm::vec3& anchor) {
 		removeSpring(&leParticle,&anchor);
@@ -33,10 +41,10 @@ public:
 	void removeSpring(Particle * leParticle, glm::vec3 * anchor) {
 		auto id = springs.find(leParticle);
 		if (id != springs.end()) {
-			std::vector<glm::vec3*>& data = springs[leParticle];
+			auto& data = springs[leParticle].springs;
 			for (uint i = 0; i < data.size(); i++)
 			{
-				if(data[i] == anchor) {
+				if(data[i].anchor == anchor) {
 					data.erase(data.begin() + i);
 					i--;
 				}
@@ -52,10 +60,11 @@ public:
 	void updateForce(Particle * toUpdate) {
 		auto id = springs.find(toUpdate);
 		if (id != springs.end()) {
-			std::vector<glm::vec3 *>& anchors = springs[toUpdate];
+			auto& anchors = springs[toUpdate].springs;
 			for (uint i = 0; i < anchors.size(); i++)
 			{
-				glm::vec3 anchor = *anchors[i];
+				float springRestLength = (anchors[i].springRestLength < 0) ? this->springRestLength : anchors[i].springRestLength;
+				glm::vec3 anchor = *anchors[i].anchor;
 				glm::vec3 diff = anchor - toUpdate->pos;
 				float diffLength = glm::length(diff);
 				float magnitude = springConstent * (diffLength - springRestLength);
