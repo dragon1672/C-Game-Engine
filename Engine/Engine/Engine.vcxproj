@@ -99,6 +99,7 @@
     <ClInclude Include="ButtonInfo.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CheapSpringForce.h" />
+    <ClInclude Include="CollisionDetection.h" />
     <ClInclude Include="CollisionEngine.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="CollisionMassCircles.h" />
@@ -133,6 +134,7 @@
     <ClInclude Include="ParticleContact.h" />
     <ClInclude Include="ParticleForceGenerator.h" />
     <ClInclude Include="ParticleForceRegistry.h" />
+    <ClInclude Include="ParticleWorld.h" />
     <ClInclude Include="ProfileCategory.h" />
     <ClInclude Include="Ray.h" />
     <ClInclude Include="Renderable.h" />

@@ -22,4 +22,5 @@ public:
 	void addForce(glm::vec3& toAdd);
 	void addAcc(glm::vec3& toAdd);
 	void clearForce();
+	float getInverseMass();
 };

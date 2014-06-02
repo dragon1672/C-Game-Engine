@@ -21,11 +21,15 @@ void Particle::clearForce() {
 	totalForce = resetTotalForceValue;
 }
 
+float Particle::getInverseMass() {
+	return 1/mass;
+}
+
 void Particle::update(float dt) {
 	acc = totalForce / mass;
 	vel += acc * dt;
-	pos += vel * dt;
 	vel *= (drag != 1) ? pow(drag,dt) : 1; // drag!!
+	pos += vel * dt;
 	momentum = vel * mass;
 	clearForce();
 }

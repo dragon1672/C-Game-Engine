@@ -55,10 +55,13 @@
     <Filter Include="Physics">
       <UniqueIdentifier>{94418a5a-d7be-4420-96b3-6641899060c5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Physics\ForceGens">
+    <Filter Include="Physics\Particles">
+      <UniqueIdentifier>{87ea07fc-0bec-4bcd-aa72-7a1b583f05ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Physics\Particles\ForceGens">
       <UniqueIdentifier>{de58a93a-78c0-4214-8fbb-164f450c14d2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Physics\Collision">
+    <Filter Include="Physics\Particles\Collision">
       <UniqueIdentifier>{3e157b2a-3879-4612-8b9d-d151ceb6192f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -212,29 +215,20 @@
     <ClInclude Include="AStarDebugPathGenerator.h">
       <Filter>Pathing\A%2a\Debug</Filter>
     </ClInclude>
-    <ClInclude Include="Particle.h">
-      <Filter>Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="ParticleForceRegistry.h">
-      <Filter>Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="ParticleForceGenerator.h">
-      <Filter>Physics</Filter>
-    </ClInclude>
     <ClInclude Include="GravityForceGenerator.h">
-      <Filter>Physics\ForceGens</Filter>
+      <Filter>Physics\Particles\ForceGens</Filter>
     </ClInclude>
     <ClInclude Include="VectorBoundForceGenerator.h">
-      <Filter>Physics\ForceGens</Filter>
+      <Filter>Physics\Particles\ForceGens</Filter>
     </ClInclude>
     <ClInclude Include="DragForceGenerator.h">
-      <Filter>Physics\ForceGens</Filter>
+      <Filter>Physics\Particles\ForceGens</Filter>
     </ClInclude>
     <ClInclude Include="SpringForceGenerator.h">
-      <Filter>Physics\ForceGens</Filter>
+      <Filter>Physics\Particles\ForceGens</Filter>
     </ClInclude>
     <ClInclude Include="CheapSpringForce.h">
-      <Filter>Physics\ForceGens</Filter>
+      <Filter>Physics\Particles\ForceGens</Filter>
     </ClInclude>
     <ClInclude Include="ButtonController.h">
       <Filter>Debug\Renderer\MenuControllers</Filter>
@@ -243,22 +237,37 @@
       <Filter>MiddleWare\QT</Filter>
     </ClInclude>
     <ClInclude Include="ParticleContact.h">
-      <Filter>Physics\Collision</Filter>
+      <Filter>Physics\Particles\Collision</Filter>
     </ClInclude>
     <ClInclude Include="FastDelegate.h">
       <Filter>MiddleWare</Filter>
     </ClInclude>
     <ClInclude Include="CollisionEngine.h">
-      <Filter>Physics\Collision</Filter>
+      <Filter>Physics\Particles\Collision</Filter>
     </ClInclude>
     <ClInclude Include="CollisionMassCircles.h">
-      <Filter>Physics\Collision</Filter>
+      <Filter>Physics\Particles\Collision</Filter>
     </ClInclude>
     <ClInclude Include="CollisionMassWall.h">
-      <Filter>Physics\Collision</Filter>
+      <Filter>Physics\Particles\Collision</Filter>
     </ClInclude>
     <ClInclude Include="CollisionManager.h">
-      <Filter>Physics\Collision</Filter>
+      <Filter>Physics\Particles\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>Physics\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleForceGenerator.h">
+      <Filter>Physics\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleForceRegistry.h">
+      <Filter>Physics\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleWorld.h">
+      <Filter>Physics\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionDetection.h">
+      <Filter>Physics\Particles\Collision</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -341,11 +350,11 @@
     <ClCompile Include="LevelSerializer.cpp">
       <Filter>Pathing\File Saving</Filter>
     </ClCompile>
-    <ClCompile Include="Particle.cpp">
-      <Filter>Physics</Filter>
-    </ClCompile>
     <ClCompile Include="ButtonInfo_mock.cpp">
       <Filter>MiddleWare\QT</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>Physics\Particles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

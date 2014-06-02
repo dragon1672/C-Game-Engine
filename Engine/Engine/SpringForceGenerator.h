@@ -1,6 +1,6 @@
 #pragma once
 
-#include <unordered_map>
+#include <map>
 #include "ParticleForceGenerator.h"
 #include <vector>
 #include "unsigned.h"
@@ -14,7 +14,7 @@ class SpringForceGenerator : public ParticleForceGenerator {
 		std::vector<Spring> springs;
 	};
 public:
-	std::unordered_map<Particle *,SpringConnections> springs;
+	std::map<Particle *,SpringConnections> springs;
 
 	float springConstent;
 	float springRestLength;
