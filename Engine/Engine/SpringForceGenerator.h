@@ -35,6 +35,9 @@ public:
 		Spring toAdd = { overrideRestlength, &anchor };
 		springs[leParticle].springs.push_back(toAdd);
 	}
+	void clear() {
+		springs.clear();
+	}
 	void removeSpring(Particle& leParticle, glm::vec3& anchor) {
 		removeSpring(&leParticle,&anchor);
 	}
@@ -66,11 +69,13 @@ public:
 				float springRestLength = (anchors[i].springRestLength < 0) ? this->springRestLength : anchors[i].springRestLength;
 				glm::vec3 anchor = *anchors[i].anchor;
 				glm::vec3 diff = anchor - toUpdate->pos;
-				float diffLength = glm::length(diff);
-				float magnitude = springConstent * (diffLength - springRestLength);
+				if(glm::dot(diff,diff) > 0) {
+					float diffLength = glm::length(diff);
+					float magnitude = springConstent * (diffLength - springRestLength);
 
-				glm::vec3 springForce = (diff / diffLength) * magnitude;
-				toUpdate->totalForce += springForce;
+					glm::vec3 springForce = (diff / diffLength) * magnitude;
+					toUpdate->totalForce += springForce;
+				}
 			}
 		}
 	}

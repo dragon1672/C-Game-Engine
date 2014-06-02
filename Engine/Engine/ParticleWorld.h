@@ -5,12 +5,11 @@
 #include "ParticleForceRegistry.h"
 
 class ParticleWorld {
+public:
 	Particle * particles;
 	uint numOfParticles;
 	ParticleForceRegistry forceReg;
 	CollisionManager collisionManager;
-
-public:
 
 	void init(Particle * particles, uint numOfParticles, Ray * walls, uint numOfWalls, float restitution = 1) {
 		this->particles = particles;

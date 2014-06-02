@@ -13,6 +13,8 @@ public:
 	uint numOfParticles;
 
 	float restitution;
+	bool wallCollide;
+	bool particleCollide;
 
 	void init(Ray * walls, uint numOfWalls, Particle * particles, uint numOfParticles, float restitution = 1) {
 		this->walls = walls;
@@ -20,6 +22,8 @@ public:
 		this->particles = particles;
 		this->numOfParticles = numOfParticles;
 		this->restitution = restitution;
+		wallCollide = true;
+		particleCollide = true;
 	}
 	
 	static bool eitherLengthZero(glm::vec3& a, glm::vec3& b) {
@@ -75,19 +79,23 @@ public:
 		for (int i = 0; i < numOfParticles; i++)
 		{
 			particles[i].update(dt);
-			for (int j = 0; j < numOfWalls; j++)
-			{
-				ParticleContact wallCollision;
-				if(collide(&particles[i],&walls[j], wallCollision)) {
-					wallCollision.collide(dt);
+			if(wallCollide) {
+				for (int j = 0; j < numOfWalls; j++)
+				{
+					ParticleContact wallCollision;
+					if(collide(&particles[i],&walls[j], wallCollision)) {
+						wallCollision.collide(dt);
+					}
 				}
 			}
-			for (int j = 0; j < numOfParticles; j++)
-			{
-				if(i!=j) {
-					ParticleContact particleCollision;
-					if(collide(&particles[i],&particles[j], particleCollision)) {
-						particleCollision.collide(dt);
+			if(particleCollide) {
+				for (int j = 0; j < numOfParticles; j++)
+				{
+					if(i!=j) {
+						ParticleContact particleCollision;
+						if(collide(&particles[i],&particles[j], particleCollision)) {
+							particleCollision.collide(dt);
+						}
 					}
 				}
 			}
