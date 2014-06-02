@@ -10,10 +10,12 @@ public:
 	uint numOfParticles;
 	ParticleForceRegistry forceReg;
 	CollisionManager collisionManager;
+	bool collision;
 
-	void init(Particle * particles, uint numOfParticles, Ray * walls, uint numOfWalls, float restitution = 1) {
+	void init(Particle * particles, uint numOfParticles, Ray * walls, uint numOfWalls, float restitution = 1, bool collision = true) {
 		this->particles = particles;
 		this->numOfParticles = numOfParticles;
+		this->collision = collision;
 		collisionManager.init(walls,numOfWalls,particles,numOfParticles,restitution);
 	}
 	void addForce(uint particleIndex, ParticleForceGenerator * forceGen) {
@@ -25,7 +27,14 @@ public:
 	void update(float dt) {
 		forceReg.updateForces();
 
-		collisionManager.update(dt);
+		if(collision) {
+			collisionManager.update(dt);
+		} else {
+			for (int i = 0; i < numOfParticles; i++)
+			{
+				particles[i].update(dt);
+			}
+		}
 	}
 	float& getRestitution() { return collisionManager.restitution; }
 };
