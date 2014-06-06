@@ -117,7 +117,7 @@ void ShaderProgram::passSavedUniforms_try() {
 		passSavedUniforms_force();
 }
 void ShaderProgram::passSavedUniforms_force() {
-	for (int i = 0; i < numOfPrams; i++)
+	for (uint i = 0; i < numOfPrams; i++)
 	{
 		prams[i].sendData();
 	}

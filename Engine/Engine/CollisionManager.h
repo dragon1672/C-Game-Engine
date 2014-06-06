@@ -76,11 +76,11 @@ public:
 		return valid;
 	}
 	void update(float dt) {
-		for (int i = 0; i < numOfParticles; i++)
+		for (uint i = 0; i < numOfParticles; i++)
 		{
 			particles[i].update(dt);
 			if(wallCollide) {
-				for (int j = 0; j < numOfWalls; j++)
+				for (uint j = 0; j < numOfWalls; j++)
 				{
 					ParticleContact wallCollision;
 					if(collide(&particles[i],&walls[j], wallCollision)) {
@@ -89,7 +89,7 @@ public:
 				}
 			}
 			if(particleCollide) {
-				for (int j = 0; j < numOfParticles; j++)
+				for (uint j = 0; j < numOfParticles; j++)
 				{
 					if(i!=j) {
 						ParticleContact particleCollision;

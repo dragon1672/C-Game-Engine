@@ -15,7 +15,7 @@ EditorNode * NodeManager::getNextNode() {
 uint NodeManager::getOffset(GameNode* startOfArray) {
 	static int offset = 0;
 	if(startOfArray[offset].pos != nodes[0]->pos) {
-		for (int i = 1; i < nodes.size(); i++)
+		for (uint i = 1; i < nodes.size(); i++)
 		{
 			offset = i;
 			if(startOfArray[offset].pos != nodes[0]->pos) return offset;
@@ -158,7 +158,7 @@ void NodeManager::activateAllConnections() {
 	}
 }
 void NodeManager::setAllVisability(bool state) {
-	for (int i = 0; i < nodes.size(); i++)
+	for (uint i = 0; i < nodes.size(); i++)
 	{
 		nodes[i]->setConnectionState(state);
 		nodes[i]->rednerable->draw = state;

@@ -10,7 +10,7 @@
 	void AStar::DEBUG::DebugPath::drawPath(DebugShapeManager& shapeManager) {
 		resetGraphics(shapeManager);
 
-		for (int i=0; i < positions.size(); i++)
+		for (uint i=0; i < positions.size(); i++)
 		{
 			glm::mat4 posTransform = glm::translate(positions[i]);
 			NodeRenderables.push_back(shapeManager.addUnitSphere(posTransform,PATH_NODE_COLOR,false));
@@ -50,11 +50,11 @@
 		if(currentNodeRenderable != nullptr) {
 			currentNodeRenderable->draw = newState;
 		}
-		for (int i = 0; i < NodeRenderables.size(); i++)
+		for (uint i = 0; i < NodeRenderables.size(); i++)
 		{
 			NodeRenderables[i]->draw = newState;
 		}
-		for (int i = 0; i < ConnectionRenderables.size(); i++)
+		for (uint i = 0; i < ConnectionRenderables.size(); i++)
 		{
 			ConnectionRenderables[i]->draw = newState;
 		}
@@ -63,12 +63,12 @@
 		if(currentNodeRenderable == nullptr) {
 			currentNodeRenderable = shapeManager.addUnitSphere(glm::translate(currentDestination),CURRENT_NODE_COLOR,false);
 		}
-		for (int i = 0; i < NodeRenderables.size(); i++)
+		for (uint i = 0; i < NodeRenderables.size(); i++)
 		{
 			NodeRenderables[i]->kill();
 		}
 		NodeRenderables.clear();
-		for (int i = 0; i < ConnectionRenderables.size(); i++)
+		for (uint i = 0; i < ConnectionRenderables.size(); i++)
 		{
 			ConnectionRenderables[i]->kill();
 		}

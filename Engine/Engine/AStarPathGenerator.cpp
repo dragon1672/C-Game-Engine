@@ -88,7 +88,7 @@ namespace AStar {
 	GameNode * PathGenerator::findClosestNode(glm::vec3& pos) {
 		GameNode * ret = nullptr;
 		float currentDist;
-		for (int i = 0; i < numOfGameNodes; i++)
+		for (uint i = 0; i < numOfGameNodes; i++)
 		{
 			glm::vec3 vecBetween = gameNodes[i].pos - pos;
 			float testingDistance = glm::dot(vecBetween,vecBetween);
@@ -128,7 +128,7 @@ namespace AStar {
 				return genPath(processingParent);
 			}
 			//process connections
-			for (int i = 0; i < processingParent->node->numOfConnections; i++)
+			for (uint i = 0; i < processingParent->node->numOfConnections; i++)
 			{
 				uint nodeID = processingParent->node->connections[i].to - gameNodes;
 				processNode(&pathingNodes[nodeID],processingParent, processingParent->node->connections[i].cost);

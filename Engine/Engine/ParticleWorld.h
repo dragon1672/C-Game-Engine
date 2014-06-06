@@ -30,7 +30,7 @@ public:
 		if(collision) {
 			collisionManager.update(dt);
 		} else {
-			for (int i = 0; i < numOfParticles; i++)
+			for (uint i = 0; i < numOfParticles; i++)
 			{
 				particles[i].update(dt);
 			}
