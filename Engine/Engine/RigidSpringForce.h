@@ -8,7 +8,7 @@
 #include <glm/gtx/rotate_vector.hpp>
 #include <glm/gtx/perpendicular.hpp>
 
-class SpringForceGenerator {
+class RigidSpringForce {
 	struct Spring {
 		float springRestLength;
 		glm::vec3 offset;
@@ -62,7 +62,7 @@ public:
 			}
 		}
 	}
-	
+
 	//override
 	void updateForce(RidgidBody * toUpdate) {
 		auto id = springs.find(toUpdate);
@@ -70,7 +70,7 @@ public:
 			auto& anchors = springs[toUpdate].springs;
 			for (uint i = 0; i < anchors.size(); i++)
 			{
-				glm::vec3 rotatedOffset = glm::rotate(anchors[i].offset, toUpdate->rotation, glm::vec3(0,0,1));
+				glm::vec3 rotatedOffset = glm::rotate(anchors[i].offset, glm::degrees(toUpdate->rotation), glm::vec3(0,0,-1));
 				glm::vec3 realPos = toUpdate->core.pos + rotatedOffset;
 				float springRestLength = (anchors[i].springRestLength < 0) ? this->springRestLength : anchors[i].springRestLength;
 				glm::vec3 anchor = *anchors[i].anchor;
