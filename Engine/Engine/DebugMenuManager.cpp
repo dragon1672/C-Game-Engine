@@ -1,7 +1,5 @@
 #include "DebugMenuManager.h"
 
-#ifdef _DEBUG
-
 void DebugMenuManager::init() {
 	mainLayout = new QHBoxLayout();
 	floatWatchCol = new QVBoxLayout();
@@ -114,5 +112,3 @@ void DebugMenuManager::button(char * name, fastdelegate::FastDelegate0<> callbac
 	newRow->addWidget(toAdd->button);
 	buttonCol->addLayout(newRow);
 }
-
-#endif

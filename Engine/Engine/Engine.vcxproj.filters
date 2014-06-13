@@ -278,6 +278,9 @@
     <ClInclude Include="RigidSpringForce.h">
       <Filter>Physics\RidgidBody</Filter>
     </ClInclude>
+    <ClInclude Include="GravityBodyForceGenerator.h">
+      <Filter>Physics\Particles\ForceGens</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LogManager.cpp">

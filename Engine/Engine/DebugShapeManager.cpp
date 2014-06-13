@@ -1,5 +1,4 @@
 #include "DebugShapeManager.h"
-#ifdef _DEBUG
 #include <glm/gtx/rotate_vector.hpp>
 #include <glm/gtx/transform.hpp>
 #include <ShapeData.h>
@@ -210,4 +209,3 @@ void      DebugShapeManager::draw() {
 		}
 	}
 }
-#endif

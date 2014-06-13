@@ -13,7 +13,6 @@
 typedef unsigned short ushort;
 
 class ENGINE_SHARED DebugShapeManager {
-#ifdef _DEBUG
 private:
 	static glm::vec3 UP;
 public:
@@ -67,21 +66,4 @@ public:
 	void update(float dt);
 
 	void draw();
-#else
-	public:
-	void init(float * viewMatrix) {}
-
-	void initShaders();
-
-	void addUnitSphere(glm::mat4& transform,                    glm::vec4& color, bool depthTest=true, float lifetime=std::numeric_limits<float>::infinity()) {}
-	void addUnitCube  (glm::mat4& transform,                    glm::vec4& color, bool depthTest=true, float lifetime=std::numeric_limits<float>::infinity()) {}
-	void addUnitVector(glm::vec3& tail,      glm::vec3& vector, glm::vec4& color, bool depthTest=true, float lifetime=std::numeric_limits<float>::infinity()) {}
-	void addLine      (glm::vec3& start,     glm::vec3& end,    glm::vec4& color, bool depthTest=true, float lifetime=std::numeric_limits<float>::infinity()) {}
-	void addPoint     (glm::vec3& pos,                                            bool depthTest=true, float lifetime=std::numeric_limits<float>::infinity()) {}
-public:
-	
-	void update(float dt) {}
-
-	void draw() {}
-#endif
 };
