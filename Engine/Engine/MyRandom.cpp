@@ -19,8 +19,8 @@ void     Random::init() {
 int      Random::randomSign() {
 	return (randomBool())? -1 : 1;
 }
-bool     Random::randomBool() {
-	return (randomInt(0,1)==0);
+bool     Random::randomBool(int weightFalse) {
+	return (randomInt(0,weightFalse)==0);
 }
 float    Random::randomFloat() {
 	return randF(eng);
