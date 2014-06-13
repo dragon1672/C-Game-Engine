@@ -139,6 +139,8 @@
     <ClInclude Include="Ray.h" />
     <ClInclude Include="Renderable.h" />
     <ClInclude Include="Renderer.h" />
+    <ClInclude Include="RidgidBody.h" />
+    <ClInclude Include="RigidSpringForce.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="ShaderUniformPram.h" />
     <ClInclude Include="SingleKeyManager.h" />

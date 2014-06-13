@@ -64,6 +64,9 @@
     <Filter Include="Physics\Particles\Collision">
       <UniqueIdentifier>{3e157b2a-3879-4612-8b9d-d151ceb6192f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Physics\RidgidBody">
+      <UniqueIdentifier>{49fbecc7-84ee-434f-a50e-5cef24181eb1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Matrix2D.h">
@@ -268,6 +271,12 @@
     </ClInclude>
     <ClInclude Include="CollisionDetection.h">
       <Filter>Physics\Particles\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="RidgidBody.h">
+      <Filter>Physics\RidgidBody</Filter>
+    </ClInclude>
+    <ClInclude Include="RigidSpringForce.h">
+      <Filter>Physics\RidgidBody</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
