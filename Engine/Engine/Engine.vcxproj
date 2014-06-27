@@ -53,7 +53,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ENGINE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\GameSolution\Core\include;$(ProjectDir)../../MiddleWare/NeumontTools/include;$(ProjectDir)../../MiddleWare/Qt/include;$(ProjectDir)../../MiddleWare/glm;$(ProjectDir)../../MiddleWare/glew/include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)..\GameSolution\Core\include;$(ProjectDir)../../MiddleWare/NeumontTools/include;$(ProjectDir)../../MiddleWare/Qt/include;$(ProjectDir)../../MiddleWare/glm;$(ProjectDir)../../MiddleWare/glew/include;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -87,107 +87,69 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="AStarDebugPath.h" />
-    <ClInclude Include="AStarDebugPathGenerator.h" />
-    <ClInclude Include="AStarPathGenerator.h" />
-    <ClInclude Include="AStarNode.h" />
-    <ClInclude Include="AStarPath.h" />
-    <ClInclude Include="BinaryToShapeLoader.h" />
-    <ClInclude Include="BoolToggleController.h" />
-    <ClInclude Include="BufferManager.h" />
-    <ClInclude Include="ButtonController.h" />
-    <ClInclude Include="ButtonInfo.h" />
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="CheapSpringForce.h" />
-    <ClInclude Include="CollisionDetection.h" />
-    <ClInclude Include="CollisionEngine.h" />
-    <ClInclude Include="CollisionManager.h" />
-    <ClInclude Include="CollisionMassCircles.h" />
-    <ClInclude Include="CollisionMassWall.h" />
-    <ClInclude Include="DebugMemHeader.h" />
-    <ClInclude Include="DebugMenuManager.h" />
-    <ClInclude Include="DebugShapeManager.h" />
-    <ClInclude Include="DebugSlider.h" />
-    <ClInclude Include="DebugTimer.h" />
-    <ClInclude Include="DragForceGenerator.h" />
-    <ClInclude Include="EditorNode.h" />
-    <ClInclude Include="EditorNodeConnection.h" />
+    <ClInclude Include="Engine\Tools\BinaryToShapeLoader.h" />
+    <ClInclude Include="Engine\Debug\MenuControllers\BoolToggleController.h" />
+    <ClInclude Include="Engine\Renderer\Geo\BufferManager.h" />
+    <ClInclude Include="Engine\Debug\MenuControllers\ButtonController.h" />
+    <ClInclude Include="Engine\Tools\QT\ButtonInfo.h" />
+    <ClInclude Include="Engine\Tools\Camera.h" />
+    <ClInclude Include="Engine\Debug\DebugMenuManager.h" />
+    <ClInclude Include="Engine\Debug\DebugShapeManager.h" />
+    <ClInclude Include="Engine\Tools\QT\DebugSlider.h" />
+    <ClInclude Include="Engine\Tools\Random\Glm.h" />
+    <ClInclude Include="Engine\Tools\Random\MyMath.h" />
     <ClInclude Include="ExportHeader.h" />
-    <ClInclude Include="FastDelegate.h" />
-    <ClInclude Include="GameNode.h" />
-    <ClInclude Include="GameNodeConnection.h" />
-    <ClInclude Include="GeometryInfo.h" />
-    <ClInclude Include="GravityBodyForceGenerator.h" />
-    <ClInclude Include="GravityForceGenerator.h" />
-    <ClInclude Include="LevelFileHeader.h" />
-    <ClInclude Include="LevelSerializer.h" />
-    <ClInclude Include="LinkedSlider.h" />
-    <ClInclude Include="Matrix2D.h" />
-    <ClInclude Include="Matrix3D.h" />
-    <ClInclude Include="myAssert.h" />
-    <ClInclude Include="MyRandom.h" />
-    <ClInclude Include="NodeManager.h" />
-    <ClInclude Include="NUShapeEditor.h" />
-    <ClInclude Include="ParameterType.h" />
-    <ClInclude Include="Particle.h" />
-    <ClInclude Include="ParticleContact.h" />
-    <ClInclude Include="ParticleForceGenerator.h" />
-    <ClInclude Include="ParticleForceRegistry.h" />
-    <ClInclude Include="ParticleWorld.h" />
-    <ClInclude Include="Ray.h" />
-    <ClInclude Include="Renderable.h" />
-    <ClInclude Include="Renderer.h" />
-    <ClInclude Include="RidgidBody.h" />
-    <ClInclude Include="RigidSpringForce.h" />
-    <ClInclude Include="ShaderProgram.h" />
-    <ClInclude Include="ShaderUniformPram.h" />
-    <ClInclude Include="SingleKeyManager.h" />
-    <ClInclude Include="SlideFloatController.h" />
-    <ClInclude Include="SlideVectorController.h" />
-    <ClInclude Include="SpringForceGenerator.h" />
-    <ClInclude Include="SquareMatrix.h" />
-    <ClInclude Include="Timer.h" />
-    <ClInclude Include="unsigned.h" />
-    <ClInclude Include="Vector 2.h" />
-    <ClInclude Include="Vector3D.h" />
-    <ClInclude Include="VectorBoundForceGenerator.h" />
-    <ClInclude Include="WatchFloatController.h" />
-    <ClInclude Include="WatchVectorController.h" />
+    <ClInclude Include="Engine\FastDelegate.h" />
+    <ClInclude Include="Engine\Renderer\Geo\GeometryInfo.h" />
+    <ClInclude Include="Engine\Tools\QT\LinkedSlider.h" />
+    <ClInclude Include="Engine\Math\Matrix2D.h" />
+    <ClInclude Include="Engine\Math\Matrix3D.h" />
+    <ClInclude Include="Engine\Tools\Random\MyRandom.h" />
+    <ClInclude Include="Engine\Tools\NUShapeEditor.h" />
+    <ClInclude Include="Engine\Renderer\ParameterType.h" />
+    <ClInclude Include="Engine\Math\Ray.h" />
+    <ClInclude Include="Engine\Renderer\Renderable.h" />
+    <ClInclude Include="Engine\Renderer\Renderer.h" />
+    <ClInclude Include="Engine\Renderer\Shader\ShaderProgram.h" />
+    <ClInclude Include="Engine\Renderer\Shader\ShaderUniformPram.h" />
+    <ClInclude Include="Engine\Tools\SingleKeyManager.h" />
+    <ClInclude Include="Engine\Debug\MenuControllers\SlideFloatController.h" />
+    <ClInclude Include="Engine\Debug\MenuControllers\SlideVectorController.h" />
+    <ClInclude Include="Engine\Math\SquareMatrix.h" />
+    <ClInclude Include="Engine\Tools\Timer.h" />
+    <ClInclude Include="Engine\unsigned.h" />
+    <ClInclude Include="Engine\Math\Vector 2.h" />
+    <ClInclude Include="Engine\Math\Vector3D.h" />
+    <ClInclude Include="Engine\Debug\MenuControllers\WatchFloatController.h" />
+    <ClInclude Include="Engine\Debug\MenuControllers\WatchVectorController.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AStarDebugPath.cpp" />
-    <ClCompile Include="AStarNode.cpp" />
-    <ClCompile Include="AStarPath.cpp" />
-    <ClCompile Include="AStarPathGenerator.cpp" />
-    <ClCompile Include="BinaryToShapeLoader.cpp" />
-    <ClCompile Include="BufferManager.cpp" />
-    <ClCompile Include="ButtonInfo_mock.cpp" />
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="DebugMenuManager.cpp" />
-    <ClCompile Include="DebugShapeManager.cpp" />
-    <ClCompile Include="DebugSlider.cpp" />
-    <ClCompile Include="DebugSlider_mock.cpp" />
-    <ClCompile Include="DebugTimer.cpp" />
+    <ClCompile Include="Engine\Tools\BinaryToShapeLoader.cpp" />
+    <ClCompile Include="Engine\Renderer\Geo\BufferManager.cpp" />
+    <ClCompile Include="Engine\Tools\QT\ButtonInfo_mock.cpp" />
+    <ClCompile Include="Engine\Tools\Camera.cpp" />
+    <ClCompile Include="Engine\Debug\DebugMenuManager.cpp" />
+    <ClCompile Include="Engine\Debug\DebugShapeManager.cpp" />
+    <ClCompile Include="Engine\Tools\QT\DebugSlider.cpp" />
+    <ClCompile Include="Engine\Tools\QT\DebugSlider_mock.cpp" />
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="EditorNode.cpp" />
-    <ClCompile Include="GeometryInfo.cpp" />
-    <ClCompile Include="LevelSerializer.cpp" />
-    <ClCompile Include="LinkedSlider.cpp" />
-    <ClCompile Include="MyRandom.cpp" />
-    <ClCompile Include="NodeManager.cpp" />
-    <ClCompile Include="NUShapeEditor.cpp" />
-    <ClCompile Include="Particle.cpp" />
-    <ClCompile Include="Renderable.cpp" />
-    <ClCompile Include="Renderer.cpp" />
-    <ClCompile Include="ShaderProgram.cpp" />
-    <ClCompile Include="ShaderUniformPram.cpp" />
-    <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="Engine\Renderer\Geo\GeometryInfo.cpp" />
+    <ClCompile Include="Engine\Tools\QT\LinkedSlider.cpp" />
+    <ClCompile Include="Engine\Tools\Random\Glm.cpp" />
+    <ClCompile Include="Engine\Tools\Random\MyMath.cpp" />
+    <ClCompile Include="Engine\Tools\Random\MyRandom.cpp" />
+    <ClCompile Include="Engine\Tools\NUShapeEditor.cpp" />
+    <ClCompile Include="Engine\Renderer\Renderable.cpp" />
+    <ClCompile Include="Engine\Renderer\Renderer.cpp" />
+    <ClCompile Include="Engine\Renderer\Shader\ShaderProgram.cpp" />
+    <ClCompile Include="Engine\Renderer\Shader\ShaderUniformPram.cpp" />
+    <ClCompile Include="Engine\Tools\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Matrix2D.inl" />
-    <None Include="Matrix3D.inl" />
-    <None Include="Vector 2.inl" />
-    <None Include="Vector3D.inl" />
+    <None Include="Engine\Math\Matrix2D.inl" />
+    <None Include="Engine\Math\Matrix3D.inl" />
+    <None Include="Engine\Math\Vector 2.inl" />
+    <None Include="Engine\Math\Vector3D.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
