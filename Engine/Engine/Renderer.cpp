@@ -41,7 +41,6 @@ void			Renderer::resetRenderables() {
 	}
 	numOfRenderables = 0;
 }
-
 ShaderProgram * Renderer::addShader() {
 	return &allShaderProgs[numOfShaders++];
 }
@@ -50,7 +49,7 @@ ShaderProgram * Renderer::addShader(const char * vertexShader, const char * frag
 	ret->buildBasicProgram(vertexShader,fragShader);
 	return ret;
 }
-void           Renderer::passDataDownAllShaders_force() {
+void            Renderer::passDataDownAllShaders_force() {
 	for (uint i = 0; i < numOfShaders; i++)
 	{
 		allShaderProgs[i].passSavedUniforms_force();
@@ -91,8 +90,7 @@ void            Renderer::draw(GeometryInfo& toDraw) {
 	glBindBuffer(toDraw.bufferInformation.bufferID,GL_ELEMENT_ARRAY_BUFFER);
 	glDrawElements(toDraw.indexingMode,toDraw.numIndices,GL_UNSIGNED_SHORT,(void*)toDraw.indicesOffset());
 }
-
-void             Renderer::drawPrep(int width, int height) {
+void            Renderer::drawPrep(int width, int height) {
 	glClearColor(.1f,.1f,.1f,1);
 	glViewport(0,0,width,height);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
