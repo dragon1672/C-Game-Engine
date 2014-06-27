@@ -88,13 +88,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Tools\BinaryToShapeLoader.h" />
-    <ClInclude Include="Engine\Debug\MenuControllers\BoolToggleController.h" />
+    <ClInclude Include="Engine\DebugTools\MenuControllers\BoolToggleController.h" />
     <ClInclude Include="Engine\Renderer\Geo\BufferManager.h" />
-    <ClInclude Include="Engine\Debug\MenuControllers\ButtonController.h" />
     <ClInclude Include="Engine\Tools\QT\ButtonInfo.h" />
     <ClInclude Include="Engine\Tools\Camera.h" />
-    <ClInclude Include="Engine\Debug\DebugMenuManager.h" />
-    <ClInclude Include="Engine\Debug\DebugShapeManager.h" />
+    <ClInclude Include="Engine\DebugTools\DebugMenuManager.h" />
+    <ClInclude Include="Engine\DebugTools\DebugShapeManager.h" />
     <ClInclude Include="Engine\Tools\QT\DebugSlider.h" />
     <ClInclude Include="Engine\Tools\Random\Glm.h" />
     <ClInclude Include="Engine\Tools\Random\MyMath.h" />
@@ -113,23 +112,23 @@
     <ClInclude Include="Engine\Renderer\Shader\ShaderProgram.h" />
     <ClInclude Include="Engine\Renderer\Shader\ShaderUniformPram.h" />
     <ClInclude Include="Engine\Tools\SingleKeyManager.h" />
-    <ClInclude Include="Engine\Debug\MenuControllers\SlideFloatController.h" />
-    <ClInclude Include="Engine\Debug\MenuControllers\SlideVectorController.h" />
+    <ClInclude Include="Engine\DebugTools\MenuControllers\SlideFloatController.h" />
+    <ClInclude Include="Engine\DebugTools\MenuControllers\SlideVectorController.h" />
     <ClInclude Include="Engine\Math\SquareMatrix.h" />
     <ClInclude Include="Engine\Tools\Timer.h" />
     <ClInclude Include="Engine\unsigned.h" />
     <ClInclude Include="Engine\Math\Vector 2.h" />
     <ClInclude Include="Engine\Math\Vector3D.h" />
-    <ClInclude Include="Engine\Debug\MenuControllers\WatchFloatController.h" />
-    <ClInclude Include="Engine\Debug\MenuControllers\WatchVectorController.h" />
+    <ClInclude Include="Engine\DebugTools\MenuControllers\WatchFloatController.h" />
+    <ClInclude Include="Engine\DebugTools\MenuControllers\WatchVectorController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\Tools\BinaryToShapeLoader.cpp" />
     <ClCompile Include="Engine\Renderer\Geo\BufferManager.cpp" />
     <ClCompile Include="Engine\Tools\QT\ButtonInfo_mock.cpp" />
     <ClCompile Include="Engine\Tools\Camera.cpp" />
-    <ClCompile Include="Engine\Debug\DebugMenuManager.cpp" />
-    <ClCompile Include="Engine\Debug\DebugShapeManager.cpp" />
+    <ClCompile Include="Engine\DebugTools\DebugMenuManager.cpp" />
+    <ClCompile Include="Engine\DebugTools\DebugShapeManager.cpp" />
     <ClCompile Include="Engine\Tools\QT\DebugSlider.cpp" />
     <ClCompile Include="Engine\Tools\QT\DebugSlider_mock.cpp" />
     <ClCompile Include="dllmain.cpp" />

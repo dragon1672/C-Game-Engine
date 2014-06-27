@@ -3,11 +3,11 @@
 //#include "MyGUI.h"
 //
 //
-//int main(int argc, char * argv[]) {
+int main(int argc, char * argv[]) {
 //	QApplication app(argc, argv);
 //	MyGUI widg;
 //	//MyWindow widg;
 //	//widg.init();
 //	widg.show();
 //	return app.exec();
-//}
+}

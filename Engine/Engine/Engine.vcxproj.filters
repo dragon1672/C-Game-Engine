@@ -40,18 +40,6 @@
     <ClInclude Include="Engine\Tools\Camera.h">
       <Filter>Tools</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Debug\MenuControllers\BoolToggleController.h">
-      <Filter>Debug\Renderer\MenuControllers</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Debug\MenuControllers\ButtonController.h">
-      <Filter>Debug\Renderer\MenuControllers</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Debug\DebugMenuManager.h">
-      <Filter>Debug\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Debug\DebugShapeManager.h">
-      <Filter>Debug\Renderer</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\FastDelegate.h">
       <Filter>MiddleWare</Filter>
     </ClInclude>
@@ -75,18 +63,6 @@
     </ClInclude>
     <ClInclude Include="Engine\Math\Vector3D.h">
       <Filter>Tools\MyMath</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Debug\MenuControllers\SlideVectorController.h">
-      <Filter>Debug\Renderer\MenuControllers</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Debug\MenuControllers\SlideFloatController.h">
-      <Filter>Debug\Renderer\MenuControllers</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Debug\MenuControllers\WatchFloatController.h">
-      <Filter>Debug\Renderer\MenuControllers</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Debug\MenuControllers\WatchVectorController.h">
-      <Filter>Debug\Renderer\MenuControllers</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Tools\NUShapeEditor.h">
       <Filter>MiddleWare\NeumontTools</Filter>
@@ -133,17 +109,32 @@
     </ClInclude>
     <ClInclude Include="Engine\Tools\Random\Glm.h" />
     <ClInclude Include="Engine\Tools\Random\MyMath.h" />
+    <ClInclude Include="Engine\DebugTools\MenuControllers\BoolToggleController.h">
+      <Filter>Debug\Renderer\MenuControllers</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\DebugTools\MenuControllers\SlideFloatController.h">
+      <Filter>Debug\Renderer\MenuControllers</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\DebugTools\MenuControllers\SlideVectorController.h">
+      <Filter>Debug\Renderer\MenuControllers</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\DebugTools\MenuControllers\WatchFloatController.h">
+      <Filter>Debug\Renderer\MenuControllers</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\DebugTools\MenuControllers\WatchVectorController.h">
+      <Filter>Debug\Renderer\MenuControllers</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\DebugTools\DebugMenuManager.h">
+      <Filter>Debug\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\DebugTools\DebugShapeManager.h">
+      <Filter>Debug\Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Engine\Tools\Camera.cpp">
       <Filter>Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Debug\DebugMenuManager.cpp">
-      <Filter>Debug\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Debug\DebugShapeManager.cpp">
-      <Filter>Debug\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Renderer\Renderable.cpp">
       <Filter>MiddleWare\Renderer</Filter>
@@ -189,6 +180,12 @@
     </ClCompile>
     <ClCompile Include="Engine\Tools\Random\Glm.cpp" />
     <ClCompile Include="Engine\Tools\Random\MyMath.cpp" />
+    <ClCompile Include="Engine\DebugTools\DebugMenuManager.cpp">
+      <Filter>Debug\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\DebugTools\DebugShapeManager.cpp">
+      <Filter>Debug\Renderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Math\Matrix2D.inl">
