@@ -4,12 +4,6 @@
     <Filter Include="Debug">
       <UniqueIdentifier>{dffcf33b-a464-4ada-a455-d10ac1b3793d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Debug\Logging">
-      <UniqueIdentifier>{514147d6-d2f0-4a71-8bf0-19cfad9077e1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Debug\Profiling">
-      <UniqueIdentifier>{bd8d342f-a40a-4b5b-9f6b-86ad1cff8b4a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Debug\Renderer">
       <UniqueIdentifier>{55bdd403-acc6-4f91-bd78-9bdcc24608ce}</UniqueIdentifier>
     </Filter>
@@ -87,15 +81,6 @@
     <ClInclude Include="MyRandom.h">
       <Filter>Tools</Filter>
     </ClInclude>
-    <ClInclude Include="AutoProfileManager.h">
-      <Filter>Debug\Profiling</Filter>
-    </ClInclude>
-    <ClInclude Include="AutoProfileManagerMacros.h">
-      <Filter>Debug\Profiling</Filter>
-    </ClInclude>
-    <ClInclude Include="AutoProfiler.h">
-      <Filter>Debug\Profiling</Filter>
-    </ClInclude>
     <ClInclude Include="DebugShapeManager.h">
       <Filter>Debug\Renderer</Filter>
     </ClInclude>
@@ -134,15 +119,6 @@
     </ClInclude>
     <ClInclude Include="myAssert.h">
       <Filter>Debug</Filter>
-    </ClInclude>
-    <ClInclude Include="LogData.h">
-      <Filter>Debug\Logging</Filter>
-    </ClInclude>
-    <ClInclude Include="LogManager.h">
-      <Filter>Debug\Logging</Filter>
-    </ClInclude>
-    <ClInclude Include="ProfileCategory.h">
-      <Filter>Debug\Profiling</Filter>
     </ClInclude>
     <ClInclude Include="Renderable.h">
       <Filter>MiddleWare\Renderer</Filter>
@@ -283,12 +259,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="LogManager.cpp">
-      <Filter>Debug\Logging</Filter>
-    </ClCompile>
-    <ClCompile Include="AutoProfilerManager.cpp">
-      <Filter>Debug\Profiling</Filter>
-    </ClCompile>
     <ClCompile Include="MyRandom.cpp">
       <Filter>Tools</Filter>
     </ClCompile>

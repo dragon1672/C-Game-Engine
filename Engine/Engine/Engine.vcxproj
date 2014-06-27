@@ -92,9 +92,6 @@
     <ClInclude Include="AStarPathGenerator.h" />
     <ClInclude Include="AStarNode.h" />
     <ClInclude Include="AStarPath.h" />
-    <ClInclude Include="AutoProfileManager.h" />
-    <ClInclude Include="AutoProfileManagerMacros.h" />
-    <ClInclude Include="AutoProfiler.h" />
     <ClInclude Include="BinaryToShapeLoader.h" />
     <ClInclude Include="BoolToggleController.h" />
     <ClInclude Include="BufferManager.h" />
@@ -125,8 +122,6 @@
     <ClInclude Include="LevelFileHeader.h" />
     <ClInclude Include="LevelSerializer.h" />
     <ClInclude Include="LinkedSlider.h" />
-    <ClInclude Include="LogData.h" />
-    <ClInclude Include="LogManager.h" />
     <ClInclude Include="Matrix2D.h" />
     <ClInclude Include="Matrix3D.h" />
     <ClInclude Include="myAssert.h" />
@@ -139,7 +134,6 @@
     <ClInclude Include="ParticleForceGenerator.h" />
     <ClInclude Include="ParticleForceRegistry.h" />
     <ClInclude Include="ParticleWorld.h" />
-    <ClInclude Include="ProfileCategory.h" />
     <ClInclude Include="Ray.h" />
     <ClInclude Include="Renderable.h" />
     <ClInclude Include="Renderer.h" />
@@ -165,7 +159,6 @@
     <ClCompile Include="AStarNode.cpp" />
     <ClCompile Include="AStarPath.cpp" />
     <ClCompile Include="AStarPathGenerator.cpp" />
-    <ClCompile Include="AutoProfilerManager.cpp" />
     <ClCompile Include="BinaryToShapeLoader.cpp" />
     <ClCompile Include="BufferManager.cpp" />
     <ClCompile Include="ButtonInfo_mock.cpp" />
@@ -180,7 +173,6 @@
     <ClCompile Include="GeometryInfo.cpp" />
     <ClCompile Include="LevelSerializer.cpp" />
     <ClCompile Include="LinkedSlider.cpp" />
-    <ClCompile Include="LogManager.cpp" />
     <ClCompile Include="MyRandom.cpp" />
     <ClCompile Include="NodeManager.cpp" />
     <ClCompile Include="NUShapeEditor.cpp" />
