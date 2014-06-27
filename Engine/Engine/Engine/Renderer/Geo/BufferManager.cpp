@@ -70,7 +70,7 @@ void BufferManager::deleteBuffer(uint bufferID) {
 
 BufferManager::BufferInfo BufferManager::storeData(BufferInfo * buff, uint size, const void * data) {
 #ifdef _DEBUG
-	qDebug() << "Storing in Buffer ( " << buff->bufferID << " ) " << size << " \ " << buff->remainingSpace << " bytes of data";
+	qDebug() << "Storing in Buffer ( " << buff->bufferID << " ) " << size << " / " << buff->remainingSpace << " bytes of data";
 #endif
 	glBindBuffer(GL_ARRAY_BUFFER, buff->bufferID);
 	
