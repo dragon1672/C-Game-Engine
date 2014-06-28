@@ -96,6 +96,7 @@
     <ClInclude Include="Engine\DebugTools\DebugMenuManager.h" />
     <ClInclude Include="Engine\Tools\QT\DebugSlider.h" />
     <ClInclude Include="Engine\Tools\Random\Glm.h" />
+    <ClInclude Include="Engine\WidgetRenderer.h" />
     <ClInclude Include="ExportHeader.h" />
     <ClInclude Include="Engine\FastDelegate.h" />
     <ClInclude Include="Engine\Renderer\Geo\GeometryInfo.h" />

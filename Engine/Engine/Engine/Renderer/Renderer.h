@@ -11,12 +11,12 @@
 
 
 class ENGINE_SHARED Renderer {
-private:
-	Renderable myRenderables[200];
+protected:
+	Renderable myRenderables[1000];
 	uint numOfRenderables;
 public:
 	ShaderProgram * mainShader;
-private:
+protected:
 	ShaderProgram allShaderProgs[10];
 	uint numOfShaders;
 

@@ -22,6 +22,8 @@ static const uint qt_meta_data_ButtonInfo[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
+	   ,
+
        1,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets

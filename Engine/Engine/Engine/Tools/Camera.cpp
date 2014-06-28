@@ -12,7 +12,7 @@ vec3 Camera::UP(0,1,0);
 
 void Camera::setPos(glm::vec3& position, glm::vec3& viewDirection) {
 	pos = position;
-	viewDir = glm::normalize(viewDirection);
+	viewDir = glm::dot(viewDirection,viewDirection) > 1 ? glm::normalize(viewDirection) : viewDirection;
 }
 mat4x4 Camera::getWorld2View() {
 	return glm::lookAt(pos,pos + viewDir,UP);
