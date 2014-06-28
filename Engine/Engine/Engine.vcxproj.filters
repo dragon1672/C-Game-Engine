@@ -1,199 +1,52 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Debug">
-      <UniqueIdentifier>{dffcf33b-a464-4ada-a455-d10ac1b3793d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Debug\Renderer">
-      <UniqueIdentifier>{55bdd403-acc6-4f91-bd78-9bdcc24608ce}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MiddleWare">
-      <UniqueIdentifier>{4efbdd45-3354-4d83-bb19-31be0a4dc6bd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MiddleWare\NeumontTools">
-      <UniqueIdentifier>{53047217-6b53-4ac9-ad9c-0ee9c33dfbd2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MiddleWare\Renderer">
-      <UniqueIdentifier>{9f2cdf06-5ed3-4285-aafb-c69d161ac56a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Tools">
-      <UniqueIdentifier>{f143dd15-048a-4074-9417-3b6d42f9f884}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Tools\MyMath">
-      <UniqueIdentifier>{f5275839-8e32-4986-b8ee-4d17e166cbd1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Debug\Renderer\MenuControllers">
-      <UniqueIdentifier>{091ad312-f2fc-43f1-b88d-4faa85896f2d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MiddleWare\QT">
-      <UniqueIdentifier>{a58dcced-01b9-4f19-8319-b864ce410f0e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MiddleWare\Renderer\GEO">
-      <UniqueIdentifier>{b4d19738-a187-468d-b050-2db07f3df394}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MiddleWare\Renderer\Shaders">
-      <UniqueIdentifier>{84296eaa-6ae7-4a94-934b-ee5775cd0d63}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="ExportHeader.h" />
-    <ClInclude Include="Engine\Tools\Camera.h">
-      <Filter>Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\FastDelegate.h">
-      <Filter>MiddleWare</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Math\Matrix2D.h">
-      <Filter>Tools\MyMath</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Math\Matrix3D.h">
-      <Filter>Tools\MyMath</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Renderer\Renderable.h">
-      <Filter>MiddleWare\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Renderer\Renderer.h">
-      <Filter>MiddleWare\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Renderer\ParameterType.h">
-      <Filter>MiddleWare\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Math\Vector 2.h">
-      <Filter>Tools\MyMath</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Math\Vector3D.h">
-      <Filter>Tools\MyMath</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Tools\NUShapeEditor.h">
-      <Filter>MiddleWare\NeumontTools</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Tools\SingleKeyManager.h">
-      <Filter>Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Math\SquareMatrix.h">
-      <Filter>Tools\MyMath</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Math\Ray.h">
-      <Filter>Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Tools\BinaryToShapeLoader.h">
-      <Filter>MiddleWare\Renderer\GEO</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Tools\Timer.h">
-      <Filter>Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Tools\QT\DebugSlider.h">
-      <Filter>MiddleWare\QT</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Tools\QT\LinkedSlider.h">
-      <Filter>MiddleWare\QT</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\unsigned.h" />
-    <ClInclude Include="Engine\Tools\QT\ButtonInfo.h">
-      <Filter>MiddleWare\QT</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Renderer\Geo\BufferManager.h">
-      <Filter>MiddleWare\Renderer\GEO</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Renderer\Geo\GeometryInfo.h">
-      <Filter>MiddleWare\Renderer\GEO</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Renderer\Shader\ShaderProgram.h">
-      <Filter>MiddleWare\Renderer\Shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Renderer\Shader\ShaderUniformPram.h">
-      <Filter>MiddleWare\Renderer\Shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Tools\Random\MyRandom.h">
-      <Filter>Tools</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\Tools\Random\Glm.h" />
-    <ClInclude Include="Engine\Tools\Random\MyMath.h" />
-    <ClInclude Include="Engine\DebugTools\MenuControllers\BoolToggleController.h">
-      <Filter>Debug\Renderer\MenuControllers</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\DebugTools\MenuControllers\SlideFloatController.h">
-      <Filter>Debug\Renderer\MenuControllers</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\DebugTools\MenuControllers\SlideVectorController.h">
-      <Filter>Debug\Renderer\MenuControllers</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\DebugTools\MenuControllers\WatchFloatController.h">
-      <Filter>Debug\Renderer\MenuControllers</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\DebugTools\MenuControllers\WatchVectorController.h">
-      <Filter>Debug\Renderer\MenuControllers</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\DebugTools\DebugMenuManager.h">
-      <Filter>Debug\Renderer</Filter>
-    </ClInclude>
     <ClInclude Include="Engine\BasicGui.h" />
+    <ClInclude Include="Engine\Tools\NUShapeEditor.h" />
+    <ClInclude Include="Engine\Tools\Camera.h" />
+    <ClInclude Include="Engine\Tools\Random\MyRandom.h" />
+    <ClInclude Include="Engine\Tools\SingleKeyManager.h" />
+    <ClInclude Include="Engine\Tools\Timer.h" />
+    <ClInclude Include="Engine\FastDelegate.h" />
+    <ClInclude Include="Engine\Renderer\Shader\ShaderProgram.h" />
+    <ClInclude Include="Engine\Renderer\Shader\ShaderUniformPram.h" />
+    <ClInclude Include="Engine\Renderer\ParameterType.h" />
+    <ClInclude Include="Engine\Renderer\Renderable.h" />
+    <ClInclude Include="Engine\Renderer\Renderer.h" />
+    <ClInclude Include="Engine\Renderer\Geo\GeometryInfo.h" />
+    <ClInclude Include="Engine\Tools\BinaryToShapeLoader.h" />
+    <ClInclude Include="Engine\Renderer\Geo\BufferManager.h" />
+    <ClInclude Include="Engine\Tools\QT\LinkedSlider.h" />
+    <ClInclude Include="Engine\Tools\QT\DebugSlider.h" />
+    <ClInclude Include="Engine\Tools\QT\ButtonInfo.h" />
+    <ClInclude Include="Engine\DebugTools\MenuControllers\BoolToggleController.h" />
+    <ClInclude Include="Engine\DebugTools\MenuControllers\SlideFloatController.h" />
+    <ClInclude Include="Engine\DebugTools\MenuControllers\SlideVectorController.h" />
+    <ClInclude Include="Engine\DebugTools\MenuControllers\WatchFloatController.h" />
+    <ClInclude Include="Engine\DebugTools\MenuControllers\WatchVectorController.h" />
+    <ClInclude Include="Engine\DebugTools\DebugMenuManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="Engine\Tools\Camera.cpp">
-      <Filter>Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Renderer\Renderable.cpp">
-      <Filter>MiddleWare\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Renderer\Renderer.cpp">
-      <Filter>MiddleWare\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Tools\NUShapeEditor.cpp">
-      <Filter>MiddleWare\NeumontTools</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Tools\BinaryToShapeLoader.cpp">
-      <Filter>MiddleWare\Renderer\GEO</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Tools\Timer.cpp">
-      <Filter>Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Tools\QT\DebugSlider.cpp">
-      <Filter>MiddleWare\QT</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Tools\QT\DebugSlider_mock.cpp">
-      <Filter>MiddleWare\QT</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Tools\QT\LinkedSlider.cpp">
-      <Filter>MiddleWare\QT</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Tools\QT\ButtonInfo_mock.cpp">
-      <Filter>MiddleWare\QT</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Renderer\Geo\BufferManager.cpp">
-      <Filter>MiddleWare\Renderer\GEO</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Renderer\Geo\GeometryInfo.cpp">
-      <Filter>MiddleWare\Renderer\GEO</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Renderer\Shader\ShaderProgram.cpp">
-      <Filter>MiddleWare\Renderer\Shaders</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Renderer\Shader\ShaderUniformPram.cpp">
-      <Filter>MiddleWare\Renderer\Shaders</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Tools\Random\MyRandom.cpp">
-      <Filter>Tools</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Tools\Random\Glm.cpp" />
-    <ClCompile Include="Engine\Tools\Random\MyMath.cpp" />
-    <ClCompile Include="Engine\DebugTools\DebugMenuManager.cpp">
-      <Filter>Debug\Renderer</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Engine\Math\Matrix2D.inl">
-      <Filter>Tools\MyMath</Filter>
-    </None>
-    <None Include="Engine\Math\Matrix3D.inl">
-      <Filter>Tools\MyMath</Filter>
-    </None>
-    <None Include="Engine\Math\Vector3D.inl">
-      <Filter>Tools\MyMath</Filter>
-    </None>
-    <None Include="Engine\Math\Vector 2.inl">
-      <Filter>Tools\MyMath</Filter>
-    </None>
+    <ClCompile Include="Engine\Tools\NUShapeEditor.cpp" />
+    <ClCompile Include="Engine\Tools\Camera.cpp" />
+    <ClCompile Include="Engine\Tools\Random\MyRandom.cpp" />
+    <ClCompile Include="Engine\Tools\Timer.cpp" />
+    <ClCompile Include="Engine\Renderer\Shader\ShaderProgram.cpp" />
+    <ClCompile Include="Engine\Renderer\Shader\ShaderUniformPram.cpp" />
+    <ClCompile Include="Engine\Renderer\Renderable.cpp" />
+    <ClCompile Include="Engine\Renderer\Renderer.cpp" />
+    <ClCompile Include="Engine\Tools\BinaryToShapeLoader.cpp" />
+    <ClCompile Include="Engine\Renderer\Geo\BufferManager.cpp" />
+    <ClCompile Include="Engine\Renderer\Geo\GeometryInfo.cpp" />
+    <ClCompile Include="Engine\Tools\QT\ButtonInfo_mock.cpp" />
+    <ClCompile Include="Engine\Tools\QT\DebugSlider.cpp" />
+    <ClCompile Include="Engine\Tools\QT\DebugSlider_mock.cpp" />
+    <ClCompile Include="Engine\Tools\QT\LinkedSlider.cpp" />
+    <ClCompile Include="Engine\DebugTools\DebugMenuManager.cpp" />
   </ItemGroup>
 </Project>

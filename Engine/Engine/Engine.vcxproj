@@ -96,17 +96,13 @@
     <ClInclude Include="Engine\DebugTools\DebugMenuManager.h" />
     <ClInclude Include="Engine\Tools\QT\DebugSlider.h" />
     <ClInclude Include="Engine\Tools\Random\Glm.h" />
-    <ClInclude Include="Engine\Tools\Random\MyMath.h" />
     <ClInclude Include="ExportHeader.h" />
     <ClInclude Include="Engine\FastDelegate.h" />
     <ClInclude Include="Engine\Renderer\Geo\GeometryInfo.h" />
     <ClInclude Include="Engine\Tools\QT\LinkedSlider.h" />
-    <ClInclude Include="Engine\Math\Matrix2D.h" />
-    <ClInclude Include="Engine\Math\Matrix3D.h" />
     <ClInclude Include="Engine\Tools\Random\MyRandom.h" />
     <ClInclude Include="Engine\Tools\NUShapeEditor.h" />
     <ClInclude Include="Engine\Renderer\ParameterType.h" />
-    <ClInclude Include="Engine\Math\Ray.h" />
     <ClInclude Include="Engine\Renderer\Renderable.h" />
     <ClInclude Include="Engine\Renderer\Renderer.h" />
     <ClInclude Include="Engine\Renderer\Shader\ShaderProgram.h" />
@@ -114,11 +110,8 @@
     <ClInclude Include="Engine\Tools\SingleKeyManager.h" />
     <ClInclude Include="Engine\DebugTools\MenuControllers\SlideFloatController.h" />
     <ClInclude Include="Engine\DebugTools\MenuControllers\SlideVectorController.h" />
-    <ClInclude Include="Engine\Math\SquareMatrix.h" />
     <ClInclude Include="Engine\Tools\Timer.h" />
     <ClInclude Include="Engine\unsigned.h" />
-    <ClInclude Include="Engine\Math\Vector 2.h" />
-    <ClInclude Include="Engine\Math\Vector3D.h" />
     <ClInclude Include="Engine\DebugTools\MenuControllers\WatchFloatController.h" />
     <ClInclude Include="Engine\DebugTools\MenuControllers\WatchVectorController.h" />
   </ItemGroup>
@@ -134,7 +127,6 @@
     <ClCompile Include="Engine\Renderer\Geo\GeometryInfo.cpp" />
     <ClCompile Include="Engine\Tools\QT\LinkedSlider.cpp" />
     <ClCompile Include="Engine\Tools\Random\Glm.cpp" />
-    <ClCompile Include="Engine\Tools\Random\MyMath.cpp" />
     <ClCompile Include="Engine\Tools\Random\MyRandom.cpp" />
     <ClCompile Include="Engine\Tools\NUShapeEditor.cpp" />
     <ClCompile Include="Engine\Renderer\Renderable.cpp" />
@@ -142,12 +134,6 @@
     <ClCompile Include="Engine\Renderer\Shader\ShaderProgram.cpp" />
     <ClCompile Include="Engine\Renderer\Shader\ShaderUniformPram.cpp" />
     <ClCompile Include="Engine\Tools\Timer.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Engine\Math\Matrix2D.inl" />
-    <None Include="Engine\Math\Matrix3D.inl" />
-    <None Include="Engine\Math\Vector 2.inl" />
-    <None Include="Engine\Math\Vector3D.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
