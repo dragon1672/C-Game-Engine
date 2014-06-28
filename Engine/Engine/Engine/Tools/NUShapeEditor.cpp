@@ -10,10 +10,6 @@ glm::vec3 differentMatrixMult(glm::mat4 mat, glm::vec3 vec) {
 	return glm::vec3(mat * glm::vec4(vec,1));
 }
 
-Neumont::ShapeData NUShapeEditor::fixTeaPotNormals(Neumont::ShapeData& obj) {
-	// ???
-	return obj;
-}
 Neumont::ShapeData NUShapeEditor::noNegY(Neumont::ShapeData& obj) {
 	float min = 0;
 	float max = 0;
@@ -30,12 +26,6 @@ Neumont::ShapeData NUShapeEditor::noNegY(Neumont::ShapeData& obj) {
 	}
 	return obj;
 }
-
-/*
-float abs(float val) {
-	return val < 0 ? - val : val;
-}
-//*/
 
 float max_withABS(float a, float b) {
 	a = abs(a);	b = abs(b);
@@ -62,9 +52,9 @@ Neumont::ShapeData NUShapeEditor::scaleToRange(Neumont::ShapeData& obj, float xB
 	}
 	return obj;
 }
-Neumont::ShapeData NUShapeEditor::setModColor(Neumont::ShapeData& obj, int mod) {
+Neumont::ShapeData NUShapeEditor::setRandomColor(Neumont::ShapeData& obj, int everyThisNumOfPoints) {
 	for (uint i = 0; i < obj.numVerts; i++) {
-		if(i % mod == 0) {
+		if(i % everyThisNumOfPoints == 0) {
 			float r = Random::randomFloat(0,1);
 			float g = Random::randomFloat(0,1);
 			float b = Random::randomFloat(0,1);
@@ -74,9 +64,9 @@ Neumont::ShapeData NUShapeEditor::setModColor(Neumont::ShapeData& obj, int mod) 
 	}
 	return obj;
 }
-Neumont::ShapeData NUShapeEditor::setColor(glm::vec4& toSet, Neumont::ShapeData& obj, int mod) {
+Neumont::ShapeData NUShapeEditor::setColor(glm::vec4& toSet, Neumont::ShapeData& obj, int everyThisNumOfPoints) {
 	for (uint i = 0; i < obj.numVerts; i++) {
-		if(i % mod == 0) {
+		if(i % everyThisNumOfPoints == 0) {
 			obj.verts[i].color = toSet;
 		}
 	}
