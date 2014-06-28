@@ -87,13 +87,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\BasicGui.h" />
     <ClInclude Include="Engine\Tools\BinaryToShapeLoader.h" />
     <ClInclude Include="Engine\DebugTools\MenuControllers\BoolToggleController.h" />
     <ClInclude Include="Engine\Renderer\Geo\BufferManager.h" />
     <ClInclude Include="Engine\Tools\QT\ButtonInfo.h" />
     <ClInclude Include="Engine\Tools\Camera.h" />
     <ClInclude Include="Engine\DebugTools\DebugMenuManager.h" />
-    <ClInclude Include="Engine\DebugTools\DebugShapeManager.h" />
     <ClInclude Include="Engine\Tools\QT\DebugSlider.h" />
     <ClInclude Include="Engine\Tools\Random\Glm.h" />
     <ClInclude Include="Engine\Tools\Random\MyMath.h" />
@@ -128,7 +128,6 @@
     <ClCompile Include="Engine\Tools\QT\ButtonInfo_mock.cpp" />
     <ClCompile Include="Engine\Tools\Camera.cpp" />
     <ClCompile Include="Engine\DebugTools\DebugMenuManager.cpp" />
-    <ClCompile Include="Engine\DebugTools\DebugShapeManager.cpp" />
     <ClCompile Include="Engine\Tools\QT\DebugSlider.cpp" />
     <ClCompile Include="Engine\Tools\QT\DebugSlider_mock.cpp" />
     <ClCompile Include="dllmain.cpp" />

@@ -127,9 +127,7 @@
     <ClInclude Include="Engine\DebugTools\DebugMenuManager.h">
       <Filter>Debug\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\DebugTools\DebugShapeManager.h">
-      <Filter>Debug\Renderer</Filter>
-    </ClInclude>
+    <ClInclude Include="Engine\BasicGui.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -181,9 +179,6 @@
     <ClCompile Include="Engine\Tools\Random\Glm.cpp" />
     <ClCompile Include="Engine\Tools\Random\MyMath.cpp" />
     <ClCompile Include="Engine\DebugTools\DebugMenuManager.cpp">
-      <Filter>Debug\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\DebugTools\DebugShapeManager.cpp">
       <Filter>Debug\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
