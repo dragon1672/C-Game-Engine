@@ -34,46 +34,12 @@ protected:
 	SingleKeyManager toggleDebugMenu;
 	float dt;
 public:
-	BasicGui(bool debugStartsVisable = true)
-	: toggleDebugMenu(TIDLE_KEY)
-	{
-		connect(&myTimer,SIGNAL(timeout()),this,SLOT(privateUpdate()));
-		myTimer.start(0);
-
-		//setup layout
-		layout = new QVBoxLayout;
-		QWidget * window = new QWidget();
-        window->setLayout(layout);
-
-		//set up locals
-		myDebugMenu = new DebugMenuManager();
-		myDebugMenu->init();
-
-		if(!debugStartsVisable) myDebugMenu->hide();
-
-		//add local widgets
-		layout->addWidget(myDebugMenu);
-
-		// Set QWidget as the central layout of the main window
-        setCentralWidget(window);
-	}
-	void addScene(WidgetRenderer * scene) {
-		this->scene = scene;
-		layout->addWidget(scene);
-		scene->setMinimumHeight(700);
-		scene->setMinimumWidth(1200);
-	}
-	void mouseMoveEvent(QMouseEvent* e) { if(scene != nullptr) scene->mouseMoveEvent(e); }
-	void keyPressEvent(QKeyEvent* e) { if(scene != nullptr) scene->keyPressEvent(e); }
+	BasicGui(bool debugStartsVisable = true);
+	void addScene(WidgetRenderer * scene);
+	void mouseMoveEvent(QMouseEvent* e);
+	void keyPressEvent(QKeyEvent* e);
 private slots:
-	void privateUpdate() {
-		toggleDebugMenu.update(.1f);
-		if(toggleDebugMenu.hasBeenClicked()) {
-			(myDebugMenu->isHidden()) ? myDebugMenu->show() : myDebugMenu->hide();
-		}
-		if(!myDebugMenu->isHidden()) myDebugMenu->update();
-		update();
-	}
+	void privateUpdate();
 protected: // included for anyone wanting to expand on this basic GUI
 	virtual void update() {}
 };
