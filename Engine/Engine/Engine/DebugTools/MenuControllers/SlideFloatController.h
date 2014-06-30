@@ -28,8 +28,9 @@ namespace DebugMenuControllers {
 
 		}
 		inline void updateGUItoModel() {
-			// not required
-			updateModeltoGUI();
+			if(doubleLink) {
+				updateModeltoGUI();
+			}
 		}
 		inline void updateModeltoGUI() {
 			slider->setBoundValue(data);
