@@ -42,7 +42,9 @@ void			Renderer::resetRenderables() {
 	numOfRenderables = 0;
 }
 ShaderProgram * Renderer::addShader() {
-	return &allShaderProgs[numOfShaders++];
+	ShaderProgram * ret = &allShaderProgs[numOfShaders++];
+	ret -> startup();
+	return ret;
 }
 ShaderProgram * Renderer::addShader(const char * vertexShader, const char * fragShader) {
 	ShaderProgram * ret = addShader();

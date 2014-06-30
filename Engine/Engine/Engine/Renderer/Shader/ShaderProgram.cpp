@@ -40,7 +40,7 @@ void ShaderProgram::shutdown() {
 	// ?
 }
 void ShaderProgram::buildBasicProgram(const char * vertexShaderFilePath, const char * fragmentShaderFilePath) {
-	startup();
+	//startup();
 	bool win = false;
 	win = addProgram(vertexShaderFilePath,GL_VERTEX_SHADER);
 	if(win) win = addProgram(fragmentShaderFilePath,GL_FRAGMENT_SHADER);
