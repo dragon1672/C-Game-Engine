@@ -52,6 +52,6 @@
     <ClCompile Include="Engine\WidgetRenderer.cpp" />
     <ClCompile Include="Engine\BasicGui_mock.cpp" />
     <ClCompile Include="Engine\WidgetRenderer_mock.cpp" />
-    <ClCompile Include="BasicGui.cpp" />
+    <ClCompile Include="Engine\BasicGui.cpp" />
   </ItemGroup>
 </Project>
