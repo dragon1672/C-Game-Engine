@@ -52,7 +52,9 @@ void main() {
 #include <Engine\Tools\Timer.h>
 #include <ExportHeader.h>
 
-class ENGINE_SHARED WidgetRenderer : public Renderer, public QWidget {
+#include <QtOpenGL\qglwidget>
+
+class ENGINE_SHARED WidgetRenderer : public Renderer, public QGLWidget {
 private:
 	glm::mat4 viewTransform;
 public:
@@ -60,7 +62,7 @@ public:
 	glm::mat4 additionalViewTransform; //applied after camera
 	
 
-	void init();
+	void initializeGL();
 public:
 	void paintGL();
 };

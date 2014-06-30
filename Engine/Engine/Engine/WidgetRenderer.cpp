@@ -1,8 +1,8 @@
 #include <GL/glew.h>
 #include <Engine\WidgetRenderer.h>
-
-//cpp
 #include "glm/gtx/transform.hpp"
+
+#pragma region shaderCode
 const char * defaultVertShader = "#version 400"
 	"																"
 	"in layout(location=0) vec3 pos;								"
@@ -36,16 +36,15 @@ const char * defaultFragShader = "#version 400"
 	"	gl_FragColor = outCol * texture(myTexture, outUv); "
 	"}													   "
 	"";
+#pragma endregion
 
-
-void WidgetRenderer::init() {
-	Renderer::init();
+void WidgetRenderer::initializeGL() {
 	glewInit();
+	Renderer::init();
 
 	setMouseTracking(true);
 	
 	//setting up default shader
-	mainShader->startup();
 	bool win = mainShader->addProgram_srcCode(defaultVertShader,GL_VERTEX_SHADER);
 	assert(win);
 	win = mainShader->addProgram_srcCode(defaultVertShader,GL_FRAGMENT_SHADER);

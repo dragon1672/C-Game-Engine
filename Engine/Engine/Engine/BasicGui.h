@@ -52,7 +52,6 @@ public:
 
 		meScene.setMinimumHeight(700);
 		meScene.setMinimumWidth(1200);
-		meScene.init();
 
 		//add local widgets
 		layout->addWidget(myDebugMenu);
