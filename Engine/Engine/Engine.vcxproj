@@ -137,6 +137,7 @@
     <ClCompile Include="Engine\Renderer\Shader\ShaderUniformPram.cpp" />
     <ClCompile Include="Engine\Tools\Timer.cpp" />
     <ClCompile Include="Engine\WidgetRenderer.cpp" />
+    <ClCompile Include="Engine\WidgetRenderer_mock.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

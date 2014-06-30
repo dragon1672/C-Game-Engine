@@ -53,16 +53,30 @@ void main() {
 #include <ExportHeader.h>
 
 #include <QtOpenGL\qglwidget>
-
-class ENGINE_SHARED WidgetRenderer : public Renderer, public QGLWidget {
+//                                   GLWidge must be first for MOC to work
+class ENGINE_SHARED WidgetRenderer : public QGLWidget, public Renderer {
 private:
+
+	Q_OBJECT;
+
 	glm::mat4 viewTransform;
-public:
+	QTimer updateTimer;
+	Timer gameTimer;
+
+protected:
+	float dt;
 	Camera myCam;
 	glm::mat4 additionalViewTransform; //applied after camera
 	
-
-	void initializeGL();
+	virtual void nextFrame(float dt) {}
+	virtual void init() {}
 public:
+	void initializeGL();
 	void paintGL();
+private slots:
+	void nxtFrm();
+public:
+	virtual void mouseMoveEvent(QMouseEvent* e); // just updates the cam by default
+	virtual void keyPressEvent(QKeyEvent* e); // just updates the cam by default
+	void updateCam(QKeyEvent* key = nullptr, QMouseEvent* mouse = nullptr);
 };

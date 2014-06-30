@@ -1,14 +1,14 @@
 /****************************************************************************
-** Meta object code from reading C++ file 'BasicGui.h'
+** Meta object code from reading C++ file 'WidgetRenderer.h'
 **
 ** Created by: The Qt Meta Object Compiler version 63 (Qt 4.8.5)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "BasicGui.h"
+#include "WidgetRenderer.h"
 #if !defined(Q_MOC_OUTPUT_REVISION)
-#error "The header file 'BasicGui.h' doesn't include <QObject>."
+#error "The header file 'WidgetRenderer.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 63
 #error "This file was generated using the moc from 4.8.5. It"
 #error "cannot be used with the include files from this version of Qt."
@@ -16,7 +16,7 @@
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
-static const uint qt_meta_data_BasicGui[] = {
+static const uint qt_meta_data_WidgetRenderer[] = {
 
  // content:
        6,       // revision
@@ -30,57 +30,59 @@ static const uint qt_meta_data_BasicGui[] = {
        0,       // signalCount
 
  // slots: signature, parameters, type, tag, flags
-      10,    9,    9,    9, 0x08,
+      16,   15,   15,   15, 0x08,
 
        0        // eod
 };
 
-static const char qt_meta_stringdata_BasicGui[] = {
-    "BasicGui\0\0privateUpdate()\0"
+static const char qt_meta_stringdata_WidgetRenderer[] = {
+    "WidgetRenderer\0\0nxtFrm()\0"
 };
 
-void BasicGui::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void WidgetRenderer::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
         Q_ASSERT(staticMetaObject.cast(_o));
-        BasicGui *_t = static_cast<BasicGui *>(_o);
+        WidgetRenderer *_t = static_cast<WidgetRenderer *>(_o);
         switch (_id) {
-        case 0: _t->privateUpdate(); break;
+        case 0: _t->nxtFrm(); break;
         default: ;
         }
     }
     Q_UNUSED(_a);
 }
 
-const QMetaObjectExtraData BasicGui::staticMetaObjectExtraData = {
+const QMetaObjectExtraData WidgetRenderer::staticMetaObjectExtraData = {
     0,  qt_static_metacall 
 };
 
-const QMetaObject BasicGui::staticMetaObject = {
-    { &QMainWindow::staticMetaObject, qt_meta_stringdata_BasicGui,
-      qt_meta_data_BasicGui, &staticMetaObjectExtraData }
+const QMetaObject WidgetRenderer::staticMetaObject = {
+    { &QGLWidget::staticMetaObject, qt_meta_stringdata_WidgetRenderer,
+      qt_meta_data_WidgetRenderer, &staticMetaObjectExtraData }
 };
 
 #ifdef Q_NO_DATA_RELOCATION
-const QMetaObject &BasicGui::getStaticMetaObject() { return staticMetaObject; }
+const QMetaObject &WidgetRenderer::getStaticMetaObject() { return staticMetaObject; }
 #endif //Q_NO_DATA_RELOCATION
 
-const QMetaObject *BasicGui::metaObject() const
+const QMetaObject *WidgetRenderer::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->metaObject : &staticMetaObject;
 }
 
-void *BasicGui::qt_metacast(const char *_clname)
+void *WidgetRenderer::qt_metacast(const char *_clname)
 {
     if (!_clname) return 0;
-    if (!strcmp(_clname, qt_meta_stringdata_BasicGui))
-        return static_cast<void*>(const_cast< BasicGui*>(this));
-    return QMainWindow::qt_metacast(_clname);
+    if (!strcmp(_clname, qt_meta_stringdata_WidgetRenderer))
+        return static_cast<void*>(const_cast< WidgetRenderer*>(this));
+    if (!strcmp(_clname, "Renderer"))
+        return static_cast< Renderer*>(const_cast< WidgetRenderer*>(this));
+    return QGLWidget::qt_metacast(_clname);
 }
 
-int BasicGui::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int WidgetRenderer::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = QMainWindow::qt_metacall(_c, _id, _a);
+    _id = QGLWidget::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {

@@ -20,7 +20,7 @@ protected:
 	ShaderProgram allShaderProgs[10];
 	uint numOfShaders;
 
-	GeometryInfo geoInfo[100];
+	GeometryInfo geoInfo[1000];
 	uint numOfGeoInfo;
 public:
 	void init();

@@ -65,7 +65,7 @@ bool ShaderProgram::addProgram_srcCode(std::string shaderCode, unsigned short sh
 	CodeBlock shaderInfo;
 	shaderInfo.code = shaderCode;
 	shaderInfo.id = glCreateShader(shaderType);
-	qDebug() << "File Load Successful ID: " << shaderInfo.id;
+	qDebug() << "Shader Load Successful ID: " << shaderInfo.id;
 
 	isValid = complileShader(shaderInfo.code.c_str(),shaderInfo.id,true);
 	if(isValid) {

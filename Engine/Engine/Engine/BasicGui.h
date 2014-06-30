@@ -12,37 +12,36 @@
 #include <Engine\WidgetRenderer.h>
 #include <Engine\Tools\Timer.h>
 #include <ExportHeader.h>
+#include <QtGui\qmouseevent>
+#include <QtGui\qkeyevent>
 
-
+/*
+	Don't forget to call add scene
+//*/
 class ENGINE_SHARED BasicGui : public QMainWindow {
-	//have debug section
-	//have renderer
-	//have virtual init/new frame
 private:
 	static const int TIDLE_KEY = 192;
 
 	Q_OBJECT;
 
-	SingleKeyManager toggleDebugMenu;
-
 	QTimer myTimer;
-	Timer gameTimer;
+
+	QVBoxLayout * layout;
+	WidgetRenderer * scene;
 
 protected:
-	WidgetRenderer meScene;
 	DebugMenuManager * myDebugMenu;
+	SingleKeyManager toggleDebugMenu;
 	float dt;
 public:
-	BasicGui()
+	BasicGui(bool debugStartsVisable = true)
 	: toggleDebugMenu(TIDLE_KEY)
 	{
-		connect(&myTimer,SIGNAL(timeout()),this,SLOT(myUpdate()));
+		connect(&myTimer,SIGNAL(timeout()),this,SLOT(privateUpdate()));
 		myTimer.start(0);
-		gameTimer.start();
 
 		//setup layout
-		QVBoxLayout * layout = new QVBoxLayout;
-		//setup mainwidget
+		layout = new QVBoxLayout;
 		QWidget * window = new QWidget();
         window->setLayout(layout);
 
@@ -50,26 +49,31 @@ public:
 		myDebugMenu = new DebugMenuManager();
 		myDebugMenu->init();
 
-		meScene.setMinimumHeight(700);
-		meScene.setMinimumWidth(1200);
+		if(!debugStartsVisable) myDebugMenu->hide();
 
 		//add local widgets
 		layout->addWidget(myDebugMenu);
-		layout->addWidget(&meScene);
 
-        // Set QWidget as the central layout of the main window
+		// Set QWidget as the central layout of the main window
         setCentralWidget(window);
 	}
-private slots:
-	void myUpdate() {
-		
-		dt = gameTimer.interval();
-		
-		nextFrame();
-
-		meScene.repaint();
+	void addScene(WidgetRenderer * scene) {
+		this->scene = scene;
+		layout->addWidget(scene);
+		scene->setMinimumHeight(700);
+		scene->setMinimumWidth(1200);
 	}
-protected:
-	virtual void nextFrame() {}
-
+	void mouseMoveEvent(QMouseEvent* e) { if(scene != nullptr) scene->mouseMoveEvent(e); }
+	void keyPressEvent(QKeyEvent* e) { if(scene != nullptr) scene->keyPressEvent(e); }
+private slots:
+	void privateUpdate() {
+		toggleDebugMenu.update(.1f);
+		if(toggleDebugMenu.hasBeenClicked()) {
+			(myDebugMenu->isHidden()) ? myDebugMenu->show() : myDebugMenu->hide();
+		}
+		if(!myDebugMenu->isHidden()) myDebugMenu->update();
+		update();
+	}
+protected: // included for anyone wanting to expand on this basic GUI
+	virtual void update() {}
 };
