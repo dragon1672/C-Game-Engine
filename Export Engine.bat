@@ -12,10 +12,11 @@ echo Exporting!
 SET /P CommitMsg=What is the changelog message:  
 cd ..
 Date /t >> "./Engine Renderer Export/ChangeLog.txt"
-echo -- Anthony Corbin >> "./Engine Renderer Export/ChangeLog.txt"
-echo -*%CommitMsg% >> "./Engine Renderer Export/ChangeLog.txt"
+echo - -- Anthony Corbin >> "./Engine Renderer Export/ChangeLog.txt"
+echo - * %CommitMsg% >> "./Engine Renderer Export/ChangeLog.txt"
+echo --------------------- >> "./Engine Renderer Export/ChangeLog.txt"
 
-robocopy "./Engine Renderer/MiddleWare/EngineCorbin" "./Engine Renderer Export" *.lib /S /R:1 /W:1 /NDL /XJD /XD OutputFolder
+robocopy "./Engine Renderer/MiddleWare/EngineCorbin" "./Engine Renderer Export" *.* /S /R:1 /W:1 /NDL /XJD /XD OutputFolder
 cd "Engine Renderer"
 
 exit /b 0 
