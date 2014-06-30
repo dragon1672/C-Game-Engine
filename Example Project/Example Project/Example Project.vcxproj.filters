@@ -3,4 +3,7 @@
   <ItemGroup>
     <ClCompile Include="mainer.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="testing.h" />
+  </ItemGroup>
 </Project>
