@@ -32,6 +32,8 @@ public:
 	//restarts, compiles, link and uses this program
 	void buildBasicProgram(const char * vertexShaderFilePath, const char * fragmentShaderFilePath);
 	bool addProgram(const char * filePath, unsigned short shaderType);
+	bool addProgram_srcCode(const char * shaderCode, unsigned short shaderType);
+	bool addProgram_srcCode(std::string shaderCode, unsigned short shaderType);
 
 	int getUniform(const char* title);
 	void passUniform(const char* name, ParameterType parameterType, const float * value);

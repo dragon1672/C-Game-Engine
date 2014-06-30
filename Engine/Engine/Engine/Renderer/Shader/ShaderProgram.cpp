@@ -51,20 +51,28 @@ bool ShaderProgram::addProgram(const char * filePath, unsigned short shaderType)
 	
 	bool isValid = validFile(filePath);
 	if(isValid) {
-		CodeBlock shaderInfo;
-		shaderInfo.code = file2str(filePath);
-		shaderInfo.id = glCreateShader(shaderType);
-		qDebug() << "File Load Successful ID: " << shaderInfo.id;
-
-		isValid = complileShader(shaderInfo.code.c_str(),shaderInfo.id,true);
-		if(isValid) {
-			glAttachShader(programID,shaderInfo.id);
-			qDebug() << "File(" << shaderInfo.id << ") Complile Successful ProgramID: " << programID << "\n";
-		} else {
-			qDebug() << "File(" << shaderInfo.id << ") Failed to Complile - NOT ADDED TO PROGRAM\n";
-		}
+		isValid = addProgram_srcCode(file2str(filePath),shaderType);
 	} else {
 		qDebug() << "File(" << filePath << ") was not found\n";
+	}
+	return isValid;
+}
+bool ShaderProgram::addProgram_srcCode(const char * shaderCode, unsigned short shaderType) {
+	return addProgram_srcCode(std::string(shaderCode),shaderType);
+}
+bool ShaderProgram::addProgram_srcCode(std::string shaderCode, unsigned short shaderType) {
+	bool isValid;
+	CodeBlock shaderInfo;
+	shaderInfo.code = shaderCode;
+	shaderInfo.id = glCreateShader(shaderType);
+	qDebug() << "File Load Successful ID: " << shaderInfo.id;
+
+	isValid = complileShader(shaderInfo.code.c_str(),shaderInfo.id,true);
+	if(isValid) {
+		glAttachShader(programID,shaderInfo.id);
+		qDebug() << "File(" << shaderInfo.id << ") Complile Successful ProgramID: " << programID << "\n";
+	} else {
+		qDebug() << "File(" << shaderInfo.id << ") Failed to Complile - NOT ADDED TO PROGRAM\n";
 	}
 	return isValid;
 }
