@@ -1,9 +1,5 @@
 #pragma once
 
-
-};
-#pragma once
-
 #include <Qt\qtimer.h>
 
 #include <QtGui\QHBoxLayout>
@@ -14,9 +10,11 @@
 #include <Engine\Tools\SingleKeyManager.h>
 #include <Qt\qmainwindow.h>
 #include <Engine\WidgetRenderer.h>
+#include <Engine\Tools\Timer.h>
+#include <ExportHeader.h>
 
 
-class BasicGui : public QMainWindow {
+class ENGINE_SHARED BasicGui : public QMainWindow {
 	//have debug section
 	//have renderer
 	//have virtual init/new frame
@@ -27,23 +25,23 @@ private:
 
 	SingleKeyManager toggleDebugMenu;
 
-	WidgetRenderer meScene;
-	DebugMenuManager * myDebugMenu;
 	QTimer myTimer;
+	Timer gameTimer;
 
 protected:
-	void mouseMoveEvent(QMouseEvent* e);
-	void keyPressEvent(QKeyEvent* e);
+	WidgetRenderer meScene;
+	DebugMenuManager * myDebugMenu;
+	float dt;
 public:
 	BasicGui()
 	: toggleDebugMenu(TIDLE_KEY)
 	{
 		connect(&myTimer,SIGNAL(timeout()),this,SLOT(myUpdate()));
 		myTimer.start(0);
-
+		gameTimer.start();
 
 		//setup layout
-		QVBoxLayout *layout = new QVBoxLayout;
+		QVBoxLayout * layout = new QVBoxLayout;
 		//setup mainwidget
 		QWidget * window = new QWidget();
         window->setLayout(layout);
@@ -59,14 +57,20 @@ public:
 		//add local widgets
 		layout->addWidget(myDebugMenu);
 		layout->addWidget(&meScene);
-		fileMenu = menuBar()->addMenu("File");
 
         // Set QWidget as the central layout of the main window
         setCentralWidget(window);
 	}
 private slots:
-	void myUpdate();
+	void myUpdate() {
+		
+		dt = gameTimer.interval();
+		
+		nextFrame();
+
+		meScene.repaint();
+	}
 protected:
-	void nextFrame();
+	virtual void nextFrame() {}
 
 };

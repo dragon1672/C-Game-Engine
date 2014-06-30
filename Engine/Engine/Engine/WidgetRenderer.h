@@ -1,60 +1,66 @@
 #pragma once
 
-//cpp
-#include <GL/glew.h>
-#include "glm/gtx/transform.hpp"
+/*
+         +-------------------------------------------------------+
+		 | Shade Code Notes                                      |
+		 +--------------------------------+----------------------+
+		 | Save renderable whereMatrix as | model2WorldTransform |
+		 | Save renderable texture as     | myTexture            |
+		 +-------------------------------------------------------+
+//*/
+/* default vert shader
+#version 400
+
+in layout(location=0) vec3 pos;
+in layout(location=1) vec3 col;
+in layout(location=3) vec2 uv;
+
+out vec2 outUv;
+out vec3 outCol;
+
+//mats
+uniform mat4x4 viewTransform;
+uniform mat4x4 model2WorldTransform;
+
+void main() {
+	vec4 transformedPos =  model2WorldTransform * vec4(pos.x,pos.y,pos.z,1);
+	gl_Position =  viewTransform * transformedPos;
+	outUv = uv;
+	outCol = col;
+}
+//*/
+
+/* default frag shader
+#version 400
+
+//PassThrough FragShader
+
+in vec2 outUv;
+in vec3 outCol;
+
+uniform sampler2D myTexture;
+
+void main() {
+	gl_FragColor = outCol * texture(myTexture, outUv);
+}
+//*/
 
 #include <Engine\Renderer\Renderer.h>
 #include <Qt/qwidget.h>
+#include <Qt/qtimer.h>
 #include <Engine\Tools\Camera.h>
 #include <Engine\Tools\Timer.h>
+#include <ExportHeader.h>
 
-class WidgetRenderer : public Renderer, public QWidget {
+class ENGINE_SHARED WidgetRenderer : public Renderer, public QWidget {
 private:
 	glm::mat4 viewTransform;
-	QTimer updateTimer;
-	Timer gameTimer;
 public:
 	Camera myCam;
-	//applied after camera
-	glm::mat4 additionalViewTransform;
+	glm::mat4 additionalViewTransform; //applied after camera
 	
 
-	void init() {
-		Renderer::init();
-		glewInit();
-
-		setMouseTracking(true);
-	
-		connect(&updateTimer,SIGNAL(timeout()),this,SLOT(myUpdate()));
-		updateTimer.start(0);
-		gameTimer.start();
-	}
-private:
-	void nxtFrm() {
-		nextFrame(gameTimer.interval());
-	}
-protected:
-	virtual void nextFrame(float dt) {
-
-	}
+	void init();
 public:
-	void paintGL() {
-		glViewport(0,0,width(),height());
-		glClearColor(.1f,.1f,.1f,1);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	
-		const float aspectRatio = (float)width()/(float)height();
-		viewTransform = glm::mat4();
-		viewTransform *= glm::perspective(60.0f,aspectRatio,.1f,200.0f);
-		viewTransform *= myCam.getWorld2View();
-		viewTransform *= additionalViewTransform;
-
-		resetAllShaders_validPush();
-
-		for (uint i = 0; i < numOfRenderables; i++)
-		{
-			draw(myRenderables[i]));
-		}
-	}
+	void paintGL();
 };

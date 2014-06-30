@@ -49,5 +49,7 @@
     <ClCompile Include="Engine\Tools\QT\DebugSlider_mock.cpp" />
     <ClCompile Include="Engine\Tools\QT\LinkedSlider.cpp" />
     <ClCompile Include="Engine\DebugTools\DebugMenuManager.cpp" />
+    <ClCompile Include="Engine\WidgetRenderer.cpp" />
+    <ClCompile Include="Engine\BasicGui_mock.cpp" />
   </ItemGroup>
 </Project>

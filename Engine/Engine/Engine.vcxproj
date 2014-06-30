@@ -117,6 +117,7 @@
     <ClInclude Include="Engine\DebugTools\MenuControllers\WatchVectorController.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\BasicGui_mock.cpp" />
     <ClCompile Include="Engine\Tools\BinaryToShapeLoader.cpp" />
     <ClCompile Include="Engine\Renderer\Geo\BufferManager.cpp" />
     <ClCompile Include="Engine\Tools\QT\ButtonInfo_mock.cpp" />
@@ -135,6 +136,7 @@
     <ClCompile Include="Engine\Renderer\Shader\ShaderProgram.cpp" />
     <ClCompile Include="Engine\Renderer\Shader\ShaderUniformPram.cpp" />
     <ClCompile Include="Engine\Tools\Timer.cpp" />
+    <ClCompile Include="Engine\WidgetRenderer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
