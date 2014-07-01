@@ -70,6 +70,9 @@ protected:
 	
 	virtual void nextFrame(float dt) {}
 	virtual void init() {}
+	void saveViewTransform(ShaderProgram * shader, const char * name) {
+		shader->saveUniform(name,ParameterType::PT_MAT4,&viewTransform[0][0]);
+	}
 public:
 	void initializeGL();
 	void paintGL();
