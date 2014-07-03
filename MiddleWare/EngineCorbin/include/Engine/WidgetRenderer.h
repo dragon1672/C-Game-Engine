@@ -51,6 +51,7 @@ void main() {
 #include <Engine\Tools\Camera.h>
 #include <Engine\Tools\Timer.h>
 #include <ExportHeader.h>
+#include <Engine\DebugTools\DebugMenuManager.h>
 
 #include <QtOpenGL\qglwidget>
 //                                   GLWidge must be first for MOC to work
@@ -62,17 +63,16 @@ private:
 	glm::mat4 viewTransform;
 	QTimer updateTimer;
 	Timer gameTimer;
+	float dt;
 
 protected:
-	float dt;
+	DebugMenuManager * menu;
 	Camera myCam;
 	glm::mat4 additionalViewTransform; //applied after camera
 	
 	virtual void nextFrame(float dt) {}
 	virtual void init() {}
-	void saveViewTransform(ShaderProgram * shader, const char * name) {
-		shader->saveUniform(name,ParameterType::PT_MAT4,&viewTransform[0][0]);
-	}
+	void saveViewTransform(ShaderProgram * shader, const char * name);
 public:
 	void initializeGL();
 	void paintGL();
@@ -82,4 +82,5 @@ public:
 	virtual void mouseMoveEvent(QMouseEvent* e); // just updates the cam by default
 	virtual void keyPressEvent(QKeyEvent* e); // just updates the cam by default
 	void updateCam(QKeyEvent* key = nullptr, QMouseEvent* mouse = nullptr);
+	void setDebugMenu(DebugMenuManager * menu);
 };
