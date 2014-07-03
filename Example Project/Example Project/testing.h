@@ -14,6 +14,7 @@ public:
 	glm::vec3 rotationSpeed;
 
 	glm::vec3 blendColor;
+	char * myString;
 
 	Renderable * meRenderable;
 	void init() {
@@ -32,6 +33,9 @@ public:
 		menu->watch("Blend: ",blendColor,"tab2");
 		menu->watch("Blend: ",blendColor,"tab2");
 		menu->edit("Blend: ",blendColor,0,1,0,1,0,1);
+		myString = "pie is good";
+		menu->watch("Demo:",myString);
+		myString = "Pie is really good";
 
 		// initUVData because sphere's don't have it
 		auto tempGeo = addGeometry(NUShapeEditor::initUVData(Neumont::ShapeGenerator::makeSphere(20)),GL_TRIANGLES);

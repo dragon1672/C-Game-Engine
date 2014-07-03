@@ -29,6 +29,7 @@
     <ClInclude Include="Engine\DebugTools\MenuControllers\WatchVectorController.h" />
     <ClInclude Include="Engine\DebugTools\DebugMenuManager.h" />
     <ClInclude Include="Engine\WidgetRenderer.h" />
+    <ClInclude Include="Engine\DebugTools\MenuControllers\CharPointerController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />

@@ -23,6 +23,7 @@
 #include <Engine\DebugTools\MenuControllers\BoolToggleController.h>
 #include <Engine\DebugTools\MenuControllers\WatchVectorController.h>
 #include <Engine\DebugTools\MenuControllers\SlideVectorController.h>
+#include <Engine\DebugTools\MenuControllers\CharPointerController.h>
 #include <Engine\Tools\QT\ButtonInfo.h>
 #include <Engine/FastDelegate.h>
 #include <vector>
@@ -39,6 +40,7 @@ class ENGINE_SHARED DebugMenuManager : public QTabWidget {
 	std::vector<DebugMenuControllers::BoolToggleController  *> bools;
 	std::vector<DebugMenuControllers::WatchVectorController *> vecWatchers;
 	std::vector<DebugMenuControllers::SlideVectorController *> vecSliders;
+	std::vector<DebugMenuControllers::CharPointerController *> nameSliders;
 	std::vector<ButtonInfo *> buttons;
 
 	QVBoxLayout * getTabLayout(const char * name);
@@ -46,6 +48,7 @@ public:
 	void init() {} // included for backwards compatability
 	void update();
 	//       ---------------------------------------- easy cover all function calls ----------------------------------------        //
+	void watch(char * name, char *& valueToWatch, char * tabName="default");
 	//floats
 	void watch(char * name, float& toWatch, const char * tabName="default");
 	void edit (char * name, float& toWatch, float min, float max, bool doubleLink = true, const char * tabName="default");
@@ -59,6 +62,7 @@ public:
 
 	//       ---------------------------------------- explicit function calls ----------------------------------------        //
 	//       -------------------------------------- (Same effect as above calls) -------------------------------------        //
+	void watchName(char * name, char *& valueToWatch, char * tabName="default");
 	void watchFloat (char * name, float& toWatch, const char * tabName="default");
 	void slideFloat (char * name, float& toWatch, float min, float max, bool doubleLink = true, const char * tabName="default");
 	void toggleBool (char * name, bool& toWatch, const char * tabName="default");

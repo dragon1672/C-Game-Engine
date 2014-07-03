@@ -88,6 +88,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BasicGui.h" />
+    <ClInclude Include="Engine\DebugTools\MenuControllers\CharPointerController.h" />
     <ClInclude Include="Engine\Tools\BinaryToShapeLoader.h" />
     <ClInclude Include="Engine\DebugTools\MenuControllers\BoolToggleController.h" />
     <ClInclude Include="Engine\Renderer\Geo\BufferManager.h" />

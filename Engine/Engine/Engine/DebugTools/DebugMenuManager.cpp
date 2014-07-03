@@ -23,8 +23,12 @@ void DebugMenuManager::update() {
 	for (uint i = 0; i < bools.size();         i++) { bools[i]->updateGUItoModel();        }
 	for (uint i = 0; i < vecWatchers.size();   i++) { vecWatchers[i]->update();            }
 	for (uint i = 0; i < vecSliders.size();    i++) { vecSliders[i]->updateGUItoModel();   }
+	for (uint i = 0; i < nameSliders.size();   i++) { nameSliders[i]->update();            }
 }
 
+void DebugMenuManager::watch(char * name, char *& valueToWatch, char * tabName) {
+	watchName(name,valueToWatch,tabName);
+}
 void DebugMenuManager::watch(char * name, float& toWatch, const char * tabName) {
 	watchFloat(name, toWatch,tabName);
 }
@@ -49,6 +53,14 @@ void DebugMenuManager::edit (char * name, bool& toWatch, const char * tabName) {
 void DebugMenuManager::edit (char * name, fastdelegate::FastDelegate0<> callback, const char * tabName) {
 	button(name,callback,tabName);
 }
+void DebugMenuManager::watchName(char * name, char *& valueToWatch, char * tabName) {
+	auto * toAdd = new DebugMenuControllers::CharPointerController();
+	toAdd->init(name,&valueToWatch);
+	nameSliders.push_back(toAdd);
+
+	QHBoxLayout * newRow = new QHBoxLayout();
+	newRow->addWidget(toAdd->label);
+	getTabLayout(tabName)->addLayout(newRow);
 }
 void DebugMenuManager::watchFloat (char * name, float& toWatch, const char * tabName)	  {
 	DebugMenuControllers::WatchFloatController * toAdd = new DebugMenuControllers::WatchFloatController();
