@@ -25,6 +25,7 @@ BasicGui::BasicGui(bool debugStartsVisable)
 }
 void BasicGui::addScene(WidgetRenderer * scene) {
 	this->scene = scene;
+	scene->setDebugMenu(myDebugMenu);
 	layout->addWidget(scene);
 	scene->setMinimumHeight(700);
 	scene->setMinimumWidth(1200);

@@ -28,6 +28,10 @@ public:
 
 		blendColor = Random::glmRand::randomFloatVectorInBox(1,1,1);
 
+		menu->watch("Blend: ",blendColor);
+		menu->watch("Blend: ",blendColor,"tab2");
+		menu->watch("Blend: ",blendColor,"tab2");
+		menu->edit("Blend: ",blendColor,0,1,0,1,0,1);
 
 		// initUVData because sphere's don't have it
 		auto tempGeo = addGeometry(NUShapeEditor::initUVData(Neumont::ShapeGenerator::makeSphere(20)),GL_TRIANGLES);

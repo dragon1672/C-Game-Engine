@@ -51,6 +51,7 @@ void main() {
 #include <Engine\Tools\Camera.h>
 #include <Engine\Tools\Timer.h>
 #include <ExportHeader.h>
+#include <Engine\DebugTools\DebugMenuManager.h>
 
 #include <QtOpenGL\qglwidget>
 //                                   GLWidge must be first for MOC to work
@@ -65,6 +66,7 @@ private:
 	float dt;
 
 protected:
+	DebugMenuManager * menu;
 	Camera myCam;
 	glm::mat4 additionalViewTransform; //applied after camera
 	
@@ -80,4 +82,5 @@ public:
 	virtual void mouseMoveEvent(QMouseEvent* e); // just updates the cam by default
 	virtual void keyPressEvent(QKeyEvent* e); // just updates the cam by default
 	void updateCam(QKeyEvent* key = nullptr, QMouseEvent* mouse = nullptr);
+	void setDebugMenu(DebugMenuManager * menu);
 };

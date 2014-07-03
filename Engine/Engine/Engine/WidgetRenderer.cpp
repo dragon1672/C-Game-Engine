@@ -115,3 +115,6 @@ void WidgetRenderer::updateCam(QKeyEvent* key, QMouseEvent* mouse) {
 		myCam.updateMousePos(newPos);
 	}
 }
+void WidgetRenderer::setDebugMenu(DebugMenuManager * menu) {
+	this->menu = menu;
+}
