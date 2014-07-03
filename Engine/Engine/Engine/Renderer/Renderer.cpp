@@ -87,6 +87,7 @@ void            Renderer::draw(Renderable& toDraw) {
 	}
 }
 void            Renderer::draw(GeometryInfo& toDraw) {
+	preDraw();
 	glBindVertexArray(toDraw.vertexArrayObjectID);
 	glBindBuffer(toDraw.bufferInformation.bufferID,GL_ARRAY_BUFFER);
 	glBindBuffer(toDraw.bufferInformation.bufferID,GL_ELEMENT_ARRAY_BUFFER);

@@ -79,7 +79,9 @@ void WidgetRenderer::paintGL() {
 	viewTransform *= additionalViewTransform;
 
 	resetAllShaders_validPush();
-
+	
+	preAllDraw();
+	
 	for (uint i = 0; i < numOfRenderables; i++)
 	{
 		draw(myRenderables[i]);

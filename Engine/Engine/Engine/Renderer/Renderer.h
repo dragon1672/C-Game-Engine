@@ -11,17 +11,19 @@
 
 
 class ENGINE_SHARED Renderer {
-protected:
-	Renderable myRenderables[1000];
-	uint numOfRenderables;
 public:
 	ShaderProgram * mainShader;
 protected:
+	Renderable myRenderables[1000];
+	uint numOfRenderables;
+	
 	ShaderProgram allShaderProgs[10];
 	uint numOfShaders;
 
 	GeometryInfo geoInfo[1000];
 	uint numOfGeoInfo;
+
+	virtual void preDraw() {}
 public:
 	void init();
 	void reset();
