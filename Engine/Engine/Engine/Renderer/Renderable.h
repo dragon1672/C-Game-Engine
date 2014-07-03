@@ -15,7 +15,7 @@ typedef unsigned int uint;
 
 class ENGINE_SHARED Renderable {
 private:
-	ShaderUniformPram uniformParameters[5];
+	ShaderUniformPram uniformParameters[20];
 	uint numUniformParameters;
 public:
 	GeometryInfo * whatGeo;
