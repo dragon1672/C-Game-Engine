@@ -63,6 +63,9 @@ void WidgetRenderer::nxtFrm() {
 	nextFrame(dt);
 	repaint();
 }
+void WidgetRenderer::saveViewTransform(ShaderProgram * shader, const char * name) {
+	shader->saveUniform(name,ParameterType::PT_MAT4,&viewTransform[0][0]);
+}
 
 void WidgetRenderer::paintGL() {
 	glViewport(0,0,width(),height());

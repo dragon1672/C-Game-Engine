@@ -10,7 +10,7 @@ uniform sampler2D myAlpha;
 
 void main() {
 	vec4 alpha = texture(myAlpha,outUv);
-	//if(alpha == vec4(0,0,0,0)) discard;
-	gl_FragColor = outCol * texture(myTexture, outUv);
-	gl_FragColor = vec4(1,1,1,1);
+	if(alpha == vec4(0,0,0,1)) discard;
+	gl_FragColor = texture(myTexture, outUv);
+	//gl_FragColor = vec4(1,1,1,1);
 }

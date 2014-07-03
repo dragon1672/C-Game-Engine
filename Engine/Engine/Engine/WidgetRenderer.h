@@ -62,17 +62,15 @@ private:
 	glm::mat4 viewTransform;
 	QTimer updateTimer;
 	Timer gameTimer;
+	float dt;
 
 protected:
-	float dt;
 	Camera myCam;
 	glm::mat4 additionalViewTransform; //applied after camera
 	
 	virtual void nextFrame(float dt) {}
 	virtual void init() {}
-	void saveViewTransform(ShaderProgram * shader, const char * name) {
-		shader->saveUniform(name,ParameterType::PT_MAT4,&viewTransform[0][0]);
-	}
+	void saveViewTransform(ShaderProgram * shader, const char * name);
 public:
 	void initializeGL();
 	void paintGL();
