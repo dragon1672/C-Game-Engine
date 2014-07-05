@@ -41,6 +41,10 @@ const char * defaultFragShader = "#version 400             \n"
 
 void WidgetRenderer::initializeGL() {
 	glewInit();
+
+	//glEnable (GL_BLEND);
+	//glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	connect(&updateTimer,SIGNAL(timeout()),this,SLOT(nxtFrm()));
 	updateTimer.start(0);
 	gameTimer.start();
