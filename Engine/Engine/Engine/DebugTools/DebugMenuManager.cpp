@@ -100,10 +100,10 @@ void DebugMenuManager::watchVector(char * name, glm::vec3& toWatch, const char *
 	getTabLayout(tabName)->addLayout(newRow);
 }
 void DebugMenuManager::slideVector(char * name, glm::vec3& toWatch, float min, float max, bool doubleLink, const char * tabName) {
-	slideVector(name,toWatch,min,max,min,max,min,max,tabName);
+	slideVector(name,toWatch,min,max,min,max,min,max,doubleLink,tabName);
 }
 void DebugMenuManager::slideVector(char * name, glm::vec3& toWatch, float xRange, float yRange, float zRange, bool doubleLink, const char * tabName) {
-	slideVector(name,toWatch,-xRange,xRange,-yRange,yRange,-zRange,zRange,tabName);
+	slideVector(name,toWatch,-xRange,xRange,-yRange,yRange,-zRange,zRange,doubleLink,tabName);
 }
 void DebugMenuManager::slideVector(char * name, glm::vec3& toWatch, float xMin, float xMax, float yMin, float yMax, float zMin, float zMax, bool doubleLink, const char * tabName) {
 	DebugMenuControllers::SlideVectorController * toAdd = new DebugMenuControllers::SlideVectorController();
