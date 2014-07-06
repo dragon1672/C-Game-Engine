@@ -42,6 +42,8 @@ const char * defaultFragShader = "#version 400             \n"
 void WidgetRenderer::initializeGL() {
 	glewInit();
 
+	maxDT = .02;
+
 	glEnable(GL_DEPTH_TEST);
 	glEnable (GL_BLEND);
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -65,8 +67,11 @@ void WidgetRenderer::initializeGL() {
 
 	init();
 }
+float min(float a, float b) {
+	return a > b ? b : a;
+}
 void WidgetRenderer::nxtFrm() {
-	dt = gameTimer.interval();
+	dt = min(gameTimer.interval(),maxDT);
 	nextFrame(dt);
 	repaint();
 }

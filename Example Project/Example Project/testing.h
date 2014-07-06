@@ -134,5 +134,19 @@ public:
 		hourHand->whereMat = glm::rotate(-hoursPercent   * 360, glm::vec3(0,0,1));
 		minHand->whereMat =  glm::rotate(-minutesPercent * 360, glm::vec3(0,0,1));
 		secHand->whereMat =  glm::rotate(-secondsPercent * 360, glm::vec3(0,0,1));
+		alphaAnimation(dt);
+	}
+	void alphaAnimation(float dt) {
+		static bool hasCompleted = false;
+		if(!hasCompleted) {
+			float beginAlpha = 1;
+			float endAlpha = .4;
+			float duration = 5; //seconds
+			static float currentProgress = 0;
+			currentProgress += dt;
+			float currentPercent = currentProgress / duration;
+			alpha = (endAlpha - beginAlpha) * currentPercent + beginAlpha;
+			hasCompleted = currentPercent >= 1;
+		}
 	}
 };

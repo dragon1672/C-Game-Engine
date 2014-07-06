@@ -64,6 +64,7 @@ private:
 	QTimer updateTimer;
 	Timer gameTimer;
 	float dt;
+	float maxDT;
 
 protected:
 	DebugMenuManager * menu;
@@ -72,6 +73,7 @@ protected:
 	
 	// call when ever creating a new matrix
 	void saveViewTransform(ShaderProgram * shader, const char * name);
+	void setMaxDT(float max); // any DT greater than this will be truncated to this (default .02)
 
 	virtual void nextFrame(float dt) {}
 	virtual void init() {}
