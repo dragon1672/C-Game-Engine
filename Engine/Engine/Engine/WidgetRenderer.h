@@ -72,10 +72,6 @@ protected:
 	
 	// call when ever creating a new matrix
 	void saveViewTransform(ShaderProgram * shader, const char * name);
-	void changeBlendingFunction(int modeRGB, int modeAlpha) {
-		glBlendFunc (modeRGB,modeAlpha);
-		//GL_ONE_MINUS_SRC_ALPHA;
-	}
 
 	virtual void nextFrame(float dt) {}
 	virtual void init() {}
