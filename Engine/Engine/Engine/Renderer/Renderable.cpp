@@ -11,6 +11,21 @@ void Renderable::reset() {
 	numUniformParameters = 0;
 }
 
+void Renderable::addUniformParameter(const char * name, const float& value) {
+	addUniformParameter(name,ParameterType::PT_FLOAT,&value);
+}
+void Renderable::addUniformParameter(const char * name, const glm::vec3& value) {
+	addUniformParameter(name,ParameterType::PT_VEC3,&value[0]);
+}
+void Renderable::addUniformParameter(const char * name, const glm::vec4& value) {
+	addUniformParameter(name,ParameterType::PT_VEC4,&value[0]);
+}
+void Renderable::addUniformParameter(const char * name, const glm::mat3& value) {
+	addUniformParameter(name,ParameterType::PT_MAT3,&value[0][0]);
+}
+void Renderable::addUniformParameter(const char * name, const glm::mat4& value) {
+	addUniformParameter(name,ParameterType::PT_MAT4,&value[0][0]);
+}
 void Renderable::addUniformParameter(const char * name, ParameterType parameterType, const float * value) {
 	uniformParameters[numUniformParameters++].init(howShader,name,parameterType,value);
 }

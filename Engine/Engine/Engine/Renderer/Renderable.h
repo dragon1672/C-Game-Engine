@@ -27,10 +27,22 @@ public:
 	void init(GeometryInfo * whatGeo, ShaderProgram * howShader, bool visible, uint textureID=-1);
 	void reset();
 
-	void addUniformParameter(const char * name, ParameterType parameterType, const float * value);
-	void addUniformParameter(const char * name, ParameterType parameterType, const int * value);
+	//convenience overloads
+	void addUniformParameter(const char * name, const float& value);
+	void addUniformParameter(const char * name, const glm::vec3& value);
+	void addUniformParameter(const char * name, const glm::vec4& value);
+	void addUniformParameter(const char * name, const glm::mat3& value);
+	void addUniformParameter(const char * name, const glm::mat4& value);
+
+	//convenience to save varables in renderable
 	void saveWhereMat(const char * uniformName);
 	void saveVisable(const char * uniformName);
 	void saveTexture(const char * uniformName);
+
+	//the real calls
+	void addUniformParameter(const char * name, ParameterType parameterType, const float * value);
+	void addUniformParameter(const char * name, ParameterType parameterType, const int * value);
+
+	//don't worry about me
 	void passUniformsDownDown();
 };
