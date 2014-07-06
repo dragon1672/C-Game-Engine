@@ -17,7 +17,6 @@
     <ClInclude Include="Engine\Renderer\Renderable.h" />
     <ClInclude Include="Engine\Renderer\Renderer.h" />
     <ClInclude Include="Engine\Renderer\Geo\GeometryInfo.h" />
-    <ClInclude Include="Engine\Tools\BinaryToShapeLoader.h" />
     <ClInclude Include="Engine\Renderer\Geo\BufferManager.h" />
     <ClInclude Include="Engine\Tools\QT\LinkedSlider.h" />
     <ClInclude Include="Engine\Tools\QT\DebugSlider.h" />
@@ -30,6 +29,7 @@
     <ClInclude Include="Engine\DebugTools\DebugMenuManager.h" />
     <ClInclude Include="Engine\WidgetRenderer.h" />
     <ClInclude Include="Engine\DebugTools\MenuControllers\CharPointerController.h" />
+    <ClInclude Include="Engine\Tools\BinaryToShapeLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -42,7 +42,6 @@
     <ClCompile Include="Engine\Renderer\Shader\ShaderUniformPram.cpp" />
     <ClCompile Include="Engine\Renderer\Renderable.cpp" />
     <ClCompile Include="Engine\Renderer\Renderer.cpp" />
-    <ClCompile Include="Engine\Tools\BinaryToShapeLoader.cpp" />
     <ClCompile Include="Engine\Renderer\Geo\BufferManager.cpp" />
     <ClCompile Include="Engine\Renderer\Geo\GeometryInfo.cpp" />
     <ClCompile Include="Engine\Tools\QT\ButtonInfo_mock.cpp" />
@@ -54,5 +53,6 @@
     <ClCompile Include="Engine\BasicGui_mock.cpp" />
     <ClCompile Include="Engine\WidgetRenderer_mock.cpp" />
     <ClCompile Include="Engine\BasicGui.cpp" />
+    <ClCompile Include="Engine\Tools\BinaryToShapeLoader.cpp" />
   </ItemGroup>
 </Project>
