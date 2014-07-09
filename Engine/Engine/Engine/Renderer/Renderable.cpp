@@ -1,4 +1,5 @@
 #include <Engine\Renderer\Renderable.h>
+#include <Qt/qdebug.h>
 
 void Renderable::init(GeometryInfo * whatGeo, ShaderProgram * howShader, bool visible, uint textureID) {
 	this->whatGeo   = whatGeo;
@@ -32,7 +33,14 @@ void Renderable::addUniformParameter(const char * name, ParameterType parameterT
 void Renderable::addUniformParameter(const char * name, ParameterType parameterType, const int * value) {
 	uniformParameters[numUniformParameters++].init(howShader,name,parameterType,value);
 }
+void Renderable::saveMatrixInfo(const char * uniformName) {
+	addUniformParameter(uniformName,ParameterType::PT_MAT4,reinterpret_cast<float*>(&transformData.getTransform()[0]));
+}
 void Renderable::saveWhereMat(const char * uniformName) {
+	qDebug() << " +--------------------WARNING--------------------+\n"
+			 << "| You are using a deprecated transform          |\n"
+			 << "| Please switch to matrix info                  |\n"
+			 << "+-----------------------------------------------+";
 	addUniformParameter(uniformName,ParameterType::PT_MAT4,reinterpret_cast<float*>(&whereMat[0]));
 }
 void Renderable::saveTexture(const char * uniformName) {

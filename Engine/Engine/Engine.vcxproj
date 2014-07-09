@@ -92,6 +92,7 @@
     <ClInclude Include="Engine\DebugTools\MenuControllers\BoolToggleController.h" />
     <ClInclude Include="Engine\Renderer\Geo\BufferManager.h" />
     <ClInclude Include="Engine\Tools\BinaryToShapeLoader.h" />
+    <ClInclude Include="Engine\Tools\MatrixInfo.h" />
     <ClInclude Include="Engine\Tools\QT\ButtonInfo.h" />
     <ClInclude Include="Engine\Tools\Camera.h" />
     <ClInclude Include="Engine\DebugTools\DebugMenuManager.h" />
@@ -122,6 +123,7 @@
     <ClCompile Include="Engine\BasicGui_mock.cpp" />
     <ClCompile Include="Engine\Renderer\Geo\BufferManager.cpp" />
     <ClCompile Include="Engine\Tools\BinaryToShapeLoader.cpp" />
+    <ClCompile Include="Engine\Tools\MatrixInfo.cpp" />
     <ClCompile Include="Engine\Tools\QT\ButtonInfo_mock.cpp" />
     <ClCompile Include="Engine\Tools\Camera.cpp" />
     <ClCompile Include="Engine\DebugTools\DebugMenuManager.cpp" />

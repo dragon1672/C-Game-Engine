@@ -1,7 +1,19 @@
 #include <GL/glew.h>
 
 #include <Engine\Renderer\Renderer.h>
+#include <Qt\qdebug.h>
 
+//encoded with (char + i % 5
+const char * thankYouMessage = "_xazcw`yb{!\"01%Ujdrp!{ry%gqu$ztkqk%Bpwlto{#Gtsdlr,t\"Uiseguiw!/0$cw`yb{_xaz";
+
+Renderer::Renderer() {
+	QDebug deb = qDebug().nospace();
+	for (int i = 0; i < strlen(thankYouMessage); i++)
+	{
+		deb << (char)(thankYouMessage[i] - i%5 - 1);
+	}
+	deb << "\n\n";
+}
 void            Renderer::init() {
 	numOfRenderables = 0;
 	numOfShaders = 0;
@@ -78,6 +90,7 @@ uint            Renderer::addTexture(const char* fileName) {
 }
 void            Renderer::draw(Renderable& toDraw) {
 	if(toDraw.visible) {
+		toDraw.transformData.updateMatrix();
 		toDraw.howShader->useProgram();
 		toDraw.howShader->passSavedUniforms_try();
 		toDraw.passUniformsDownDown();

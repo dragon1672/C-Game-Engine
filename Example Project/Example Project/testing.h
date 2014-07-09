@@ -74,19 +74,19 @@ public:
 
 		hourHand  = addRenderable(clockhandGeo,alphaBinaryShader,addTexture("./../textures/ClockHands.png"));
 		hourHand->addUniformParameter("myAlpha", ParameterType::PT_TEXTURE,&hrHandAlpha);
-		hourHand->saveTexture("myTexture");	hourHand->saveWhereMat("model2WorldTransform");
+		hourHand->saveTexture("myTexture");	hourHand->saveMatrixInfo("model2WorldTransform");
 		
 		minHand   = addRenderable(clockhandGeo,alphaBinaryShader,hourHand->textureID);
 		minHand->addUniformParameter("myAlpha", ParameterType::PT_TEXTURE,&minhandAlpha);
-		minHand->saveTexture("myTexture");	minHand->saveWhereMat("model2WorldTransform");
+		minHand->saveTexture("myTexture");	minHand->saveMatrixInfo("model2WorldTransform");
 		
 		secHand   = addRenderable(clockhandGeo,alphaBinaryShader,hourHand->textureID);
 		secHand->addUniformParameter("myAlpha", ParameterType::PT_TEXTURE,&secondHandAlpha);
-		secHand->saveTexture("myTexture");	secHand->saveWhereMat("model2WorldTransform");
+		secHand->saveTexture("myTexture");	secHand->saveMatrixInfo("model2WorldTransform");
 
 		glassFace = addRenderable(clockLenseGeo,alphaBlendShader,-1);
 		glassFace->saveTexture("myTexture");
-		glassFace->saveWhereMat("model2WorldTransform");
+		glassFace->saveMatrixInfo("model2WorldTransform");
 		glassFace->addUniformParameter("blendColor",blendColor);
 		glassFace->addUniformParameter("alphaVal",alpha);
 		randomClockFace();
@@ -131,9 +131,9 @@ public:
 		float minutesPercent = smooth ? (minutes + secondsPercent) / 60 : (((int)minutes) / 60.0f);
 		float hoursPercent   = smooth ? (hours   + minutesPercent) / 12 : (((int)hours  ) / 12.0f);
 
-		hourHand->whereMat = glm::rotate(-hoursPercent   * 360, glm::vec3(0,0,1));
-		minHand->whereMat =  glm::rotate(-minutesPercent * 360, glm::vec3(0,0,1));
-		secHand->whereMat =  glm::rotate(-secondsPercent * 360, glm::vec3(0,0,1));
+		hourHand -> transformData.rotation.z = -hoursPercent   * 360;
+		minHand  -> transformData.rotation.z = -minutesPercent * 360;
+		secHand  -> transformData.rotation.z = -secondsPercent * 360;
 		alphaAnimation(dt);
 	}
 	void alphaAnimation(float dt) {
