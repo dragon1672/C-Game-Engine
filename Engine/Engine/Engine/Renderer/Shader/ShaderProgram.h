@@ -34,28 +34,29 @@ public:
 	bool addProgram(const char * filePath, unsigned short shaderType);
 	bool addProgram_srcCode(const char * shaderCode, unsigned short shaderType);
 	bool addProgram_srcCode(std::string shaderCode, unsigned short shaderType);
-
-	int getUniform(const char* title);
-	void passUniform(const char* name, ParameterType parameterType, const float * value);
-	void passUniform(const char* name, ParameterType parameterType, const int     value);
-	void saveUniform(const char* name, ParameterType parameterType, const float * value);
-	void saveUniform(const char* name, ParameterType parameterType, const int   * value);
-	void saveUniform(const char* name, ParameterType parameterType, const bool  * value);
-
-	void passSavedUniforms_try();
-	void passSavedUniforms_force();
-	bool getValidPush();
-	void resetValidPush();
-
 	bool complileShader(const char * code, GLuint id, bool debug);
 	void link();
+	GLuint linkAndRun();
 
 	GLuint getProgramID();
 	GLuint getCurrentlyUsedProgram();
 	bool isCurrentProgram();
 	void useProgram();
 
-	GLuint linkAndRun();
+	int getUniform(const char* title);
+	void passUniform(const char* name, ParameterType parameterType, const float * value);
+	void passUniform(const char* name, ParameterType parameterType, const int     value);
+
+	//use these to add shader wide uniforms
+	void saveUniform(const char* name, ParameterType parameterType, const float * value);
+	void saveUniform(const char* name, ParameterType parameterType, const int   * value);
+	void saveUniform(const char* name, ParameterType parameterType, const bool  * value);
+
+	//used in draw calls
+	void passSavedUniforms_try();
+	void passSavedUniforms_force();
+	bool getValidPush();
+	void resetValidPush();
 
 	static QImage getImageFromFile(QString filePath);
 
