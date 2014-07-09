@@ -42,6 +42,7 @@ const char * defaultFragShader = "#version 400             \n"
 void WidgetRenderer::initializeGL() {
 	glewInit();
 
+	disableCamMovement = false;
 	maxDT = .02;
 
 	glEnable(GL_DEPTH_TEST);
@@ -72,6 +73,14 @@ float min(float a, float b) {
 }
 void WidgetRenderer::nxtFrm() {
 	dt = min(gameTimer.interval(),maxDT);
+	
+	if(!disableCamMovement && GetAsyncKeyState(CAM_CONTROL_FORWARD ) !=0 ) { myCam.moveForward();  }
+	if(!disableCamMovement && GetAsyncKeyState(CAM_CONTROL_BACKWARD) !=0 ) { myCam.moveBackward(); }
+	if(!disableCamMovement && GetAsyncKeyState(CAM_CONTROL_LEFT    ) !=0 ) { myCam.moveLeft();     }
+	if(!disableCamMovement && GetAsyncKeyState(CAM_CONTROL_RIGHT   ) !=0 ) { myCam.moveRight();    }
+	if(!disableCamMovement && GetAsyncKeyState(CAM_CONTROL_UP      ) !=0 ) { myCam.moveUp();       }
+	if(!disableCamMovement && GetAsyncKeyState(CAM_CONTROL_DOWN    ) !=0 ) { myCam.moveDown();     }
+
 	nextFrame(dt);
 	repaint();
 }
@@ -101,31 +110,8 @@ void WidgetRenderer::paintGL() {
 }
 
 void WidgetRenderer::mouseMoveEvent(QMouseEvent* e) {
-	if(GetAsyncKeyState(VK_RBUTTON)!=0) {
-		updateCam(nullptr,e);
-	}
-}
-void WidgetRenderer::keyPressEvent(QKeyEvent* e) {
-	updateCam(e,nullptr);
-}
-void WidgetRenderer::updateCam(QKeyEvent* key, QMouseEvent* mouse) {
-	if(key != nullptr) {
-		if(key->key() == Qt::Key::Key_W) {
-			myCam.moveForward();
-		} else if(key->key() == Qt::Key::Key_S) {
-			myCam.moveBackward();
-		} else if(key->key() == Qt::Key::Key_A) {
-			myCam.moveLeft();
-		} else if(key->key() == Qt::Key::Key_D) {
-			myCam.moveRight();
-		} else if(key->key() == Qt::Key::Key_R) {
-			myCam.moveUp();
-		} else if(key->key() == Qt::Key::Key_F) {
-			myCam.moveDown();
-		}
-	}
-	if(mouse!=nullptr) {
-		glm::vec2 newPos(mouse->x(),mouse->y());
+	if(!disableCamMovement && GetAsyncKeyState(CAM_CONTROL_ENABLECLICK)!=0) {
+		glm::vec2 newPos(e->x(),e->y());
 		myCam.updateMousePos(newPos);
 	}
 }
