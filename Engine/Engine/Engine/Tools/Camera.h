@@ -19,9 +19,7 @@ class ENGINE_SHARED Camera {
 	glm::vec2 oldMousePos;
 
 public:
-	Camera()
-		: pos(),
-		viewDir(0,0,-1) { }
+	Camera();
 	void setPos(glm::vec3& position, glm::vec3& viewDirection);
 	
 	

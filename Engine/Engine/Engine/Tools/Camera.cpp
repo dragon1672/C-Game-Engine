@@ -10,8 +10,15 @@ const float MOVEMENT_SPEED = .5f;
 
 vec3 Camera::UP(0,1,0);
 
+Camera::Camera()
+		: pos(),
+		viewDir(0,0,-1) {
+			strafeDir= glm::cross(viewDir, UP);
+}
+
 void Camera::setPos(glm::vec3& position, glm::vec3& viewDirection) {
 	pos = position;
+	strafeDir= glm::cross(viewDir, UP);
 	viewDir = glm::dot(viewDirection,viewDirection) > 1 ? glm::normalize(viewDirection) : viewDirection;
 }
 mat4x4 Camera::getWorld2View() {
