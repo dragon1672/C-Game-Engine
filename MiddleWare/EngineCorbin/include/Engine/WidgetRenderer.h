@@ -57,6 +57,16 @@ void main() {
 //                                   GLWidge must be first for MOC to work
 class ENGINE_SHARED WidgetRenderer : public QGLWidget, public Renderer {
 private:
+#pragma region camControls
+	//changing these will do nothing
+	static const int CAM_CONTROL_FORWARD  = 'W';
+	static const int CAM_CONTROL_BACKWARD = 'S';
+	static const int CAM_CONTROL_LEFT     = 'A';
+	static const int CAM_CONTROL_RIGHT    = 'D';
+	static const int CAM_CONTROL_UP       = 'R';
+	static const int CAM_CONTROL_DOWN     = 'F';
+	static const int CAM_CONTROL_ENABLECLICK = VK_LBUTTON;
+#pragma endregion
 
 	Q_OBJECT;
 
@@ -69,6 +79,7 @@ private:
 protected:
 	DebugMenuManager * menu;
 	Camera myCam;
+	bool disableCamMovement;
 	glm::mat4 additionalViewTransform; //applied after camera
 	
 	// call when ever creating a new matrix
@@ -85,8 +96,8 @@ public:
 private slots:
 	void nxtFrm();
 public:
-	virtual void mouseMoveEvent(QMouseEvent* e); // just updates the cam by default
-	virtual void keyPressEvent(QKeyEvent* e); // just updates the cam by default
+	virtual void mouseMoveEvent(QMouseEvent* e); // enables camera drag movement
+	virtual void keyPressEvent(QKeyEvent* e) {}
 	void updateCam(QKeyEvent* key = nullptr, QMouseEvent* mouse = nullptr);
 	void setDebugMenu(DebugMenuManager * menu);
 };

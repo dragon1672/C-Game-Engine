@@ -25,6 +25,7 @@ protected:
 
 	virtual void preDraw() {}
 public:
+	Renderer();
 	void init();
 	void reset();
 
