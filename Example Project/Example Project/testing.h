@@ -34,7 +34,8 @@ public:
 
 	float clockFaceID;
 	void init() {
-		myCam.setPos(glm::vec3(0,.1,30),glm::vec3(0,0,-.5));
+		//myCam.setPos(glm::vec3(0,.1,30),glm::vec3(0,0,-.5));
+		myCam.lookAt(glm::vec3(0,.1,30),glm::vec3(0,0,0));
 
 		timeScale = 1;
 		alpha = .5;

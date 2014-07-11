@@ -19,16 +19,22 @@ class ENGINE_SHARED Camera {
 	glm::vec2 oldMousePos;
 
 public:
+
+	float LARGEST_MOUSE_CHANGE;// = 50;
+	float MOUSE_SPEED_SCALE;// = .5f;
+	float MOVEMENT_SPEED;// = 1;
+
 	Camera();
 	void setPos(glm::vec3& position, glm::vec3& viewDirection);
+	void lookAt(glm::vec3& position, glm::vec3& toLookAt);
 	
 	
-	void moveForward();
-	void moveBackward();
-	void moveLeft();
-	void moveRight();
-	void moveUp();
-	void moveDown();
+	void moveForward(float  dt = 1);
+	void moveBackward(float dt = 1);
+	void moveLeft(float  dt = 1);
+	void moveRight(float dt = 1);
+	void moveUp(float   dt = 1);
+	void moveDown(float dt = 1);
 	void rotate(glm::vec2& change);
 	void updateMousePos(const glm::vec2& newMousePos);
 
