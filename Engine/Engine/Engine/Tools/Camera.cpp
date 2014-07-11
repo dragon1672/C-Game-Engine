@@ -4,44 +4,49 @@
 using glm::vec3;
 using glm::mat4x4;
 
-const float LARGEST_MOUSE_CHANGE = 50;
-const float MOUSE_SPEED_SCALE = .5f;
-const float MOVEMENT_SPEED = .5f;
-
 vec3 Camera::UP(0,1,0);
 
 Camera::Camera()
 		: pos(),
 		viewDir(0,0,-1) {
 			strafeDir= glm::cross(viewDir, UP);
+			LARGEST_MOUSE_CHANGE = 50;
+			MOUSE_SPEED_SCALE = .5f;
+			MOVEMENT_SPEED = 30;
 }
 
 void Camera::setPos(glm::vec3& position, glm::vec3& viewDirection) {
 	pos = position;
+	float lenSquared = glm::dot(viewDirection,viewDirection);
+	viewDir = lenSquared > 1 ?
+		lenSquared == 0 ? glm::vec3(0,0,-1) : glm::normalize(viewDirection)
+		: viewDirection;
 	strafeDir= glm::cross(viewDir, UP);
-	viewDir = glm::dot(viewDirection,viewDirection) > 1 ? glm::normalize(viewDirection) : viewDirection;
+}
+void Camera::lookAt(glm::vec3& position, glm::vec3& toLookAt) {
+	setPos(position,toLookAt - position);
 }
 mat4x4 Camera::getWorld2View() {
 	return glm::lookAt(pos,pos + viewDir,UP);
 }
 
-void Camera::moveForward() {
-	pos += MOVEMENT_SPEED * viewDir;
+void Camera::moveForward(float dt) {
+	pos += dt * MOVEMENT_SPEED * viewDir;
 }
-void Camera::moveBackward() {
-	pos -= MOVEMENT_SPEED * viewDir;
+void Camera::moveBackward(float dt) {
+	pos -= dt * MOVEMENT_SPEED * viewDir;
 }
-void Camera::moveLeft() {
-	pos -= MOVEMENT_SPEED * strafeDir;
+void Camera::moveLeft(float dt) {
+	pos -= dt * MOVEMENT_SPEED * strafeDir;
 }
-void Camera::moveRight() {
-	pos += MOVEMENT_SPEED * strafeDir;
+void Camera::moveRight(float dt) {
+	pos += dt * MOVEMENT_SPEED * strafeDir;
 }
-void Camera::moveUp() {
-	pos += MOVEMENT_SPEED * UP;
+void Camera::moveUp(float dt) {
+	pos += dt * MOVEMENT_SPEED * UP;
 }
-void Camera::moveDown() {
-	pos -= MOVEMENT_SPEED * UP;
+void Camera::moveDown(float dt) {
+	pos -= dt * MOVEMENT_SPEED * UP;
 }
 void Camera::rotate(glm::vec2& change) {
 	strafeDir= glm::cross(viewDir, UP);
