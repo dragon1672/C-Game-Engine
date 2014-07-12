@@ -12,6 +12,21 @@
 
 class Testing : public WidgetRenderer {
 public:
+	Renderable * meCube;
+	glm::mat4 cubeRotation;
+	Renderable * lightSrcRenderable;
+	int normalMap;
+
+	glm::vec3 lightColor;
+	float specPower;
+
+	bool whiteAsTexture;
+
+	void init();
+	
+	void nextFrame(float dt);
+	/* clock
+public:
 	Renderable * clock,
 			   * hourHand,
 			   * minHand,
@@ -150,4 +165,5 @@ public:
 			hasCompleted = currentPercent >= 1;
 		}
 	}
+	//*/
 };

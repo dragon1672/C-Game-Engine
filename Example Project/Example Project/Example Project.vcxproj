@@ -80,6 +80,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="mainer.cpp" />
+    <ClCompile Include="testing.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="testing.h" />
