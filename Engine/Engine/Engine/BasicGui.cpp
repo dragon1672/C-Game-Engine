@@ -12,20 +12,19 @@ BasicGui::BasicGui(bool debugStartsVisable)
     window->setLayout(layout);
 
 	//set up locals
-	myDebugMenu = new DebugMenuManager();
-	myDebugMenu->init();
+	myDebugMenu.init();
 
-	if(!debugStartsVisable) myDebugMenu->hide();
+	if(!debugStartsVisable) myDebugMenu.hide();
 
 	//add local widgets
-	layout->addWidget(myDebugMenu);
+	layout->addWidget(myDebugMenu.getWidg());
 
 	// Set QWidget as the central layout of the main window
     setCentralWidget(window);
 }
 void BasicGui::addScene(WidgetRenderer * scene) {
 	this->scene = scene;
-	scene->setDebugMenu(myDebugMenu);
+	scene->setDebugMenu(&myDebugMenu);
 	layout->addWidget(scene);
 	scene->setMinimumHeight(700);
 	scene->setMinimumWidth(1200);
@@ -35,8 +34,8 @@ void BasicGui::keyPressEvent(QKeyEvent* e) { if(scene != nullptr) scene->keyPres
 void BasicGui::privateUpdate() {
 	toggleDebugMenu.update(.1f);
 	if(toggleDebugMenu.hasBeenClicked()) {
-		(myDebugMenu->isHidden()) ? myDebugMenu->show() : myDebugMenu->hide();
+		(myDebugMenu.isHidden()) ? myDebugMenu.show() : myDebugMenu.hide();
 	}
-	if(!myDebugMenu->isHidden()) myDebugMenu->update();
+	if(!myDebugMenu.isHidden()) myDebugMenu.update();
 	update();
 }

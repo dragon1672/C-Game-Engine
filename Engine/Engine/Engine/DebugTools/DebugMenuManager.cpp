@@ -1,7 +1,17 @@
 #include "DebugMenuManager.h"
 #include <Engine\unsigned.h>
 
+
+DebugMenuManager::DebugMenuManager() {
+	defaultTabName = "default";
+	tabManager = new QTabWidget();
+}
+
+void DebugMenuManager::setDefaultTab(const char * tabname) {
+	defaultTabName = tabname;
+}
 QVBoxLayout * DebugMenuManager::getTabLayout(const char * name) {
+	name = name == nullptr ? defaultTabName : name;
 	for (uint i = 0; i < tabs.size(); i++)
 	{
 		if(name == tabs[i].name) return tabs[i].layout;
@@ -10,12 +20,46 @@ QVBoxLayout * DebugMenuManager::getTabLayout(const char * name) {
 	QWidget * widg = new QWidget();
 		
 	widg -> setLayout(layout);
-		
-	addTab(widg,name);
-	TabData toAdd = {name,layout};
+
+	int index = tabManager->addTab(widg,name);
+	TabData toAdd = {name,layout,index};
 	tabs.push_back( toAdd );
 	return layout;
 }
+
+
+void DebugMenuManager::hide() { return tabManager->hide(); }
+void DebugMenuManager::show() { return tabManager->hide(); }
+bool DebugMenuManager::isHidden() { return tabManager->isHidden(); }
+QWidget * DebugMenuManager::getWidg() { return tabManager; };
+
+
+const char * DebugMenuManager::getActiveTab() {
+	for (uint i = 0; i < tabs.size(); i++)
+	{
+		if(tabManager->currentIndex()== tabs[i].index) return tabs[i].name;
+	}
+	return nullptr;
+}
+//returns true if tab is active
+bool DebugMenuManager::isActiveTab(const char * tabname) {
+	return tabname == getActiveTab();
+}
+
+//returns false if tab not found
+bool DebugMenuManager::setActiveTab(const char * tabname) {
+	int index = -1;
+	for (uint i = 0; i < tabs.size() || index < 0; i++)
+	{
+		if(tabname == tabs[i].name) index = tabs[i].index;
+	}
+	if(index>=0) {
+		tabManager->setCurrentIndex(index);
+		return true;
+	}
+	return false;
+}
+
 
 void DebugMenuManager::update() {
 	for (uint i = 0; i < floatWatchers.size(); i++) { floatWatchers[i]->update();          }
