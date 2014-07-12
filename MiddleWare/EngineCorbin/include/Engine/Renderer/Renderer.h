@@ -49,7 +49,7 @@ public:
 	Renderable* getRenderable(uint index);
 	GeometryInfo* getGeometry(uint index);
 
-	uint addTexture(const char* fileName);
+	uint addTexture(const char* fileName, bool flipHorz = false, bool flipVert = false);
 	void draw(GeometryInfo& toDraw);
 	void draw(Renderable& toDraw);
 	void drawPrep(int width, int height);

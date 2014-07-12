@@ -58,10 +58,10 @@ public:
 	bool getValidPush();
 	void resetValidPush();
 
-	static QImage getImageFromFile(QString filePath);
+	static QImage getImageFromFile(QString filePath, bool flipHorz = false, bool flipVert = false);
 
 	//returns the bufferID
-	static GLuint load2DTexture(QString filePath);
+	static GLuint load2DTexture(QString filePath, bool flipHorz = false, bool flipVert = false);
 };
 
 #endif
