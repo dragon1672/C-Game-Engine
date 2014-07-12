@@ -85,8 +85,8 @@ uint            Renderer::getNumOfGeo()          { return numOfGeoInfo;     }
 ShaderProgram * Renderer::getShader(uint index) { return &allShaderProgs[index]; }
 Renderable    * Renderer::getRenderable(uint index) { return &myRenderables[index];  }
 GeometryInfo  * Renderer::getGeometry(uint index) { return &geoInfo[index];        }
-uint            Renderer::addTexture(const char* fileName) {
-	return ShaderProgram::load2DTexture(fileName);
+uint            Renderer::addTexture(const char* fileName, bool flipHorz, bool flipVert) {
+	return ShaderProgram::load2DTexture(fileName, flipHorz, flipVert);
 }
 void            Renderer::draw(Renderable& toDraw) {
 	if(toDraw.visible) {

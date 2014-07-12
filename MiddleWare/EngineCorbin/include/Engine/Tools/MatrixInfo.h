@@ -2,8 +2,9 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
+#include <ExportHeader.h>
 
-class MatrixInfo {
+class ENGINE_SHARED MatrixInfo {
 private:
 	glm::mat4 transform;
 	
