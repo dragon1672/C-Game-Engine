@@ -103,3 +103,127 @@ Neumont::ShapeData NUShapeEditor::rotate(Neumont::ShapeData& obj, float x, float
 	}
 	return obj;
 }
+/*
+#include "Vector4D.h"
+struct Triangle
+{
+ unsigned short index[3];
+};
+void CalculateTangentArray(long vertexCount, const Point3D *vertex, const Vector3D *normal,
+ const Point2D *texcoord, long triangleCount, const Triangle *triangle, Vector4D *tangent)
+{
+ Vector3D *tan1 = new Vector3D[vertexCount * 2];
+ Vector3D *tan2 = tan1 + vertexCount;
+ ZeroMemory(tan1, vertexCount * sizeof(Vector3D) * 2);
+ 
+ for (long a = 0; a < triangleCount; a++)
+ {
+ long i1 = triangle->index[0];
+ long i2 = triangle->index[1];
+ long i3 = triangle->index[2];
+ 
+ const Point3D& v1 = vertex[i1];
+ const Point3D& v2 = vertex[i2];
+ const Point3D& v3 = vertex[i3];
+ 
+ const Point2D& w1 = texcoord[i1];
+ const Point2D& w2 = texcoord[i2];
+ const Point2D& w3 = texcoord[i3];
+ 
+ float x1 = v2.x - v1.x;
+ float x2 = v3.x - v1.x;
+ float y1 = v2.y - v1.y;
+ float y2 = v3.y - v1.y;
+ float z1 = v2.z - v1.z;
+ float z2 = v3.z - v1.z;
+ 
+ float s1 = w2.x - w1.x;
+ float s2 = w3.x - w1.x;
+ float t1 = w2.y - w1.y;
+ float t2 = w3.y - w1.y;
+ 
+ float r = 1.0F / (s1 * t2 - s2 * t1);
+ Vector3D sdir((t2 * x1 - t1 * x2) * r, (t2 * y1 - t1 * y2) * r,
+ (t2 * z1 - t1 * z2) * r);
+ Vector3D tdir((s1 * x2 - s2 * x1) * r, (s1 * y2 - s2 * y1) * r,
+ (s1 * z2 - s2 * z1) * r);
+ 
+ tan1[i1] += sdir;
+ tan1[i2] += sdir;
+ tan1[i3] += sdir;
+ 
+ tan2[i1] += tdir;
+ tan2[i2] += tdir;
+ tan2[i3] += tdir;
+ 
+ triangle++;
+ }
+ 
+ for (long a = 0; a < vertexCount; a++)
+ {
+ const Vector3D& n = normal[a];
+ const Vector3D& t = tan1[a];
+ 
+ // Gram-Schmidt orthogonalize
+ tangent[a] = (t - n * Dot(n, t)).Normalize();
+ 
+ // Calculate handedness
+ tangent[a].w = (Dot(Cross(n, t), tan2[a]) < 0.0F) ? -1.0F : 1.0F;
+ }
+ 
+ delete[] tan1;
+}
+
+//*/
+Neumont::ShapeData NUShapeEditor::overrideColorWithTanNormals(Neumont::ShapeData&obj) {
+	glm::vec3 * tan1 = new glm::vec3[obj.numVerts * 2];
+	glm::vec3 * tan2 = tan1 + obj.numVerts;
+	//ZeroMemory(tan1, vertexCount * sizeof(Vector3D) * 2);
+	for (int i = 0; i < obj.numIndices/3; i++)
+	{
+		long i1 = obj.indices[0 + i*3];
+		long i2 = obj.indices[1 + i*3];
+		long i3 = obj.indices[2 + i*3];
+		
+		Neumont::Vertex& v1 = obj.verts[i1];
+		Neumont::Vertex& v2 = obj.verts[i2];
+		Neumont::Vertex& v3 = obj.verts[i3];
+		//v1-3 is pos
+		//w1-3 is UV
+		float x1 = v2.position.x - v1.position.x;
+		float x2 = v3.position.x - v1.position.x;
+		float y1 = v2.position.y - v1.position.y;
+		float y2 = v3.position.y - v1.position.y;
+		float z1 = v2.position.z - v1.position.z;
+		float z2 = v3.position.z - v1.position.z;
+ 
+		float s1 = v2.uv.x - v1.uv.x;
+		float s2 = v3.uv.x - v1.uv.x;
+		float t1 = v2.uv.y - v1.uv.y;
+		float t2 = v3.uv.y - v1.uv.y;
+
+		float r = 1.0f / (s1 * t2 - s2 * t1);
+		glm::vec3 sdir( (t2 * x1 - t1 * x2) * r,     (t2 * y1 - t1 * y2) * r,      (t2 * z1 - t1 * z2) * r);
+		glm::vec3 tdir( (s1 * x2 - s2 * x1) * r,     (s1 * y2 - s2 * y1) * r,      (s1 * z2 - s2 * z1) * r);
+		
+		tan1[i1] += sdir;
+		tan1[i2] += sdir;
+		tan1[i3] += sdir;
+ 
+		tan2[i1] += tdir;
+		tan2[i2] += tdir;
+		tan2[i3] += tdir;
+	}
+	for (int i = 0; i < obj.numVerts; i++)
+	{
+		glm::vec3& n = obj.verts[i].normal;
+		glm::vec3& t = tan1[i];
+		// Gram-Schmidt orthogonalize
+		obj.verts[i].color = glm::normalize(glm::vec4((t - n * glm::normalize(glm::dot(n, t))),1));
+
+		// Calculate handedness
+		obj.verts[i].color.w = (glm::dot(glm::cross(n, t), tan2[i]) < 0.0F) ? -1.0F : 1.0F;
+	}
+	delete[] tan1;
+	return obj;
+}

@@ -30,7 +30,7 @@ private:
 	WidgetRenderer * scene;
 
 protected:
-	DebugMenuManager * myDebugMenu;
+	DebugMenuManager myDebugMenu;
 	SingleKeyManager toggleDebugMenu;
 	float dt;
 public:

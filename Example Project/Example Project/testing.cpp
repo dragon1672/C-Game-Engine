@@ -1,4 +1,6 @@
+//*
 #include "testing.h"
+#include <Engine\Tools\NUShapeEditor.h>
 
 Neumont::Vertex stackVerts[] = 
 {
@@ -137,7 +139,8 @@ void Testing::init() {
 
 	whiteAsTexture = false;
 
-	auto meGeo =  addGeometry(NUShapeEditor::scale(makeCube(),5),GL_TRIANGLES);
+	auto meGeo =  addGeometry(NUShapeEditor::overrideColorWithTanNormals(NUShapeEditor::scale(makeCube(),5)),GL_TRIANGLES);
+	//auto meGeo =  addGeometry((NUShapeEditor::scale(makeCube(),5)),GL_TRIANGLES);
 	auto cameraGeo = addGeometry(Neumont::ShapeGenerator::makeSphere(50),GL_TRIANGLES);
 
 	lightSrcRenderable = addRenderable(cameraGeo,mainShader,-1);
@@ -171,7 +174,7 @@ void Testing::init() {
 	
 void Testing::nextFrame(float dt) {
 	static float time = 0;
-	time += dt;
+	//time += dt;
 	if(time > 2) {
 		time -= 2;
 		if(menu->isActiveTab("pie"))
@@ -182,3 +185,4 @@ void Testing::nextFrame(float dt) {
 	cubeRotation = meCube->transformData.genRotMat();
 
 }
+//*/

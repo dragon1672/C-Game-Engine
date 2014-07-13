@@ -55,10 +55,10 @@ public:
 		timeScale = 1;
 		alpha = .5;
 		smooth = true;
-		
 		auto clockFaceGeo =  addGeometry(BinaryToShapeLoader::loadFromFile("./../models/clock face.bin"),  GL_TRIANGLES);
 		auto clockhandGeo =  addGeometry(BinaryToShapeLoader::loadFromFile("./../models/clock hands.bin") ,GL_TRIANGLES);
-		auto clockGeo =      addGeometry(BinaryToShapeLoader::loadFromFile("./../models/clock.bin")       ,GL_TRIANGLES);
+		//auto clockGeo =      addGeometry(BinaryToShapeLoader::loadFromFile("./../models/clock.bin")       ,GL_TRIANGLES);
+		auto clockGeo =      addGeometry(BinaryToShapeLoader::loadFromFile("./../models/Ogre.bin")       ,GL_TRIANGLES);
 		auto clockLenseGeo = addGeometry(BinaryToShapeLoader::loadFromFile("./../models/clockLense.bin")  ,GL_TRIANGLES);
 
 		ShaderProgram * basicShader       = addShader("./../shaders/PassThrough_V.glsl","./../shaders/PassThrough_F.glsl"); // for clock, clock face
