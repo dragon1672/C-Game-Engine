@@ -176,8 +176,8 @@ void CalculateTangentArray(long vertexCount, const Point3D *vertex, const Vector
 
 //*/
 Neumont::ShapeData NUShapeEditor::overrideColorWithTanNormals(Neumont::ShapeData&obj) {
-	glm::vec3 * tan1 = new glm::vec3[obj.numVerts * 2];
-	glm::vec3 * tan2 = tan1 + obj.numVerts;
+	glm::vec3 * tan1 = new glm::vec3[obj.numVerts];// * 2];
+	//glm::vec3 * tan2 = tan1 + obj.numVerts;
 	//ZeroMemory(tan1, vertexCount * sizeof(Vector3D) * 2);
 	for (int i = 0; i < obj.numIndices/3; i++)
 	{
@@ -188,8 +188,7 @@ Neumont::ShapeData NUShapeEditor::overrideColorWithTanNormals(Neumont::ShapeData
 		Neumont::Vertex& v1 = obj.verts[i1];
 		Neumont::Vertex& v2 = obj.verts[i2];
 		Neumont::Vertex& v3 = obj.verts[i3];
-		//v1-3 is pos
-		//w1-3 is UV
+		
 		float x1 = v2.position.x - v1.position.x;
 		float x2 = v3.position.x - v1.position.x;
 		float y1 = v2.position.y - v1.position.y;
@@ -200,6 +199,7 @@ Neumont::ShapeData NUShapeEditor::overrideColorWithTanNormals(Neumont::ShapeData
 		float s1 = v2.uv.x - v1.uv.x;
 		float s2 = v3.uv.x - v1.uv.x;
 		float t1 = v2.uv.y - v1.uv.y;
+
 		float t2 = v3.uv.y - v1.uv.y;
 
 		float r = 1.0f / (s1 * t2 - s2 * t1);
@@ -210,19 +210,20 @@ Neumont::ShapeData NUShapeEditor::overrideColorWithTanNormals(Neumont::ShapeData
 		tan1[i2] += sdir;
 		tan1[i3] += sdir;
  
-		tan2[i1] += tdir;
-		tan2[i2] += tdir;
-		tan2[i3] += tdir;
+		//tan2[i1] += tdir;
+		//tan2[i2] += tdir;
+		//tan2[i3] += tdir;
+
 	}
 	for (int i = 0; i < obj.numVerts; i++)
 	{
 		glm::vec3& n = obj.verts[i].normal;
 		glm::vec3& t = tan1[i];
 		// Gram-Schmidt orthogonalize
-		obj.verts[i].color = glm::normalize(glm::vec4((t - n * glm::normalize(glm::dot(n, t))),1));
+		obj.verts[i].color = glm::vec4(glm::normalize((t - n * glm::dot(n, t))),0);
 
 		// Calculate handedness
-		obj.verts[i].color.w = (glm::dot(glm::cross(n, t), tan2[i]) < 0.0F) ? -1.0F : 1.0F;
+		//obj.verts[i].color.w = (glm::dot(glm::cross(n, t), tan2[i]) < 0.0F) ? -1.0F : 1.0F;
 	}
 	delete[] tan1;
 	return obj;
