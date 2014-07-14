@@ -17,7 +17,12 @@ uniform vec3  lightColor;
 uniform vec3  diffusePos;
 uniform float specPower;
 uniform vec3  camPos;
+uniform sampler2D diffuseMap;
 uniform sampler2D normalMap;
+uniform sampler2D occMap;
+uniform bool showTexture;
+uniform bool useNormal;
+uniform bool useOcc;
 
 
 uniform bool whiteAsTexture;
@@ -36,7 +41,14 @@ vec3 initTextureToNorm(vec3 input) {
 	return texture2ModelTransform * input;
 }
 void calculateVectors(vec3 vertPos) {
-	rotatedNormal = mat3(modelRotation) * initTextureToNorm(vec3(texture(normalMap,outUv)));
+	vec3 orginalNorm;
+	if(useNormal) {
+		orginalNorm = initTextureToNorm(vec3(texture(normalMap,outUv)));
+	} else {
+		orginalNorm = texture2ModelTransform * vec3(0,0,1);
+	}
+	rotatedNormal = mat3(modelRotation) * orginalNorm;
+	//rotatedNormal = normalize(rotatedNormal); // EWW
 	diffuseVector = normalize(diffusePos - vertPos);
 	eyeVector = normalize(camPos - vertPos);
 	specVector = -reflect(diffuseVector,rotatedNormal);
@@ -62,14 +74,20 @@ in vec3 outCol;
 
 void main() {
 	vec3 finalCol = vec3(1,1,1);
-	if(!whiteAsTexture)	finalCol = vec3(texture(normalMap,outUv));
+	if(showTexture) {
+		finalCol *= vec3(texture(diffuseMap,outUv));
+	}
 	vec3 lightV;
 	calculateVectors(vec3(outPos));
 	lightV = diffuseLightAmount();
 	finalCol = finalCol * lightV + specLight();
+	if(useOcc) {
+		finalCol *= vec3(texture(occMap,outUv));
+	}
 	finalColorForOutput = vec4(finalCol,1);
 	//finalColorForOutput = texture(normalMap,outUv);
 	//finalColorForOutput = vec4(lightV,1);
 	//finalColorForOutput = vec4(rotatedNormal,1);
 	//finalColorForOutput = vec4(outCol,1);
+	//finalColorForOutput = vec4(specLight(),1);
 }

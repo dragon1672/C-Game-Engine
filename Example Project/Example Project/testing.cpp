@@ -2,6 +2,7 @@
 #include "testing.h"
 #include <Engine\Tools\NUShapeEditor.h>
 
+#pragma region cube
 Neumont::Vertex stackVerts[] = 
 {
 	// Top
@@ -130,59 +131,59 @@ Neumont::ShapeData makeCube() {
 	ret.numIndices = sizeof(stackIndices) / sizeof(*stackIndices);
 	return ret;
 }
+#pragma endregion
 
 void Testing::init() {
 	myCam.lookAt(glm::vec3(0,.1,10),glm::vec3(0,0,0));
 
 	specPower = 100;
 	lightColor = glm::vec3(1,1,1);
+	
+	
+	showTexture = true;
+	useNormalMap = true;
+	useOcclusion = false;
 
-	whiteAsTexture = false;
-
-	auto meGeo =  addGeometry(NUShapeEditor::overrideColorWithTanNormals(NUShapeEditor::scale(makeCube(),5)),GL_TRIANGLES);
-	//auto meGeo =  addGeometry((NUShapeEditor::scale(makeCube(),5)),GL_TRIANGLES);
+	auto meGeo =  addGeometry(NUShapeEditor::overrideColorWithTanNormals(BinaryToShapeLoader::loadFromFile("./../models/Ogre.bin")),GL_TRIANGLES);
 	auto cameraGeo = addGeometry(Neumont::ShapeGenerator::makeSphere(50),GL_TRIANGLES);
 
 	lightSrcRenderable = addRenderable(cameraGeo,mainShader,-1);
 	lightSrcRenderable->saveMatrixInfo("model2WorldTransform");
 
-	ShaderProgram * meShader = addShader("./../shaders/tanNormal_V.glsl","./../shaders/tanNormal_F.glsl");
+	ShaderProgram * meShader = addShader("./../shaders/tanNormal_V.glsl","./../shaders/tanNormal_orge_F.glsl");
 	saveViewTransform(meShader,"viewTransform");
-	meShader->saveUniform("diffusePos",   ParameterType::PT_VEC3, &lightSrcRenderable->transformData.position[0]         );
-	meShader->saveUniform("lightColor", ParameterType::PT_VEC3, &lightColor[0]         );
-	meShader->saveUniform("camPos",     ParameterType::PT_VEC3, &myCam.getPos()[0]     );
-	meShader->saveUniform("specPower",  ParameterType::PT_FLOAT, &specPower            );
-	meShader->saveUniform("whiteAsTexture", ParameterType::PT_BOOLEAN, &whiteAsTexture );
+	meShader->saveUniform("diffusePos",     ParameterType::PT_VEC3, &lightSrcRenderable->transformData.position[0]         );
+	meShader->saveUniform("lightColor",     ParameterType::PT_VEC3, &lightColor[0]     );
+	meShader->saveUniform("camPos",         ParameterType::PT_VEC3, &myCam.getPos()[0] );
+	meShader->saveUniform("specPower",      ParameterType::PT_FLOAT, &specPower        );
+	meShader->saveUniform("showTexture",    ParameterType::PT_BOOLEAN, &showTexture    );
+	meShader->saveUniform("useNormal",      ParameterType::PT_BOOLEAN, &useNormalMap   );
+	meShader->saveUniform("useOcc",         ParameterType::PT_BOOLEAN, &useOcclusion   );
 		
-	meCube = addRenderable(meGeo,meShader,addTexture("./../textures/basicNormal.png",false,true));
-	meCube->saveTexture("normalMap");
-	meCube->saveMatrixInfo("model2WorldTransform");
-	meCube->addUniformParameter("modelRotation", cubeRotation );
-	
-	menu->setDefaultTab("cheese");
-	menu->edit("lightPosition",lightSrcRenderable->transformData.position,-20,20);
-	//menu->edit("lightColor",lightColor,0,1);
-	//menu->edit("specPower",specPower,3,100);
-	menu->edit("Cube Rot:",meCube->transformData.rotation,-360,360);
-	menu->setDefaultTab("pie");
-	menu->edit("showLightSrc",lightSrcRenderable->visible);
-	menu->edit("whiteAsTexture",whiteAsTexture);
+	normalMap = addTexture("./../textures/ogre_normalmap.png");
+	occlusionmap = addTexture("./../textures/ao_ears.png");
 
-	lightSrcRenderable->transformData.position = glm::vec3(0,10,0); // debug menu is corrupting data ?!?
+	meOrge = addRenderable(meGeo,meShader,addTexture("./../textures/ogre_diffuse.png"));
+	meOrge->saveMatrixInfo("model2WorldTransform");
+	meOrge->saveTexture("diffuseMap");
+	meOrge->addUniformParameter("normalMap",     ParameterType::PT_TEXTURE,&normalMap);
+	meOrge->addUniformParameter("occMap",        ParameterType::PT_TEXTURE,&occlusionmap);
+	meOrge->addUniformParameter("modelRotation", headRotation );
+
+	meOrge->transformData.scale = glm::vec3(7,7,7);
+	
+	menu->edit("lightPosition",lightSrcRenderable->transformData.position,-20,20);
+	menu->edit("Cube Rot:",meOrge->transformData.rotation,-360,360);
+	menu->edit("showLightSrc",lightSrcRenderable->visible);
+	menu->edit("normMap",useNormalMap);
+	menu->edit("occMap",useOcclusion);
+	menu->edit("diffuse",showTexture);
+
+	lightSrcRenderable->transformData.position = glm::vec3(0,4,9.5); // debug menu is corrupting data ?!?
 	lightSrcRenderable->transformData.scale = glm::vec3(.2,.2,.2);
 }
 	
 void Testing::nextFrame(float dt) {
-	static float time = 0;
-	//time += dt;
-	if(time > 2) {
-		time -= 2;
-		if(menu->isActiveTab("pie"))
-			menu->setActiveTab("cheese");
-		else
-			menu->setActiveTab("pie");
-	}
-	cubeRotation = meCube->transformData.genRotMat();
-
+	headRotation = meOrge->transformData.genRotMat();
 }
 //*/
