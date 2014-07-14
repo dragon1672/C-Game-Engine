@@ -16,4 +16,5 @@ public:
 	static Neumont::ShapeData initUVData(Neumont::ShapeData& obj);
 	static Neumont::ShapeData scale(Neumont::ShapeData& obj, float scale);
 	static Neumont::ShapeData rotate(Neumont::ShapeData& obj, float x, float y, float z);
+	static Neumont::ShapeData overrideColorWithTanNormals(Neumont::ShapeData&obj);
 };
