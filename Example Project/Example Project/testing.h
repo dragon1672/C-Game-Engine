@@ -13,16 +13,6 @@
 class Testing : public WidgetRenderer {
 public:
 	Renderable * meOrge;
-	glm::mat4 headRotation;
-	Renderable * lightSrcRenderable;
-	int normalMap;
-	int occlusionmap;
-	bool showTexture;
-	bool useNormalMap;
-	bool useOcclusion;
-
-	glm::vec3 lightColor;
-	float specPower;
 
 	void init();
 	
