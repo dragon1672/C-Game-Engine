@@ -10,6 +10,7 @@
 #include <Engine\Renderer\ParameterType.h>
 #include "ExportHeader.h"
 #include <Engine\Renderer\Shader\ShaderUniformPram.h>
+#include <Engine\unsigned.h>
 
 class ENGINE_SHARED ShaderProgram {
 private:
@@ -62,6 +63,7 @@ public:
 
 	//returns the bufferID
 	static GLuint load2DTexture(QString filePath, bool flipHorz = false, bool flipVert = false);
+	static GLuint load2DTexture(ubyte * data, uint width, uint height);
 };
 
 #endif

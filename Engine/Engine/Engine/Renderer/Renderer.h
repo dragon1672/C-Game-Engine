@@ -6,6 +6,7 @@
 #include <Engine\Renderer\Shader\ShaderProgram.h>
 #include <Engine\Renderer\Shader\ShaderUniformPram.h>
 #include <Engine\Renderer\ParameterType.h>
+#include <Engine\unsigned.h>
 
 #include <ExportHeader.h>
 
@@ -50,6 +51,7 @@ public:
 	GeometryInfo* getGeometry(uint index);
 
 	uint addTexture(const char* fileName, bool flipHorz = false, bool flipVert = false);
+	uint addTexture(ubyte * textureData, uint width, uint height);
 	void draw(GeometryInfo& toDraw);
 	void draw(Renderable& toDraw);
 	void drawPrep(int width, int height);

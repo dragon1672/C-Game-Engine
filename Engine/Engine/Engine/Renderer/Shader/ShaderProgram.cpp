@@ -243,12 +243,27 @@ GLuint ShaderProgram::load2DTexture(QString fileName, bool flipHorz, bool flipVe
 		glBindTexture(GL_TEXTURE_2D, bufferID);
 
 		glTexImage2D(GL_TEXTURE_2D,0, GL_RGBA, data.width(), data.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, data.bits());
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
 		return ID;
 	} else {
 		qDebug() << "Invalid file path " << formatFileName(filePath) << " Texture not loaded";
 		return -1;
 	}
+}
+GLuint ShaderProgram::load2DTexture(ubyte * data, uint width, uint height) {
+	uint ID = numOfTextures++;
+	GLuint bufferID;
+
+	glActiveTexture(GL_TEXTURE0+ID);
+	glEnable(GL_TEXTURE_2D);
+	glGenTextures(1,&bufferID);
+	glBindTexture(GL_TEXTURE_2D, bufferID);
+
+	glTexImage2D(GL_TEXTURE_2D,0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+	return ID;
 }

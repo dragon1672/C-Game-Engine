@@ -88,6 +88,9 @@ GeometryInfo  * Renderer::getGeometry(uint index) { return &geoInfo[index];     
 uint            Renderer::addTexture(const char* fileName, bool flipHorz, bool flipVert) {
 	return ShaderProgram::load2DTexture(fileName, flipHorz, flipVert);
 }
+uint            Renderer::addTexture(ubyte * textureData, uint width, uint height) {
+	return ShaderProgram::load2DTexture(textureData, width, height);
+}
 void            Renderer::draw(Renderable& toDraw) {
 	if(toDraw.visible) {
 		toDraw.transformData.updateMatrix();
