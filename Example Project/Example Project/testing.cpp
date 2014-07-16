@@ -5,7 +5,7 @@
 
 void Testing::init() {
 	myCam.lookAt(glm::vec3(0,2,1),glm::vec3(0,0,0));
-	myCam.MOVEMENT_SPEED *= .5;
+	myCam.MOVEMENT_SPEED *= .1;
 
 
 	auto meShader = addShader("./../shaders/PassThroughV.glsl","./../shaders/PassThroughF.glsl");

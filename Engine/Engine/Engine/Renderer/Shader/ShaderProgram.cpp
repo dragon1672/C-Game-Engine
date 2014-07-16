@@ -224,29 +224,15 @@ QImage ShaderProgram::getImageFromFile(QString fileName, bool flipHorz, bool fli
 	return myTexture;
 }
 //returns the bufferID
+GLuint ShaderProgram::load2DTexture(QImage image) {
+	return load2DTexture(image.bits(),image.width(),image.height());
+}
 GLuint ShaderProgram::load2DTexture(QString fileName, bool flipHorz, bool flipVert) {
 	QString filePath = /**/QCoreApplication::applicationDirPath() + /**/fileName;
 	QFile tempFile(filePath);
 	if(tempFile.exists()) {
-		uint ID = numOfTextures++;
-
-		GLuint bufferID;
-
 		QImage data = getImageFromFile(filePath,flipHorz,flipVert);
-
-		glActiveTexture(GL_TEXTURE0+ID);
-
-		glEnable(GL_TEXTURE_2D);
-
-		glGenTextures(1,&bufferID);
-
-		glBindTexture(GL_TEXTURE_2D, bufferID);
-
-		glTexImage2D(GL_TEXTURE_2D,0, GL_RGBA, data.width(), data.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, data.bits());
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
-		return ID;
+		return load2DTexture(data);
 	} else {
 		qDebug() << "Invalid file path " << formatFileName(filePath) << " Texture not loaded";
 		return -1;
