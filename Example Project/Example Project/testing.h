@@ -13,6 +13,8 @@
 class Testing : public WidgetRenderer {
 public:
 	float layer;
+	glm::vec3 color;
+	float updateRate;
 
 	void init();
 	
