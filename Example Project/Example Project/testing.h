@@ -12,7 +12,7 @@
 
 class Testing : public WidgetRenderer {
 public:
-	Renderable * meOrge;
+	float layer;
 
 	void init();
 	
