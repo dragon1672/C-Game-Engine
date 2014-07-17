@@ -70,7 +70,7 @@ void DebugMenuManager::update() {
 	for (uint i = 0; i < nameSliders.size();   i++) { nameSliders[i]->update();            }
 }
 
-void DebugMenuManager::watch(char * name, char *& valueToWatch, char * tabName) {
+void DebugMenuManager::watch(char * name, const char *& valueToWatch, char * tabName) {
 	watchName(name,valueToWatch,tabName);
 }
 void DebugMenuManager::watch(char * name, float& toWatch, const char * tabName) {
@@ -97,7 +97,7 @@ void DebugMenuManager::edit (char * name, bool& toWatch, const char * tabName) {
 void DebugMenuManager::edit (char * name, fastdelegate::FastDelegate0<> callback, const char * tabName) {
 	button(name,callback,tabName);
 }
-void DebugMenuManager::watchName(char * name, char *& valueToWatch, char * tabName) {
+void DebugMenuManager::watchName(char * name, const char *& valueToWatch, char * tabName) {
 	auto * toAdd = new DebugMenuControllers::CharPointerController();
 	toAdd->init(name,&valueToWatch);
 	nameSliders.push_back(toAdd);

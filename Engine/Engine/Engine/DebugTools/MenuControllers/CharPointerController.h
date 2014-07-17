@@ -8,13 +8,13 @@
 namespace DebugMenuControllers {
 	struct ENGINE_SHARED CharPointerController {
 		QLabel * label;
-		char * title;
-		char ** data;
+		const char * title;
+		const char ** data;
 
 		CharPointerController() {
 			label = new QLabel();
 		}
-		inline void init(char * name, char ** toWatch) {
+		inline void init(const char * name, const char ** toWatch) {
 			title = name;
 			data = toWatch;
 			update();
