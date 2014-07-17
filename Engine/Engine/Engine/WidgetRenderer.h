@@ -82,8 +82,10 @@ protected:
 	bool disableCamMovement;
 	glm::mat4 additionalViewTransform; //applied after camera
 	
+public:
 	// call when ever creating a new matrix
 	void saveViewTransform(ShaderProgram * shader, const char * name);
+protected:
 	void setMaxDT(float max); // any DT greater than this will be truncated to this (default .02)
 
 	virtual void nextFrame(float dt) {}

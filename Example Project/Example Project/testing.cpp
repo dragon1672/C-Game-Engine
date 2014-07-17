@@ -61,7 +61,7 @@ void Testing::nextFrame(float dt) {
 	static float timePassed = -1;
 	timePassed += dt;
 	if(timePassed > updateRate || timePassed < 0) {
-		timePassed -= updateRate;
+		timePassed = timePassed < 0 ? 0 : timePassed-updateRate;
 		color = Random::glmRand::randomFloatVectorInBox(1,1,1);
 	}
 }
