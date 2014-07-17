@@ -4,6 +4,7 @@
 #pragma warning(push)
 #include <glm\glm.hpp>
 #pragma warning(pop)
+#include <Qt\qdebug.h>
 
 #define GET_DATA(type, offset) *reinterpret_cast<type *>(bytes+offset);	offset += sizeof(type);
 
@@ -11,6 +12,9 @@
 Neumont::ShapeData BinaryToShapeLoader::loadFromFile(const char * fileName) {
 	//understand da file
 	std::ifstream input( fileName , std::ios::binary | std::ios::in);
+	if(!input.good()) {
+		qDebug() << fileName << "failed to load, unable to convert to binary";
+	}
 	assert(input.good()); 
 	input.seekg(0, std::ios::end);
 	int fileSize = (int)input.tellg();

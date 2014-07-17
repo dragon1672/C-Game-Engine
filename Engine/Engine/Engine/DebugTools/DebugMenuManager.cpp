@@ -29,7 +29,7 @@ QVBoxLayout * DebugMenuManager::getTabLayout(const char * name) {
 
 
 void DebugMenuManager::hide() { return tabManager->hide(); }
-void DebugMenuManager::show() { return tabManager->hide(); }
+void DebugMenuManager::show() { return tabManager->show(); }
 bool DebugMenuManager::isHidden() { return tabManager->isHidden(); }
 QWidget * DebugMenuManager::getWidg() { return tabManager; };
 

@@ -8,6 +8,7 @@
 #include <Qt/qimage.h>
 #include <Qt/qfile.h>
 #pragma warning(pop)
+#include <cassert>
 
 
 GLuint ShaderProgram::currentProgram;
@@ -54,6 +55,7 @@ bool ShaderProgram::addProgram(const char * filePath, unsigned short shaderType)
 		isValid = addProgram_srcCode(file2str(filePath),shaderType);
 	} else {
 		qDebug() << "File(" << filePath << ") was not found\n";
+		assert(false);
 	}
 	return isValid;
 }
@@ -73,6 +75,7 @@ bool ShaderProgram::addProgram_srcCode(std::string shaderCode, unsigned short sh
 		qDebug() << "File(" << shaderInfo.id << ") Complile Successful ProgramID: " << programID << "\n";
 	} else {
 		qDebug() << "File(" << shaderInfo.id << ") Failed to Complile - NOT ADDED TO PROGRAM\n";
+		assert(false);
 	}
 	return isValid;
 }
@@ -210,6 +213,7 @@ QImage ShaderProgram::getImageFromFile(QString fileName, bool flipHorz, bool fli
 
 	if(myTexture.isNull()) {
 		qDebug() << "attempt to load " << fileName << " failed";
+		assert(false);
 	} else {
 		QString formatedName = fileName.replace(QRegExp("[_]")," ");
 		formatedName = formatedName.remove(".jpg",Qt::CaseInsensitive);
@@ -235,6 +239,7 @@ GLuint ShaderProgram::load2DTexture(QString fileName, bool flipHorz, bool flipVe
 		return load2DTexture(data);
 	} else {
 		qDebug() << "Invalid file path " << formatFileName(filePath) << " Texture not loaded";
+		assert(false);
 		return -1;
 	}
 }
