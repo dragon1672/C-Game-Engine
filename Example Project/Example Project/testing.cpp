@@ -51,7 +51,7 @@ void Testing::init() {
 	auto meRenderable = addRenderable(meGeo,meShader,textureID);
 	meRenderable->saveTexture("myTexture");
 	meRenderable->saveMatrixInfo("model2WorldTransform");
-
+	 
 	menu->edit("OctaveCount: ",layer,1,4);
 	menu->edit("UpdateRate: ",updateRate,0,3);
 	menu->watch("Color: ",color);
