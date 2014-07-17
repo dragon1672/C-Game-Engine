@@ -31,6 +31,8 @@
     <ClInclude Include="Engine\DebugTools\MenuControllers\CharPointerController.h" />
     <ClInclude Include="Engine\Tools\BinaryToShapeLoader.h" />
     <ClInclude Include="Engine\Tools\MatrixInfo.h" />
+    <ClInclude Include="Engine\Scene.h" />
+    <ClInclude Include="Engine\SceneManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -56,5 +58,6 @@
     <ClCompile Include="Engine\BasicGui.cpp" />
     <ClCompile Include="Engine\Tools\BinaryToShapeLoader.cpp" />
     <ClCompile Include="Engine\Tools\MatrixInfo.cpp" />
+    <ClCompile Include="Engine\SceneManager.cpp" />
   </ItemGroup>
 </Project>

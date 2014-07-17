@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Scene.h"
 #include <ShapeGenerator.h>
+#include <Engine\Scene.h>
 
 class SceneTwo : public Scene {
 public:

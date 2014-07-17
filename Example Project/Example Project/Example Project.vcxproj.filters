@@ -6,8 +6,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="testing.h" />
-    <ClInclude Include="SceneManager.h" />
-    <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneOne.h" />
     <ClInclude Include="SceneTwo.h" />
   </ItemGroup>

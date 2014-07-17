@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Scene.h"
+#include <Engine\Scene.h>
 #include <ShapeGenerator.h>
 
 class SceneOne : public Scene {

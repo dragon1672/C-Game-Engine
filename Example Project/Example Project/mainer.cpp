@@ -1,7 +1,7 @@
 #include <Qt/qapplication.h>
 #include "testing.h"
 #include <Engine\BasicGui.h>
-#include "SceneManager.h"
+#include <Engine\SceneManager.h>
 #include "SceneOne.h"
 #include "SceneTwo.h"
 

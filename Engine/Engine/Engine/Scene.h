@@ -1,8 +1,9 @@
 #pragma once
 
 #include <Engine\WidgetRenderer.h>
+#include <ExportHeader.h>
 
-class Scene {
+class ENGINE_SHARED Scene {
 public:
 	const char * name;
 	Scene(const char * name) { this->name = name; }
