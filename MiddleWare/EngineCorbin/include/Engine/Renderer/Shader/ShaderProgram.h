@@ -45,13 +45,11 @@ public:
 	void useProgram();
 
 	int getUniform(const char* title);
-	void passUniform(const char* name, ParameterType parameterType, const float * value);
-	void passUniform(const char* name, ParameterType parameterType, const int     value);
+	//only passes data down once, will not update every paint
+	void passUniform(const char* name, ParameterType parameterType, const void * value);
 
 	//use these to add shader wide uniforms
-	void saveUniform(const char* name, ParameterType parameterType, const float * value);
-	void saveUniform(const char* name, ParameterType parameterType, const int   * value);
-	void saveUniform(const char* name, ParameterType parameterType, const bool  * value);
+	void saveUniform(const char* name, ParameterType parameterType, const void * value);
 
 	//used in draw calls
 	void passSavedUniforms_try();

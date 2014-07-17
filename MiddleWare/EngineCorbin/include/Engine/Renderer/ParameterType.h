@@ -9,6 +9,7 @@ enum ENGINE_SHARED ParameterType {
 	PT_VEC4  = sizeof(float) *  4,
 	PT_MAT3  = sizeof(float) *  9,
 	PT_MAT4  = sizeof(float) * 16,
+	PT_INT,
 	PT_BOOLEAN,
 	PT_TEXTURE,
 };
