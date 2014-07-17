@@ -5,37 +5,17 @@ void ShaderUniformPram::init(ShaderProgram * prog, const char * name, ParameterT
 	this->title = name;
 	theProg = prog;
 	this->type = type;
-	cashedInt = nullptr;
-	cashedFloat = nullptr;
-	cashedBool = nullptr;
+	cashedPointer = nullptr;
 }
-void ShaderUniformPram::init(ShaderProgram * prog, const char * name, ParameterType type, const int * val) {
+void ShaderUniformPram::init(ShaderProgram * prog, const char * name, ParameterType type, const void * val) {
 	init(prog,name,type);
-	cashedInt = val;
+	cashedPointer = val;
 	sendData(val);
-}
-void ShaderUniformPram::init(ShaderProgram * prog, const char * name, ParameterType type, const bool * val) {
-	init(prog,name,type);
-	cashedBool = val;
-	sendData(val);
-}
-void ShaderUniformPram::init(ShaderProgram * prog, const char * name, ParameterType type, const float * val) {
-	init(prog,name,type);
-	cashedFloat = val;
-	sendData();
 }
 
 void ShaderUniformPram::sendData() {
-	if(cashedInt!=nullptr)   sendData(cashedInt);
-	if(cashedFloat!=nullptr) sendData(cashedFloat);
-	if(cashedBool!=nullptr) sendData(cashedBool);
+	if(cashedPointer!=nullptr)   sendData(cashedPointer);
 }
-void ShaderUniformPram::sendData(const int * val) {
-	theProg->passUniform(title,type,*val);
-}
-void ShaderUniformPram::sendData(const bool * val) {
-	theProg->passUniform(title,type,*val);
-}
-void ShaderUniformPram::sendData(const float * val) {
+void ShaderUniformPram::sendData(const void * val) {
 	theProg->passUniform(title,type,val);
 }

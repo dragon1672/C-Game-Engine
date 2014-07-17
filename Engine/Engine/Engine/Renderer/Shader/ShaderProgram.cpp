@@ -83,43 +83,30 @@ bool ShaderProgram::addProgram_srcCode(std::string shaderCode, unsigned short sh
 int ShaderProgram::getUniform(const char* title) {
 	return glGetUniformLocation(getProgramID(),title);
 }
-
-void ShaderProgram::passUniform(const char* name, ParameterType parameterType, const float * value) {
+void ShaderProgram::passUniform(const char* name, ParameterType parameterType, const void * value) {
 	uint location = getUniform(name);
 	if(parameterType == ParameterType::PT_FLOAT) {
-		glUniform1f(location, *value);
+		glUniform1f(location, *(float*)value);
 	} else if(parameterType == ParameterType::PT_VEC2) {
-		glUniform2fv(location,1,value);
+		glUniform2fv(location,1,(float*)value);
 	} else if(parameterType == ParameterType::PT_VEC3) {
-		glUniform3fv(location,1,value);
+		glUniform3fv(location,1,(float*)value);
 	} else if(parameterType == ParameterType::PT_VEC4) {
-		glUniform4fv(location,1,value);
+		glUniform4fv(location,1,(float*)value);
 	} else if(parameterType == ParameterType::PT_MAT3) {
-		glUniformMatrix3fv(location,1,false,value);
+		glUniformMatrix3fv(location,1,false,(float*)value);
 	} else if(parameterType == ParameterType::PT_MAT4) {
-		glUniformMatrix4fv(location,1,false,value);
+		glUniformMatrix4fv(location,1,false,(float*)value);
+	} else if(parameterType == ParameterType::PT_TEXTURE || ParameterType::PT_BOOLEAN || ParameterType::PT_INT) {
+		int decodedValue = *(int*)value;
+		glUniform1i(location,decodedValue);
 	} else {
 		//wat?
-		qDebug() << "Uniform " << name << " of type: " << parameterType << " was not passed down correctly, (was passed as float *)";
+		qDebug() << "Uniform " << name << " of type: " << parameterType << " was not passed down correctly";
+		assert(false);
 	}
 }
-void ShaderProgram::passUniform(const char* name, ParameterType parameterType, const int value) {
-	uint location = getUniform(name);
-
-	if(parameterType == ParameterType::PT_TEXTURE || ParameterType::PT_BOOLEAN) {
-		glUniform1i(location,value);
-	} else {
-		//wat?
-		qDebug() << "Uniform " << name << " of type: " << parameterType << " was not passed down correctly, (was passed as int *)";
-	}
-}
-void ShaderProgram::saveUniform(const char* name, ParameterType parameterType, const float * value) {
-	prams[numOfPrams++].init(this,name,parameterType,value);
-}
-void ShaderProgram::saveUniform(const char* name, ParameterType parameterType, const int * value) {
-	prams[numOfPrams++].init(this,name,parameterType,value);
-}
-void ShaderProgram::saveUniform(const char* name, ParameterType parameterType, const bool * value) {
+void ShaderProgram::saveUniform(const char* name, ParameterType parameterType, const void * value) {
 	prams[numOfPrams++].init(this,name,parameterType,value);
 }
 

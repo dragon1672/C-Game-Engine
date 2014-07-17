@@ -4,7 +4,6 @@
 #include <string>
 #include "ExportHeader.h"
 
-typedef unsigned int uint;
 
 class ENGINE_SHARED ShaderProgram;
 
@@ -14,17 +13,11 @@ private:
 	const char * title;
 	ShaderProgram * theProg;
 public:
-	const float * cashedFloat;
-	const int * cashedInt;
-	const bool * cashedBool;
-
+	const void * cashedPointer;
+	
 	void init(ShaderProgram * prog, const char * name, ParameterType type);
-	void init(ShaderProgram * prog, const char * name, ParameterType type, const bool * val);
-	void init(ShaderProgram * prog, const char * name, ParameterType type, const int * val);
-	void init(ShaderProgram * prog, const char * name, ParameterType type, const float * val);
-
+	void init(ShaderProgram * prog, const char * name, ParameterType type, const void * val);
+	
 	void sendData();
-	void sendData(const bool * val);
-	void sendData(const int * val);
-	void sendData(const float * val);
+	void sendData(const void * val);
 };
