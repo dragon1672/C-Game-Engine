@@ -71,7 +71,7 @@ public:
 	//if tab is not defined the default tab will be used
 	void setDefaultTab(const char * tabname);
 	//       ---------------------------------------- easy cover all function calls ----------------------------------------        //
-	void watch(char * name, char *& valueToWatch, char * tabName=nullptr);
+	void watch(char * name, const char *& valueToWatch, char * tabName=nullptr);
 	//floats
 	void watch(char * name, float& toWatch, const char * tabName=nullptr);
 	void edit (char * name, float& toWatch, float min, float max, bool doubleLink = true, const char * tabName=nullptr);
@@ -85,7 +85,7 @@ public:
 
 	//       ---------------------------------------- explicit function calls ----------------------------------------        //
 	//       -------------------------------------- (Same effect as above calls) -------------------------------------        //
-	void watchName(char * name, char *& valueToWatch, char * tabName=nullptr);
+	void watchName(char * name, const char *& valueToWatch, char * tabName=nullptr);
 	void watchFloat (char * name, float& toWatch, const char * tabName=nullptr);
 	void slideFloat (char * name, float& toWatch, float min, float max, bool doubleLink = true, const char * tabName=nullptr);
 	void toggleBool (char * name, bool& toWatch, const char * tabName=nullptr);
