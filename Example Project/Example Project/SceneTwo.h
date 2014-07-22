@@ -73,6 +73,7 @@ public:
 	}
 
 	virtual void init(WidgetRenderer * renderer, Camera& myCam, DebugMenuManager * menu) {
+		myCam.lookAt(glm::vec3(10,10,10),glm::vec3());
 		meEpicTexture = renderer->addPassInfo(false);
 		renderer->setDefaultPassInfo(meEpicTexture);
 		meEpicTexture->initTextures(renderer->width(),renderer->height());

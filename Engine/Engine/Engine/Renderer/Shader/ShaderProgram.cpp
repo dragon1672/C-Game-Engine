@@ -242,7 +242,8 @@ GLuint ShaderProgram::load2DTexture(ubyte * data, uint width, uint height, GLenu
 	glActiveTexture(GL_TEXTURE0+(bufferID-1));
 	glBindTexture(GL_TEXTURE_2D, bufferID);
 	
-	glTexImage2D(GL_TEXTURE_2D,0, fileType, width, height, 0, fileType, GL_UNSIGNED_BYTE, data);
+	//find a better way to do this
+	glTexImage2D(GL_TEXTURE_2D,0, fileType, width, height, 0, fileType == GL_DEPTH_COMPONENT32 ? GL_DEPTH_COMPONENT : fileType, GL_UNSIGNED_BYTE, data);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 

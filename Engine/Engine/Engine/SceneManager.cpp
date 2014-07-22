@@ -14,6 +14,7 @@ void SceneManager::init() {
 		scenes[i]->myDefaultPass->visable = false;
 		if(i==scenes.size()-1) {
 			scenes[i]->myDefaultPass->visable = true;
+			myCam = scenes[i]->myDefaultPass->cam;
 			menu->setActiveTab(scenes[i]->name);
 			activeScene = scenes[i];
 		}
