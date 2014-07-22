@@ -43,8 +43,7 @@ public:
 	void saveTexture(const char * uniformName);
 
 	//the real calls
-	void addUniformParameter(const char * name, ParameterType parameterType, const float * value);
-	void addUniformParameter(const char * name, ParameterType parameterType, const int * value);
+	void addUniformParameter(const char * name, ParameterType parameterType, const void * value); // CONVERT ME TO VOID
 
 	//don't worry about me
 	void passUniformsDownDown();

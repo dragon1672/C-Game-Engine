@@ -103,9 +103,9 @@ void WidgetRenderer::paintGL() {
 	
 	preAllDraw();
 	
-	for (uint i = 0; i < numOfRenderables; i++)
+	for (uint i = 0; i < getNumOfRenderables(); i++)
 	{
-		draw(myRenderables[i]);
+		draw(*getRenderable(i));
 	}
 }
 

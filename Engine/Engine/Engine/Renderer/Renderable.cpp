@@ -27,10 +27,7 @@ void Renderable::addUniformParameter(const char * name, const glm::mat3& value) 
 void Renderable::addUniformParameter(const char * name, const glm::mat4& value) {
 	addUniformParameter(name,ParameterType::PT_MAT4,&value[0][0]);
 }
-void Renderable::addUniformParameter(const char * name, ParameterType parameterType, const float * value) {
-	uniformParameters[numUniformParameters++].init(howShader,name,parameterType,value);
-}
-void Renderable::addUniformParameter(const char * name, ParameterType parameterType, const int * value) {
+void Renderable::addUniformParameter(const char * name, ParameterType parameterType, const void * value) {
 	uniformParameters[numUniformParameters++].init(howShader,name,parameterType,value);
 }
 void Renderable::saveMatrixInfo(const char * uniformName) {
