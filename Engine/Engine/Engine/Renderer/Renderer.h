@@ -12,9 +12,7 @@
 
 
 class ENGINE_SHARED Renderer {
-public:
-	ShaderProgram * mainShader;
-protected:
+private:
 	Renderable myRenderables[1000];
 	uint numOfRenderables;
 	
@@ -23,9 +21,10 @@ protected:
 
 	GeometryInfo geoInfo[1000];
 	uint numOfGeoInfo;
-
 	virtual void preDraw() {}
 public:
+	ShaderProgram * mainShader;
+	
 	Renderer();
 	void init();
 	void reset();
@@ -51,7 +50,7 @@ public:
 	GeometryInfo* getGeometry(uint index);
 
 	uint addTexture(const char* fileName, bool flipHorz = false, bool flipVert = false);
-	uint addTexture(ubyte * textureData, uint width, uint height);
+	uint addTexture(ubyte * textureData, uint width, uint height, GLenum type = GL_RGBA);
 	void draw(GeometryInfo& toDraw);
 	void draw(Renderable& toDraw);
 	void drawPrep(int width, int height);

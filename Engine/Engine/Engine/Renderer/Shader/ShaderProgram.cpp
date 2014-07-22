@@ -85,6 +85,9 @@ int ShaderProgram::getUniform(const char* title) {
 }
 void ShaderProgram::passUniform(const char* name, ParameterType parameterType, const void * value) {
 	uint location = getUniform(name);
+	passUniform(location,parameterType,value);
+}
+void ShaderProgram::passUniform(uint location, ParameterType parameterType, const void * value) {
 	if(parameterType == ParameterType::PT_FLOAT) {
 		glUniform1f(location, *(float*)value);
 	} else if(parameterType == ParameterType::PT_VEC2) {
@@ -102,7 +105,7 @@ void ShaderProgram::passUniform(const char* name, ParameterType parameterType, c
 		glUniform1i(location,decodedValue);
 	} else {
 		//wat?
-		qDebug() << "Uniform " << name << " of type: " << parameterType << " was not passed down correctly";
+		qDebug() << "Uniform " << location << " of type: " << parameterType << " was not passed down correctly";
 		assert(false);
 	}
 }
@@ -215,8 +218,8 @@ QImage ShaderProgram::getImageFromFile(QString fileName, bool flipHorz, bool fli
 	return myTexture;
 }
 //returns the bufferID
-GLuint ShaderProgram::load2DTexture(QImage image) {
-	return load2DTexture(image.bits(),image.width(),image.height());
+GLuint ShaderProgram::load2DTexture(QImage image, GLenum type) {
+	return load2DTexture(image.bits(),image.width(),image.height(), type);
 }
 GLuint ShaderProgram::load2DTexture(QString fileName, bool flipHorz, bool flipVert) {
 	QString filePath = /**/QCoreApplication::applicationDirPath() + /**/fileName;
@@ -230,18 +233,19 @@ GLuint ShaderProgram::load2DTexture(QString fileName, bool flipHorz, bool flipVe
 		return -1;
 	}
 }
-GLuint ShaderProgram::load2DTexture(ubyte * data, uint width, uint height) {
-	uint ID = numOfTextures++;
+GLuint ShaderProgram::load2DTexture(ubyte * data, uint width, uint height, GLenum fileType) {
+	//uint ID = numOfTextures++;
 	GLuint bufferID;
 
-	glActiveTexture(GL_TEXTURE0+ID);
 	glEnable(GL_TEXTURE_2D);
 	glGenTextures(1,&bufferID);
+	glActiveTexture(GL_TEXTURE0+(bufferID-1));
 	glBindTexture(GL_TEXTURE_2D, bufferID);
-
-	glTexImage2D(GL_TEXTURE_2D,0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+	
+	glTexImage2D(GL_TEXTURE_2D,0, fileType, width, height, 0, fileType, GL_UNSIGNED_BYTE, data);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-	return ID;
+	return (bufferID-1);
+	//return ID;
 }
