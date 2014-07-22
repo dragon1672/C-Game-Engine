@@ -32,6 +32,8 @@ public:
 
 	//restarts, compiles, link and uses this program
 	void buildBasicProgram(const char * vertexShaderFilePath, const char * fragmentShaderFilePath);
+
+	//adds singluar shaders
 	bool addProgram(const char * filePath, unsigned short shaderType);
 	bool addProgram_srcCode(const char * shaderCode, unsigned short shaderType);
 	bool addProgram_srcCode(std::string shaderCode, unsigned short shaderType);
@@ -45,8 +47,10 @@ public:
 	void useProgram();
 
 	int getUniform(const char* title);
+
 	//only passes data down once, will not update every paint
 	void passUniform(const char* name, ParameterType parameterType, const void * value);
+	void passUniform(uint location, ParameterType parameterType, const void * value);
 
 	//use these to add shader wide uniforms
 	void saveUniform(const char* name, ParameterType parameterType, const void * value);
@@ -60,9 +64,9 @@ public:
 	static QImage getImageFromFile(QString filePath, bool flipHorz = false, bool flipVert = false);
 
 	//returns the bufferID
-	static GLuint load2DTexture(QImage image);
+	static GLuint load2DTexture(QImage image, GLenum type = GL_RGBA);
 	static GLuint load2DTexture(QString filePath, bool flipHorz = false, bool flipVert = false);
-	static GLuint load2DTexture(ubyte * data, uint width, uint height);
+	static GLuint load2DTexture(ubyte * data, uint width, uint height, GLenum type = GL_RGBA);
 };
 
 #endif

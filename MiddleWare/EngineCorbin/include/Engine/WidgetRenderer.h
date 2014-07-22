@@ -8,7 +8,8 @@
 		 | Save renderable texture as     | myTexture            |
 		 +-------------------------------------------------------+
 //*/
-/* default vert shader
+
+/* default vert shader  Part of Set { A,B }
 #version 400
 
 in layout(location=0) vec3 pos;
@@ -23,25 +24,31 @@ uniform mat4x4 viewTransform;
 uniform mat4x4 model2WorldTransform;
 
 void main() {
-	vec4 transformedPos =  model2WorldTransform * vec4(pos.x,pos.y,pos.z,1);
+	vec4 transformedPos =  model2WorldTransform * vec4(pos,1);
 	gl_Position =  viewTransform * transformedPos;
 	outUv = uv;
 	outCol = col;
 }
 //*/
 
-/* default frag shader
+/* default frag shader in set { A }
 #version 400
 
-//PassThrough FragShader
-
-in vec2 outUv;
 in vec3 outCol;
 
-uniform sampler2D myTexture;
-
 void main() {
-	gl_FragColor = outCol * texture(myTexture, outUv);
+	gl_FragColor = vec4(outCol,1);
+}
+//*/
+
+/* default frag shader with texture in set { B }
+#version 400
+
+in vec2 outUv;
+uniform sampler2D myTexture;
+	
+void main() {
+	gl_FragColor = texture(myTexture,outUv);
 }
 //*/
 
@@ -52,6 +59,7 @@ void main() {
 #include <Engine\Tools\Timer.h>
 #include <ExportHeader.h>
 #include <Engine\DebugTools\DebugMenuManager.h>
+#include <Engine\Renderer\Output\PassInfo.h>
 
 #include <QtOpenGL\qglwidget>
 //                                   GLWidge must be first for MOC to work
@@ -75,26 +83,58 @@ private:
 	Timer gameTimer;
 	float dt;
 	float maxDT;
-
+	float nearPlane, farPlane;
+	std::vector<PassInfo *> passInfos;
+	PassInfo passInfo_Screen;
 protected:
 	DebugMenuManager * menu;
 	Camera myCam;
 	bool disableCamMovement;
 	glm::mat4 additionalViewTransform; //applied after camera
-	
+	PassInfo * passInfo_Default;
 public:
+
+	struct {
+		ShaderProgram * passThroughColor; // see code set A
+		ShaderProgram * passThroughTexture; // see code set B
+	} defaultShaders;
+
+
+	void setDefaultPassInfo(PassInfo * toSet) {
+		passInfo_Default = toSet;
+	}
+	void resetDefaultPassInfoToScreen() {
+		passInfo_Default = &passInfo_Screen;
+	}
+
+
 	// call when ever creating a new matrix
 	void saveViewTransform(ShaderProgram * shader, const char * name);
-protected:
-	void setMaxDT(float max); // any DT greater than this will be truncated to this (default .02)
+	
+	// any DT greater than this will be truncated to this (default .02)
+	void setMaxDT(float max);
+
+	//if using Renderer::addRenderable(...) it will be added to the default PassInfo
+	Renderable* addRenderable(GeometryInfo * whatGeometry, ShaderProgram * howShaders, GLuint textureID = -1);
+	Renderable* addRenderable(GeometryInfo * whatGeometry, ShaderProgram * howShaders, GLuint textureID, PassInfo * passInfoToRegisterTo);
+	Renderable* addRenderable(GeometryInfo * whatGeometry, ShaderProgram * howShaders, PassInfo * passInfoToRegisterTo);
+
+	PassInfo * addPassInfo(bool populateWithContentsOfDefault);
+
+private: // these are the guys you want to override
 
 	virtual void nextFrame(float dt) {}
 	virtual void init() {}
 	virtual void preDraw() {} // called before drawing each object
 	virtual void preAllDraw() {} // called before all objects are drawn
+
+
+
+	//Don't worry about anything down here
 public:
 	void initializeGL();
 	void paintGL();
+	~WidgetRenderer();
 private slots:
 	void nxtFrm();
 public:
