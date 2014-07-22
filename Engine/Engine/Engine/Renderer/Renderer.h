@@ -22,6 +22,7 @@ private:
 	GeometryInfo geoInfo[1000];
 	uint numOfGeoInfo;
 	virtual void preDraw() {}
+	virtual void renderableAdded(Renderable * justAdded) {}
 public:
 	ShaderProgram * mainShader;
 	

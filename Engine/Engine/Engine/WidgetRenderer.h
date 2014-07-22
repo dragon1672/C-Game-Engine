@@ -52,6 +52,7 @@ void main() {
 #include <Engine\Tools\Timer.h>
 #include <ExportHeader.h>
 #include <Engine\DebugTools\DebugMenuManager.h>
+#include <Engine\Renderer\Output\PassInfo.h>
 
 #include <QtOpenGL\qglwidget>
 //                                   GLWidge must be first for MOC to work
@@ -75,8 +76,12 @@ private:
 	Timer gameTimer;
 	float dt;
 	float maxDT;
-
+	std::vector<PassInfo> passInfos;
+	void renderableAdded(Renderable * justAdded) {
+		PassInfo_Default.add(justAdded);
+	}
 protected:
+	PassInfo PassInfo_Default;
 	DebugMenuManager * menu;
 	Camera myCam;
 	bool disableCamMovement;
@@ -85,13 +90,28 @@ protected:
 public:
 	// call when ever creating a new matrix
 	void saveViewTransform(ShaderProgram * shader, const char * name);
-protected:
-	void setMaxDT(float max); // any DT greater than this will be truncated to this (default .02)
+	
+	// any DT greater than this will be truncated to this (default .02)
+	void setMaxDT(float max);
+
+	//if using Renderer::addRenderable(...) it will be added to the default PassInfo
+	Renderable* addRenderable(GeometryInfo * whatGeometry, ShaderProgram * howShaders, GLuint textureID = -1) {
+		return Renderer::addRenderable(whatGeometry,howShaders,textureID);
+	}
+	Renderable* addRenderable(GeometryInfo * whatGeometry, ShaderProgram * howShaders, GLuint textureID, PassInfo * passInfoToRegisterTo);
+	Renderable* addRenderable(GeometryInfo * whatGeometry, ShaderProgram * howShaders, PassInfo * passInfoToRegisterTo);
+
+
+private: // these are the guys you want to override
 
 	virtual void nextFrame(float dt) {}
 	virtual void init() {}
 	virtual void preDraw() {} // called before drawing each object
 	virtual void preAllDraw() {} // called before all objects are drawn
+
+
+
+	//Don't worry about anything down here
 public:
 	void initializeGL();
 	void paintGL();

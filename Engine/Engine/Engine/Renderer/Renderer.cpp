@@ -42,6 +42,7 @@ GeometryInfo  * Renderer::addGeometry( Neumont::ShapeData& toAdd, GLuint indexin
 Renderable    * Renderer::addRenderable(GeometryInfo * whatGeometry, ShaderProgram * howShaders, GLuint textureID) {
 	int id = numOfRenderables++;
 	myRenderables[id].init(whatGeometry,howShaders,true,textureID);
+	renderableAdded(&myRenderables[id]);
 	return &myRenderables[id];
 }
 void			Renderer::resetRenderables() {
@@ -88,8 +89,8 @@ GeometryInfo  * Renderer::getGeometry(uint index) { return &geoInfo[index];     
 uint            Renderer::addTexture(const char* fileName, bool flipHorz, bool flipVert) {
 	return ShaderProgram::load2DTexture(fileName, flipHorz, flipVert);
 }
-uint            Renderer::addTexture(ubyte * textureData, uint width, uint height) {
-	return ShaderProgram::load2DTexture(textureData, width, height);
+uint            Renderer::addTexture(ubyte * textureData, uint width, uint height, GLenum type) {
+	return ShaderProgram::load2DTexture(textureData, width, height, type);
 }
 void            Renderer::draw(Renderable& toDraw) {
 	if(toDraw.visible) {

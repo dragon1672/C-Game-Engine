@@ -90,6 +90,9 @@ void WidgetRenderer::saveViewTransform(ShaderProgram * shader, const char * name
 
 void WidgetRenderer::paintGL() {
 	glViewport(0,0,width(),height());
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 1);
+
 	glClearColor(.1f,.1f,.1f,1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
