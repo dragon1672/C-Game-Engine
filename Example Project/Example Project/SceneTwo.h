@@ -76,30 +76,22 @@ public:
 		meEpicTexture = renderer->addPassInfo(false);
 		renderer->setDefaultPassInfo(meEpicTexture);
 		meEpicTexture->initTextures(renderer->width(),renderer->height());
+		meEpicTexture->cam.enabled = true;
+		addToFakeOutput(renderer,meEpicTexture->cam,menu);
 
-		addToFakeOutput(renderer,myCam,menu);
+		meEpicTexture->clearColor = glm::vec3();
 
-		renderer->resetDefaultPassInfoToScreen();
-		auto tempRenderable = renderer->addRenderable(renderer->addGeometry(Neumont::ShapeGenerator::makePlane(2)),renderer->defaultShaders.passThroughTexture, meEpicTexture->depthTexture);
+		//renderer->resetDefaultPassInfoToScreen();
+		renderer->setDefaultPassInfo(myDefaultPass);
+
+		auto tempRenderable = renderer->addRenderable(renderer->addGeometry(Neumont::ShapeGenerator::makeCube()),renderer->defaultShaders.passThroughTexture, meEpicTexture->colorTexture);
 		tempRenderable->saveTexture("myTexture");
 		tempRenderable->saveMatrixInfo("model2WorldTransform");
-		tempRenderable->transformData.rotation.x = -90;
+		tempRenderable->transformData.rotation.x = 90;
 		tempRenderable->transformData.scale = glm::vec3(5,5,5);
 		tempRenderable->transformData.position.y = 2;
 		tempRenderable->transformData.position.x = 2;
 		
-	}
-	virtual void enable() {
-		for (int i = 0; i < allMyRenderables.size(); i++)
-		{
-			allMyRenderables[i]->visible = true;
-		}
-	}
-	virtual void disable() {
-		for (int i = 0; i < allMyRenderables.size(); i++)
-		{
-			allMyRenderables[i]->visible = false;
-		}
 	}
 	virtual void update(float dt) {
 		float speed = .1;

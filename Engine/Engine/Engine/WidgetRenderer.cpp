@@ -116,21 +116,26 @@ void WidgetRenderer::paintGL() {
 
 	for (uint i = 0; i < passInfos.size(); i++)
 	{
-		passInfos[i]->activate();
-		glClearColor(.1f,.1f,.1f,1);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		if(passInfos[i]->visable) {
+			passInfos[i]->activate();
+			float clearX = passInfos[i]->clearColor.x;
+			float clearY = passInfos[i]->clearColor.y;
+			float clearZ = passInfos[i]->clearColor.z;
+			glClearColor(clearX,clearY,clearZ,1);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
-		const float aspectRatio = (float)width()/(float)height();
-		viewTransform = glm::mat4();
-		viewTransform *= glm::perspective(60.0f,aspectRatio,nearPlane,farPlane);
-		viewTransform *= passInfos[i]->overrideCam ? passInfos[i]->cam.getWorld2View() : myCam.getWorld2View();
-		viewTransform *= additionalViewTransform;
+			const float aspectRatio = (float)width()/(float)height();
+			viewTransform = glm::mat4();
+			viewTransform *= glm::perspective(60.0f,aspectRatio,nearPlane,farPlane);
+			viewTransform *= passInfos[i]->cam.enabled ? passInfos[i]->cam.getWorld2View() : myCam.getWorld2View();
+			viewTransform *= additionalViewTransform;
 	
-		preAllDraw();
+			preAllDraw();
 		
-		for (uint j = 0; j < passInfos[i]->myRenderables.size(); j++)
-		{
-			draw(*passInfos[i]->myRenderables[j]);
+			for (uint j = 0; j < passInfos[i]->myRenderables.size(); j++)
+			{
+				draw(*passInfos[i]->myRenderables[j]);
+			}
 		}
 	}
 

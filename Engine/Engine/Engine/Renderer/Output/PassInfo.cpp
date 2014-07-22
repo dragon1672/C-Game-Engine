@@ -6,15 +6,13 @@
 void PassInfo::initTextures(int width, int height) {
 	glGenFramebuffers(1,&frameBufferID);
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER,frameBufferID);
-	uint getColorTexture = ShaderProgram::load2DTexture(0,width,height,GL_RGBA);
-	uint getDepthTexture = ShaderProgram::load2DTexture(0,width,height,GL_DEPTH_COMPONENT32);
-	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER,GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, getColorTexture,0);
-	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER,GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, getDepthTexture,0);
+	colorTexture = ShaderProgram::load2DTexture(0,width,height,GL_RGBA);
+	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER,GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, colorTexture+1,0);
+	depthTexture = ShaderProgram::load2DTexture(0,width,height,GL_DEPTH_COMPONENT32);
+	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER,GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTexture+1,0);
 	uint status = glCheckFramebufferStatus(GL_DRAW_FRAMEBUFFER);
 	if(status != GL_FRAMEBUFFER_COMPLETE) { // returning error code: 36054, incomplete frame
-		static int power = 0;
-
-		qDebug() << "THE BUFFER (" << status << ") - ----- - - - - - - - - - - - - - - - --- -- - - - -  - -- -- -";
+		qDebug() << "THE BUFFER (" << status << ") - ----- - - - - - - - - - - - - - - - --- --";
 	}
 }
 void PassInfo::activate() {

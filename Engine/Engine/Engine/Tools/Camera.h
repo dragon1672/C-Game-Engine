@@ -17,14 +17,14 @@ class ENGINE_SHARED Camera {
 	glm::vec3 strafeDir;
 
 	glm::vec2 oldMousePos;
-
 public:
-
+	bool enabled;
 	float LARGEST_MOUSE_CHANGE;// = 50;
 	float MOUSE_SPEED_SCALE;// = .5f;
 	float MOVEMENT_SPEED;// = 1;
 
 	Camera();
+	Camera(bool enabled);
 	void setPos(glm::vec3& position, glm::vec3& viewDirection);
 	void lookAt(glm::vec3& position, glm::vec3& toLookAt);
 	

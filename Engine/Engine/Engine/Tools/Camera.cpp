@@ -6,13 +6,23 @@ using glm::mat4x4;
 
 vec3 Camera::UP(0,1,0);
 
-Camera::Camera()
-		: pos(),
-		viewDir(0,0,-1) {
-			strafeDir= glm::cross(viewDir, UP);
-			LARGEST_MOUSE_CHANGE = 50;
-			MOUSE_SPEED_SCALE = .5f;
-			MOVEMENT_SPEED = 30;
+Camera::Camera() {
+	pos = glm::vec3();
+	viewDir = glm::vec3(0,0,-1);
+	enabled = true;
+	strafeDir= glm::cross(viewDir, UP);
+	LARGEST_MOUSE_CHANGE = 50;
+	MOUSE_SPEED_SCALE = .5f;
+	MOVEMENT_SPEED = 30;
+}
+Camera::Camera(bool enabled) {
+	pos = glm::vec3();
+	viewDir = glm::vec3(0,0,-1);
+	strafeDir= glm::cross(viewDir, UP);
+	LARGEST_MOUSE_CHANGE = 50;
+	MOUSE_SPEED_SCALE = .5f;
+	MOVEMENT_SPEED = 30;
+	this->enabled = enabled;
 }
 
 void Camera::setPos(glm::vec3& position, glm::vec3& viewDirection) {
