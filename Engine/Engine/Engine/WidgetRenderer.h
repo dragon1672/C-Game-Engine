@@ -76,10 +76,8 @@ private:
 	Timer gameTimer;
 	float dt;
 	float maxDT;
-	std::vector<PassInfo> passInfos;
-	void renderableAdded(Renderable * justAdded) {
-		PassInfo_Default.add(justAdded);
-	}
+	float nearPlane, farPlane;
+	std::vector<PassInfo *> passInfos;
 protected:
 	PassInfo PassInfo_Default;
 	DebugMenuManager * menu;
@@ -96,11 +94,27 @@ public:
 
 	//if using Renderer::addRenderable(...) it will be added to the default PassInfo
 	Renderable* addRenderable(GeometryInfo * whatGeometry, ShaderProgram * howShaders, GLuint textureID = -1) {
-		return Renderer::addRenderable(whatGeometry,howShaders,textureID);
+		Renderable * ret = Renderer::addRenderable(whatGeometry,howShaders,textureID);
+		PassInfo_Default.add(ret);
+		return ret;
 	}
-	Renderable* addRenderable(GeometryInfo * whatGeometry, ShaderProgram * howShaders, GLuint textureID, PassInfo * passInfoToRegisterTo);
-	Renderable* addRenderable(GeometryInfo * whatGeometry, ShaderProgram * howShaders, PassInfo * passInfoToRegisterTo);
+	Renderable* addRenderable(GeometryInfo * whatGeometry, ShaderProgram * howShaders, GLuint textureID, PassInfo * passInfoToRegisterTo) {
+		Renderable * ret = Renderer::addRenderable(whatGeometry,howShaders,textureID);
+		passInfoToRegisterTo->add(ret);
+		return ret;
+	}
+	Renderable* addRenderable(GeometryInfo * whatGeometry, ShaderProgram * howShaders, PassInfo * passInfoToRegisterTo) {
+		Renderable * ret = Renderer::addRenderable(whatGeometry,howShaders);
+		passInfoToRegisterTo->add(ret);
+		return ret;
+	}
 
+	PassInfo * addPassInfo(bool populateWithContentsOfDefault) {
+		PassInfo * ret = new PassInfo();
+		passInfos.push_back(ret);
+		if(populateWithContentsOfDefault) ret->loadRenderables(&PassInfo_Default);
+		return ret;
+	}
 
 private: // these are the guys you want to override
 
@@ -115,6 +129,14 @@ private: // these are the guys you want to override
 public:
 	void initializeGL();
 	void paintGL();
+	~WidgetRenderer() {
+		while(passInfos.size() != 0) {
+			int index = passInfos.size() - 1;
+			if(passInfos[index] != &PassInfo_Default)
+				delete passInfos[passInfos.size() - 1];
+			passInfos.pop_back();
+		}
+	}
 private slots:
 	void nxtFrm();
 public:

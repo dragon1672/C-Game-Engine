@@ -2,17 +2,16 @@
 #include "PassInfo.h"
 #include <Engine\Renderer\Shader\ShaderProgram.h>
 
-void PassInfo::initTextures() {
+void PassInfo::initTextures(int width, int height) {
 	glGenFramebuffers(1,&frameBufferID);
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER,frameBufferID);
-	uint getColorTexture; // type RGBA
-	uint getDepthTexture; // type GL_DEPTH_COMPONENT32
+	uint getColorTexture = ShaderProgram::load2DTexture(0,width,height,GL_RGBA);
+	uint getDepthTexture = ShaderProgram::load2DTexture(0,width,height,GL_DEPTH_COMPONENT32);
 	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER,GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, getColorTexture,0);
 	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER,GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, getDepthTexture,0);
-
 }
 void PassInfo::activate() {
-
+	glBindFramebuffer(GL_FRAMEBUFFER, frameBufferID);
 }
 
 //function pointer preDraw

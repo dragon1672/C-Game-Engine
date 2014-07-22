@@ -6,19 +6,18 @@
 #include <ExportHeader.h>
 
 class ENGINE_SHARED PassInfo {
-	std::vector<Renderable *> myRenderables;
 public:
+	std::vector<Renderable *> myRenderables;
 	uint colorTexture;
 	uint depthTexture;
-	//bool overrideCam;
-	//Camera cam;
+	bool overrideCam;
+	Camera cam;
 	uint frameBufferID;
 
-	PassInfo() : frameBufferID(0) {}
+	PassInfo() : frameBufferID(0), overrideCam(false) {}
 
 	//will init textures
-	void initTextures(); // will generate a frame buffer for you to use
-	void initTextures(int FrameBufferID);
+	void initTextures(int width, int height); // will generate a frame buffer for you to use
 
 	// will set this PassInfo as the dude to draw to
 	void activate();

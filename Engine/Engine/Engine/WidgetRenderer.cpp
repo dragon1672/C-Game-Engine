@@ -44,6 +44,10 @@ void WidgetRenderer::initializeGL() {
 
 	disableCamMovement = false;
 	maxDT = .02;
+	nearPlane = .1f;
+	farPlane = 200;
+
+	passInfos.push_back(&PassInfo_Default);
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable (GL_BLEND);
@@ -91,25 +95,29 @@ void WidgetRenderer::saveViewTransform(ShaderProgram * shader, const char * name
 void WidgetRenderer::paintGL() {
 	glViewport(0,0,width(),height());
 
-	glBindFramebuffer(GL_FRAMEBUFFER, 1);
-
-	glClearColor(.1f,.1f,.1f,1);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	
-	const float aspectRatio = (float)width()/(float)height();
-	viewTransform = glm::mat4();
-	viewTransform *= glm::perspective(60.0f,aspectRatio,.1f,200.0f);
-	viewTransform *= myCam.getWorld2View();
-	viewTransform *= additionalViewTransform;
-
 	resetAllShaders_validPush();
-	
-	preAllDraw();
-	
-	for (uint i = 0; i < getNumOfRenderables(); i++)
+
+	for (uint i = 0; i < passInfos.size(); i++)
 	{
-		draw(*getRenderable(i));
+		passInfos[i]->activate();
+		glClearColor(.1f,.1f,.1f,1);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
+		const float aspectRatio = (float)width()/(float)height();
+		viewTransform = glm::mat4();
+		viewTransform *= glm::perspective(60.0f,aspectRatio,nearPlane,farPlane);
+		viewTransform *= passInfos[i]->overrideCam ? passInfos[i]->cam.getWorld2View() : myCam.getWorld2View();
+		viewTransform *= additionalViewTransform;
+	
+		preAllDraw();
+		
+		for (uint j = 0; j < passInfos[i]->myRenderables.size(); j++)
+		{
+			draw(*passInfos[i]->myRenderables[j]);
+		}
 	}
+
+	
 }
 
 void WidgetRenderer::mouseMoveEvent(QMouseEvent* e) {

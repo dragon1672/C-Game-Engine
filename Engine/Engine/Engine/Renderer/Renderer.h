@@ -34,7 +34,7 @@ public:
 	GeometryInfo * addGeometry( const Neumont::Vertex* verts, uint numVerts,  ushort* indices, uint numIndices, GLuint indexingMode);
 	GeometryInfo * addGeometry( void * verts, uint sizeOfVerts, uint numVerts,  ushort* indices, uint numIndices, GLuint indexingMode);
 
-	Renderable* addRenderable(GeometryInfo * whatGeometry, ShaderProgram * howShaders, GLuint textureID=-1);
+	virtual Renderable* addRenderable(GeometryInfo * whatGeometry, ShaderProgram * howShaders, GLuint textureID=-1);
 	void resetRenderables();
 
 	ShaderProgram * addShader();
