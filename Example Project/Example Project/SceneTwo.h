@@ -24,7 +24,10 @@ public:
 		float magnitude;
 	} teapot;
 
-	virtual void init(WidgetRenderer * renderer, Camera& myCam, DebugMenuManager * menu) {
+	PassInfo * meEpicTexture;
+
+
+	void addToFakeOutput(WidgetRenderer * renderer, Camera& myCam, DebugMenuManager * menu) {
 		myCam.lookAt(glm::vec3(0,1,-7),glm::vec3(0,0,0));
 		teapot.magnitude = .6;
 		menu->edit("magnitude",teapot.magnitude,0,2);
@@ -67,6 +70,23 @@ public:
 
 			allMyRenderables.push_back(bears[i].renderable);
 		}
+	}
+
+	virtual void init(WidgetRenderer * renderer, Camera& myCam, DebugMenuManager * menu) {
+		meEpicTexture = renderer->addPassInfo(false);
+		renderer->setDefaultPassInfo(meEpicTexture);
+		meEpicTexture->initTextures(renderer->width(),renderer->height());
+
+		addToFakeOutput(renderer,myCam,menu);
+
+		renderer->resetDefaultPassInfoToScreen();
+		auto tempRenderable = renderer->addRenderable(renderer->addGeometry(Neumont::ShapeGenerator::makePlane(2)),renderer->defaultShaders.passThroughTexture, meEpicTexture->depthTexture);
+		tempRenderable->saveTexture("myTexture");
+		tempRenderable->saveMatrixInfo("model2WorldTransform");
+		tempRenderable->transformData.rotation.x = -90;
+		tempRenderable->transformData.scale = glm::vec3(5,5,5);
+		tempRenderable->transformData.position.y = 2;
+		tempRenderable->transformData.position.x = 2;
 		
 	}
 	virtual void enable() {

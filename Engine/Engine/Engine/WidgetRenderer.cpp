@@ -25,16 +25,25 @@ const char * defaultVertShader = "#version 400                      \n"
 	"	outCol = col;												\n"
 	"}"
 	"";
-const char * defaultFragShader = "#version 400             \n"
+//color
+const char * defaultFragShader_Color = "#version 400       \n"
 	"													   \n"
-	"in vec2 outUv;										   \n"
 	"in vec3 outCol;									   \n"
 	"													   \n"
-	"uniform sampler2D myTexture;						   \n"
+	"void main() {										   \n"
+	"	gl_FragColor = vec4(outCol,1);                     \n"
+	"}													   \n"
+	"";
+//texture
+const char * defaultFragShader_Texture = "#version 400     \n"
+	"													   \n"
+	"in vec2 outUv;										   \n"
+	"uniform sampler2D myTexture;                          \n"
 	"													   \n"
 	"void main() {										   \n"
-	"	gl_FragColor = vec4(outCol,1);// * texture(myTexture, outUv); \n"
-	"	//gl_FragColor = vec4(.5,.5,.5,1); \n"
+	"	gl_FragColor = vec4(1,1,1,1);                      \n"
+	"	gl_FragColor = texture(myTexture,outUv);           \n"
+	"	gl_FragColor.a = 1;                                \n"
 	"}													   \n"
 	"";
 #pragma endregion
@@ -47,7 +56,8 @@ void WidgetRenderer::initializeGL() {
 	nearPlane = .1f;
 	farPlane = 200;
 
-	passInfos.push_back(&PassInfo_Default);
+	passInfos.push_back(&passInfo_Screen);
+	passInfo_Default = &passInfo_Screen;
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable (GL_BLEND);
@@ -64,11 +74,18 @@ void WidgetRenderer::initializeGL() {
 	setMouseTracking(true);
 
 	//setting up default shader
-	bool noDefaultShaderErrors = mainShader->addProgram_srcCode(defaultVertShader,GL_VERTEX_SHADER);	assert(noDefaultShaderErrors);
-		 noDefaultShaderErrors = mainShader->addProgram_srcCode(defaultFragShader,GL_FRAGMENT_SHADER);	assert(noDefaultShaderErrors);
-	
+	bool noDefaultShaderErrors = mainShader->addProgram_srcCode(defaultVertShader,      GL_VERTEX_SHADER);		assert(noDefaultShaderErrors);
+		 noDefaultShaderErrors = mainShader->addProgram_srcCode(defaultFragShader_Color,GL_FRAGMENT_SHADER);	assert(noDefaultShaderErrors);
 	mainShader->linkAndRun();
 	mainShader->saveUniform("viewTransform",ParameterType::PT_MAT4,&viewTransform[0][0]);
+
+	defaultShaders.passThroughColor = mainShader;
+	defaultShaders.passThroughTexture = addShader();
+
+	noDefaultShaderErrors = defaultShaders.passThroughTexture->addProgram_srcCode(defaultVertShader,        GL_VERTEX_SHADER);		assert(noDefaultShaderErrors);
+	noDefaultShaderErrors = defaultShaders.passThroughTexture->addProgram_srcCode(defaultFragShader_Texture,GL_FRAGMENT_SHADER);	assert(noDefaultShaderErrors);
+	defaultShaders.passThroughTexture->linkAndRun();
+	defaultShaders.passThroughTexture->saveUniform("viewTransform",ParameterType::PT_MAT4,&viewTransform[0][0]);
 
 	init();
 }
@@ -128,4 +145,39 @@ void WidgetRenderer::mouseMoveEvent(QMouseEvent* e) {
 }
 void WidgetRenderer::setDebugMenu(DebugMenuManager * menu) {
 	this->menu = menu;
+}
+
+
+void WidgetRenderer::setMaxDT(float max) {
+	this->maxDT = max;
+}
+Renderable* WidgetRenderer::addRenderable(GeometryInfo * whatGeometry, ShaderProgram * howShaders, GLuint textureID) {
+	Renderable * ret = Renderer::addRenderable(whatGeometry,howShaders,textureID);
+	passInfo_Default->add(ret);
+	return ret;
+}
+Renderable* WidgetRenderer::addRenderable(GeometryInfo * whatGeometry, ShaderProgram * howShaders, GLuint textureID, PassInfo * passInfoToRegisterTo) {
+	Renderable * ret = Renderer::addRenderable(whatGeometry,howShaders,textureID);
+	passInfoToRegisterTo->add(ret);
+	return ret;
+}
+Renderable* WidgetRenderer::addRenderable(GeometryInfo * whatGeometry, ShaderProgram * howShaders, PassInfo * passInfoToRegisterTo) {
+	Renderable * ret = Renderer::addRenderable(whatGeometry,howShaders);
+	passInfoToRegisterTo->add(ret);
+	return ret;
+}
+PassInfo * WidgetRenderer::addPassInfo(bool populateWithContentsOfDefault) {
+	PassInfo * ret = new PassInfo();
+	passInfos.push_back(ret);
+	if(populateWithContentsOfDefault) ret->loadRenderables(passInfo_Default);
+	return ret;
+}
+
+WidgetRenderer::~WidgetRenderer() {
+	while(passInfos.size() != 0) {
+		int index = passInfos.size() - 1;
+		if(passInfos[index] != &passInfo_Screen)
+			delete passInfos[passInfos.size() - 1];
+		passInfos.pop_back();
+	}
 }
