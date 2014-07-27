@@ -74,10 +74,13 @@ public:
 	//       ---------------------------------------- easy cover all function calls ----------------------------------------        //
 	void watch(char * name, const char *& valueToWatch, char * tabName=nullptr);
 	//floats
+	void watch(char * name, int& toWatch, const char * tabName=nullptr);
 	void watch(char * name, float& toWatch, const char * tabName=nullptr);
 	void edit (char * name, float& toWatch, float min, float max, bool doubleLink = true, const char * tabName=nullptr);
+	void edit (char * name, int&   toWatch, float min, float max, bool doubleLink = true, const char * tabName=nullptr);
 	//vectors
 	void watch(char * name, glm::vec3& toWatch, const char * tabName=nullptr);
+	void watch(char * name, glm::vec4& toWatch, const char * tabName=nullptr);
 	void edit (char * name, glm::vec3& toWatch, float min, float max, bool doubleLink = true, const char * tabName=nullptr);
 	void edit (char * name, glm::vec3& toWatch, float xRange, float yRange, float zRange, bool doubleLink = true, const char * tabName=nullptr);
 	void edit (char * name, glm::vec3& toWatch, float xMin, float xMax, float yMin, float yMax, float zMin, float zMax, bool doubleLink = true, const char * tabName=nullptr);
@@ -88,9 +91,12 @@ public:
 	//       -------------------------------------- (Same effect as above calls) -------------------------------------        //
 	void watchName(char * name, const char *& valueToWatch, char * tabName=nullptr);
 	void watchFloat (char * name, float& toWatch, const char * tabName=nullptr);
+	void watchInt   (char * name, int&   toWatch, const char * tabName=nullptr);
 	void slideFloat (char * name, float& toWatch, float min, float max, bool doubleLink = true, const char * tabName=nullptr);
+	void slideInt   (char * name, int&   toWatch, float min, float max, bool doubleLink = true, const char * tabName=nullptr);
 	void toggleBool (char * name, bool& toWatch, const char * tabName=nullptr);
 	void watchVector(char * name, glm::vec3& toWatch, const char * tabName=nullptr);
+	void watchVector(char * name, glm::vec4& toWatch, const char * tabName=nullptr);
 	void slideVector(char * name, glm::vec3& toWatch, float xRange, float yRange, float zRange, bool doubleLink = true, const char * tabName=nullptr);
 	void slideVector(char * name, glm::vec3& toWatch, float xMin, float xMax, float yMin, float yMax, float zMin, float zMax, bool doubleLink = true, const char * tabName=nullptr);
 	void slideVector(char * name, glm::vec3& toWatch, float min, float max, bool doubleLink = true, const char * tabName=nullptr);

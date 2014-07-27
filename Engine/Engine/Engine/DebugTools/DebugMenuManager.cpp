@@ -6,6 +6,7 @@
 #include <Engine\Tools\QT\LinkedSlider.h>
 #include <sstream>
 #include <iomanip>
+#include <Engine\Tools\QT\LinkedIntSlider.h>
 
 
 namespace DebugMenuControllers {
@@ -167,6 +168,87 @@ namespace DebugMenuControllers {
 			label->setText(QString( ss.str().c_str() ));
 		}
 	};
+	
+	//new
+	class WatchIntController : public Controller {
+	public:
+		const char * title;
+		QLabel * label;
+		int * data;
+
+		WatchIntController() {
+			label = new QLabel() ;
+		}
+
+		inline void init(const char * name, int * toWatch) {
+			title = name;
+			data = toWatch;
+			label->setText(name);
+			update();
+		}
+		inline void update() {
+			std::stringstream ss;
+			ss << std::fixed << title << ": " << *data;
+			label->setText(QString( ss.str().c_str() ));
+		}
+	};
+	class WatchVector4Controller : public Controller {
+	public:
+		const char * title;
+		QLabel * label;
+		glm::vec4 * data;
+
+		WatchVector4Controller() {
+			label = new QLabel() ;
+		}
+
+		inline void init(const char * name, glm::vec4 * toWatch) {
+			title = name;
+			data = toWatch;
+			label->setText(name);
+			update();
+		}
+		inline void update() {
+			std::stringstream ss;
+			ss << std::fixed << std::setprecision( 6 ) << title << ": {" << data->r << ", " << data->g << ", " << data->b << ", " << data->a << " }";
+			label->setText(QString( ss.str().c_str() ));
+		}
+	};
+	class SlideIntController : public Controller {
+	public:
+		QLabel * label;
+		int * data;
+		LinkedIntSlider * slider;
+		bool doubleLink;
+
+		SlideIntController() {
+			label = new QLabel();
+			slider = new LinkedIntSlider();
+		}
+		inline void init(const char * name, int * toWatch, int min, int max, bool doubleLink) {
+			this->doubleLink = doubleLink;
+			data = toWatch;
+			label->setText(name);
+			float floatData = *toWatch;
+			slider->setBoundValue(toWatch);
+			slider->setMin(min);
+			slider->setMax(max);
+			int range = abs(max - min);
+			slider->setGranularity(range);
+			*toWatch = floatData;
+			updateModeltoGUI();
+
+		}
+		inline void updateGUItoModel() {
+			if(doubleLink) {
+				updateModeltoGUI();
+			}
+		}
+		inline void updateModeltoGUI() {
+			slider->setBoundValue(data);
+		}
+		inline void update() { updateGUItoModel(); }
+	};
 }
 
 
@@ -244,11 +326,20 @@ void DebugMenuManager::watch(char * name, const char *& valueToWatch, char * tab
 void DebugMenuManager::watch(char * name, float& toWatch, const char * tabName) {
 	watchFloat(name, toWatch,tabName);
 }
+void DebugMenuManager::watch(char * name, int& toWatch, const char * tabName) {
+	watchInt(name, toWatch,tabName);
+}
 void DebugMenuManager::watch(char * name, glm::vec3& toWatch, const char * tabName) {
+	watchVector(name,toWatch,tabName);
+}
+void DebugMenuManager::watch(char * name, glm::vec4& toWatch, const char * tabName) {
 	watchVector(name,toWatch,tabName);
 }
 void DebugMenuManager::edit (char * name, float& toWatch, float min, float max, bool doubleLink, const char * tabName) {
 	slideFloat(name,toWatch,min,max,doubleLink,tabName);
+}
+void DebugMenuManager::edit (char * name, int&   toWatch, float min, float max, bool doubleLink, const char * tabName) {
+	slideInt(name,toWatch,min,max,doubleLink,tabName);
 }
 void DebugMenuManager::edit (char * name, glm::vec3& toWatch, float min, float max, bool doubleLink, const char * tabName) {
 	slideVector(name,toWatch,min,max,doubleLink,tabName);
@@ -265,6 +356,7 @@ void DebugMenuManager::edit (char * name, bool& toWatch, const char * tabName) {
 void DebugMenuManager::edit (char * name, fastdelegate::FastDelegate0<> callback, const char * tabName) {
 	button(name,callback,tabName);
 }
+
 void DebugMenuManager::watchName(char * name, const char *& valueToWatch, char * tabName) {
 	auto * toAdd = new DebugMenuControllers::CharPointerController();
 	toAdd->init(name,&valueToWatch);
@@ -283,8 +375,27 @@ void DebugMenuManager::watchFloat (char * name, float& toWatch, const char * tab
 	newRow->addWidget((toAdd->label));
 	getTabLayout(tabName)->addLayout(newRow);
 }
+void DebugMenuManager::watchInt   (char * name, int&   toWatch, const char * tabName)	  {
+	DebugMenuControllers::WatchIntController * toAdd = new DebugMenuControllers::WatchIntController();
+	toAdd->init(name,&toWatch);
+	floatWatchers.push_back(toAdd);
+
+	QHBoxLayout * newRow = new QHBoxLayout();
+	newRow->addWidget((toAdd->label));
+	getTabLayout(tabName)->addLayout(newRow);
+}
 void DebugMenuManager::slideFloat (char * name, float& toWatch, float min, float max, bool doubleLink, const char * tabName)	  {
 	DebugMenuControllers::SlideFloatController * toAdd = new DebugMenuControllers::SlideFloatController();
+	toAdd->init(name,&toWatch,min,max, doubleLink);
+	floatSliders.push_back(toAdd);
+
+	QHBoxLayout * newRow = new QHBoxLayout();
+	newRow->addWidget((toAdd->label));
+	newRow->addWidget((toAdd->slider));
+	getTabLayout(tabName)->addLayout(newRow);
+}
+void DebugMenuManager::slideInt   (char * name, int&   toWatch, float min, float max, bool doubleLink, const char * tabName)	  {
+	DebugMenuControllers::SlideIntController * toAdd = new DebugMenuControllers::SlideIntController();
 	toAdd->init(name,&toWatch,min,max, doubleLink);
 	floatSliders.push_back(toAdd);
 
@@ -304,6 +415,15 @@ void DebugMenuManager::toggleBool (char * name, bool& toWatch, const char * tabN
 }
 void DebugMenuManager::watchVector(char * name, glm::vec3& toWatch, const char * tabName) {
 	DebugMenuControllers::WatchVectorController * toAdd = new DebugMenuControllers::WatchVectorController();
+	toAdd->init(name,&toWatch);
+	vecWatchers.push_back(toAdd);
+
+	QHBoxLayout * newRow = new QHBoxLayout();
+	newRow->addWidget((toAdd->label));
+	getTabLayout(tabName)->addLayout(newRow);
+}
+void DebugMenuManager::watchVector(char * name, glm::vec4& toWatch, const char * tabName) {
+	DebugMenuControllers::WatchVector4Controller * toAdd = new DebugMenuControllers::WatchVector4Controller();
 	toAdd->init(name,&toWatch);
 	vecWatchers.push_back(toAdd);
 

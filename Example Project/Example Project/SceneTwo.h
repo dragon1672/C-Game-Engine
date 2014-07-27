@@ -25,6 +25,9 @@ public:
 
 	PassInfo * meEpicTexture;
 
+	int testing;
+	glm::vec4 testVec;
+
 
 	void addToFakeOutput(WidgetRenderer * renderer, Camera& myCam, DebugMenuManager * menu) {
 		myCam.lookAt(glm::vec3(0,1,-7),glm::vec3(0,0,0));
@@ -69,6 +72,15 @@ public:
 	}
 
 	virtual void init(WidgetRenderer * renderer, Camera& myCam, DebugMenuManager * menu) {
+
+		testing = 0;
+
+		menu->watch("int test",testing);
+		menu->watch("Vec4 test", testVec);
+		menu->edit("Testing Int",testing,1,10);
+
+
+
 		myCam.lookAt(glm::vec3(10,10,10),glm::vec3());
 		meEpicTexture = renderer->addPassInfo(false);
 		renderer->setDefaultPassInfo(meEpicTexture);
@@ -91,6 +103,13 @@ public:
 		
 	}
 	virtual void update(float dt) {
+		//testing ++;
+		testVec.r += dt * 1;
+		testVec.g += dt * 2;
+		testVec.b += dt * 3;
+		testVec.a += dt * 4;
+
+
 		float speed = .1;
 		float range = 2;
 		static float spotInRange = range/2;

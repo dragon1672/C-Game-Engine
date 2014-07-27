@@ -22,6 +22,7 @@ DebugSlider::DebugSlider(float min, float max, bool textOnLeft, float granularit
 }
 
 float DebugSlider::value() const {
+	int slideVal = slider->value();
 	return min + (max - min) * (slider->value() / sliderGranularity);
 }
 
@@ -44,5 +45,11 @@ void DebugSlider::setMax(float newMax) {
 	float val = value();
 	max = newMax;
 	val = val > max ? max : val; // clip if needed
+	setValue(val);
+}
+void DebugSlider::setGranularity(float newGranularity) {
+	float val = this->value();
+	sliderGranularity = newGranularity;
+	slider->setMaximum(sliderGranularity);
 	setValue(val);
 }

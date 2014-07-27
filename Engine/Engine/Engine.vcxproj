@@ -98,6 +98,7 @@
     <ClInclude Include="Engine\Tools\Camera.h" />
     <ClInclude Include="Engine\DebugTools\DebugMenuManager.h" />
     <ClInclude Include="Engine\Tools\QT\DebugSlider.h" />
+    <ClInclude Include="Engine\Tools\QT\LinkedIntSlider.h" />
     <ClInclude Include="Engine\Tools\Random\Glm.h" />
     <ClInclude Include="Engine\WidgetRenderer.h" />
     <ClInclude Include="ExportHeader.h" />
@@ -130,6 +131,7 @@
     <ClCompile Include="Engine\Tools\QT\DebugSlider_mock.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Engine\Renderer\Geo\GeometryInfo.cpp" />
+    <ClCompile Include="Engine\Tools\QT\LinkedIntSlider.cpp" />
     <ClCompile Include="Engine\Tools\QT\LinkedSlider.cpp" />
     <ClCompile Include="Engine\Tools\Random\Glm.cpp" />
     <ClCompile Include="Engine\Tools\Random\MyRandom.cpp" />
