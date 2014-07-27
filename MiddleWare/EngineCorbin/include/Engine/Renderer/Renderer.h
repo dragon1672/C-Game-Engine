@@ -16,7 +16,7 @@ private:
 	Renderable myRenderables[1000];
 	uint numOfRenderables;
 	
-	ShaderProgram allShaderProgs[10];
+	ShaderProgram allShaderProgs[100];
 	uint numOfShaders;
 
 	GeometryInfo geoInfo[1000];

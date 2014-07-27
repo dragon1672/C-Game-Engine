@@ -9,6 +9,7 @@
 #include <Qt/qfile.h>
 #pragma warning(pop)
 #include <cassert>
+#include <Engine\Defines\Vectors.h>
 
 
 GLuint ShaderProgram::currentProgram;
@@ -33,12 +34,14 @@ bool ShaderProgram::validFile(const char * filePath) {
 }
 
 void ShaderProgram::startup() {
-	numOfPrams = 0;
 	programID = glCreateProgram();
 	qDebug() << "Creating Shader Program ID: " << programID;
 }
+ShaderProgram::~ShaderProgram() {
+	shutdown();
+}
 void ShaderProgram::shutdown() {
-	// ?
+	CLEAR_VECTOR(prams);
 }
 void ShaderProgram::buildBasicProgram(const char * vertexShaderFilePath, const char * fragmentShaderFilePath) {
 	//startup();
@@ -110,7 +113,8 @@ void ShaderProgram::passUniform(uint location, ParameterType parameterType, cons
 	}
 }
 void ShaderProgram::saveUniform(const char* name, ParameterType parameterType, const void * value) {
-	prams[numOfPrams++].init(this,name,parameterType,value);
+	prams.push_back(new ShaderUniformPram());
+	prams[prams.size()-1]->init(this,name,parameterType,value);
 }
 
 void ShaderProgram::passSavedUniforms_try() {
@@ -118,9 +122,9 @@ void ShaderProgram::passSavedUniforms_try() {
 		passSavedUniforms_force();
 }
 void ShaderProgram::passSavedUniforms_force() {
-	for (uint i = 0; i < numOfPrams; i++)
+	for (uint i = 0; i < prams.size(); i++)
 	{
-		prams[i].sendData();
+		prams[i]->sendData();
 	}
 	validPush = false;
 }

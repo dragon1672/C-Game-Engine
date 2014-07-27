@@ -29,6 +29,7 @@
     <ClInclude Include="Engine\SceneManager.h" />
     <ClInclude Include="Engine\Renderer\Output\PassInfo.h" />
     <ClInclude Include="Engine\Tools\QT\LinkedIntSlider.h" />
+    <ClInclude Include="Engine\Defines\Vectors.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />

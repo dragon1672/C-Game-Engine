@@ -9,16 +9,16 @@
 #pragma warning(push)
 #include <glm\glm.hpp>
 #pragma warning(pop)
-
+#include <vector>
 #include "ParameterType.h"
 
 typedef unsigned int uint;
 
 class ENGINE_SHARED Renderable {
 private:
-	ShaderUniformPram uniformParameters[20];
-	uint numUniformParameters;
+	std::vector<ShaderUniformPram *> uniformParameters;
 public:
+	~Renderable();
 	GeometryInfo * whatGeo;
 	ShaderProgram * howShader;
 	glm::mat4 whereMat;

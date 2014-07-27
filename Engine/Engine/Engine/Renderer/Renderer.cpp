@@ -2,17 +2,7 @@
 
 #include <Engine\Renderer\Renderer.h>
 #include <Qt\qdebug.h>
-
-#define CLEAR_VECTOR(meVector) while(meVector.size() != 0) { \
-		delete meVector[meVector.size() - 1];                \
-		meVector.pop_back();                                 \
-	}
-#define CLEAR_VECTOR_WITH_CALL(meVector,method)      \
-	while(meVector.size() != 0) {                \
-		meVector[meVector.size() - 1]->method(); \
-		delete meVector[meVector.size() - 1];    \
-		meVector.pop_back();                     \
-	}
+#include <Engine\Defines\Vectors.h>
 
 //encoded with (char + i % 5
 const char * thankYouMessage = "_xazcw`yb{!\"01%Ujdrp!{ry%gqu$ztkqk%Bpwlto{#Gtsdlr,t\"Uiseguiw!/0$cw`yb{_xaz";

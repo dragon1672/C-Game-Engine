@@ -1,15 +1,18 @@
 #include <Engine\Renderer\Renderable.h>
 #include <Qt/qdebug.h>
+#include <Engine\Defines\Vectors.h>
 
 void Renderable::init(GeometryInfo * whatGeo, ShaderProgram * howShader, bool visible, uint textureID) {
 	this->whatGeo   = whatGeo;
 	this->howShader = howShader;
 	this->visible   = visible;
 	this->textureID = textureID;
-	numUniformParameters = 0;
+}
+Renderable::~Renderable() {
+	reset();
 }
 void Renderable::reset() {
-	numUniformParameters = 0;
+	CLEAR_VECTOR(uniformParameters);
 }
 
 void Renderable::addUniformParameter(const char * name, const float& value) {
@@ -28,7 +31,8 @@ void Renderable::addUniformParameter(const char * name, const glm::mat4& value) 
 	addUniformParameter(name,ParameterType::PT_MAT4,&value[0][0]);
 }
 void Renderable::addUniformParameter(const char * name, ParameterType parameterType, const void * value) {
-	uniformParameters[numUniformParameters++].init(howShader,name,parameterType,value);
+	uniformParameters.push_back(new ShaderUniformPram());
+	uniformParameters[uniformParameters.size()-1]->init(howShader,name,parameterType,value);
 }
 void Renderable::saveMatrixInfo(const char * uniformName) {
 	addUniformParameter(uniformName,ParameterType::PT_MAT4,reinterpret_cast<float*>(&transformData.getTransform()[0]));
@@ -48,8 +52,8 @@ void Renderable::saveVisable(const char * uniformName) {
 }
 
 void Renderable::passUniformsDownDown() {
-	for (uint i = 0; i < numUniformParameters; i++)
+	for (uint i = 0; i < uniformParameters.size(); i++)
 	{
-		uniformParameters[i].sendData();
+		uniformParameters[i]->sendData();
 	}
 }
