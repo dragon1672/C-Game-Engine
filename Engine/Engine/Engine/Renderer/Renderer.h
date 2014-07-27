@@ -13,20 +13,17 @@
 
 class ENGINE_SHARED Renderer {
 private:
-	Renderable myRenderables[1000];
-	uint numOfRenderables;
-	
-	ShaderProgram allShaderProgs[10];
-	uint numOfShaders;
+	std::vector<Renderable *> myRenderables;
+	std::vector<ShaderProgram *> allShaderProgs;
+	std::vector<GeometryInfo *> geoInfo;
 
-	GeometryInfo geoInfo[1000];
-	uint numOfGeoInfo;
 	virtual void preDraw() {}
 	virtual void renderableAdded(Renderable * justAdded) {}
 public:
 	ShaderProgram * mainShader;
 	
 	Renderer();
+	~Renderer();
 	void init();
 	void reset();
 
@@ -35,7 +32,6 @@ public:
 	GeometryInfo * addGeometry( void * verts, uint sizeOfVerts, uint numVerts,  ushort* indices, uint numIndices, GLuint indexingMode = GL_TRIANGLES);
 
 	virtual Renderable* addRenderable(GeometryInfo * whatGeometry, ShaderProgram * howShaders, GLuint textureID=-1);
-	void resetRenderables();
 
 	ShaderProgram * addShader();
 	ShaderProgram * addShader(const char * vertexShader, const char * fragShader);

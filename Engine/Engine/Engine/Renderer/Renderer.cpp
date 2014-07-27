@@ -3,6 +3,17 @@
 #include <Engine\Renderer\Renderer.h>
 #include <Qt\qdebug.h>
 
+#define CLEAR_VECTOR(meVector) while(meVector.size() != 0) { \
+		delete meVector[meVector.size() - 1];                \
+		meVector.pop_back();                                 \
+	}
+#define CLEAR_VECTOR_WITH_CALL(meVector,method)      \
+	while(meVector.size() != 0) {                \
+		meVector[meVector.size() - 1]->method(); \
+		delete meVector[meVector.size() - 1];    \
+		meVector.pop_back();                     \
+	}
+
 //encoded with (char + i % 5
 const char * thankYouMessage = "_xazcw`yb{!\"01%Ujdrp!{ry%gqu$ztkqk%Bpwlto{#Gtsdlr,t\"Uiseguiw!/0$cw`yb{_xaz";
 
@@ -15,21 +26,21 @@ Renderer::Renderer() {
 	deb << "\n\n";
 }
 void            Renderer::init() {
-	numOfRenderables = 0;
-	numOfShaders = 0;
-	numOfGeoInfo = 0;
 	mainShader = addShader();
 }
+Renderer::~Renderer() {
+	reset();
+}
 void            Renderer::reset() {
-	//wipe renderables
-	//clear geo from hardware
-	//clear geo infos
-	//clear shaders
+	CLEAR_VECTOR(geoInfo);
+	CLEAR_VECTOR_WITH_CALL(myRenderables,reset);
+	CLEAR_VECTOR(allShaderProgs);
 }
 GeometryInfo  * Renderer::addGeometry( const Neumont::Vertex* verts, uint numVerts,  ushort* indices, uint numIndices, GLuint indexingMode) {
-	int id = numOfGeoInfo++;
-	geoInfo[id].init(verts,numVerts,indices,numIndices,indexingMode);
-	return &geoInfo[id];
+	GeometryInfo * ret = new GeometryInfo();
+	geoInfo.push_back(ret);
+	ret->init(verts,numVerts,indices,numIndices,indexingMode);
+	return ret;
 }
 GeometryInfo  * Renderer::addGeometry( Neumont::ShapeData& toAdd, GLuint indexingMode) {
 	GeometryInfo * ret = addGeometry(toAdd.verts,toAdd.numVerts,toAdd.indices,toAdd.numIndices,indexingMode);
@@ -40,20 +51,15 @@ GeometryInfo  * Renderer::addGeometry( Neumont::ShapeData& toAdd, GLuint indexin
 	return ret;
 }
 Renderable    * Renderer::addRenderable(GeometryInfo * whatGeometry, ShaderProgram * howShaders, GLuint textureID) {
-	int id = numOfRenderables++;
-	myRenderables[id].init(whatGeometry,howShaders,true,textureID);
-	renderableAdded(&myRenderables[id]);
-	return &myRenderables[id];
-}
-void			Renderer::resetRenderables() {
-	for (uint i = 0; i < numOfRenderables; i++)
-	{
-		myRenderables[i].reset();
-	}
-	numOfRenderables = 0;
+	Renderable * ret = new Renderable();
+	myRenderables.push_back(ret);
+	ret->init(whatGeometry,howShaders,true,textureID);
+	renderableAdded(ret);
+	return ret;
 }
 ShaderProgram * Renderer::addShader() {
-	ShaderProgram * ret = &allShaderProgs[numOfShaders++];
+	ShaderProgram * ret = new ShaderProgram();
+	allShaderProgs.push_back(ret);
 	ret -> startup();
 	return ret;
 }
@@ -63,29 +69,31 @@ ShaderProgram * Renderer::addShader(const char * vertexShader, const char * frag
 	return ret;
 }
 void            Renderer::passDataDownAllShaders_force() {
-	for (uint i = 0; i < numOfShaders; i++)
+	for (uint i = 0; i < allShaderProgs.size(); i++)
 	{
-		allShaderProgs[i].passSavedUniforms_force();
+		allShaderProgs[i]->passSavedUniforms_force();
 	}
 }
 void            Renderer::passDataDownAllShaders_try() {
-	for (uint i = 0; i < numOfShaders; i++)
+	for (uint i = 0; i < allShaderProgs.size(); i++)
 	{
-		allShaderProgs[i].passSavedUniforms_try();
+		allShaderProgs[i]->passSavedUniforms_try();
 	}
 }
 void            Renderer::resetAllShaders_validPush() {
-	for (uint i = 0; i < numOfShaders; i++)
+	for (uint i = 0; i < allShaderProgs.size(); i++)
 	{
-		allShaderProgs[i].resetValidPush();
+		allShaderProgs[i]->resetValidPush();
 	}
 }
-uint            Renderer::getNumOfShaders()      { return numOfShaders;     }
-uint            Renderer::getNumOfRenderables()  { return numOfRenderables; }
-uint            Renderer::getNumOfGeo()          { return numOfGeoInfo;     }
-ShaderProgram * Renderer::getShader(uint index) { return &allShaderProgs[index]; }
-Renderable    * Renderer::getRenderable(uint index) { return &myRenderables[index];  }
-GeometryInfo  * Renderer::getGeometry(uint index) { return &geoInfo[index];        }
+uint            Renderer::getNumOfShaders()      { return allShaderProgs.size(); }
+uint            Renderer::getNumOfRenderables()  { return myRenderables.size();  }
+uint            Renderer::getNumOfGeo()          { return geoInfo.size();        }
+
+ShaderProgram * Renderer::getShader(uint index) { return allShaderProgs[index];    }
+Renderable    * Renderer::getRenderable(uint index) { return myRenderables[index]; }
+GeometryInfo  * Renderer::getGeometry(uint index) { return geoInfo[index];         }
+
 uint            Renderer::addTexture(const char* fileName, bool flipHorz, bool flipVert) {
 	return ShaderProgram::load2DTexture(fileName, flipHorz, flipVert);
 }
