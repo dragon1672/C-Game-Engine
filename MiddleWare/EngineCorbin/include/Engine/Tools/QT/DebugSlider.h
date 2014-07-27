@@ -29,6 +29,7 @@ public:
 	void setValue(float newValue);
 	void setMin(float newMin);
 	void setMax(float newMax);
+	void setGranularity(float newGranularity);
 };
 
 #endif
