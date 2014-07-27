@@ -52,6 +52,11 @@ public:
 
 	uint addTexture(const char* fileName, bool flipHorz = false, bool flipVert = false);
 	uint addTexture(ubyte * textureData, uint width, uint height, GLenum type = GL_RGBA);
+
+	void update2DTexture(uint texture, QImage image, GLenum type = GL_RGBA);
+	void update2DTexture(uint texture, QString filePath, bool flipHorz = false, bool flipVert = false);
+	void update2DTexture(uint texture, ubyte * data, uint width, uint height, GLenum type = GL_RGBA);
+
 	void draw(GeometryInfo& toDraw);
 	void draw(Renderable& toDraw);
 	void drawPrep(int width, int height);

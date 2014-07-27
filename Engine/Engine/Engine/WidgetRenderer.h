@@ -1,4 +1,5 @@
 #pragma once
+#include <Qt/qdebug.h>
 
 /*
          +-------------------------------------------------------+
@@ -85,7 +86,9 @@ private:
 	float maxDT;
 	float nearPlane, farPlane;
 	std::vector<PassInfo *> passInfos;
+	PassInfo HUD;
 	PassInfo passInfo_Screen;
+	int oldWidth,oldHeight;
 protected:
 	DebugMenuManager * menu;
 	Camera myCam;
@@ -100,12 +103,8 @@ public:
 	} defaultShaders;
 
 
-	void setDefaultPassInfo(PassInfo * toSet) {
-		passInfo_Default = toSet;
-	}
-	void resetDefaultPassInfoToScreen() {
-		passInfo_Default = &passInfo_Screen;
-	}
+	void setDefaultPassInfo(PassInfo * toSet);
+	void resetDefaultPassInfoToScreen();
 
 
 	// call when ever creating a new matrix
@@ -127,13 +126,16 @@ private: // these are the guys you want to override
 	virtual void init() {}
 	virtual void preDraw() {} // called before drawing each object
 	virtual void preAllDraw() {} // called before all objects are drawn
-
+	virtual void windowResized(int oldWith, int oldHeight) {
+		qDebug() << oldWidth << "x" << oldHeight << " to " << width() << "x" << height();
+	} // called when window changes dimentions
 
 
 	//Don't worry about anything down here
 public:
 	void initializeGL();
 	void paintGL();
+	void drawPass(PassInfo& toDraw, bool clear = true);
 	~WidgetRenderer();
 private slots:
 	void nxtFrm();

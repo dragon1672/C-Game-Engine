@@ -28,7 +28,6 @@ public:
 	int testing;
 	glm::vec4 testVec;
 
-
 	void addToFakeOutput(WidgetRenderer * renderer, Camera& myCam, DebugMenuManager * menu) {
 		myCam.lookAt(glm::vec3(0,1,-7),glm::vec3(0,0,0));
 		teapot.magnitude = .6;

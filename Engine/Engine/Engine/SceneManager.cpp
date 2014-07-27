@@ -38,6 +38,14 @@ void SceneManager::nextFrame(float dt) {
 	activeScene->myDefaultPass->cam = myCam;
 	activeScene->update(dt);
 }
-void SceneManager::addScene(Scene * toAdd) {
-		scenes.push_back(toAdd);
+
+void SceneManager::windowResized(int oldWidth,int oldHeight) {
+	for (int i = 0; i < scenes.size(); i++)
+	{
+		scenes[i]->windowResized(width(),height());
 	}
+}
+
+void SceneManager::addScene(Scene * toAdd) {
+	scenes.push_back(toAdd);
+}

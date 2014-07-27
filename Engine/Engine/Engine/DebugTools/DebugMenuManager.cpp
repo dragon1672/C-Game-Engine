@@ -299,6 +299,7 @@ namespace DebugMenuControllers {
 DebugMenuManager::DebugMenuManager() {
 	defaultTabName = "default";
 	tabManager = new QTabWidget();
+	defaultSliderGranularity = 100;
 }
 
 void DebugMenuManager::setDefaultTab(const char * tabname) {
@@ -327,6 +328,9 @@ void DebugMenuManager::show() { return tabManager->show(); }
 bool DebugMenuManager::isHidden() { return tabManager->isHidden(); }
 QWidget * DebugMenuManager::getWidg() { return tabManager; };
 
+void DebugMenuManager::setSliderGranularity(int valueToSet) {
+	defaultSliderGranularity = valueToSet;
+}
 
 const char * DebugMenuManager::getActiveTab() {
 	for (uint i = 0; i < tabs.size(); i++)
@@ -389,7 +393,6 @@ void DebugMenuManager::edit (char * name, glm::vec3& toWatch, float xRange, floa
 void DebugMenuManager::edit (char * name, glm::vec3& toWatch, float xMin, float xMax, float yMin, float yMax, float zMin, float zMax, bool doubleLink, const char * tabName) {
 	slideVector(name,toWatch,xMin,xMax,yMin,yMax,zMin,zMax,doubleLink,tabName);
 }
-
 void DebugMenuManager::edit (char * name, glm::vec4& toWatch, float min, float max, bool doubleLink, const char * tabName) {
 	slideVector(name,toWatch,min,max,doubleLink,tabName);
 }
@@ -399,7 +402,6 @@ void DebugMenuManager::edit (char * name, glm::vec4& toWatch, float rRange, floa
 void DebugMenuManager::edit (char * name, glm::vec4& toWatch, float rMin, float rMax, float gMin, float gMax, float bMin, float bMax, float aMin, float aMax, bool doubleLink, const char * tabName) {
 	slideVector(name,toWatch,rMin,rMax,gMin,gMax,bMin,bMax,aMin,aMax,doubleLink,tabName);
 }
-
 void DebugMenuManager::edit (char * name, bool& toWatch, const char * tabName) {
 	toggleBool(name,toWatch,tabName);
 }
@@ -440,6 +442,7 @@ void DebugMenuManager::slideFloat (char * name, float& toWatch, float min, float
 	controllers.push_back(toAdd);
 
 	QHBoxLayout * newRow = new QHBoxLayout();
+	toAdd->slider->setGranularity(defaultSliderGranularity);
 	newRow->addWidget((toAdd->label));
 	newRow->addWidget((toAdd->slider));
 	getTabLayout(tabName)->addLayout(newRow);
@@ -494,12 +497,11 @@ void DebugMenuManager::slideVector(char * name, glm::vec3& toWatch, float xMin, 
 
 	QHBoxLayout * newRow = new QHBoxLayout();
 	newRow->addWidget(toAdd->label);
-	newRow->addWidget(toAdd->xSlider);
-	newRow->addWidget(toAdd->ySlider);
-	newRow->addWidget(toAdd->zSlider);
+	newRow->addWidget(toAdd->xSlider);	toAdd->xSlider->setGranularity(defaultSliderGranularity);
+	newRow->addWidget(toAdd->ySlider);	toAdd->ySlider->setGranularity(defaultSliderGranularity);
+	newRow->addWidget(toAdd->zSlider);	toAdd->zSlider->setGranularity(defaultSliderGranularity);
 	getTabLayout(tabName)->addLayout(newRow);
 }
-
 void DebugMenuManager::slideVector(char * name, glm::vec4& toWatch, float min, float max, bool doubleLink, const char * tabName) {
 	slideVector(name,toWatch,min,max,min,max,min,max,min,max,doubleLink,tabName);
 }
@@ -513,13 +515,12 @@ void DebugMenuManager::slideVector(char * name, glm::vec4& toWatch, float rMin, 
 
 	QHBoxLayout * newRow = new QHBoxLayout();
 	newRow->addWidget(toAdd->label);
-	newRow->addWidget(toAdd->rSlider);
-	newRow->addWidget(toAdd->gSlider);
-	newRow->addWidget(toAdd->bSlider);
-	newRow->addWidget(toAdd->aSlider);
+	newRow->addWidget(toAdd->rSlider);	toAdd->rSlider->setGranularity(defaultSliderGranularity);
+	newRow->addWidget(toAdd->gSlider);	toAdd->gSlider->setGranularity(defaultSliderGranularity);
+	newRow->addWidget(toAdd->bSlider);	toAdd->bSlider->setGranularity(defaultSliderGranularity);
+	newRow->addWidget(toAdd->aSlider);	toAdd->aSlider->setGranularity(defaultSliderGranularity);
 	getTabLayout(tabName)->addLayout(newRow);
 }
-
 void DebugMenuManager::button(char * name, fastdelegate::FastDelegate0<> callback, const char * tabName) {
 	auto * toAdd = new ButtonInfo();
 	toAdd->init(name,callback);

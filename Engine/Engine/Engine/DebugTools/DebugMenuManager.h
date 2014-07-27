@@ -42,6 +42,7 @@ class ENGINE_SHARED DebugMenuManager {
 
 	QVBoxLayout * getTabLayout(const char * name);
 	const char * defaultTabName; // default
+	int defaultSliderGranularity; // 100
 public:
 	//mainly used by GUI
 	DebugMenuManager();
@@ -52,6 +53,7 @@ public:
 	bool isHidden();
 	QWidget * getWidg();
 
+	void setSliderGranularity(int valueToSet);
 
 	//returns current active tab
 	//returns null if non found

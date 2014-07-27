@@ -22,4 +22,5 @@ public:
 	Scene(const char * name) : name(name) {}
 	virtual void init(WidgetRenderer * renderer, Camera& myCam, DebugMenuManager * menu) = 0;
 	virtual void update(float dt) = 0;
+	virtual void windowResized(int newWidth,int newHeight) {}
 };

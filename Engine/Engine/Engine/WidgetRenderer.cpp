@@ -47,6 +47,11 @@ const char * defaultFragShader_Texture = "#version 400     \n"
 	"}													   \n"
 	"";
 #pragma endregion
+#pragma region HUD assets
+
+
+
+#pragma endregion
 
 void WidgetRenderer::initializeGL() {
 	glewInit();
@@ -55,6 +60,7 @@ void WidgetRenderer::initializeGL() {
 	maxDT = .02;
 	nearPlane = .1f;
 	farPlane = 200;
+	oldWidth = oldHeight = -1;
 
 	passInfos.push_back(&passInfo_Screen);
 	passInfo_Default = &passInfo_Screen;
@@ -105,11 +111,25 @@ void WidgetRenderer::nxtFrm() {
 	nextFrame(dt);
 	repaint();
 }
+
+void WidgetRenderer::setDefaultPassInfo(PassInfo * toSet) {
+	passInfo_Default = toSet;
+}
+void WidgetRenderer::resetDefaultPassInfoToScreen() {
+	passInfo_Default = &passInfo_Screen;
+}
+
 void WidgetRenderer::saveViewTransform(ShaderProgram * shader, const char * name) {
 	shader->saveUniform(name,ParameterType::PT_MAT4,&viewTransform[0][0]);
 }
 
 void WidgetRenderer::paintGL() {
+	if((oldWidth != width() || oldHeight != height())
+		&& oldWidth > 0 && oldHeight > 0) {
+		windowResized(oldWidth,oldHeight);
+	}
+	oldWidth = width();
+	oldHeight = height();
 	glViewport(0,0,width(),height());
 
 	resetAllShaders_validPush();
@@ -118,28 +138,37 @@ void WidgetRenderer::paintGL() {
 	{
 		if(passInfos[i]->visable) {
 			passInfos[i]->activate();
-			float clearX = passInfos[i]->clearColor.x;
-			float clearY = passInfos[i]->clearColor.y;
-			float clearZ = passInfos[i]->clearColor.z;
-			glClearColor(clearX,clearY,clearZ,1);
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	
-			const float aspectRatio = (float)width()/(float)height();
-			viewTransform = glm::mat4();
-			viewTransform *= glm::perspective(60.0f,aspectRatio,nearPlane,farPlane);
-			viewTransform *= passInfos[i]->cam.enabled ? passInfos[i]->cam.getWorld2View() : myCam.getWorld2View();
-			viewTransform *= additionalViewTransform;
-	
-			preAllDraw();
-		
-			for (uint j = 0; j < passInfos[i]->myRenderables.size(); j++)
-			{
-				draw(*passInfos[i]->myRenderables[j]);
-			}
+			drawPass(*passInfos[i]);
 		}
 	}
+	drawPass(HUD,false);
 
 	
+}
+
+void WidgetRenderer::drawPass(PassInfo& toDraw, bool clear) {
+	if(toDraw.myRenderables.size() == 0) return; // no need to do more work than we have to
+	toDraw.activate();
+	if(clear) {
+		float clearX = toDraw.clearColor.x;
+		float clearY = toDraw.clearColor.y;
+		float clearZ = toDraw.clearColor.z;
+		glClearColor(clearX,clearY,clearZ,1);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	}
+	
+	const float aspectRatio = (float)width()/(float)height();
+	viewTransform = glm::mat4();
+	viewTransform *= glm::perspective(60.0f,aspectRatio,nearPlane,farPlane);
+	viewTransform *= toDraw.cam.enabled ? toDraw.cam.getWorld2View() : myCam.getWorld2View();
+	viewTransform *= additionalViewTransform;
+	
+	preAllDraw();
+		
+	for (uint j = 0; j < toDraw.myRenderables.size(); j++)
+	{
+		draw(*toDraw.myRenderables[j]);
+	}
 }
 
 void WidgetRenderer::mouseMoveEvent(QMouseEvent* e) {

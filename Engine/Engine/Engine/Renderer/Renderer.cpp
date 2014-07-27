@@ -92,6 +92,15 @@ uint            Renderer::addTexture(const char* fileName, bool flipHorz, bool f
 uint            Renderer::addTexture(ubyte * textureData, uint width, uint height, GLenum type) {
 	return ShaderProgram::load2DTexture(textureData, width, height, type);
 }
+void            Renderer::update2DTexture(uint texture, QImage image, GLenum type) {
+	ShaderProgram::update2DTexture(texture,image,type);
+}
+void            Renderer::update2DTexture(uint texture, QString filePath, bool flipHorz, bool flipVert) {
+	ShaderProgram::update2DTexture(texture,filePath,flipHorz,flipVert);
+}
+void            Renderer::update2DTexture(uint texture, ubyte * data, uint width, uint height, GLenum type) {
+	ShaderProgram::update2DTexture(texture,data,width,height,type);
+}
 void            Renderer::draw(Renderable& toDraw) {
 	if(toDraw.visible) {
 		toDraw.transformData.updateMatrix();
