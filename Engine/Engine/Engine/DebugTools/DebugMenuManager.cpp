@@ -7,6 +7,7 @@
 #include <sstream>
 #include <iomanip>
 #include <Engine\Tools\QT\LinkedIntSlider.h>
+#include <Qt/qtablewidget.h>
 
 
 namespace DebugMenuControllers {
@@ -168,8 +169,6 @@ namespace DebugMenuControllers {
 			label->setText(QString( ss.str().c_str() ));
 		}
 	};
-	
-	//new
 	class WatchIntController : public Controller {
 	public:
 		const char * title;
@@ -293,6 +292,71 @@ namespace DebugMenuControllers {
 		}
 		inline void update() { updateGUItoModel(); }
 	};
+	//new
+	class WatchMat4Controller : public Controller {
+	public:
+		static const int size = 4;
+		const char * title;
+		QLabel * label;
+		QTableWidget * table;
+		glm::mat4 * data;
+
+		WatchMat4Controller() {
+			table = new QTableWidget(size,size) ;
+			label = new QLabel();
+			for(int i = 0; i < size; i++) {
+				for(int j = 0; j < size; j++)
+					table->setItem(i, j, new QTableWidgetItem(
+									  QString("label %1")
+									  .arg(i * size + j + 1)));
+			}
+		}
+
+		inline void init(const char * name, glm::mat4 * toWatch) {
+			title = name;
+			data = toWatch;
+			label->setText(name);
+			update();
+		}
+		inline void update() {
+			for(int i=0;i<size;i++) {
+				for(int j=0;j<size;j++) {
+					std::stringstream ss;
+					ss << std::fixed << std::setprecision( 6 ) << (*data)[i][j];
+					table->item(i,j)->setText(QString( ss.str().c_str() ));
+				}
+			}
+		}
+	};
+	class WatchMat3Controller : public Controller {
+	public:
+		static const int size = 3;
+		const char * title;
+		QLabel * label;
+		QTableWidget * table;
+		glm::mat3 * data;
+
+		WatchMat3Controller() {
+			table = new QTableWidget(size,size) ;
+			label = new QLabel();
+		}
+
+		inline void init(const char * name, glm::mat3 * toWatch) {
+			title = name;
+			data = toWatch;
+			label->setText(name);
+			update();
+		}
+		inline void update() {
+			for(int i=0;i<size;i++) {
+				for(int j=0;j<size;j++) {
+					std::stringstream ss;
+					ss << std::fixed << std::setprecision( 6 ) << (*data)[i][j];
+					table->item(i,j)->setText(QString( ss.str().c_str() ));
+				}
+			}
+		}
+	};
 }
 
 
@@ -401,6 +465,12 @@ void DebugMenuManager::edit (char * name, glm::vec4& toWatch, float rRange, floa
 }
 void DebugMenuManager::edit (char * name, glm::vec4& toWatch, float rMin, float rMax, float gMin, float gMax, float bMin, float bMax, float aMin, float aMax, bool doubleLink, const char * tabName) {
 	slideVector(name,toWatch,rMin,rMax,gMin,gMax,bMin,bMax,aMin,aMax,doubleLink,tabName);
+}
+void DebugMenuManager::watch(char * name, glm::mat3& toWatch, const char * tabName) {
+	watchMat(name,toWatch,tabName);
+}
+void DebugMenuManager::watch(char * name, glm::mat4& toWatch, const char * tabName) {
+	watchMat(name,toWatch,tabName);
 }
 void DebugMenuManager::edit (char * name, bool& toWatch, const char * tabName) {
 	toggleBool(name,toWatch,tabName);
@@ -519,6 +589,26 @@ void DebugMenuManager::slideVector(char * name, glm::vec4& toWatch, float rMin, 
 	newRow->addWidget(toAdd->gSlider);	toAdd->gSlider->setGranularity(defaultSliderGranularity);
 	newRow->addWidget(toAdd->bSlider);	toAdd->bSlider->setGranularity(defaultSliderGranularity);
 	newRow->addWidget(toAdd->aSlider);	toAdd->aSlider->setGranularity(defaultSliderGranularity);
+	getTabLayout(tabName)->addLayout(newRow);
+}
+void DebugMenuManager::watchMat   (char * name, glm::mat3& toWatch, const char * tabName) {
+	DebugMenuControllers::WatchMat3Controller * toAdd = new DebugMenuControllers::WatchMat3Controller();
+	toAdd->init(name,&toWatch);
+	controllers.push_back(toAdd);
+
+	QHBoxLayout * newRow = new QHBoxLayout();
+	newRow->addWidget((toAdd->label));
+	newRow->addWidget((toAdd->table));
+	getTabLayout(tabName)->addLayout(newRow);
+}
+void DebugMenuManager::watchMat   (char * name, glm::mat4& toWatch, const char * tabName) {
+	DebugMenuControllers::WatchMat4Controller * toAdd = new DebugMenuControllers::WatchMat4Controller();
+	toAdd->init(name,&toWatch);
+	controllers.push_back(toAdd);
+
+	QHBoxLayout * newRow = new QHBoxLayout();
+	newRow->addWidget((toAdd->label));
+	newRow->addWidget((toAdd->table));
 	getTabLayout(tabName)->addLayout(newRow);
 }
 void DebugMenuManager::button(char * name, fastdelegate::FastDelegate0<> callback, const char * tabName) {

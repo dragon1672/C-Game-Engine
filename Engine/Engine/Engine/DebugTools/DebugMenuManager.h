@@ -80,13 +80,15 @@ public:
 	void edit (char * name, glm::vec3& toWatch, float min, float max, bool doubleLink = true, const char * tabName=nullptr);
 	void edit (char * name, glm::vec3& toWatch, float xRange, float yRange, float zRange, bool doubleLink = true, const char * tabName=nullptr);
 	void edit (char * name, glm::vec3& toWatch, float xMin, float xMax, float yMin, float yMax, float zMin, float zMax, bool doubleLink = true, const char * tabName=nullptr);
-	//vec4
 	void edit (char * name, glm::vec4& toWatch, float min, float max, bool doubleLink = true, const char * tabName = nullptr);
 	void edit (char * name, glm::vec4& toWatch, float rRange, float gRange, float bRange, float aRange, bool doubleLink = true, const char * tabName = nullptr);
 	void edit (char * name, glm::vec4& toWatch, float rMin, float rMax, float gMin, float gMax, float bMin, float bMax, float aMin, float aMax, bool doubleLink = true, const char * tabName = nullptr);
-	
-	void edit (char * name, bool& toWatch, const char * tabName=nullptr);								// bool
+	//mats
+	void watch(char * name, glm::mat3& toWatch, const char * tabName=nullptr);
+	void watch(char * name, glm::mat4& toWatch, const char * tabName=nullptr);
+	//other
 	void edit (char * name, fastdelegate::FastDelegate0<> callback, const char * tabName=nullptr);	// button
+	void edit (char * name, bool& toWatch, const char * tabName=nullptr);							// bool
 
 	//       ---------------------------------------- explicit function calls ----------------------------------------        //
 	//       -------------------------------------- (Same effect as above calls) -------------------------------------        //
@@ -101,10 +103,10 @@ public:
 	void slideVector(char * name, glm::vec3& toWatch, float xRange, float yRange, float zRange, bool doubleLink = true, const char * tabName=nullptr);
 	void slideVector(char * name, glm::vec3& toWatch, float xMin, float xMax, float yMin, float yMax, float zMin, float zMax, bool doubleLink = true, const char * tabName=nullptr);
 	void slideVector(char * name, glm::vec3& toWatch, float min, float max, bool doubleLink = true, const char * tabName=nullptr);
-
 	void slideVector(char * name, glm::vec4& toWatch, float min, float max, bool doubleLink = true, const char * tabName=nullptr);
 	void slideVector(char * name, glm::vec4& toWatch, float rRange, float gRange, float bRange, float aRange, bool doubleLink = true, const char * tabName=nullptr);
 	void slideVector(char * name, glm::vec4& toWatch, float rMin, float rMax, float gMin, float gMax, float bMin, float bMax, float aMin, float aMax, bool doubleLink = true, const char * tabName=nullptr);
-
+	void watchMat   (char * name, glm::mat3& toWatch, const char * tabName=nullptr);
+	void watchMat   (char * name, glm::mat4& toWatch, const char * tabName=nullptr);
 	void button(char * name, fastdelegate::FastDelegate0<> callback, const char * tabName=nullptr);
 };

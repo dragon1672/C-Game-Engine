@@ -68,19 +68,14 @@ public:
 			bears[i].renderable->addUniformParameter("noiseMap",ParameterType::PT_TEXTURE,&bears[i].noiseTexture);
 			bears[i].renderable->addUniformParameter("discardThreshold",ParameterType::PT_FLOAT,&bears[i].discardThreshold);
 		}
+
+
+
+
+		menu->watch("Matrix",teapot.Teapot->transformData.genRotMat());
 	}
 
 	virtual void init(WidgetRenderer * renderer, Camera& myCam, DebugMenuManager * menu) {
-
-		testing = 0;
-
-		menu->watch("int test",testing);
-		menu->watch("Vec4 test", testVec);
-		menu->edit("Vec4 test", testVec,-1,1);
-		menu->edit("Testing Int",testing,1,10);
-
-
-
 		myCam.lookAt(glm::vec3(10,10,10),glm::vec3());
 		meEpicTexture = renderer->addPassInfo(false);
 		renderer->setDefaultPassInfo(meEpicTexture);
@@ -100,6 +95,18 @@ public:
 		tempRenderable->transformData.scale = glm::vec3(5,5,5);
 		tempRenderable->transformData.position.y = 2;
 		tempRenderable->transformData.position.x = 2;
+
+
+
+
+		testing = 0;
+
+		menu->watch("int test",testing);
+		menu->watch("Vec4 test", testVec);
+		menu->edit("Vec4 test", testVec,-1,1);
+		menu->edit("Testing Int",testing,1,10);
+
+
 		
 	}
 	virtual void update(float dt) {
