@@ -7,6 +7,9 @@
 class ENGINE_SHARED MatrixInfo {
 private:
 	glm::mat4 transform;
+	glm::mat4 rotationMat;
+	glm::mat4 translationMat;
+	glm::mat4 scaleMat;
 	
 public:
 	glm::vec3 position;
@@ -19,11 +22,12 @@ public:
 
 	glm::mat4& getTransform();// save this on in the Shader
 
-	//gen short for generate
-	glm::mat4  genRotMat();
-	glm::mat4  genScaleMat();
-	glm::mat4  genTranslationMat();
-	glm::mat4  genCompleteTransform();
+	//gen short for generate, also return address that can ben sent to shader
+	//warning these mats are updated so any changes will not stick
+	glm::mat4&  genRotMat();
+	glm::mat4&  genScaleMat();
+	glm::mat4&  genTranslationMat();
+	glm::mat4&  genCompleteTransform();
 
 	//called by renderer in draw before passing uniforms to shader
 	void updateMatrix();
