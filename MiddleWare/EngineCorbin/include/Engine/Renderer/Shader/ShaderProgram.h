@@ -15,11 +15,9 @@
 class ENGINE_SHARED ShaderProgram {
 private:
 	static int numOfTextures;
-	static const int MAX_POSSIBLE_PROGRAM_FILES = 10;
 	static GLuint currentProgram;
 	
-	ShaderUniformPram prams[30];
-	uint numOfPrams;
+	std::vector<ShaderUniformPram *> prams;
 
 	GLuint programID;
 
@@ -28,6 +26,7 @@ private:
 	bool validPush;
 public:
 	void startup();
+	~ShaderProgram();
 	void shutdown();
 
 	//restarts, compiles, link and uses this program
