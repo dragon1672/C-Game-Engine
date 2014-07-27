@@ -38,13 +38,7 @@ class ENGINE_SHARED DebugMenuManager {
 	std::vector<TabData> tabs;
 	QTabWidget * tabManager;
 
-	std::vector<DebugMenuControllers::Controller *> floatWatchers;
-	std::vector<DebugMenuControllers::Controller *> floatSliders;
-	std::vector<DebugMenuControllers::Controller *> bools;
-	std::vector<DebugMenuControllers::Controller *> vecWatchers;
-	std::vector<DebugMenuControllers::Controller *> vecSliders;
-	std::vector<DebugMenuControllers::Controller *> nameSliders;
-	std::vector<ButtonInfo *> buttons;
+	std::vector<DebugMenuControllers::Controller *> controllers;
 
 	QVBoxLayout * getTabLayout(const char * name);
 	const char * defaultTabName; // default
@@ -84,6 +78,11 @@ public:
 	void edit (char * name, glm::vec3& toWatch, float min, float max, bool doubleLink = true, const char * tabName=nullptr);
 	void edit (char * name, glm::vec3& toWatch, float xRange, float yRange, float zRange, bool doubleLink = true, const char * tabName=nullptr);
 	void edit (char * name, glm::vec3& toWatch, float xMin, float xMax, float yMin, float yMax, float zMin, float zMax, bool doubleLink = true, const char * tabName=nullptr);
+	//vec4
+	void edit (char * name, glm::vec4& toWatch, float min, float max, bool doubleLink = true, const char * tabName = nullptr);
+	void edit (char * name, glm::vec4& toWatch, float rRange, float gRange, float bRange, float aRange, bool doubleLink = true, const char * tabName = nullptr);
+	void edit (char * name, glm::vec4& toWatch, float rMin, float rMax, float gMin, float gMax, float bMin, float bMax, float aMin, float aMax, bool doubleLink = true, const char * tabName = nullptr);
+	
 	void edit (char * name, bool& toWatch, const char * tabName=nullptr);								// bool
 	void edit (char * name, fastdelegate::FastDelegate0<> callback, const char * tabName=nullptr);	// button
 
@@ -100,5 +99,10 @@ public:
 	void slideVector(char * name, glm::vec3& toWatch, float xRange, float yRange, float zRange, bool doubleLink = true, const char * tabName=nullptr);
 	void slideVector(char * name, glm::vec3& toWatch, float xMin, float xMax, float yMin, float yMax, float zMin, float zMax, bool doubleLink = true, const char * tabName=nullptr);
 	void slideVector(char * name, glm::vec3& toWatch, float min, float max, bool doubleLink = true, const char * tabName=nullptr);
+
+	void slideVector(char * name, glm::vec4& toWatch, float min, float max, bool doubleLink = true, const char * tabName=nullptr);
+	void slideVector(char * name, glm::vec4& toWatch, float rRange, float gRange, float bRange, float aRange, bool doubleLink = true, const char * tabName=nullptr);
+	void slideVector(char * name, glm::vec4& toWatch, float rMin, float rMax, float gMin, float gMax, float bMin, float bMax, float aMin, float aMax, bool doubleLink = true, const char * tabName=nullptr);
+
 	void button(char * name, fastdelegate::FastDelegate0<> callback, const char * tabName=nullptr);
 };

@@ -77,6 +77,7 @@ public:
 
 		menu->watch("int test",testing);
 		menu->watch("Vec4 test", testVec);
+		menu->edit("Vec4 test", testVec,-1,1);
 		menu->edit("Testing Int",testing,1,10);
 
 
@@ -103,13 +104,6 @@ public:
 		
 	}
 	virtual void update(float dt) {
-		//testing ++;
-		testVec.r += dt * 1;
-		testVec.g += dt * 2;
-		testVec.b += dt * 3;
-		testVec.a += dt * 4;
-
-
 		float speed = .1;
 		float range = 2;
 		static float spotInRange = range/2;
