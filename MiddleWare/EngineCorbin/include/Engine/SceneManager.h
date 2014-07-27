@@ -12,6 +12,7 @@ class ENGINE_SHARED SceneManager : public WidgetRenderer {
 	//overrides
 	void init();
 	void nextFrame(float dt);
+	void windowResized(int oldWith, int oldHeight);
 public:
 	void addScene(Scene * toAdd);
 };
