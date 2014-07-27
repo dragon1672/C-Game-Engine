@@ -88,8 +88,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Engine\BasicGui.h" />
-    <ClInclude Include="Engine\DebugTools\MenuControllers\CharPointerController.h" />
-    <ClInclude Include="Engine\DebugTools\MenuControllers\BoolToggleController.h" />
     <ClInclude Include="Engine\Renderer\Geo\BufferManager.h" />
     <ClInclude Include="Engine\Renderer\Output\PassInfo.h" />
     <ClInclude Include="Engine\Scene.h" />
@@ -114,12 +112,8 @@
     <ClInclude Include="Engine\Renderer\Shader\ShaderProgram.h" />
     <ClInclude Include="Engine\Renderer\Shader\ShaderUniformPram.h" />
     <ClInclude Include="Engine\Tools\SingleKeyManager.h" />
-    <ClInclude Include="Engine\DebugTools\MenuControllers\SlideFloatController.h" />
-    <ClInclude Include="Engine\DebugTools\MenuControllers\SlideVectorController.h" />
     <ClInclude Include="Engine\Tools\Timer.h" />
     <ClInclude Include="Engine\unsigned.h" />
-    <ClInclude Include="Engine\DebugTools\MenuControllers\WatchFloatController.h" />
-    <ClInclude Include="Engine\DebugTools\MenuControllers\WatchVectorController.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\BasicGui.cpp" />

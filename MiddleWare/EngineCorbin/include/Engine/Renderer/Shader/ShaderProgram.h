@@ -67,6 +67,10 @@ public:
 	static GLuint load2DTexture(QImage image, GLenum type = GL_RGBA);
 	static GLuint load2DTexture(QString filePath, bool flipHorz = false, bool flipVert = false);
 	static GLuint load2DTexture(ubyte * data, uint width, uint height, GLenum type = GL_RGBA);
+
+	static void update2DTexture(uint texture, QImage image, GLenum type = GL_RGBA);
+	static void update2DTexture(uint texture, QString filePath, bool flipHorz = false, bool flipVert = false);
+	static void update2DTexture(uint texture, ubyte * data, uint width, uint height, GLenum type = GL_RGBA);
 };
 
 #endif

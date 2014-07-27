@@ -8,7 +8,6 @@
 class SceneTwo : public Scene {
 public:
 	SceneTwo() : Scene("SceneTwo") {}
-	std::vector<Renderable *> allMyRenderables;
 
 	struct {
 		Renderable * renderable;
@@ -39,7 +38,6 @@ public:
 		teapot.noiseTexture = renderer->addTexture("./../textures/seamlessNoise.png");
 		
 		teapot.Teapot = renderer->addRenderable(teaPotGeo,deformWithTexture,teapot.noiseTexture);
-		allMyRenderables.push_back(teapot.Teapot);
 		teapot.Teapot->saveMatrixInfo("model2WorldTransform");
 		teapot.Teapot->saveTexture("myTexture");
 		teapot.Teapot->addUniformParameter("noiseMap",ParameterType::PT_TEXTURE,&teapot.noiseTexture);
@@ -67,8 +65,6 @@ public:
 			bears[i].renderable->saveTexture("myTexture");
 			bears[i].renderable->addUniformParameter("noiseMap",ParameterType::PT_TEXTURE,&bears[i].noiseTexture);
 			bears[i].renderable->addUniformParameter("discardThreshold",ParameterType::PT_FLOAT,&bears[i].discardThreshold);
-
-			allMyRenderables.push_back(bears[i].renderable);
 		}
 	}
 

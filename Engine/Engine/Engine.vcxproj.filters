@@ -21,14 +21,8 @@
     <ClInclude Include="Engine\Tools\QT\LinkedSlider.h" />
     <ClInclude Include="Engine\Tools\QT\DebugSlider.h" />
     <ClInclude Include="Engine\Tools\QT\ButtonInfo.h" />
-    <ClInclude Include="Engine\DebugTools\MenuControllers\BoolToggleController.h" />
-    <ClInclude Include="Engine\DebugTools\MenuControllers\SlideFloatController.h" />
-    <ClInclude Include="Engine\DebugTools\MenuControllers\SlideVectorController.h" />
-    <ClInclude Include="Engine\DebugTools\MenuControllers\WatchFloatController.h" />
-    <ClInclude Include="Engine\DebugTools\MenuControllers\WatchVectorController.h" />
     <ClInclude Include="Engine\DebugTools\DebugMenuManager.h" />
     <ClInclude Include="Engine\WidgetRenderer.h" />
-    <ClInclude Include="Engine\DebugTools\MenuControllers\CharPointerController.h" />
     <ClInclude Include="Engine\Tools\BinaryToShapeLoader.h" />
     <ClInclude Include="Engine\Tools\MatrixInfo.h" />
     <ClInclude Include="Engine\Scene.h" />

@@ -1,6 +1,174 @@
 #include "DebugMenuManager.h"
 #include <Engine\unsigned.h>
 
+#include <Qt/qcheckbox.h>
+#include <Qt/qlabel.h>
+#include <Engine\Tools\QT\LinkedSlider.h>
+#include <sstream>
+#include <iomanip>
+
+
+namespace DebugMenuControllers {
+	class BoolToggleController : public Controller {
+	public:
+		QCheckBox * checkBox;
+		bool * dataBound;
+
+		BoolToggleController() {
+			checkBox = new QCheckBox();
+		}
+
+		inline void init(const char * name, bool * toWatch) {
+			checkBox->setText(name);
+			dataBound = toWatch;
+			updateModeltoGUI();
+		}
+		inline void updateGUItoModel() {
+			*dataBound = checkBox->isChecked();
+		}
+		inline void updateModeltoGUI() {
+			checkBox->setChecked(*dataBound);
+		}
+		inline void update() {
+			updateGUItoModel();
+		}
+	};
+	class CharPointerController : public Controller {
+	public:
+		QLabel * label;
+		const char * title;
+		const char ** data;
+
+		CharPointerController() {
+			label = new QLabel();
+		}
+		inline void init(const char * name, const char ** toWatch) {
+			title = name;
+			data = toWatch;
+			update();
+		}
+		inline void update() {
+			std::stringstream ss;
+			ss << title << *data;
+			label->setText(QString( ss.str().c_str() ));
+		}
+	};
+	class SlideFloatController : public Controller {
+	public:
+		QLabel * label;
+		float * data;
+		LinkedSlider * slider;
+		bool doubleLink;
+
+		SlideFloatController() {
+			label = new QLabel();
+			slider = new LinkedSlider();
+		}
+		inline void init(const char * name, float * toWatch, float min, float max, bool doubleLink) {
+			this->doubleLink = doubleLink;
+			data = toWatch;
+			label->setText(name);
+			float floatData = *toWatch;
+			slider->setBoundValue(toWatch);
+			slider->setMin(min);
+			slider->setMax(max);
+			*toWatch = floatData;
+			updateModeltoGUI();
+
+		}
+		inline void updateGUItoModel() {
+			if(doubleLink) {
+				updateModeltoGUI();
+			}
+		}
+		inline void updateModeltoGUI() {
+			slider->setBoundValue(data);
+		}
+		inline void update() { updateGUItoModel(); }
+	};
+	class SlideVectorController : public Controller {
+	public:
+		QLabel * label;
+		LinkedSlider * xSlider;
+		LinkedSlider * ySlider;
+		LinkedSlider * zSlider;
+		glm::vec3 * data;
+		bool doubleLink;
+
+		SlideVectorController() {
+			label   = new QLabel();
+			xSlider = new LinkedSlider();
+			ySlider = new LinkedSlider();
+			zSlider = new LinkedSlider();
+		}
+
+		inline void init(const char * name, glm::vec3 * toWatch, float xMin, float xMax, float yMin, float yMax, float zMin, float zMax, bool doubleLink) {
+			data = toWatch;
+			this->doubleLink = doubleLink;
+			label->setText(name);
+			updateModeltoGUI();
+			glm::vec3 tempSave = *toWatch;
+			xSlider->setMin(xMin);	xSlider->setMinimumWidth(30);	xSlider->setMax(xMax);
+			ySlider->setMin(yMin);	ySlider->setMinimumWidth(30);	ySlider->setMax(yMax);
+			zSlider->setMin(zMin);	zSlider->setMinimumWidth(30);	zSlider->setMax(zMax);
+			*toWatch = tempSave;
+			updateModeltoGUI();
+		}
+		inline void updateGUItoModel() {
+			if(doubleLink) {
+				updateModeltoGUI();
+			}
+		}
+		inline void updateModeltoGUI() {
+			xSlider->setBoundValue(&data->x);
+			ySlider->setBoundValue(&data->y);
+			zSlider->setBoundValue(&data->z);
+		}
+		inline void update() { updateGUItoModel(); }
+	};
+	class WatchFloatController : public Controller {
+	public:
+		const char * title;
+		float * data;
+		QLabel * label;
+		WatchFloatController() {
+			label = new QLabel();
+		}
+		inline void init(const char * name, float * toWatch) {
+			title = name;
+			data = toWatch;
+			update();
+		}
+		inline void update() {
+			std::stringstream ss;
+			ss << title << ": " << std::fixed << std::setprecision( 6 ) << *data;
+			label->setText(QString( ss.str().c_str() ));
+		}
+	};
+	class WatchVectorController : public Controller {
+	public:
+		const char * title;
+		QLabel * label;
+		glm::vec3 * data;
+
+		WatchVectorController() {
+			label = new QLabel() ;
+		}
+
+		inline void init(const char * name, glm::vec3 * toWatch) {
+			title = name;
+			data = toWatch;
+			label->setText(name);
+			update();
+		}
+		inline void update() {
+			std::stringstream ss;
+			ss << std::fixed << std::setprecision( 6 ) << title << ": {" << data->x << ", " << data->y << ", " << data->z << " }";
+			label->setText(QString( ss.str().c_str() ));
+		}
+	};
+}
+
 
 DebugMenuManager::DebugMenuManager() {
 	defaultTabName = "default";
@@ -63,10 +231,10 @@ bool DebugMenuManager::setActiveTab(const char * tabname) {
 
 void DebugMenuManager::update() {
 	for (uint i = 0; i < floatWatchers.size(); i++) { floatWatchers[i]->update();          }
-	for (uint i = 0; i < floatSliders.size();  i++) { floatSliders[i]->updateGUItoModel(); }
-	for (uint i = 0; i < bools.size();         i++) { bools[i]->updateGUItoModel();        }
+	for (uint i = 0; i < floatSliders.size();  i++) { floatSliders[i]->update(); }
+	for (uint i = 0; i < bools.size();         i++) { bools[i]->update();        }
 	for (uint i = 0; i < vecWatchers.size();   i++) { vecWatchers[i]->update();            }
-	for (uint i = 0; i < vecSliders.size();    i++) { vecSliders[i]->updateGUItoModel();   }
+	for (uint i = 0; i < vecSliders.size();    i++) { vecSliders[i]->update();   }
 	for (uint i = 0; i < nameSliders.size();   i++) { nameSliders[i]->update();            }
 }
 

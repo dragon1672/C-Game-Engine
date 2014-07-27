@@ -10,7 +10,7 @@ Camera::Camera() {
 	pos = glm::vec3();
 	viewDir = glm::vec3(0,0,-1);
 	enabled = true;
-	strafeDir= glm::cross(viewDir, UP);
+	strafeDir= glm::normalize(glm::cross(viewDir, UP));
 	LARGEST_MOUSE_CHANGE = 50;
 	MOUSE_SPEED_SCALE = .5f;
 	MOVEMENT_SPEED = 30;
@@ -18,7 +18,7 @@ Camera::Camera() {
 Camera::Camera(bool enabled) {
 	pos = glm::vec3();
 	viewDir = glm::vec3(0,0,-1);
-	strafeDir= glm::cross(viewDir, UP);
+	strafeDir= glm::normalize(glm::cross(viewDir, UP));
 	LARGEST_MOUSE_CHANGE = 50;
 	MOUSE_SPEED_SCALE = .5f;
 	MOVEMENT_SPEED = 30;
@@ -31,7 +31,7 @@ void Camera::setPos(glm::vec3& position, glm::vec3& viewDirection) {
 	viewDir = lenSquared > 1 ?
 		lenSquared == 0 ? glm::vec3(0,0,-1) : glm::normalize(viewDirection)
 		: viewDirection;
-	strafeDir= glm::cross(viewDir, UP);
+	strafeDir= glm::normalize(glm::cross(viewDir, UP));
 }
 void Camera::lookAt(glm::vec3& position, glm::vec3& toLookAt) {
 	setPos(position,toLookAt - position);
@@ -59,7 +59,7 @@ void Camera::moveDown(float dt) {
 	pos -= dt * MOVEMENT_SPEED * UP;
 }
 void Camera::rotate(glm::vec2& change) {
-	strafeDir= glm::cross(viewDir, UP);
+	strafeDir= glm::normalize(glm::cross(viewDir, UP));
 	glm::mat4 mouseRot =  glm::rotate(-change.x, UP)
 						* glm::rotate(-change.y, strafeDir);
 	viewDir = glm::vec3(mouseRot * glm::vec4(viewDir,1));

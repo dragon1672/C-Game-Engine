@@ -234,19 +234,41 @@ GLuint ShaderProgram::load2DTexture(QString fileName, bool flipHorz, bool flipVe
 	}
 }
 GLuint ShaderProgram::load2DTexture(ubyte * data, uint width, uint height, GLenum fileType) {
-	//uint ID = numOfTextures++;
+	static uint ID = 0;
 	GLuint bufferID;
+
+	uint slot = ID++;
 
 	glEnable(GL_TEXTURE_2D);
 	glGenTextures(1,&bufferID);
-	glActiveTexture(GL_TEXTURE0+(bufferID-1));
+	glActiveTexture(GL_TEXTURE0+slot);
 	glBindTexture(GL_TEXTURE_2D, bufferID);
+
+	update2DTexture(slot,data,width,height,fileType);
+	
+	return slot;
+}
+
+void ShaderProgram::update2DTexture(uint texture, QImage image, GLenum type) {
+	update2DTexture(texture, image.bits(),image.width(),image.height(), type);
+}
+void ShaderProgram::update2DTexture(uint texture, QString fileName, bool flipHorz, bool flipVert) {
+	QString filePath = /**/QCoreApplication::applicationDirPath() + /**/fileName;
+	QFile tempFile(filePath);
+	if(tempFile.exists()) {
+		QImage data = getImageFromFile(filePath,flipHorz,flipVert);
+		update2DTexture(texture, data);
+	} else {
+		qDebug() << "Invalid file path " << formatFileName(filePath) << " Texture not loaded";
+		assert(false);
+	}
+}
+void ShaderProgram::update2DTexture(uint texture, ubyte * data, uint width, uint height, GLenum fileType) {
+	glEnable(GL_TEXTURE_2D);
+	glActiveTexture(GL_TEXTURE0+texture);
 	
 	//find a better way to do this
 	glTexImage2D(GL_TEXTURE_2D,0, fileType, width, height, 0, fileType == GL_DEPTH_COMPONENT32 ? GL_DEPTH_COMPONENT : fileType, GL_UNSIGNED_BYTE, data);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
-	return (bufferID-1);
-	//return ID;
 }
