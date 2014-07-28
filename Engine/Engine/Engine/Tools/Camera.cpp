@@ -36,8 +36,8 @@ void Camera::setPos(glm::vec3& position, glm::vec3& viewDirection) {
 void Camera::lookAt(glm::vec3& position, glm::vec3& toLookAt) {
 	setPos(position,toLookAt - position);
 }
-mat4x4 Camera::getWorld2View() {
-	return glm::lookAt(pos,pos + viewDir,UP);
+mat4x4& Camera::getWorld2View() {
+	return lookAtMat = glm::lookAt(pos,pos + viewDir,UP);
 }
 
 void Camera::moveForward(float dt) {
