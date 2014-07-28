@@ -132,12 +132,10 @@ void WidgetRenderer::paintGL() {
 	oldHeight = height();
 	glViewport(0,0,width(),height());
 
-	resetAllShaders_validPush();
-
 	for (uint i = 0; i < passInfos.size(); i++)
 	{
 		if(passInfos[i]->visable) {
-			passInfos[i]->activate();
+			resetAllShaders_validPush();
 			drawPass(*passInfos[i]);
 		}
 	}
@@ -148,6 +146,7 @@ void WidgetRenderer::paintGL() {
 
 void WidgetRenderer::drawPass(PassInfo& toDraw, bool clear) {
 	if(toDraw.myRenderables.size() == 0) return; // no need to do more work than we have to
+
 	toDraw.activate();
 	if(clear) {
 		float clearX = toDraw.clearColor.x;
