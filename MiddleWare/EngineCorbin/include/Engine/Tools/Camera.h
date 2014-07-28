@@ -16,6 +16,8 @@ class ENGINE_SHARED Camera {
 	glm::vec3 viewDir;
 	glm::vec3 strafeDir;
 
+	glm::mat4 lookAtMat;
+
 	glm::vec2 oldMousePos;
 public:
 	bool enabled;
@@ -41,5 +43,5 @@ public:
 	inline glm::vec3& getPos() { return pos; }
 	inline glm::vec3& getViewDir() { return viewDir; }
 
-	glm::mat4x4 getWorld2View();
+	glm::mat4x4& getWorld2View();
 };
