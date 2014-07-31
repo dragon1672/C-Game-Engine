@@ -112,6 +112,12 @@ void ShaderProgram::passUniform(uint location, ParameterType parameterType, cons
 		assert(false);
 	}
 }
+
+void ShaderProgram::saveUniform(const char * name, const float& value)     { saveUniform(name,ParameterType::PT_FLOAT,&value);      }
+void ShaderProgram::saveUniform(const char * name, const glm::vec3& value) { saveUniform(name,ParameterType::PT_VEC3,&value[0]);    }
+void ShaderProgram::saveUniform(const char * name, const glm::vec4& value) { saveUniform(name,ParameterType::PT_VEC4,&value[0]);    }
+void ShaderProgram::saveUniform(const char * name, const glm::mat3& value) { saveUniform(name,ParameterType::PT_MAT3,&value[0][0]); }
+void ShaderProgram::saveUniform(const char * name, const glm::mat4& value) { saveUniform(name,ParameterType::PT_MAT4,&value[0][0]); }
 void ShaderProgram::saveUniform(const char* name, ParameterType parameterType, const void * value) {
 	prams.push_back(new ShaderUniformPram());
 	prams[prams.size()-1]->init(this,name,parameterType,value);
@@ -298,20 +304,21 @@ void ShaderProgram::update2DTexture(uint texture, ubyte * data, uint width, uint
 GLuint ShaderProgram::loadCubeTexture(QString& posX,QString& negX,QString& posY,QString& negY,QString& posZ,QString& negZ) {
 	QString paths[] = { posX, negX, posY, negY, posZ, negZ };
 	const int pathSize = sizeof(paths) / sizeof(*paths);
-	ImageData imageData[pathSize];
+	QImage imageData[pathSize];
+	ImageData ret[pathSize];
 
 	for(int i=0;i<pathSize;i++) {
 		QString filePath = /**/QCoreApplication::applicationDirPath() + /**/paths[i];
 		QFile tempFile(filePath);
 		if(tempFile.exists()) {
-			QImage data = getImageFromFile(filePath);
-			imageData[i].init(data);
+			imageData[i] = getImageFromFile(filePath,false,true);
+			ret[i].init(imageData[i]);
 		} else {
 			qDebug() << "Invalid file path " << formatFileName(filePath) << " Texture not loaded";
 			assert(false);
 		}
 	}
-	return loadCubeTexture(imageData[0],imageData[1],imageData[2],imageData[3],imageData[4],imageData[5]);
+	return loadCubeTexture(ret[0],ret[1],ret[2],ret[3],ret[4],ret[5]);
 }
 GLuint ShaderProgram::loadCubeTexture(QString& directory,QString& posX,QString& negX,QString& posY,QString& negY,QString& posZ,QString& negZ) {
 	QString paths[] = { posX, negX, posY, negY, posZ, negZ };

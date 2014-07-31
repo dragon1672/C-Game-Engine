@@ -60,10 +60,12 @@ public:
 	void update2DTexture(uint texture, ubyte * data, uint width, uint height, GLenum type, GLenum type2);
 	void update2DTexture(uint texture, ShaderProgram::ImageData& imageData);
 
-	GLuint loadCubeTexture(QString& posX,QString& negX,QString& posY,QString& negY,QString& posZ,QString& negZ);
-	GLuint loadCubeTexture(QString directory,QString& posX,QString& negX,QString& posY,QString& negY,QString& posZ,QString& negZ);
-	GLuint loadCubeTexture(ShaderProgram::ImageData& posX,ShaderProgram::ImageData& negX,ShaderProgram::ImageData& posY,ShaderProgram::ImageData& negY,ShaderProgram::ImageData& posZ,ShaderProgram::ImageData& negZ);
-	GLuint loadCubeTexture(QImage& posX,QImage negX,QImage& posY,QImage negY,QImage& posZ,QImage negZ);
+	GLuint addCubeTexture(QString& posX,QString& negX,QString& posY,QString& negY,QString& posZ,QString& negZ);
+	GLuint addCubeTexture(const char * posX,const char * negX,const char * posY,const char * negY,const char * posZ,const char * negZ);
+	GLuint addCubeTexture(QString& directory,QString& posX,QString& negX,QString& posY,QString& negY,QString& posZ,QString& negZ);
+	GLuint addCubeTexture(const char * directory,const char * posX,const char * negX,const char * posY,const char * negY,const char * posZ,const char * negZ);
+	GLuint addCubeTexture(ShaderProgram::ImageData& posX,ShaderProgram::ImageData& negX,ShaderProgram::ImageData& posY,ShaderProgram::ImageData& negY,ShaderProgram::ImageData& posZ,ShaderProgram::ImageData& negZ);
+	GLuint addCubeTexture(QImage& posX,QImage negX,QImage& posY,QImage negY,QImage& posZ,QImage negZ);
 
 	void draw(GeometryInfo& toDraw);
 	void draw(Renderable& toDraw);

@@ -20,6 +20,9 @@ public:
 
 	MatrixInfo() : scale(1,1,1) {}
 
+	//sets the x y and z to this scale
+	void setScale(float xyz);
+
 	glm::mat4& getTransform();// save this on in the Shader
 
 	//gen short for generate, also return address that can ben sent to shader

@@ -11,6 +11,7 @@
 #include "ExportHeader.h"
 #include <Engine\Renderer\Shader\ShaderUniformPram.h>
 #include <Engine\unsigned.h>
+#include <glm\glm.hpp>
 
 class ENGINE_SHARED ShaderProgram {
 private:
@@ -52,6 +53,11 @@ public:
 	void passUniform(uint location, ParameterType parameterType, const void * value);
 
 	//use these to add shader wide uniforms
+	void saveUniform(const char * name, const float& value);
+	void saveUniform(const char * name, const glm::vec3& value);
+	void saveUniform(const char * name, const glm::vec4& value);
+	void saveUniform(const char * name, const glm::mat3& value);
+	void saveUniform(const char * name, const glm::mat4& value);
 	void saveUniform(const char* name, ParameterType parameterType, const void * value);
 
 	//used in draw calls

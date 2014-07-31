@@ -122,16 +122,22 @@ void            Renderer::update2DTexture(uint texture, ShaderProgram::ImageData
 	ShaderProgram::update2DTexture(texture, imageData);
 }
 
-GLuint          Renderer::loadCubeTexture(QString& posX,QString& negX,QString& posY,QString& negY,QString& posZ,QString& negZ) {
+GLuint          Renderer::addCubeTexture(QString& posX,QString& negX,QString& posY,QString& negY,QString& posZ,QString& negZ) {
 	return ShaderProgram::loadCubeTexture(posX,negX,posY,negY,posZ,negZ);
 }
-GLuint          Renderer::loadCubeTexture(QString directory,QString& posX,QString& negX,QString& posY,QString& negY,QString& posZ,QString& negZ) {
+GLuint          Renderer::addCubeTexture(QString& directory,QString& posX,QString& negX,QString& posY,QString& negY,QString& posZ,QString& negZ) {
 	return ShaderProgram::loadCubeTexture(directory,posX,negX,posY,negY,posZ,negZ);
 }
-GLuint          Renderer::loadCubeTexture(ShaderProgram::ImageData& posX,ShaderProgram::ImageData& negX,ShaderProgram::ImageData& posY,ShaderProgram::ImageData& negY,ShaderProgram::ImageData& posZ,ShaderProgram::ImageData& negZ) {
+GLuint          Renderer::addCubeTexture(const char * posX,const char * negX,const char * posY,const char * negY,const char * posZ,const char * negZ) {
+	return ShaderProgram::loadCubeTexture(QString(posX),QString(negX),QString(posY),QString(negY),QString(posZ),QString(negZ));
+}
+GLuint          Renderer::addCubeTexture(const char * directory,const char * posX,const char * negX,const char * posY,const char * negY,const char * posZ,const char * negZ) {
+	return ShaderProgram::loadCubeTexture(QString(directory),QString(posX),QString(negX),QString(posY),QString(negY),QString(posZ),QString(negZ));
+}
+GLuint          Renderer::addCubeTexture(ShaderProgram::ImageData& posX,ShaderProgram::ImageData& negX,ShaderProgram::ImageData& posY,ShaderProgram::ImageData& negY,ShaderProgram::ImageData& posZ,ShaderProgram::ImageData& negZ) {
 	return ShaderProgram::loadCubeTexture(posX,negX,posY,negY,posZ,negZ);
 }
-GLuint          Renderer::loadCubeTexture(QImage& posX,QImage negX,QImage& posY,QImage negY,QImage& posZ,QImage negZ) {
+GLuint          Renderer::addCubeTexture(QImage& posX,QImage negX,QImage& posY,QImage negY,QImage& posZ,QImage negZ) {
 	return ShaderProgram::loadCubeTexture(posX,negX,posY,negY,posZ,negZ);
 }
 

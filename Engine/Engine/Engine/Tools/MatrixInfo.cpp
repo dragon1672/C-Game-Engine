@@ -20,3 +20,8 @@ glm::mat4&  MatrixInfo::genCompleteTransform() {
 		* genScaleMat()
 		* postTransform;
 }
+
+
+void MatrixInfo::setScale(float xyz) {
+	scale = glm::vec3(xyz,xyz,xyz);
+}
