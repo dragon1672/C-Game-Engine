@@ -122,6 +122,9 @@ void WidgetRenderer::resetDefaultPassInfoToScreen() {
 void WidgetRenderer::saveViewTransform(ShaderProgram * shader, const char * name) {
 	shader->saveUniform(name,ParameterType::PT_MAT4,&viewTransform[0][0]);
 }
+void WidgetRenderer::savePerspectiveMat(ShaderProgram * shader, const char * name) {
+	shader->saveUniform(name,ParameterType::PT_MAT4,&perspectiveMat[0][0]);
+}
 
 void WidgetRenderer::paintGL() {
 	if((oldWidth != width() || oldHeight != height())
@@ -157,8 +160,8 @@ void WidgetRenderer::drawPass(PassInfo& toDraw, bool clear) {
 	}
 	
 	const float aspectRatio = (float)width()/(float)height();
-	viewTransform = glm::mat4();
-	viewTransform *= glm::perspective(60.0f,aspectRatio,nearPlane,farPlane);
+	perspectiveMat = glm::perspective(60.0f,aspectRatio,nearPlane,farPlane);
+	viewTransform = perspectiveMat;
 	viewTransform *= toDraw.cam.enabled ? toDraw.cam.getWorld2View() : myCam.getWorld2View();
 	viewTransform *= additionalViewTransform;
 	

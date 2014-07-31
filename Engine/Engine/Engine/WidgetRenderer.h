@@ -80,6 +80,7 @@ private:
 	Q_OBJECT;
 
 	glm::mat4 viewTransform;
+	glm::mat4 perspectiveMat;
 	QTimer updateTimer;
 	Timer gameTimer;
 	float dt;
@@ -109,6 +110,7 @@ public:
 
 	// call when ever creating a new matrix
 	void saveViewTransform(ShaderProgram * shader, const char * name);
+	void savePerspectiveMat(ShaderProgram * shader, const char * name);
 	
 	// any DT greater than this will be truncated to this (default .02)
 	void setMaxDT(float max);

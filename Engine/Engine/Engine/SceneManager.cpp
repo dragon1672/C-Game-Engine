@@ -37,6 +37,7 @@ void SceneManager::nextFrame(float dt) {
 	}
 	activeScene->myDefaultPass->cam = myCam;
 	activeScene->update(dt);
+	myCam = activeScene->myDefaultPass->cam;
 }
 
 void SceneManager::windowResized(int oldWidth,int oldHeight) {
