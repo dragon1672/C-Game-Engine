@@ -8,5 +8,6 @@
     <ClInclude Include="testing.h" />
     <ClInclude Include="SceneOne.h" />
     <ClInclude Include="SceneTwo.h" />
+    <ClInclude Include="SceneThree.h" />
   </ItemGroup>
 </Project>

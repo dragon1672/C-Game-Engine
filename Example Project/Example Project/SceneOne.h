@@ -12,12 +12,6 @@ public:
 		meRenderable = renderer->addRenderable(tempGeo,renderer->mainShader);
 		meRenderable->saveMatrixInfo("model2WorldTransform");
 	}
-	void enable() {
-		meRenderable->visible = true;
-	}
-	void disable() {
-		meRenderable->visible = false;
-	}
 	void update(float dt) {
 		meRenderable->transformData.rotation.x += 30 * dt;
 	}

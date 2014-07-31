@@ -84,6 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceneOne.h" />
+    <ClInclude Include="SceneThree.h" />
     <ClInclude Include="SceneTwo.h" />
     <ClInclude Include="testing.h" />
   </ItemGroup>
