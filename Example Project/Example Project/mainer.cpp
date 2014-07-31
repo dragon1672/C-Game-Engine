@@ -5,7 +5,7 @@
 #include "SceneOne.h"
 #include "SceneTwo.h"
 
-#include "Shadows.h"
+#include "SceneThree.h"
 
 
 int main(int argc, char * argv[]) {
@@ -17,7 +17,7 @@ int main(int argc, char * argv[]) {
 
 	SceneOne tab1;	widg.addScene(&tab1);
 	SceneTwo tab2;	widg.addScene(&tab2);
-	Shadows tab3;	widg.addScene(&tab3);
+	SceneThree tab3;	widg.addScene(&tab3);
 
 	GUI.addScene(&widg);
 	GUI.show();
