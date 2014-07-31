@@ -16,6 +16,7 @@ public:
 
 	//will init output to textures and set color/depth texture
 	void initTextures(int width, int height); // will generate a frame buffer for you to use
+	void updateTextureSize(int width,int height);
 
 	//renderable managment
 	bool contains(Renderable * toCheck);

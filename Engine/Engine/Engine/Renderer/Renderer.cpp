@@ -84,21 +84,57 @@ ShaderProgram * Renderer::getShader(uint index) { return allShaderProgs[index]; 
 Renderable    * Renderer::getRenderable(uint index) { return myRenderables[index]; }
 GeometryInfo  * Renderer::getGeometry(uint index) { return geoInfo[index];         }
 
-uint            Renderer::addTexture(const char* fileName, bool flipHorz, bool flipVert) {
-	return ShaderProgram::load2DTexture(fileName, flipHorz, flipVert);
+GLuint          Renderer::addTexture(QImage image, GLenum type) {
+	return ShaderProgram::load2DTexture(image,type);
 }
-uint            Renderer::addTexture(ubyte * textureData, uint width, uint height, GLenum type) {
-	return ShaderProgram::load2DTexture(textureData, width, height, type);
+GLuint          Renderer::addTexture(QImage image, GLenum type, GLenum type2) {
+	return ShaderProgram::load2DTexture(image,type,type2);
 }
-void            Renderer::update2DTexture(uint texture, QImage image, GLenum type) {
+GLuint          Renderer::addTexture(const char * filePath, bool flipHorz, bool flipVert) {
+	return ShaderProgram::load2DTexture(QString(filePath),flipHorz,flipVert);
+}
+GLuint          Renderer::addTexture(ubyte * data, uint width, uint height, GLenum type) {
+	return ShaderProgram::load2DTexture(data,width,height,type);
+}
+GLuint          Renderer::addTexture(ubyte * data, uint width, uint height, GLenum type, GLenum type2) {
+	return ShaderProgram::load2DTexture(data,width,height,type,type2);
+}
+GLuint          Renderer::addTexture(ShaderProgram::ImageData& imageData) {
+	return ShaderProgram::load2DTexture(imageData);
+}
+
+void            Renderer::update2DTexture(uint texture, QImage& image, GLenum type) {
 	ShaderProgram::update2DTexture(texture,image,type);
 }
-void            Renderer::update2DTexture(uint texture, QString filePath, bool flipHorz, bool flipVert) {
+void            Renderer::update2DTexture(uint texture, QImage& image, GLenum type, GLenum type2) {
+	ShaderProgram::update2DTexture(texture,image,type,type2);
+}
+void            Renderer::update2DTexture(uint texture, QString& filePath, bool flipHorz, bool flipVert) {
 	ShaderProgram::update2DTexture(texture,filePath,flipHorz,flipVert);
 }
 void            Renderer::update2DTexture(uint texture, ubyte * data, uint width, uint height, GLenum type) {
 	ShaderProgram::update2DTexture(texture,data,width,height,type);
 }
+void            Renderer::update2DTexture(uint texture, ubyte * data, uint width, uint height, GLenum type, GLenum type2) {
+	ShaderProgram::update2DTexture(texture,data,width,height,type,type2);
+}
+void            Renderer::update2DTexture(uint texture, ShaderProgram::ImageData& imageData) {
+	ShaderProgram::update2DTexture(texture, imageData);
+}
+
+GLuint          Renderer::loadCubeTexture(QString& posX,QString& negX,QString& posY,QString& negY,QString& posZ,QString& negZ) {
+	return ShaderProgram::loadCubeTexture(posX,negX,posY,negY,posZ,negZ);
+}
+GLuint          Renderer::loadCubeTexture(QString directory,QString& posX,QString& negX,QString& posY,QString& negY,QString& posZ,QString& negZ) {
+	return ShaderProgram::loadCubeTexture(directory,posX,negX,posY,negY,posZ,negZ);
+}
+GLuint          Renderer::loadCubeTexture(ShaderProgram::ImageData& posX,ShaderProgram::ImageData& negX,ShaderProgram::ImageData& posY,ShaderProgram::ImageData& negY,ShaderProgram::ImageData& posZ,ShaderProgram::ImageData& negZ) {
+	return ShaderProgram::loadCubeTexture(posX,negX,posY,negY,posZ,negZ);
+}
+GLuint          Renderer::loadCubeTexture(QImage& posX,QImage negX,QImage& posY,QImage negY,QImage& posZ,QImage negZ) {
+	return ShaderProgram::loadCubeTexture(posX,negX,posY,negY,posZ,negZ);
+}
+
 void            Renderer::draw(Renderable& toDraw) {
 	if(toDraw.visible) {
 		toDraw.transformData.updateMatrix();

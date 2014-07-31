@@ -46,12 +46,24 @@ public:
 	Renderable* getRenderable(uint index);
 	GeometryInfo* getGeometry(uint index);
 
-	uint addTexture(const char* fileName, bool flipHorz = false, bool flipVert = false);
-	uint addTexture(ubyte * textureData, uint width, uint height, GLenum type = GL_RGBA);
+	GLuint addTexture(QImage image, GLenum type = GL_RGBA);
+	GLuint addTexture(QImage image, GLenum type, GLenum type2);
+	GLuint addTexture(const char * filePath, bool flipHorz = false, bool flipVert = false);
+	GLuint addTexture(ubyte * data, uint width, uint height, GLenum type = GL_RGBA);
+	GLuint addTexture(ubyte * data, uint width, uint height, GLenum type, GLenum type2);
+	GLuint addTexture(ShaderProgram::ImageData& imageData);
 
-	void update2DTexture(uint texture, QImage image, GLenum type = GL_RGBA);
-	void update2DTexture(uint texture, QString filePath, bool flipHorz = false, bool flipVert = false);
+	void update2DTexture(uint texture, QImage& image, GLenum type = GL_RGBA);
+	void update2DTexture(uint texture, QImage& image, GLenum type, GLenum type2);
+	void update2DTexture(uint texture, QString& filePath, bool flipHorz = false, bool flipVert = false);
 	void update2DTexture(uint texture, ubyte * data, uint width, uint height, GLenum type = GL_RGBA);
+	void update2DTexture(uint texture, ubyte * data, uint width, uint height, GLenum type, GLenum type2);
+	void update2DTexture(uint texture, ShaderProgram::ImageData& imageData);
+
+	GLuint loadCubeTexture(QString& posX,QString& negX,QString& posY,QString& negY,QString& posZ,QString& negZ);
+	GLuint loadCubeTexture(QString directory,QString& posX,QString& negX,QString& posY,QString& negY,QString& posZ,QString& negZ);
+	GLuint loadCubeTexture(ShaderProgram::ImageData& posX,ShaderProgram::ImageData& negX,ShaderProgram::ImageData& posY,ShaderProgram::ImageData& negY,ShaderProgram::ImageData& posZ,ShaderProgram::ImageData& negZ);
+	GLuint loadCubeTexture(QImage& posX,QImage negX,QImage& posY,QImage negY,QImage& posZ,QImage negZ);
 
 	void draw(GeometryInfo& toDraw);
 	void draw(Renderable& toDraw);

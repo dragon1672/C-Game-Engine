@@ -292,7 +292,6 @@ namespace DebugMenuControllers {
 		}
 		inline void update() { updateGUItoModel(); }
 	};
-	//new
 	class WatchMat4Controller : public Controller {
 	public:
 		static const int size = 4;
