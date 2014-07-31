@@ -103,7 +103,10 @@ void ShaderProgram::passUniform(uint location, ParameterType parameterType, cons
 		glUniformMatrix3fv(location,1,false,(float*)value);
 	} else if(parameterType == ParameterType::PT_MAT4) {
 		glUniformMatrix4fv(location,1,false,(float*)value);
-	} else if(parameterType == ParameterType::PT_TEXTURE || ParameterType::PT_BOOLEAN || ParameterType::PT_INT) {
+	} else if(ParameterType::PT_BOOLEAN) {
+		bool decodedValue = *(bool*)value;
+		glUniform1i(location,decodedValue);
+	} else if(parameterType == ParameterType::PT_TEXTURE || ParameterType::PT_INT) {
 		int decodedValue = *(int*)value;
 		glUniform1i(location,decodedValue);
 	} else {
@@ -340,13 +343,13 @@ GLuint ShaderProgram::loadCubeTexture(ImageData& posX,ImageData& negX,ImageData&
 	glBindTexture(GL_TEXTURE_CUBE_MAP, bufferID);
 
 	//copy paste time :D
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+	//glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	//glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	//glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_BASE_LEVEL, 0); 
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAX_LEVEL, 0); 
+	//glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_BASE_LEVEL, 0); 
+	//glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAX_LEVEL, 0); 
 
 	ImageData images[] = { posX, negX, posY, negY, posZ, negZ };
 	const int pathSize = sizeof(images) / sizeof(*images);

@@ -7,9 +7,6 @@
 #include <Windows.h>
 #include <ExportHeader.h>
 
-template struct ENGINE_SHARED glm::detail::tvec2<float>;
-template struct ENGINE_SHARED glm::detail::tvec3<float>;
-
 class ENGINE_SHARED Camera {
 	static glm::vec3 UP;
 	glm::vec3 pos;
