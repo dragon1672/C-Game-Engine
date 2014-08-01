@@ -53,13 +53,6 @@ public:
 	GLuint addTexture(ubyte * data, uint width, uint height, GLenum type, GLenum type2);
 	GLuint addTexture(ShaderProgram::ImageData& imageData);
 
-	void update2DTexture(uint texture, QImage& image, GLenum type = GL_RGBA);
-	void update2DTexture(uint texture, QImage& image, GLenum type, GLenum type2);
-	void update2DTexture(uint texture, QString& filePath, bool flipHorz = false, bool flipVert = false);
-	void update2DTexture(uint texture, ubyte * data, uint width, uint height, GLenum type = GL_RGBA);
-	void update2DTexture(uint texture, ubyte * data, uint width, uint height, GLenum type, GLenum type2);
-	void update2DTexture(uint texture, ShaderProgram::ImageData& imageData);
-
 	GLuint addCubeTexture(QString& posX,QString& negX,QString& posY,QString& negY,QString& posZ,QString& negZ);
 	GLuint addCubeTexture(const char * posX,const char * negX,const char * posY,const char * negY,const char * posZ,const char * negZ);
 	GLuint addCubeTexture(QString& directory,QString& posX,QString& negX,QString& posY,QString& negY,QString& posZ,QString& negZ);

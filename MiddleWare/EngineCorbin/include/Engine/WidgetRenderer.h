@@ -10,46 +10,82 @@
 		 +-------------------------------------------------------+
 //*/
 
-/* default vert shader  Part of Set { A,B }
+// default vert shader Part of Set { A,B,C,D }
+// uniforms: (mat4)model2WorldTransform
+/* code
 #version 400
 
 in layout(location=0) vec3 pos;
 in layout(location=1) vec3 col;
 in layout(location=3) vec2 uv;
 
-out vec2 outUv;
-out vec3 outCol;
+out vec2 fragUv;
+out vec3 fragCol;
+out vec3 fragPos;
+out vec3 fragWorldPos;
 
 //mats
 uniform mat4x4 viewTransform;
 uniform mat4x4 model2WorldTransform;
 
 void main() {
-	vec4 transformedPos =  model2WorldTransform * vec4(pos,1);
-	gl_Position =  viewTransform * transformedPos;
-	outUv = uv;
-	outCol = col;
+	vec4 transformedPos = model2WorldTransform * vec4(pos,1);
+	gl_Position = viewTransform * transformedPos;
+	fragUv = uv;
+	fragCol = col;
+	fragPos = pos;
+	fragWorldPos = vec3(transformedPos);
 }
 //*/
 
-/* default frag shader in set { A }
+// default frag shader Part of Set { A }
+// uniforms: NONE
+/* code
 #version 400
 
-in vec3 outCol;
+in vec3 fragCol;
 
 void main() {
-	gl_FragColor = vec4(outCol,1);
+	gl_FragColor = vec4(fragCol,1);
 }
 //*/
 
-/* default frag shader with texture in set { B }
+// default frag shader with texture Part of Set { B }
+// uniforms: (texture2D)myTexture
+/*
 #version 400
 
-in vec2 outUv;
+in vec2 fragUv;
 uniform sampler2D myTexture;
-	
+
 void main() {
-	gl_FragColor = texture(myTexture,outUv);
+	gl_FragColor = texture(myTexture,fragUv);
+}
+//*/
+
+// default frag shader Cube map withModeldPos Part of Set { D }
+// uniforms: (textureCube)worldMap
+/*
+#version 400
+
+in vec3 fragPos;
+uniform samplerCube worldMap;
+
+void main() {
+	gl_FragColor = texture(worldMap,fragPos);
+}
+//*/
+
+// default frag shader Cube map withWorldPos Part of Set { C }
+// uniforms: (textureCube)worldMap
+/*
+#version 400
+
+in vec3 fragWorldPos;
+uniform samplerCube worldMap;
+
+void main() {
+	gl_FragColor = texture(worldMap,fragWorldPos);
 }
 //*/
 
@@ -99,8 +135,10 @@ protected:
 public:
 
 	struct {
-		ShaderProgram * passThroughColor; // see code set A
-		ShaderProgram * passThroughTexture; // see code set B
+		ShaderProgram * passThroughColor;    // see code set A
+		ShaderProgram * passThroughTexture;  // see code set B
+		ShaderProgram * passThroughCubeMap;  // see code set C
+		ShaderProgram * passThroughWCubeMap; // see code set D
 	} defaultShaders;
 
 
@@ -144,6 +182,7 @@ private slots:
 public:
 	virtual void mouseMoveEvent(QMouseEvent* e); // enables camera drag movement
 	virtual void keyPressEvent(QKeyEvent* e) {}
+	void wheelEvent(QWheelEvent* e);
 	void updateCam(QKeyEvent* key = nullptr, QMouseEvent* mouse = nullptr);
 	void setDebugMenu(DebugMenuManager * menu);
 };

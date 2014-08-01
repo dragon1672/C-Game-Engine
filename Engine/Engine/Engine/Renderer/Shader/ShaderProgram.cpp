@@ -258,45 +258,39 @@ GLuint ShaderProgram::load2DTexture(ImageData& imageData) {
 GLuint ShaderProgram::load2DTexture(ubyte * data, uint width, uint height, GLenum fileType, GLenum fileType2) {
 	static uint ID = 0;
 	GLuint bufferID;
-
 	uint slot = ID++;
-
-	glEnable(GL_TEXTURE_2D);
 	glGenTextures(1,&bufferID);
-	glActiveTexture(GL_TEXTURE0+slot);
-	glBindTexture(GL_TEXTURE_2D, bufferID);
-
-	update2DTexture(slot,data,width,height,fileType,fileType2);
-	
+	update2DTexture(bufferID,slot,data,width,height,fileType,fileType2);
 	return slot;
 }
 
-void ShaderProgram::update2DTexture(uint texture, QImage& image, GLenum type, GLenum type2) {
-	update2DTexture(texture, image.bits(),image.width(),image.height(), type, type2);
+void ShaderProgram::update2DTexture(uint textureID, uint slot, QImage& image, GLenum type, GLenum type2) {
+	update2DTexture(textureID,slot, image.bits(),image.width(),image.height(), type, type2);
 }
-void ShaderProgram::update2DTexture(uint texture, QImage& image, GLenum type) {
-	update2DTexture(texture, image.bits(),image.width(),image.height(), type, type);
+void ShaderProgram::update2DTexture(uint textureID, uint slot, QImage& image, GLenum type) {
+	update2DTexture(textureID,slot, image.bits(),image.width(),image.height(), type, type);
 }
-void ShaderProgram::update2DTexture(uint texture, QString& fileName, bool flipHorz, bool flipVert) {
+void ShaderProgram::update2DTexture(uint textureID, uint slot, QString& fileName, bool flipHorz, bool flipVert) {
 	QString filePath = /**/QCoreApplication::applicationDirPath() + /**/fileName;
 	QFile tempFile(filePath);
 	if(tempFile.exists()) {
 		QImage data = getImageFromFile(filePath,flipHorz,flipVert);
-		update2DTexture(texture, data);
+		update2DTexture(textureID,slot, data);
 	} else {
 		qDebug() << "Invalid file path " << formatFileName(filePath) << " Texture not loaded";
 		assert(false);
 	}
 }
-void ShaderProgram::update2DTexture(uint texture, ubyte * data, uint width, uint height, GLenum fileType) {
-	update2DTexture(texture,data,width,height,fileType,fileType);
+void ShaderProgram::update2DTexture(uint textureID, uint slot, ubyte * data, uint width, uint height, GLenum fileType) {
+	update2DTexture(textureID,slot,data,width,height,fileType,fileType);
 }
-void ShaderProgram::update2DTexture(uint texture, ImageData& imageData) {
-	update2DTexture(texture, imageData.data,imageData.width,imageData.height,imageData.type, imageData.type2 == -1 ? imageData.type : imageData.type2);
+void ShaderProgram::update2DTexture(uint textureID, uint slot, ImageData& imageData) {
+	update2DTexture(textureID,slot, imageData.data,imageData.width,imageData.height,imageData.type, imageData.type2 == -1 ? imageData.type : imageData.type2);
 }
-void ShaderProgram::update2DTexture(uint texture, ubyte * data, uint width, uint height, GLenum fileType, GLenum fileType2) {
+void ShaderProgram::update2DTexture(uint textureID, uint slot, ubyte * data, uint width, uint height, GLenum fileType, GLenum fileType2) {
 	glEnable(GL_TEXTURE_2D);
-	glActiveTexture(GL_TEXTURE0+texture);
+	glActiveTexture(GL_TEXTURE0+slot);
+	glBindTexture(GL_TEXTURE_2D, textureID);
 	
 	//find a better way to do this
 	glTexImage2D(GL_TEXTURE_2D,0, fileType, width, height, 0, fileType2, GL_UNSIGNED_BYTE, data);

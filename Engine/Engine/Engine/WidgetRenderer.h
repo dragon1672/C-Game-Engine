@@ -182,6 +182,7 @@ private slots:
 public:
 	virtual void mouseMoveEvent(QMouseEvent* e); // enables camera drag movement
 	virtual void keyPressEvent(QKeyEvent* e) {}
+	void wheelEvent(QWheelEvent* e);
 	void updateCam(QKeyEvent* key = nullptr, QMouseEvent* mouse = nullptr);
 	void setDebugMenu(DebugMenuManager * menu);
 };

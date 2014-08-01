@@ -103,25 +103,6 @@ GLuint          Renderer::addTexture(ShaderProgram::ImageData& imageData) {
 	return ShaderProgram::load2DTexture(imageData);
 }
 
-void            Renderer::update2DTexture(uint texture, QImage& image, GLenum type) {
-	ShaderProgram::update2DTexture(texture,image,type);
-}
-void            Renderer::update2DTexture(uint texture, QImage& image, GLenum type, GLenum type2) {
-	ShaderProgram::update2DTexture(texture,image,type,type2);
-}
-void            Renderer::update2DTexture(uint texture, QString& filePath, bool flipHorz, bool flipVert) {
-	ShaderProgram::update2DTexture(texture,filePath,flipHorz,flipVert);
-}
-void            Renderer::update2DTexture(uint texture, ubyte * data, uint width, uint height, GLenum type) {
-	ShaderProgram::update2DTexture(texture,data,width,height,type);
-}
-void            Renderer::update2DTexture(uint texture, ubyte * data, uint width, uint height, GLenum type, GLenum type2) {
-	ShaderProgram::update2DTexture(texture,data,width,height,type,type2);
-}
-void            Renderer::update2DTexture(uint texture, ShaderProgram::ImageData& imageData) {
-	ShaderProgram::update2DTexture(texture, imageData);
-}
-
 GLuint          Renderer::addCubeTexture(QString& posX,QString& negX,QString& posY,QString& negY,QString& posZ,QString& negZ) {
 	return ShaderProgram::loadCubeTexture(posX,negX,posY,negY,posZ,negZ);
 }
