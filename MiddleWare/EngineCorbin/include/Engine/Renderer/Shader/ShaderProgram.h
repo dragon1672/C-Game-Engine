@@ -53,6 +53,7 @@ public:
 	void passUniform(uint location, ParameterType parameterType, const void * value);
 
 	//use these to add shader wide uniforms
+	void saveUniform(const char * name, const bool& value);
 	void saveUniform(const char * name, const float& value);
 	void saveUniform(const char * name, const glm::vec3& value);
 	void saveUniform(const char * name, const glm::vec4& value);

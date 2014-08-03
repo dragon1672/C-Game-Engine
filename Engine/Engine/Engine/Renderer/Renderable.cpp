@@ -14,7 +14,9 @@ Renderable::~Renderable() {
 void Renderable::reset() {
 	CLEAR_VECTOR(uniformParameters);
 }
-
+void Renderable::addUniformParameter(const char * name, const bool& value) {
+	addUniformParameter(name,ParameterType::PT_BOOLEAN,&value);
+}
 void Renderable::addUniformParameter(const char * name, const float& value) {
 	addUniformParameter(name,ParameterType::PT_FLOAT,&value);
 }

@@ -16,6 +16,9 @@ public:
 	std::vector<uint> textures;
 	int currentTextureID;
 
+	bool shouldRefract;
+	float refractFloat;
+
 	Renderable * world;
 	Renderable * meObject;
 	glm::vec3 angleVel;
@@ -24,6 +27,8 @@ public:
 		myCam.lookAt(glm::vec3(0,5,5),glm::vec3());
 		geoID = 0;
 		currentTextureID = 0;
+		refractFloat = 1;
+		shouldRefract = false;
 
 		angleVel = Random::randomFloat(180,360) * Random::glmRand::randomUnitVector();
 
@@ -32,6 +37,8 @@ public:
 		ShaderProgram * cubeMapShader = renderer->addShader("./../shaders/CubeMap_V.glsl","./../shaders/CubeMap_F.glsl");
 		renderer->saveViewTransform(cubeMapShader,"viewTransform");
 		cubeMapShader->saveUniform("camPos",myCam.getPos());
+		cubeMapShader->saveUniform("refractFloat",refractFloat);
+		cubeMapShader->saveUniform("shouldRefract",shouldRefract);
 
 		//setup renderables
 		auto worldGeo = renderer->addGeometry(Neumont::ShapeGenerator::makeSphere(20));
@@ -39,7 +46,6 @@ public:
 		world->transformData.setScale(30);
 		world->saveMatrixInfo("model2WorldTransform");
 		world->addUniformParameter("worldMap",ParameterType::PT_TEXTURE,&worldTexture);
-
 
 		auto meObjectGeo = renderer->addGeometry(Neumont::ShapeGenerator::makeSphere(20));
 		meObject = renderer->addRenderable(meObjectGeo,cubeMapShader);
@@ -68,6 +74,8 @@ public:
 		menu->edit("angleSpeed",angleVel,-360,360);
 		menu->edit("World", currentTextureID, 0,textures.size()-1);
 		menu->edit("Geo", geoID, 0,geos.size()-1);
+		menu->edit("refractFloat",refractFloat,0,2);
+		menu->edit("shouldRefract",shouldRefract);
 		
 	}
 	void update(float dt) {

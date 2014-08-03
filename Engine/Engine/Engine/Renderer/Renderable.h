@@ -30,6 +30,7 @@ public:
 	void reset();
 
 	//convenience overloads
+	void addUniformParameter(const char * name, const bool& value);
 	void addUniformParameter(const char * name, const float& value);
 	void addUniformParameter(const char * name, const glm::vec3& value);
 	void addUniformParameter(const char * name, const glm::vec4& value);

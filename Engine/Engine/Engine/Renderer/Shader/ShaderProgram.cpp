@@ -116,6 +116,7 @@ void ShaderProgram::passUniform(uint location, ParameterType parameterType, cons
 	}
 }
 
+void ShaderProgram::saveUniform(const char * name, const bool& value)      { saveUniform(name,ParameterType::PT_BOOLEAN,&value);    }
 void ShaderProgram::saveUniform(const char * name, const float& value)     { saveUniform(name,ParameterType::PT_FLOAT,&value);      }
 void ShaderProgram::saveUniform(const char * name, const glm::vec3& value) { saveUniform(name,ParameterType::PT_VEC3,&value[0]);    }
 void ShaderProgram::saveUniform(const char * name, const glm::vec4& value) { saveUniform(name,ParameterType::PT_VEC4,&value[0]);    }
