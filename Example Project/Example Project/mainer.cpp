@@ -6,6 +6,7 @@
 #include "SceneTwo.h"
 
 #include "SceneThree.h"
+#include "CoolScene.h"
 
 
 int main(int argc, char * argv[]) {
@@ -15,9 +16,10 @@ int main(int argc, char * argv[]) {
 	//Testing widg;
 	SceneManager widg;
 
-	SceneOne tab1;	widg.addScene(&tab1);
-	SceneTwo tab2;	widg.addScene(&tab2);
-	SceneThree tab3;	widg.addScene(&tab3);
+	//SceneOne tab1;	widg.addScene(&tab1);
+	//SceneTwo tab2;	widg.addScene(&tab2);
+	//SceneThree tab3;	widg.addScene(&tab3);
+	CoolScene tab4;	widg.addScene(&tab4);
 
 	GUI.addScene(&widg);
 	GUI.show();

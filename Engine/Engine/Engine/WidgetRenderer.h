@@ -115,6 +115,7 @@ private:
 
 	Q_OBJECT;
 
+public:
 	glm::mat4 viewTransform;
 	glm::mat4 perspectiveMat;
 	QTimer updateTimer;

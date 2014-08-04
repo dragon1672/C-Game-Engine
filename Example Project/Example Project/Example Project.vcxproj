@@ -83,6 +83,7 @@
     <ClCompile Include="testing.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CoolScene.h" />
     <ClInclude Include="SceneOne.h" />
     <ClInclude Include="SceneThree.h" />
     <ClInclude Include="SceneTwo.h" />
