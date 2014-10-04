@@ -187,3 +187,6 @@ LevelEditor/output.lvl
 GameSolution/LogOutput.html
 GameSolution/Profile.csv
 MiddleWare/PhysicsGUI/.svn/
+
+.idea/
+*.iml
