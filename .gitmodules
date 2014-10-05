@@ -1,0 +1,3 @@
+[submodule "MiddleWare"]
+	path = MiddleWare
+	url = https://anthony_corbin@bitbucket.org/anthony_corbin/c-game-dev-middleware.git
