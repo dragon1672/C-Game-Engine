@@ -1,5 +1,5 @@
 #include <GL/glew.h>
-#include <Engine\WidgetRenderer.h>
+#include <Engine\Systems\WidgetRenderer.h>
 #include "glm/gtx/transform.hpp"
 #include <QtGui\qmouseevent>
 #include <QtGui\qkeyevent>
@@ -79,7 +79,7 @@ void WidgetRenderer::initializeGL() {
 	glewInit();
 
 	disableCamMovement = false;
-	maxDT = .02;
+	maxDT = .02f;
 	nearPlane = .1f;
 	farPlane = 200;
 	oldWidth = oldHeight = -1;
@@ -220,7 +220,7 @@ void WidgetRenderer::mouseMoveEvent(QMouseEvent* e) {
 void WidgetRenderer::wheelEvent(QWheelEvent* e) {
 	int delta = e->delta();
 	const int increment = 75;
-	float percent = .1;
+	float percent = .1f;
 	for (int i = 0; i < delta; i++)
 	{
 		myCam.moveForward(percent / increment);

@@ -1,8 +1,8 @@
 #pragma once
 
-#include <Engine\WidgetRenderer.h>
+#include <Engine\Systems\WidgetRenderer.h>
 #include <vector>
-#include <Engine\Scene.h>
+#include <Engine\Systems\Scene.h>
 #include <ExportHeader.h>
 
 class ENGINE_SHARED SceneManager : public WidgetRenderer {

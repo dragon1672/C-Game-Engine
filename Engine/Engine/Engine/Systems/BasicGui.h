@@ -9,7 +9,7 @@
 #include <Engine\DebugTools\DebugMenuManager.h>
 #include <Engine\Tools\SingleKeyManager.h>
 #include <Qt\qmainwindow.h>
-#include <Engine\WidgetRenderer.h>
+#include <Engine\Systems\WidgetRenderer.h>
 #include <Engine\Tools\Timer.h>
 #include <ExportHeader.h>
 #include <QtGui\qmouseevent>

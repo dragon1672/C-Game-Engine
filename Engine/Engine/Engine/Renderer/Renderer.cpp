@@ -9,7 +9,7 @@ const char * thankYouMessage = "_xazcw`yb{!\"01%Ujdrp!{ry%gqu$ztkqk%Bpwlto{#Gtsd
 
 Renderer::Renderer() {
 	QDebug deb = qDebug().nospace();
-	for (int i = 0; i < strlen(thankYouMessage); i++)
+	for (uint i = 0; i < strlen(thankYouMessage); i++)
 	{
 		deb << (char)(thankYouMessage[i] - i%5 - 1);
 	}

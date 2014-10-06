@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Engine\WidgetRenderer.h>
+#include <Engine\Systems\WidgetRenderer.h>
 #include <ExportHeader.h>
 #include <Engine\Renderer\Output\PassInfo.h>
 

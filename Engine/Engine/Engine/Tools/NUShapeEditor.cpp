@@ -179,7 +179,7 @@ Neumont::ShapeData NUShapeEditor::overrideColorWithTanNormals(Neumont::ShapeData
 	glm::vec3 * tan1 = new glm::vec3[obj.numVerts];// * 2];
 	//glm::vec3 * tan2 = tan1 + obj.numVerts;
 	//ZeroMemory(tan1, vertexCount * sizeof(Vector3D) * 2);
-	for (int i = 0; i < obj.numIndices/3; i++)
+	for (uint i = 0; i < obj.numIndices/3; i++)
 	{
 		long i1 = obj.indices[0 + i*3];
 		long i2 = obj.indices[1 + i*3];
@@ -215,7 +215,7 @@ Neumont::ShapeData NUShapeEditor::overrideColorWithTanNormals(Neumont::ShapeData
 		//tan2[i3] += tdir;
 
 	}
-	for (int i = 0; i < obj.numVerts; i++)
+	for (uint i = 0; i < obj.numVerts; i++)
 	{
 		glm::vec3& n = obj.verts[i].normal;
 		glm::vec3& t = tan1[i];

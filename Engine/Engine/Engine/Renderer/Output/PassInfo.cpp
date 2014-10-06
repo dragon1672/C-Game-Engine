@@ -26,7 +26,7 @@ void PassInfo::activate() {
 
 //function pointer preDraw
 bool PassInfo::contains(Renderable * toCheck) {
-	for (int i = 0; i < myRenderables.size(); i++)
+	for (uint i = 0; i < myRenderables.size(); i++)
 		if(myRenderables[i] == toCheck) return true;
 	return false;
 }
@@ -34,7 +34,7 @@ void PassInfo::add(Renderable * toAdd) {
 	myRenderables.push_back(toAdd);
 }
 void PassInfo::remove(Renderable * toRemove) {
-	for (int i = 0; i < myRenderables.size(); i++) {
+	for (uint i = 0; i < myRenderables.size(); i++) {
 		if(myRenderables[i] == toRemove) {
 			myRenderables.erase(myRenderables.begin() + i);
 			return; // we are done here
@@ -42,7 +42,7 @@ void PassInfo::remove(Renderable * toRemove) {
 	}
 }
 void PassInfo::loadRenderables(PassInfo * toLoadFrom, bool allowDups) {
-	for (int i = 0; i < toLoadFrom->myRenderables.size(); i++)
+	for (uint i = 0; i < toLoadFrom->myRenderables.size(); i++)
 	{
 		if(allowDups || !contains(toLoadFrom->myRenderables[i]))
 			myRenderables.push_back(toLoadFrom->myRenderables[i]);

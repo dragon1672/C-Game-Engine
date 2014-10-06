@@ -3,7 +3,7 @@
 #include "SceneManager.h"
 
 void SceneManager::init() {
-	for (int i = 0; i < scenes.size(); i++)
+	for (uint i = 0; i < scenes.size(); i++)
 	{
 		menu->setDefaultTab(scenes[i]->name);
 		menu->watch("Scene name: ",scenes[i]->name);
@@ -25,7 +25,7 @@ void SceneManager::nextFrame(float dt) {
 	if(currentActiveScene != activeScene->name) {
 		activeScene->myDefaultPass->visable = false;
 
-		for (int i = 0; i < scenes.size(); i++)
+		for (uint i = 0; i < scenes.size(); i++)
 		{
 			if(currentActiveScene == scenes[i]->name) {
 				scenes[i]->myDefaultPass->visable = true;
@@ -41,7 +41,7 @@ void SceneManager::nextFrame(float dt) {
 }
 
 void SceneManager::windowResized(int oldWidth,int oldHeight) {
-	for (int i = 0; i < scenes.size(); i++)
+	for (uint i = 0; i < scenes.size(); i++)
 	{
 		scenes[i]->windowResized(width(),height());
 	}
