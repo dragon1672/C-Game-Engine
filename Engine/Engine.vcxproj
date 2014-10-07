@@ -56,6 +56,8 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ENGINE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)..\GameSolution\Core\include;$(ProjectDir)../../MiddleWare/NeumontTools/include;$(ProjectDir)../../MiddleWare/Qt/include;$(ProjectDir)../../MiddleWare/glm;$(ProjectDir)../../MiddleWare/glew/include;</AdditionalIncludeDirectories>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
