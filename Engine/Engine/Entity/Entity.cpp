@@ -9,7 +9,7 @@ void Entity::removeComponent(int toKill) {
 	}
 }
 void Entity::addComponent(Component * toAdd) {
-	toAdd->Parent = this;
+	toAdd->parent = this;
 	components.push_back(toAdd);
 }
 template<typename T> void Entity::removeComponent() {
