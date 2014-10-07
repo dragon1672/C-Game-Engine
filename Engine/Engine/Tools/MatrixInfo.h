@@ -25,12 +25,10 @@ public:
 
 	glm::mat4& getTransform();// save this on in the Shader
 
-	//gen short for generate, also return address that can ben sent to shader
-	//warning these mats are updated so any changes will not stick
-	glm::mat4&  genRotMat();
-	glm::mat4&  genScaleMat();
-	glm::mat4&  genTranslationMat();
-	glm::mat4&  genCompleteTransform();
+	glm::mat4&  getRotMat();
+	glm::mat4&  getScaleMat();
+	glm::mat4&  getTranslationMat();
+	glm::mat4&  getCompleteTransform();
 
 	//called by renderer in draw before passing uniforms to shader
 	void updateMatrix();

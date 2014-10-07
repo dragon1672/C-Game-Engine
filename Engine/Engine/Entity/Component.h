@@ -3,6 +3,7 @@
 #include <Engine\Entity\Entity.h>
 
 class Component { 
+protected:
 	friend Entity;
 	Entity * parent;
 public:

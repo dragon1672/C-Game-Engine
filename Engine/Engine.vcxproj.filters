@@ -32,6 +32,8 @@
     <ClInclude Include="Engine\Systems\WidgetRenderer.h" />
     <ClInclude Include="Engine\Entity\Component.h" />
     <ClInclude Include="Engine\Entity\Entity.h" />
+    <ClInclude Include="Engine\Entity\Components\RenderableComponent.h" />
+    <ClInclude Include="Engine\Entity\Components\MatrixInfoComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -61,5 +63,7 @@
     <ClCompile Include="Engine\Systems\WidgetRenderer.cpp" />
     <ClCompile Include="Engine\Systems\WidgetRenderer_mock.cpp" />
     <ClCompile Include="Engine\Entity\Entity.cpp" />
+    <ClCompile Include="Engine\Entity\Components\RenderableComponent.cpp" />
+    <ClCompile Include="Engine\Entity\Components\MatrixInfoComponent.cpp" />
   </ItemGroup>
 </Project>

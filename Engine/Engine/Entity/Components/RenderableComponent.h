@@ -1,34 +1,22 @@
 #pragma once
 
-#include <ExportHeader.h>
-#include <Engine\Renderer\Shader\ShaderUniformPram.h>
+#include <Engine\Entity\Component.h>
 #include <Engine\Renderer\Geo\GeometryInfo.h>
-#include <Engine\Tools\MatrixInfo.h>
+#include <Engine\Renderer\Shader\ShaderProgram.h>
 
-#pragma warning(disable: 4201)
-#pragma warning(push)
-#include <glm\glm.hpp>
-#pragma warning(pop)
-#include <vector>
-#include "ParameterType.h"
-
-typedef unsigned int uint;
-
-class ENGINE_SHARED Renderable {
+class RenderableComponent : public Component {
 private:
+	const char * transformShaderName;
 	std::vector<ShaderUniformPram *> uniformParameters;
+	ShaderUniformPram transform;
 public:
-	~Renderable();
 	GeometryInfo * whatGeo;
 	ShaderProgram * howShader;
-	glm::mat4 whereMat;
-	MatrixInfo transformData;
-	bool visible;
-	uint textureID;
+	bool visable;
 
-	void init(GeometryInfo * whatGeo, ShaderProgram * howShader, bool visible, uint textureID=-1);
-	void reset();
-
+	RenderableComponent(GeometryInfo * geo, ShaderProgram * shader, ShaderUniformPram * uniforms = nullptr, int numOfUniforms = 0)
+		: transformShaderName(nullptr), whatGeo(geo), howShader(shader), visable(true) { }
+	
 	//convenience overloads
 	void addUniformParameter(const char * name, const bool& value);
 	void addUniformParameter(const char * name, const float& value);
@@ -39,13 +27,11 @@ public:
 
 	//convenience to save varables in renderable
 	void saveMatrixInfo(const char * uniformName);
-	void saveWhereMat(const char * uniformName); // WARNING this method is not garunteed in future releases
-	void saveVisable(const char * uniformName);
-	void saveTexture(const char * uniformName);
 
 	//the real calls
 	void addUniformParameter(const char * name, ParameterType parameterType, const void * value);
+	
 
-	//don't worry about me
-	void passUniformsDownDown();
+	void update();
+	void drawWarmup();
 };
