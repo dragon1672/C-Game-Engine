@@ -60,7 +60,9 @@ public:
 	GLuint addCubeTexture(ShaderProgram::ImageData& posX,ShaderProgram::ImageData& negX,ShaderProgram::ImageData& posY,ShaderProgram::ImageData& negY,ShaderProgram::ImageData& posZ,ShaderProgram::ImageData& negZ);
 	GLuint addCubeTexture(QImage& posX,QImage negX,QImage& posY,QImage negY,QImage& posZ,QImage negZ);
 
+	void draw(GeometryInfo * toDraw);
 	void draw(GeometryInfo& toDraw);
+	void draw(Renderable * toDraw);
 	void draw(Renderable& toDraw);
 	void drawPrep(int width, int height);
 };

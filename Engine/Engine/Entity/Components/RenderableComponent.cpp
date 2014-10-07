@@ -16,6 +16,9 @@ void RenderableComponent::saveMatrixInfo(const char * uniformName) {
 }
 
 void RenderableComponent::drawWarmup() {
+	howShader->useProgram();
+	howShader->passSavedUniforms_try();
+
 	if(transformShaderName != nullptr) this->transform.sendData();
 	for (uint i = 0; i < uniformParameters.size(); i++) {
 		uniformParameters[i]->sendData();
@@ -24,7 +27,4 @@ void RenderableComponent::drawWarmup() {
 
 void RenderableComponent::update() {
 	transform.init(howShader,transformShaderName,ParameterType::PT_MAT4,&parent->transform.getTransform()[0][0]);
-}
-void RenderableComponent::saveMatrixInfo(const char * uniformName) {
-	transformShaderName = uniformName;
 }

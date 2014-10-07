@@ -138,6 +138,17 @@ void            Renderer::draw(GeometryInfo& toDraw) {
 	glBindBuffer(toDraw.bufferInformation.bufferID,GL_ELEMENT_ARRAY_BUFFER);
 	glDrawElements(toDraw.indexingMode,toDraw.numIndices,GL_UNSIGNED_SHORT,(void*)toDraw.indicesOffset());
 }
+
+void Renderer::draw(GeometryInfo * toDraw)
+{
+	draw(*toDraw);
+}
+
+void Renderer::draw(Renderable * toDraw)
+{
+	draw(*toDraw);
+}
+
 void            Renderer::drawPrep(int width, int height) {
 	glClearColor(.1f,.1f,.1f,1);
 	glViewport(0,0,width,height);

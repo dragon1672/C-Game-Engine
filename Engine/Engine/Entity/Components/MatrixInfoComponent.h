@@ -59,4 +59,4 @@ public:
 
 	//called by renderer in draw before passing uniforms to shader
 	void lateUpdate();
-}
+};
