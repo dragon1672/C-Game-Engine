@@ -6,6 +6,7 @@
 #pragma warning(pop)
 #include <Windows.h>
 #include <ExportHeader.h>
+#include <Engine/Defines/SingletonsDefine.h>
 
 class ENGINE_SHARED Camera {
 	static glm::vec3 UP;
@@ -17,7 +18,7 @@ class ENGINE_SHARED Camera {
 
 	glm::vec2 oldMousePos;
 
-	static Camera * _instance;
+	DEFINE_SINGLETON(Camera);
 	void init(bool enabled);
 public:
 	bool enabled;
@@ -44,6 +45,4 @@ public:
 	inline glm::vec3& getViewDir() { return viewDir; }
 
 	glm::mat4x4& getWorld2View();
-
-	static Camera& getInstance();
 };

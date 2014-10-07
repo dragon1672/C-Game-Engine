@@ -89,14 +89,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\Defines\SingletonsDefine.h" />
     <ClInclude Include="Engine\Entity\Components\MatrixInfoComponent.h" />
     <ClInclude Include="Engine\Entity\Components\RenderableComponent.h" />
     <ClInclude Include="Engine\Systems\BasicGui.h" />
     <ClInclude Include="Engine\Defines\Vectors.h" />
     <ClInclude Include="Engine\Renderer\Geo\BufferManager.h" />
     <ClInclude Include="Engine\Renderer\Output\PassInfo.h" />
+    <ClInclude Include="Engine\Systems\Entity\GameObjectManager.h" />
     <ClInclude Include="Engine\Systems\Scene.h" />
     <ClInclude Include="Engine\Systems\SceneManager.h" />
+    <ClInclude Include="Engine\Systems\Singletons\TimeSingle.h" />
     <ClInclude Include="Engine\Tools\BinaryToShapeLoader.h" />
     <ClInclude Include="Engine\Tools\MatrixInfo.h" />
     <ClInclude Include="Engine\Tools\QT\ButtonInfo.h" />
@@ -131,6 +134,7 @@
     <ClCompile Include="Engine\Renderer\Geo\BufferManager.cpp" />
     <ClCompile Include="Engine\Renderer\Output\PassInfo.cpp" />
     <ClCompile Include="Engine\Systems\SceneManager.cpp" />
+    <ClCompile Include="Engine\Systems\Singletons\TimeSingle.cpp" />
     <ClCompile Include="Engine\Tools\BinaryToShapeLoader.cpp" />
     <ClCompile Include="Engine\Tools\MatrixInfo.cpp" />
     <ClCompile Include="Engine\Tools\QT\ButtonInfo_mock.cpp" />

@@ -4,6 +4,7 @@
 
 #include <windows.h>
 #include <ExportHeader.h>
+#include <Engine/Defines/SingletonsDefine.h>
 
 class ENGINE_SHARED Timer {
 private:
@@ -14,7 +15,9 @@ private:
 	LARGE_INTEGER frequency;
 	float LargeInt2Secs( LARGE_INTEGER & L);
 
-	static Timer * _instance;
+	float _deltaTime;
+
+	DEFINE_SINGLETON(Timer);
 public:
 	Timer();
 	void  start();
@@ -22,10 +25,9 @@ public:
 	void  pause();
 	void  resume();
 	float interval();
+	float deltaTime();
 	float getCurrentTime();
 	float getElapsedTime();
-
-	static Timer& getInstance();
 };
 
 #endif

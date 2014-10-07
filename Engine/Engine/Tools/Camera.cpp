@@ -73,8 +73,4 @@ void Camera::updateMousePos(const glm::vec2& newMousePos) {
 	oldMousePos = newMousePos;
 }
 
-Camera * Camera::_instance = new Camera();
-Camera& Camera::getInstance()
-{
-	return *_instance;
-}
+IMPLEMENT_SINGLETON(Camera);

@@ -1,6 +1,7 @@
 #include <Engine\Tools\Timer.h>
 #include <windows.h>
 
+IMPLEMENT_SINGLETON(Timer);
 
 float Timer::LargeInt2Secs( LARGE_INTEGER & L) {
 	return ((float)L.QuadPart / (float)frequency.QuadPart);
@@ -33,7 +34,8 @@ float Timer::interval() {
 	LARGE_INTEGER TEMP;
 	TEMP.QuadPart = current.QuadPart - _lastInterval.QuadPart;
 	_lastInterval = current;
-	return LargeInt2Secs(TEMP);
+	_deltaTime = LargeInt2Secs(TEMP);
+	return deltaTime();
 }
 float Timer::getCurrentTime() {
 	LARGE_INTEGER current;
@@ -48,8 +50,6 @@ float Timer::getElapsedTime() {
 	return LargeInt2Secs(TEMP);
 }
 
-Timer * Timer::_instance = new Timer();
-Timer& Timer::getInstance()
-{
-	return *_instance;
+float Timer::deltaTime() {
+	return _deltaTime;
 }

@@ -34,6 +34,9 @@
     <ClInclude Include="Engine\Entity\Entity.h" />
     <ClInclude Include="Engine\Entity\Components\RenderableComponent.h" />
     <ClInclude Include="Engine\Entity\Components\MatrixInfoComponent.h" />
+    <ClInclude Include="Engine\Systems\Entity\GameObjectManager.h" />
+    <ClInclude Include="Engine\Systems\Singletons\TimeSingle.h" />
+    <ClInclude Include="Engine\Defines\SingletonsDefine.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -65,5 +68,6 @@
     <ClCompile Include="Engine\Entity\Entity.cpp" />
     <ClCompile Include="Engine\Entity\Components\RenderableComponent.cpp" />
     <ClCompile Include="Engine\Entity\Components\MatrixInfoComponent.cpp" />
+    <ClCompile Include="Engine\Systems\Singletons\TimeSingle.cpp" />
   </ItemGroup>
 </Project>
