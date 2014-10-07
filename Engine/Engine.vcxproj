@@ -129,6 +129,7 @@
     <ClInclude Include="Engine\unsigned.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\Systems\Entity\GameObjectManager.cpp" />
     <ClCompile Include="Engine\Entity\Components\MatrixInfoComponent.cpp" />
     <ClCompile Include="Engine\Entity\Components\RenderableComponent.cpp" />
     <ClCompile Include="Engine\Systems\BasicGui.cpp" />

@@ -69,5 +69,6 @@
     <ClCompile Include="Engine\Entity\Components\RenderableComponent.cpp" />
     <ClCompile Include="Engine\Entity\Components\MatrixInfoComponent.cpp" />
     <ClCompile Include="Engine\Systems\Singletons\TimeSingle.cpp" />
+    <ClCompile Include="Engine\Systems\Entity\GameObjectManager.cpp" />
   </ItemGroup>
 </Project>
