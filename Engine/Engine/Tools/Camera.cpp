@@ -7,15 +7,13 @@ using glm::mat4x4;
 vec3 Camera::UP(0,1,0);
 
 Camera::Camera() {
-	pos = glm::vec3();
-	viewDir = glm::vec3(0,0,-1);
-	enabled = true;
-	strafeDir= glm::normalize(glm::cross(viewDir, UP));
-	LARGEST_MOUSE_CHANGE = 50;
-	MOUSE_SPEED_SCALE = .5f;
-	MOVEMENT_SPEED = 30;
+	init(true);
 }
 Camera::Camera(bool enabled) {
+	init(enabled);
+}
+void Camera::init(bool enabled)
+{
 	pos = glm::vec3();
 	viewDir = glm::vec3(0,0,-1);
 	strafeDir= glm::normalize(glm::cross(viewDir, UP));
@@ -73,4 +71,10 @@ void Camera::updateMousePos(const glm::vec2& newMousePos) {
 		rotate(result);
 	}
 	oldMousePos = newMousePos;
+}
+
+Camera * Camera::_instance = new Camera();
+Camera& Camera::getInstance()
+{
+	return *_instance;
 }

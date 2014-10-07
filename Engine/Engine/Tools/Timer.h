@@ -13,6 +13,8 @@ private:
 	LARGE_INTEGER total;//used for pause/resume
 	LARGE_INTEGER frequency;
 	float LargeInt2Secs( LARGE_INTEGER & L);
+
+	static Timer * _instance;
 public:
 	Timer();
 	void  start();
@@ -22,6 +24,8 @@ public:
 	float interval();
 	float getCurrentTime();
 	float getElapsedTime();
+
+	static Timer& getInstance();
 };
 
 #endif

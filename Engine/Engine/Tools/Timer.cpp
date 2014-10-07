@@ -5,7 +5,7 @@
 float Timer::LargeInt2Secs( LARGE_INTEGER & L) {
 	return ((float)L.QuadPart / (float)frequency.QuadPart);
 }
-      Timer::Timer() {
+Timer::Timer() {
 	_start.QuadPart = 0;
 	_stop.QuadPart  = 0;
 	total.QuadPart = 0;
@@ -46,4 +46,10 @@ float Timer::getElapsedTime() {
 	LARGE_INTEGER TEMP;
 	TEMP.QuadPart = total.QuadPart + _stop.QuadPart - _start.QuadPart;
 	return LargeInt2Secs(TEMP);
+}
+
+Timer * Timer::_instance = new Timer();
+Timer& Timer::getInstance()
+{
+	return *_instance;
 }

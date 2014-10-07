@@ -16,6 +16,9 @@ class ENGINE_SHARED Camera {
 	glm::mat4 lookAtMat;
 
 	glm::vec2 oldMousePos;
+
+	static Camera * _instance;
+	void init(bool enabled);
 public:
 	bool enabled;
 	float LARGEST_MOUSE_CHANGE;// = 50;
@@ -41,4 +44,6 @@ public:
 	inline glm::vec3& getViewDir() { return viewDir; }
 
 	glm::mat4x4& getWorld2View();
+
+	static Camera& getInstance();
 };
