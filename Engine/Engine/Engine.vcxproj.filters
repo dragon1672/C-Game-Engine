@@ -30,6 +30,8 @@
     <ClInclude Include="Engine\Systems\Scene.h" />
     <ClInclude Include="Engine\Systems\SceneManager.h" />
     <ClInclude Include="Engine\Systems\WidgetRenderer.h" />
+    <ClInclude Include="Engine\Entity\Component.h" />
+    <ClInclude Include="Engine\Entity\Entity.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -58,5 +60,6 @@
     <ClCompile Include="Engine\Systems\SceneManager.cpp" />
     <ClCompile Include="Engine\Systems\WidgetRenderer.cpp" />
     <ClCompile Include="Engine\Systems\WidgetRenderer_mock.cpp" />
+    <ClCompile Include="Engine\Entity\Entity.cpp" />
   </ItemGroup>
 </Project>

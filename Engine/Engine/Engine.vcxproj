@@ -104,6 +104,8 @@
     <ClInclude Include="Engine\Tools\QT\LinkedIntSlider.h" />
     <ClInclude Include="Engine\Tools\Random\Glm.h" />
     <ClInclude Include="Engine\Systems\WidgetRenderer.h" />
+    <ClInclude Include="Engine\Entity\Component.h" />
+    <ClInclude Include="Engine\Entity\Entity.h" />
     <ClInclude Include="ExportHeader.h" />
     <ClInclude Include="Engine\FastDelegate.h" />
     <ClInclude Include="Engine\Renderer\Geo\GeometryInfo.h" />
@@ -146,6 +148,7 @@
     <ClCompile Include="Engine\Tools\Timer.cpp" />
     <ClCompile Include="Engine\Systems\WidgetRenderer.cpp" />
     <ClCompile Include="Engine\Systems\WidgetRenderer_mock.cpp" />
+    <ClCompile Include="Engine\Entity\Entity.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
