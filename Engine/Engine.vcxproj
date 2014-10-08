@@ -91,6 +91,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\DebugTools\DebugMemHeader.h" />
+    <ClInclude Include="Engine\DebugTools\DebugShapeManager.h" />
+    <ClInclude Include="Engine\DebugTools\Logging\LogData.h" />
+    <ClInclude Include="Engine\DebugTools\Logging\LogManager.h" />
+    <ClInclude Include="Engine\DebugTools\myAssert.h" />
+    <ClInclude Include="Engine\DebugTools\Profiling\AutoProfileManager.h" />
+    <ClInclude Include="Engine\DebugTools\Profiling\AutoProfileManagerMacros.h" />
+    <ClInclude Include="Engine\DebugTools\Profiling\AutoProfiler.h" />
+    <ClInclude Include="Engine\DebugTools\Profiling\ProfileCategory.h" />
     <ClInclude Include="Engine\Defines\SingletonsDefine.h" />
     <ClInclude Include="Engine\Entity\Components\MatrixInfoComponent.h" />
     <ClInclude Include="Engine\Entity\Components\RenderableComponent.h" />
@@ -129,6 +138,9 @@
     <ClInclude Include="Engine\unsigned.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\DebugTools\DebugShapeManager.cpp" />
+    <ClCompile Include="Engine\DebugTools\Logging\LogManager.cpp" />
+    <ClCompile Include="Engine\DebugTools\Profiling\AutoProfilerManager.cpp" />
     <ClCompile Include="Engine\Systems\Entity\GameObjectManager.cpp" />
     <ClCompile Include="Engine\Entity\Components\MatrixInfoComponent.cpp" />
     <ClCompile Include="Engine\Entity\Components\RenderableComponent.cpp" />

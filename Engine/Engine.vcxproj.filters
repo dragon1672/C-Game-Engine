@@ -37,6 +37,15 @@
     <ClInclude Include="Engine\Systems\Entity\GameObjectManager.h" />
     <ClInclude Include="Engine\Systems\Singletons\TimeSingle.h" />
     <ClInclude Include="Engine\Defines\SingletonsDefine.h" />
+    <ClInclude Include="Engine\DebugTools\Logging\LogData.h" />
+    <ClInclude Include="Engine\DebugTools\Logging\LogManager.h" />
+    <ClInclude Include="Engine\DebugTools\Profiling\AutoProfileManager.h" />
+    <ClInclude Include="Engine\DebugTools\Profiling\AutoProfileManagerMacros.h" />
+    <ClInclude Include="Engine\DebugTools\Profiling\AutoProfiler.h" />
+    <ClInclude Include="Engine\DebugTools\Profiling\ProfileCategory.h" />
+    <ClInclude Include="Engine\DebugTools\DebugMemHeader.h" />
+    <ClInclude Include="Engine\DebugTools\DebugShapeManager.h" />
+    <ClInclude Include="Engine\DebugTools\myAssert.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -70,5 +79,8 @@
     <ClCompile Include="Engine\Entity\Components\MatrixInfoComponent.cpp" />
     <ClCompile Include="Engine\Systems\Singletons\TimeSingle.cpp" />
     <ClCompile Include="Engine\Systems\Entity\GameObjectManager.cpp" />
+    <ClCompile Include="Engine\DebugTools\Logging\LogManager.cpp" />
+    <ClCompile Include="Engine\DebugTools\Profiling\AutoProfilerManager.cpp" />
+    <ClCompile Include="Engine\DebugTools\DebugShapeManager.cpp" />
   </ItemGroup>
 </Project>

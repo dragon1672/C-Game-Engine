@@ -10,7 +10,7 @@ glm::vec3 differentMatrixMult(glm::mat4 mat, glm::vec3 vec) {
 	return glm::vec3(mat * glm::vec4(vec,1));
 }
 
-Neumont::ShapeData NUShapeEditor::noNegY(Neumont::ShapeData& obj) {
+Neumont::ShapeData NUShapeEditor::noNegY(Neumont::ShapeData obj) {
 	float min = 0;
 	float max = 0;
 	for (uint i = 0; i < obj.numVerts; i++) {
@@ -32,7 +32,7 @@ float max_withABS(float a, float b) {
 	return a > b ? a : b;
 }
 
-Neumont::ShapeData NUShapeEditor::scaleToRange(Neumont::ShapeData& obj, float xBound, float yBound, float zBound) {
+Neumont::ShapeData NUShapeEditor::scaleToRange(Neumont::ShapeData obj, float xBound, float yBound, float zBound) {
 	glm::vec3 min;
 	glm::vec3 max;
 	for (uint i = 0; i < obj.numVerts; i++) {
@@ -52,7 +52,7 @@ Neumont::ShapeData NUShapeEditor::scaleToRange(Neumont::ShapeData& obj, float xB
 	}
 	return obj;
 }
-Neumont::ShapeData NUShapeEditor::setRandomColor(Neumont::ShapeData& obj, int everyThisNumOfPoints) {
+Neumont::ShapeData NUShapeEditor::setRandomColor(Neumont::ShapeData obj, int everyThisNumOfPoints) {
 	for (uint i = 0; i < obj.numVerts; i++) {
 		if(i % everyThisNumOfPoints == 0) {
 			float r = Random::randomFloat(0,1);
@@ -64,7 +64,7 @@ Neumont::ShapeData NUShapeEditor::setRandomColor(Neumont::ShapeData& obj, int ev
 	}
 	return obj;
 }
-Neumont::ShapeData NUShapeEditor::setColor(glm::vec4& toSet, Neumont::ShapeData& obj, int everyThisNumOfPoints) {
+Neumont::ShapeData NUShapeEditor::setColor(glm::vec4 toSet, Neumont::ShapeData obj, int everyThisNumOfPoints) {
 	for (uint i = 0; i < obj.numVerts; i++) {
 		if(i % everyThisNumOfPoints == 0) {
 			obj.verts[i].color = toSet;
@@ -72,7 +72,7 @@ Neumont::ShapeData NUShapeEditor::setColor(glm::vec4& toSet, Neumont::ShapeData&
 	}
 	return obj;
 }
-Neumont::ShapeData NUShapeEditor::initUVData(Neumont::ShapeData& obj) {
+Neumont::ShapeData NUShapeEditor::initUVData(Neumont::ShapeData obj) {
 	int size = (int)sqrt(obj.numVerts);
 	float divisor = (float)size-1;
 	for(unsigned int i = 0; i<obj.numVerts; i++)
@@ -83,14 +83,14 @@ Neumont::ShapeData NUShapeEditor::initUVData(Neumont::ShapeData& obj) {
 	}
 	return obj;
 }
-Neumont::ShapeData NUShapeEditor::scale(Neumont::ShapeData& obj, float scale) {
+Neumont::ShapeData NUShapeEditor::scale(Neumont::ShapeData obj, float scale) {
 	for(unsigned int i = 0; i<obj.numVerts; i++)
 	{
 		obj.verts[i].position *= scale;
 	}
 	return obj;
 }
-Neumont::ShapeData NUShapeEditor::rotate(Neumont::ShapeData& obj, float x, float y, float z) {
+Neumont::ShapeData NUShapeEditor::rotate(Neumont::ShapeData obj, float x, float y, float z) {
 	glm::mat3 rot = glm::mat3(
 					glm::rotate(x,glm::vec3(1,0,0))
 				  * glm::rotate(y,glm::vec3(0,1,0))
@@ -175,7 +175,7 @@ void CalculateTangentArray(long vertexCount, const Point3D *vertex, const Vector
 }
 
 //*/
-Neumont::ShapeData NUShapeEditor::overrideColorWithTanNormals(Neumont::ShapeData&obj) {
+Neumont::ShapeData NUShapeEditor::overrideColorWithTanNormals(Neumont::ShapeData obj) {
 	glm::vec3 * tan1 = new glm::vec3[obj.numVerts];// * 2];
 	//glm::vec3 * tan2 = tan1 + obj.numVerts;
 	//ZeroMemory(tan1, vertexCount * sizeof(Vector3D) * 2);
