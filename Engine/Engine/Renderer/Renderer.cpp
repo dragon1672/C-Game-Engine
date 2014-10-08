@@ -4,6 +4,8 @@
 #include <Qt\qdebug.h>
 #include <Engine\Defines\Vectors.h>
 
+#include <Engine/DebugTools/DebugMemHeader.h>
+
 //encoded with (char + i % 5
 const char * thankYouMessage = "_xazcw`yb{!\"01%Ujdrp!{ry%gqu$ztkqk%Bpwlto{#Gtsdlr,t\"Uiseguiw!/0$cw`yb{_xaz";
 
@@ -27,7 +29,7 @@ void            Renderer::reset() {
 	CLEAR_VECTOR(allShaderProgs);
 }
 GeometryInfo  * Renderer::addGeometry( const Neumont::Vertex* verts, uint numVerts,  ushort* indices, uint numIndices, GLuint indexingMode) {
-	GeometryInfo * ret = new GeometryInfo();
+	GeometryInfo * ret = new GeometryInfo;
 	geoInfo.push_back(ret);
 	ret->init(verts,numVerts,indices,numIndices,indexingMode);
 	return ret;
