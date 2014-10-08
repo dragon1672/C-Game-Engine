@@ -51,6 +51,24 @@
     <ClInclude Include="Engine\Tools\MyMath\SquareMatrix.h" />
     <ClInclude Include="Engine\Tools\MyMath\Vector 2.h" />
     <ClInclude Include="Engine\Tools\MyMath\Vector3D.h" />
+    <ClInclude Include="Engine\Physics\Particles\Collision\CollisionDetection.h" />
+    <ClInclude Include="Engine\Physics\Particles\Collision\CollisionEngine.h" />
+    <ClInclude Include="Engine\Physics\Particles\Collision\CollisionManager.h" />
+    <ClInclude Include="Engine\Physics\Particles\Collision\CollisionMassCircles.h" />
+    <ClInclude Include="Engine\Physics\Particles\Collision\CollisionMassWall.h" />
+    <ClInclude Include="Engine\Physics\Particles\Collision\ParticleContact.h" />
+    <ClInclude Include="Engine\Physics\Particles\ForceGen\CheapSpringForce.h" />
+    <ClInclude Include="Engine\Physics\Particles\ForceGen\DragForceGenerator.h" />
+    <ClInclude Include="Engine\Physics\Particles\ForceGen\GravityBodyForceGenerator.h" />
+    <ClInclude Include="Engine\Physics\Particles\ForceGen\GravityForceGenerator.h" />
+    <ClInclude Include="Engine\Physics\Particles\ForceGen\SpringForceGenerator.h" />
+    <ClInclude Include="Engine\Physics\Particles\ForceGen\VectorBoundForceGenerator.h" />
+    <ClInclude Include="Engine\Physics\Particles\Particle.h" />
+    <ClInclude Include="Engine\Physics\Particles\ParticleForceGenerator.h" />
+    <ClInclude Include="Engine\Physics\Particles\ParticleForceRegistry.h" />
+    <ClInclude Include="Engine\Physics\Particles\ParticleWorld.h" />
+    <ClInclude Include="Engine\Physics\RidgidBody\RidgidBody.h" />
+    <ClInclude Include="Engine\Physics\RidgidBody\RigidSpringForce.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -87,6 +105,7 @@
     <ClCompile Include="Engine\DebugTools\Logging\LogManager.cpp" />
     <ClCompile Include="Engine\DebugTools\Profiling\AutoProfilerManager.cpp" />
     <ClCompile Include="Engine\DebugTools\DebugShapeManager.cpp" />
+    <ClCompile Include="Engine\Physics\Particles\Particle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Tools\MyMath\Matrix2D.inl" />
