@@ -164,7 +164,7 @@ void CalculateTangentArray(long vertexCount, const Point3D *vertex, const Vector
  const Vector3D& n = normal[a];
  const Vector3D& t = tan1[a];
  
- // Gram-Schmidt orthogonalize
+ // Gram-Schmidt orthogonalized
  tangent[a] = (t - n * Dot(n, t)).Normalize();
  
  // Calculate handedness

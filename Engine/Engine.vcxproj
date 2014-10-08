@@ -113,6 +113,11 @@
     <ClInclude Include="Engine\Systems\Singletons\TimeSingle.h" />
     <ClInclude Include="Engine\Tools\BinaryToShapeLoader.h" />
     <ClInclude Include="Engine\Tools\MatrixInfo.h" />
+    <ClInclude Include="Engine\Tools\MyMath\Matrix2D.h" />
+    <ClInclude Include="Engine\Tools\MyMath\Matrix3D.h" />
+    <ClInclude Include="Engine\Tools\MyMath\SquareMatrix.h" />
+    <ClInclude Include="Engine\Tools\MyMath\Vector 2.h" />
+    <ClInclude Include="Engine\Tools\MyMath\Vector3D.h" />
     <ClInclude Include="Engine\Tools\QT\ButtonInfo.h" />
     <ClInclude Include="Engine\Tools\Camera.h" />
     <ClInclude Include="Engine\DebugTools\DebugMenuManager.h" />
@@ -172,6 +177,12 @@
     <ClCompile Include="Engine\Systems\WidgetRenderer.cpp" />
     <ClCompile Include="Engine\Systems\WidgetRenderer_mock.cpp" />
     <ClCompile Include="Engine\Entity\Entity.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Engine\Tools\MyMath\Matrix2D.inl" />
+    <None Include="Engine\Tools\MyMath\Matrix3D.inl" />
+    <None Include="Engine\Tools\MyMath\Vector 2.inl" />
+    <None Include="Engine\Tools\MyMath\Vector3D.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

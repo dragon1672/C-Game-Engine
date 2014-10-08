@@ -46,6 +46,11 @@
     <ClInclude Include="Engine\DebugTools\DebugMemHeader.h" />
     <ClInclude Include="Engine\DebugTools\DebugShapeManager.h" />
     <ClInclude Include="Engine\DebugTools\myAssert.h" />
+    <ClInclude Include="Engine\Tools\MyMath\Matrix2D.h" />
+    <ClInclude Include="Engine\Tools\MyMath\Matrix3D.h" />
+    <ClInclude Include="Engine\Tools\MyMath\SquareMatrix.h" />
+    <ClInclude Include="Engine\Tools\MyMath\Vector 2.h" />
+    <ClInclude Include="Engine\Tools\MyMath\Vector3D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -82,5 +87,11 @@
     <ClCompile Include="Engine\DebugTools\Logging\LogManager.cpp" />
     <ClCompile Include="Engine\DebugTools\Profiling\AutoProfilerManager.cpp" />
     <ClCompile Include="Engine\DebugTools\DebugShapeManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Engine\Tools\MyMath\Matrix2D.inl" />
+    <None Include="Engine\Tools\MyMath\Matrix3D.inl" />
+    <None Include="Engine\Tools\MyMath\Vector 2.inl" />
+    <None Include="Engine\Tools\MyMath\Vector3D.inl" />
   </ItemGroup>
 </Project>
