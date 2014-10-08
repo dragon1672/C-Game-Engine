@@ -69,6 +69,18 @@
     <ClInclude Include="Engine\Physics\Particles\ParticleWorld.h" />
     <ClInclude Include="Engine\Physics\RidgidBody\RidgidBody.h" />
     <ClInclude Include="Engine\Physics\RidgidBody\RigidSpringForce.h" />
+    <ClInclude Include="Engine\Pathing\AStar\DebugTools\AStarDebugPath.h" />
+    <ClInclude Include="Engine\Pathing\AStar\DebugTools\AStarDebugPathGenerator.h" />
+    <ClInclude Include="Engine\Pathing\AStar\AStarNode.h" />
+    <ClInclude Include="Engine\Pathing\AStar\AStarPath.h" />
+    <ClInclude Include="Engine\Pathing\AStar\AStarPathGenerator.h" />
+    <ClInclude Include="Engine\Pathing\FileSaving\LevelFileHeader.h" />
+    <ClInclude Include="Engine\Pathing\FileSaving\LevelSerializer.h" />
+    <ClInclude Include="Engine\Pathing\EditorNode.h" />
+    <ClInclude Include="Engine\Pathing\EditorNodeConnection.h" />
+    <ClInclude Include="Engine\Pathing\GameNode.h" />
+    <ClInclude Include="Engine\Pathing\GameNodeConnection.h" />
+    <ClInclude Include="Engine\Pathing\NodeManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -106,6 +118,13 @@
     <ClCompile Include="Engine\DebugTools\Profiling\AutoProfilerManager.cpp" />
     <ClCompile Include="Engine\DebugTools\DebugShapeManager.cpp" />
     <ClCompile Include="Engine\Physics\Particles\Particle.cpp" />
+    <ClCompile Include="Engine\Pathing\AStar\DebugTools\AStarDebugPath.cpp" />
+    <ClCompile Include="Engine\Pathing\AStar\AStarNode.cpp" />
+    <ClCompile Include="Engine\Pathing\AStar\AStarPath.cpp" />
+    <ClCompile Include="Engine\Pathing\AStar\AStarPathGenerator.cpp" />
+    <ClCompile Include="Engine\Pathing\FileSaving\LevelSerializer.cpp" />
+    <ClCompile Include="Engine\Pathing\EditorNode.cpp" />
+    <ClCompile Include="Engine\Pathing\NodeManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Tools\MyMath\Matrix2D.inl" />

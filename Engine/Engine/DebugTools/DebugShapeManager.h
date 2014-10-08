@@ -57,8 +57,8 @@ public:
 
 	void initShaders();
 
-	DebugShapeData * addUnitSphere(glm::mat4& transform,                    glm::vec4& color,                   bool depthTest=true, float lifetime=std::numeric_limits<float>::infinity());
-	DebugShapeData * addUnitCube  (glm::mat4& transform,                    glm::vec4& color,                   bool depthTest=true, float lifetime=std::numeric_limits<float>::infinity());
+	DebugShapeData * addUnitSphere(glm::mat4  transform,                    glm::vec4& color,                   bool depthTest=true, float lifetime=std::numeric_limits<float>::infinity());
+	DebugShapeData * addUnitCube  (glm::mat4  transform,                    glm::vec4& color,                   bool depthTest=true, float lifetime=std::numeric_limits<float>::infinity());
 	DebugShapeData * addLine      (glm::vec3& start,     glm::vec3& end,    glm::vec4& color, float offset = 0, bool depthTest=true, float lifetime=std::numeric_limits<float>::infinity());
 	DebugShapeData * addUnitVector(glm::vec3& tail,      glm::vec3& vector, glm::vec4& color, float offset = 0, bool depthTest=true, float lifetime=std::numeric_limits<float>::infinity());
 	DebugShapeData * addPoint     (glm::vec3& pos,                                                              bool depthTest=true, float lifetime=std::numeric_limits<float>::infinity());

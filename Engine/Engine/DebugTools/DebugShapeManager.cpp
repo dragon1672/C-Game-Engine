@@ -107,7 +107,7 @@ void      DebugShapeManager::initShaders() {
 	debugShapeShader = myRenderer.addShader("../Shaders/PassThroughVertexShader.glsl","../Shaders/PassThroughFragShader.glsl");
 	debugShapeShader->saveUniform("viewTransform",ParameterType::PT_MAT4,viewMatrix);
 }
-DebugShapeManager::DebugShapeData * DebugShapeManager::addUnitSphere(glm::mat4& transform,                    glm::vec4& color,               bool depthTest, float lifetime) {
+DebugShapeManager::DebugShapeData * DebugShapeManager::addUnitSphere(glm::mat4 transform,                    glm::vec4& color,               bool depthTest, float lifetime) {
 	DebugShapeData * toAdd = new DebugShapeData();
 	toAdd->whatGeo = GEO_sphere;
 	toAdd->transform = transform;
@@ -119,7 +119,7 @@ DebugShapeManager::DebugShapeData * DebugShapeManager::addUnitSphere(glm::mat4& 
 	shapes.push_back(toAdd);
 	return toAdd;
 }
-DebugShapeManager::DebugShapeData * DebugShapeManager::addUnitCube  (glm::mat4& transform,                    glm::vec4& color,               bool depthTest, float lifetime) {
+DebugShapeManager::DebugShapeData * DebugShapeManager::addUnitCube  (glm::mat4 transform,                    glm::vec4& color,               bool depthTest, float lifetime) {
 	DebugShapeData * toAdd = new DebugShapeData();
 	toAdd->whatGeo = GEO_cube;
 	toAdd->transform = transform;
