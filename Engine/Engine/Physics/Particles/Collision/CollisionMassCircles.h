@@ -1,9 +1,9 @@
 #pragma once
 
-#include "CollisionEngine.h"
-#include "Particle.h"
+#include <Engine/Physics/Particles/Collision/CollisionEngine.h>
+#include <Engine/Physics/Particles/Particle.h>
 #include <glm/gtx/projection.hpp>
-#include "ExportHeader.h"
+#include <ExportHeader.h>
 
 class ENGINE_SHARED CollisionMassCircles : public CollisionEngine {
 public:

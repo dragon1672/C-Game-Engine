@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ParticleForceGenerator.h"
+#include <Engine/Physics/Particles/ParticleForceGenerator.h>
 #include <glm\glm.hpp>
 
 class DragForceGenerator : public ParticleForceGenerator {

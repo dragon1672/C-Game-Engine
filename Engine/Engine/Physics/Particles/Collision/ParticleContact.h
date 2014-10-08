@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Particle.h"
+#include <Engine\Physics\Particles\Particle.h>
 #include <glm\gtx\projection.hpp>
 
 #define MAX(a,b) ( a < b ? b : a)

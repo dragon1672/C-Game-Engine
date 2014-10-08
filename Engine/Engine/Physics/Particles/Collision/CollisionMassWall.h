@@ -1,10 +1,10 @@
 #pragma once
 
-#include "CollisionEngine.h"
-#include "Particle.h"
+#include <Engine/Physics/Particles/Collision/CollisionEngine.h>
+#include <Engine/Physics/Particles/Particle.h>
 #include <glm/gtx/projection.hpp>
-#include "ExportHeader.h"
-#include "Ray.h"
+#include <ExportHeader.h>
+#include <Engine/Tools/Ray.h>
 
 class ENGINE_SHARED CollisionMassWall: public CollisionEngine {
 public:

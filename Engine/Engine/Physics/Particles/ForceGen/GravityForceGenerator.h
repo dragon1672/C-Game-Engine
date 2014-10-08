@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ParticleForceGenerator.h"
+#include <Engine/Physics/Particles/ParticleForceGenerator.h>
 
 class GravityForceGenerator : public ParticleForceGenerator {
 public:

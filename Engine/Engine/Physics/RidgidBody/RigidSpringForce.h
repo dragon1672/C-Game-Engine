@@ -1,9 +1,9 @@
 #pragma once
 
 #include <map>
-#include "ParticleForceGenerator.h"
+#include <Engine/Physics/Particles/ParticleForceGenerator.h>
 #include <vector>
-#include "unsigned.h"
+#include <Engine/unsigned.h>
 #include "RidgidBody.h"
 #include <glm/gtx/rotate_vector.hpp>
 #include <glm/gtx/perpendicular.hpp>

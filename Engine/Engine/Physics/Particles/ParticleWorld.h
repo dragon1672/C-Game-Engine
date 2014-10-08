@@ -1,7 +1,7 @@
 #pragma once
 
-#include "unsigned.h"
-#include "CollisionManager.h"
+#include <Engine/unsigned.h>
+#include <Engine/Physics/Particles/Collision/CollisionManager.h>
 #include "ParticleForceRegistry.h"
 
 class ParticleWorld {

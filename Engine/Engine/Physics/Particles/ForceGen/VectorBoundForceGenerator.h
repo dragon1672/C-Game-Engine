@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ParticleForceGenerator.h"
+#include <Engine/Physics/Particles/ParticleForceGenerator.h>
 
 class VectorBoundForceGenerator : public ParticleForceGenerator {
 	glm::vec3 * bound;
