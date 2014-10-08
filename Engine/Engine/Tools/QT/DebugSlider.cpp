@@ -22,7 +22,7 @@ DebugSlider::DebugSlider(float min, float max, bool textOnLeft, float granularit
 }
 
 float DebugSlider::value() const {
-	int slideVal = slider->value();
+	//int slideVal = slider->value();
 	return min + (max - min) * (slider->value() / sliderGranularity);
 }
 

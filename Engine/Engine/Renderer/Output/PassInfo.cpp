@@ -16,6 +16,8 @@ void PassInfo::initTextures(int width, int height) {
 	}
 }
 void PassInfo::updateTextureSize(int width,int height) {
+	width;
+	height;
 	//initTextures(width,height);
 	//ShaderProgram::update2DTexture(colorTexture+1,colorTexture,0,width,height);
 	//ShaderProgram::update2DTexture(depthTexture+1,depthTexture,0,width,height);

@@ -91,7 +91,8 @@ GLuint          Renderer::addTexture(QImage image, GLenum type, GLenum type2) {
 	return ShaderProgram::load2DTexture(image,type,type2);
 }
 GLuint          Renderer::addTexture(const char * filePath, bool flipHorz, bool flipVert) {
-	return ShaderProgram::load2DTexture(QString(filePath),flipHorz,flipVert);
+	QString data = QString(filePath);
+	return ShaderProgram::load2DTexture(data,flipHorz,flipVert);
 }
 GLuint          Renderer::addTexture(ubyte * data, uint width, uint height, GLenum type) {
 	return ShaderProgram::load2DTexture(data,width,height,type);
@@ -110,10 +111,12 @@ GLuint          Renderer::addCubeTexture(QString& directory,QString& posX,QStrin
 	return ShaderProgram::loadCubeTexture(directory,posX,negX,posY,negY,posZ,negZ);
 }
 GLuint          Renderer::addCubeTexture(const char * posX,const char * negX,const char * posY,const char * negY,const char * posZ,const char * negZ) {
-	return ShaderProgram::loadCubeTexture(QString(posX),QString(negX),QString(posY),QString(negY),QString(posZ),QString(negZ));
+	QString data[] =  { QString(posX),QString(negX),QString(posY),QString(negY),QString(posZ),QString(negZ) };
+	return ShaderProgram::loadCubeTexture(data[0],data[1],data[2],data[3],data[4],data[5]);
 }
 GLuint          Renderer::addCubeTexture(const char * directory,const char * posX,const char * negX,const char * posY,const char * negY,const char * posZ,const char * negZ) {
-	return ShaderProgram::loadCubeTexture(QString(directory),QString(posX),QString(negX),QString(posY),QString(negY),QString(posZ),QString(negZ));
+	QString data[] =  { QString(directory), QString(posX),QString(negX),QString(posY),QString(negY),QString(posZ),QString(negZ) };
+	return ShaderProgram::loadCubeTexture(data[0],data[1],data[2],data[3],data[4],data[5],data[6]);
 }
 GLuint          Renderer::addCubeTexture(ShaderProgram::ImageData& posX,ShaderProgram::ImageData& negX,ShaderProgram::ImageData& posY,ShaderProgram::ImageData& negY,ShaderProgram::ImageData& posZ,ShaderProgram::ImageData& negZ) {
 	return ShaderProgram::loadCubeTexture(posX,negX,posY,negY,posZ,negZ);

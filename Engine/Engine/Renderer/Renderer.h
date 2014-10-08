@@ -18,7 +18,7 @@ private:
 	std::vector<GeometryInfo *> geoInfo;
 
 	virtual void preDraw() {}
-	virtual void renderableAdded(Renderable * justAdded) {}
+	virtual void renderableAdded(Renderable * justAdded) {justAdded;}
 public:
 	ShaderProgram * mainShader;
 	

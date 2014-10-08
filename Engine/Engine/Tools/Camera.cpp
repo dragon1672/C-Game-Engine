@@ -32,7 +32,8 @@ void Camera::setPos(glm::vec3& position, glm::vec3& viewDirection) {
 	strafeDir= glm::normalize(glm::cross(viewDir, UP));
 }
 void Camera::lookAt(glm::vec3& position, glm::vec3& toLookAt) {
-	setPos(position,toLookAt - position);
+	glm::vec3 dir = toLookAt - position;
+	setPos(position,dir);
 }
 mat4x4& Camera::getWorld2View() {
 	return lookAtMat = glm::lookAt(pos,pos + viewDir,UP);

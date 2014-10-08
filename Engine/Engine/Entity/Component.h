@@ -1,8 +1,9 @@
 #pragma once
 
 #include <Engine\Entity\Entity.h>
+#include <ExportHeader.h>
 
-class Component { 
+class ENGINE_SHARED Component { 
 protected:
 	friend Entity;
 	Entity * parent;

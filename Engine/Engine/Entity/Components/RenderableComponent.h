@@ -14,8 +14,13 @@ public:
 	ShaderProgram * howShader;
 	bool visable;
 
-	RenderableComponent(GeometryInfo * geo, ShaderProgram * shader, ShaderUniformPram * uniforms = nullptr, int numOfUniforms = 0)
-		: transformShaderName(nullptr), whatGeo(geo), howShader(shader), visable(true) { }
+	RenderableComponent(GeometryInfo * geo, ShaderProgram * shader, ShaderUniformPram ** uniforms = nullptr, int numOfUniforms = 0)
+		: transformShaderName(nullptr), whatGeo(geo), howShader(shader), visable(true) {
+			for (int i = 0; i < numOfUniforms; i++)
+			{
+				uniformParameters.push_back(uniforms[i]);
+			}
+	}
 	
 	//convenience overloads
 	void addUniformParameter(const char * name, const bool& value);

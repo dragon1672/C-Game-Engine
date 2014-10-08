@@ -76,12 +76,12 @@ public:
 		GLenum type;
 		GLenum type2;
 		ImageData() : data(nullptr),
-					width(-1), height(-1),
-					type(GL_RGBA), type2(-1) {}
+					width((uint)-1), height((uint)-1),
+					type((GLenum)GL_RGBA), type2((GLenum)-1) {}
 		ImageData(QImage& src) {
 			init(src);
-			type = GL_RGBA;
-			type2 = -1;
+			type = (GLenum)GL_RGBA;
+			type2 = (GLenum)-1;
 		}
 		void init(QImage& src) {
 			data = src.bits();

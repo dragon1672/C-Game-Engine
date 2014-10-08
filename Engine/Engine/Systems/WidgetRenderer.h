@@ -163,13 +163,13 @@ public:
 
 private: // these are the guys you want to override
 
-	virtual void nextFrame(float dt) {}
+	virtual void nextFrame(float dt) {dt;}
 	virtual void init() {}
 	virtual void preDraw() {} // called before drawing each object
 	virtual void preAllDraw() {} // called before all objects are drawn
 	virtual void windowResized(int oldWith, int oldHeight) {
-		qDebug() << oldWidth << "x" << oldHeight << " to " << width() << "x" << height();
-	} // called when window changes dimentions
+		qDebug() << oldWith << "x" << oldHeight << " to " << width() << "x" << height();
+	} // called when window changes dimensions
 
 
 	//Don't worry about anything down here
@@ -182,7 +182,7 @@ private slots:
 	void nxtFrm();
 public:
 	virtual void mouseMoveEvent(QMouseEvent* e); // enables camera drag movement
-	virtual void keyPressEvent(QKeyEvent* e) {}
+	virtual void keyPressEvent(QKeyEvent* e) {e;}
 	void wheelEvent(QWheelEvent* e);
 	void updateCam(QKeyEvent* key = nullptr, QMouseEvent* mouse = nullptr);
 	void setDebugMenu(DebugMenuManager * menu);

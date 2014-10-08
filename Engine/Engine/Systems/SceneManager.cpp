@@ -41,6 +41,7 @@ void SceneManager::nextFrame(float dt) {
 }
 
 void SceneManager::windowResized(int oldWidth,int oldHeight) {
+	oldWidth;oldHeight;
 	for (uint i = 0; i < scenes.size(); i++)
 	{
 		scenes[i]->windowResized(width(),height());

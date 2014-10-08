@@ -35,9 +35,9 @@ Neumont::ShapeData BinaryToShapeLoader::loadFromFile(const char * fileName) {
 }
 Neumont::ShapeData BinaryToShapeLoader::loadFromBinary(myByte * bytes) {
 	uint offset = 0;
-	int vertexOffset = GET_DATA(int,offset);
+	/*int vertexOffset = */GET_DATA(int,offset);
 	int vertexSize   = GET_DATA(int,offset);
-	int indiceOffset = GET_DATA(int,offset);
+	/*int indiceOffset = */GET_DATA(int,offset);
 	int indiceSize   = GET_DATA(int,offset);
 	int numOfVerts   = vertexSize / (sizeof(float) * 3 + sizeof(float) * 2 + sizeof(float) * 3); // 3F pos, 2F UV, 3F norm
 	int numOfindices = indiceSize/(sizeof (ushort)*3) * 3;

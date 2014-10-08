@@ -247,7 +247,7 @@ GLuint ShaderProgram::load2DTexture(QString& fileName, bool flipHorz, bool flipV
 	} else {
 		qDebug() << "Invalid file path " << formatFileName(filePath) << " Texture not loaded";
 		assert(false);
-		return -1;
+		return (uint)-1;
 	}
 }
 GLuint ShaderProgram::load2DTexture(ubyte * data, uint width, uint height, GLenum fileType) {
@@ -355,5 +355,6 @@ GLuint ShaderProgram::loadCubeTexture(ImageData& posX,ImageData& negX,ImageData&
 	return slot;
 }
 GLuint ShaderProgram::loadCubeTexture(QImage& posX,QImage& negX,QImage& posY,QImage& negY,QImage& posZ,QImage& negZ) {
-	return loadCubeTexture(ImageData(posX),ImageData(negX),ImageData(posY),ImageData(negY),ImageData(posZ),ImageData(negZ));
+	ImageData data[] = { ImageData(posX),ImageData(negX),ImageData(posY),ImageData(negY),ImageData(posZ),ImageData(negZ) };
+	return loadCubeTexture(data[0],data[1],data[2],data[3],data[4],data[5]);
 }
