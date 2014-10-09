@@ -7,15 +7,16 @@
 #include <Engine\Renderer\Shader\ShaderUniformPram.h>
 #include <Engine\Renderer\ParameterType.h>
 #include <Engine\unsigned.h>
+#include <Engine/Tools/ConstVector.h>
 
 #include <ExportHeader.h>
 
 
 class ENGINE_SHARED Renderer {
 private:
-	std::vector<Renderable *> myRenderables;
-	std::vector<ShaderProgram *> allShaderProgs;
-	std::vector<GeometryInfo *> geoInfo;
+	ConstVector<Renderable> myRenderables;
+	ConstVector<ShaderProgram> allShaderProgs;
+	ConstVector<GeometryInfo> geoInfo;
 
 	virtual void preDraw() {}
 	virtual void renderableAdded(Renderable * justAdded) {justAdded;}

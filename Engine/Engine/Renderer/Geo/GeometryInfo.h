@@ -31,11 +31,6 @@ public:
 	//Vertex Data
 	void addStreamedParameters(int * sizes,int numOfSizes);
 
-	inline void NU_VertexStreamedPosition(int layoutLocation) { addStreamedParameter(layoutLocation,ParameterType::PT_VEC3,Neumont::Vertex::POSITION_OFFSET, Neumont::Vertex::STRIDE); }
-	inline void NU_VertexStreamedColor(int layoutLocation)    { addStreamedParameter(layoutLocation,ParameterType::PT_VEC4,Neumont::Vertex::COLOR_OFFSET,    Neumont::Vertex::STRIDE); }
-	inline void NU_VertexStreamedNormal(int layoutLocation)   { addStreamedParameter(layoutLocation,ParameterType::PT_VEC3,Neumont::Vertex::NORMAL_OFFSET,   Neumont::Vertex::STRIDE); }
-	inline void NU_VertexStreamedUv(int layoutLocation)       { addStreamedParameter(layoutLocation,ParameterType::PT_VEC2,Neumont::Vertex::UV_OFFSET,       Neumont::Vertex::STRIDE); }
-
 	inline uint vertexBufferSize() const { return numVerts   * sizeOfVerts; }
 	inline uint dataOffset()       const { return bufferInformation.offset; }
 	inline uint indicesOffset()    const { return dataOffset() + vertexBufferSize(); };

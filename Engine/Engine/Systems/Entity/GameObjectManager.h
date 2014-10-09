@@ -4,10 +4,15 @@
 #include <Engine/Entity/Components/RenderableComponent.h>
 #include <Engine/Renderer/Renderer.h>
 #include <Engine/Tools/Timer.h>
+#include <Engine/Renderer/TextureInfo.h>
+
+#include <Engine/Tools/ConstVector.h>
 
 class GameObjectManager {
 private:
-	std::vector<Entity*> entities;
+	ConstVector<Entity> entities;
+	ConstVector<TextureInfo> textures;
+	
 	Renderer renderer;
 	bool active;
 public:

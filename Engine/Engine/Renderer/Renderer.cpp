@@ -24,34 +24,33 @@ Renderer::~Renderer() {
 	reset();
 }
 void            Renderer::reset() {
-	CLEAR_VECTOR(geoInfo);
-	CLEAR_VECTOR_WITH_CALL(myRenderables,reset);
-	CLEAR_VECTOR(allShaderProgs);
+	//CLEAR_VECTOR(geoInfo);
+	for (uint i = 0; i < myRenderables.size(); i++) myRenderables[i].reset();
+	//CLEAR_VECTOR_WITH_CALL(myRenderables,reset);
+	//CLEAR_VECTOR(allShaderProgs);
 }
 GeometryInfo  * Renderer::addGeometry( const Neumont::Vertex* verts, uint numVerts,  ushort* indices, uint numIndices, GLuint indexingMode) {
-	GeometryInfo * ret = new GeometryInfo;
-	geoInfo.push_back(ret);
+	geoInfo.add(GeometryInfo());
+	GeometryInfo * ret = &geoInfo.last();
 	ret->init(verts,numVerts,indices,numIndices,indexingMode);
 	return ret;
 }
 GeometryInfo  * Renderer::addGeometry( Neumont::ShapeData& toAdd, GLuint indexingMode) {
 	GeometryInfo * ret = addGeometry(toAdd.verts,toAdd.numVerts,toAdd.indices,toAdd.numIndices,indexingMode);
-	ret -> NU_VertexStreamedPosition(0);
-	ret -> NU_VertexStreamedColor(1);
-	ret -> NU_VertexStreamedNormal(2);
-	ret -> NU_VertexStreamedUv(3);
+	int data[] = { 3,4,3,2 };
+	ret->addStreamedParameters(data,sizeof(data)/sizeof(*data));
 	return ret;
 }
 Renderable    * Renderer::addRenderable(GeometryInfo * whatGeometry, ShaderProgram * howShaders, GLuint textureID) {
-	Renderable * ret = new Renderable();
-	myRenderables.push_back(ret);
+	myRenderables.add(Renderable());
+	Renderable * ret = &myRenderables.last();
 	ret->init(whatGeometry,howShaders,true,textureID);
 	renderableAdded(ret);
 	return ret;
 }
 ShaderProgram * Renderer::addShader() {
-	ShaderProgram * ret = new ShaderProgram();
-	allShaderProgs.push_back(ret);
+	allShaderProgs.add(ShaderProgram());
+	ShaderProgram * ret = &allShaderProgs.last();
 	ret -> startup();
 	return ret;
 }
@@ -63,28 +62,28 @@ ShaderProgram * Renderer::addShader(const char * vertexShader, const char * frag
 void            Renderer::passDataDownAllShaders_force() {
 	for (uint i = 0; i < allShaderProgs.size(); i++)
 	{
-		allShaderProgs[i]->passSavedUniforms_force();
+		allShaderProgs[i].passSavedUniforms_force();
 	}
 }
 void            Renderer::passDataDownAllShaders_try() {
 	for (uint i = 0; i < allShaderProgs.size(); i++)
 	{
-		allShaderProgs[i]->passSavedUniforms_try();
+		allShaderProgs[i].passSavedUniforms_try();
 	}
 }
 void            Renderer::resetAllShaders_validPush() {
 	for (uint i = 0; i < allShaderProgs.size(); i++)
 	{
-		allShaderProgs[i]->resetValidPush();
+		allShaderProgs[i].resetValidPush();
 	}
 }
 uint            Renderer::getNumOfShaders()      { return allShaderProgs.size(); }
 uint            Renderer::getNumOfRenderables()  { return myRenderables.size();  }
 uint            Renderer::getNumOfGeo()          { return geoInfo.size();        }
 
-ShaderProgram * Renderer::getShader(uint index) { return allShaderProgs[index];    }
-Renderable    * Renderer::getRenderable(uint index) { return myRenderables[index]; }
-GeometryInfo  * Renderer::getGeometry(uint index) { return geoInfo[index];         }
+ShaderProgram * Renderer::getShader(uint index) { return &allShaderProgs[index];    }
+Renderable    * Renderer::getRenderable(uint index) { return &myRenderables[index]; }
+GeometryInfo  * Renderer::getGeometry(uint index) { return &geoInfo[index];         }
 
 GLuint          Renderer::addTexture(QImage image, GLenum type) {
 	return ShaderProgram::load2DTexture(image,type);

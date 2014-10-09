@@ -56,14 +56,8 @@ void      DebugShapeManager::init(float * viewMatrix) {
 	
 	//send data down
 	GEO_sphere = myRenderer.addGeometry(NUSphere,GL_TRIANGLES);
-	GEO_sphere->NU_VertexStreamedPosition(0);
-	GEO_sphere->NU_VertexStreamedColor(1);
 	GEO_cube   = myRenderer.addGeometry(NUCube,  GL_TRIANGLES);
-	GEO_cube->NU_VertexStreamedPosition(0);
-	GEO_cube->NU_VertexStreamedColor(1);
 	GEO_line   = myRenderer.addGeometry(NULine,  GL_LINES);
-	GEO_line->NU_VertexStreamedPosition(0);
-	GEO_line->NU_VertexStreamedColor(1);
 #ifdef useArrowForVec
 	Neumont::ShapeData NUArrow;
 	NUArrow.numVerts = 4;
@@ -92,14 +86,10 @@ void      DebugShapeManager::init(float * viewMatrix) {
 
 	GEO_vector = myRenderer.addGeometry(NUArrow,GL_LINES);
 	//GEO_vector = myRenderer.addGeometry(NUShapeEditor::scaleToRange(NUShapeEditor::noNegY(NUShapeEditor::rotate(Neumont::ShapeGenerator::makeArrow(),90,0,0))),GL_TRIANGLES);
-	GEO_vector->NU_VertexStreamedPosition(0);
-	GEO_vector->NU_VertexStreamedColor(1);
 #else
 	GEO_vector = GEO_line;
 #endif
 	GEO_point  = myRenderer.addGeometry(NUPoint, GL_LINES);
-	GEO_point->NU_VertexStreamedPosition(0);
-	GEO_point->NU_VertexStreamedColor(1);
 
 	initShaders();
 }
