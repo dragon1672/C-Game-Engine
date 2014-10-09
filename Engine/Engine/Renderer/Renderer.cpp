@@ -129,7 +129,7 @@ GLuint          Renderer::addCubeTexture(QImage& posX,QImage negX,QImage& posY,Q
 
 void            Renderer::draw(Renderable& toDraw) {
 	if(toDraw.visible) {
-		toDraw.transformData.updateMatrix();
+		toDraw.transformData.lateUpdate();
 		toDraw.howShader->useProgram();
 		toDraw.howShader->passSavedUniforms_try();
 		toDraw.passUniformsDownDown();

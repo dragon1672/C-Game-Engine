@@ -1,4 +1,5 @@
 #include "RenderableComponent.h"
+#include <Engine/Entity/Entity.h>
 
 void RenderableComponent::addUniformParameter(const char * name, const bool& value)      { addUniformParameter(name,ParameterType::PT_BOOLEAN,&value);       }
 void RenderableComponent::addUniformParameter(const char * name, const float& value)     { addUniformParameter(name,ParameterType::PT_FLOAT,  &value);       }

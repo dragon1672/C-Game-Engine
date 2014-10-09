@@ -49,6 +49,7 @@ int Entity::getIndex(std::string toFind)
 
 LuaTable * Entity::getLuaComponent(std::string name)
 {
-	int index = getIndex(name);
-	return (index < 0) ? components[index]->getLuaComponent() : nullptr;
+	//int index = getIndex(name);
+	//return (index < 0) ? components[index]->getLuaComponent() : nullptr;
+	return nullptr;
 }

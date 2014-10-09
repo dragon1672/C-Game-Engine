@@ -1,8 +1,10 @@
 #pragma once
 
-#include <Engine\Entity\Entity.h>
 #include <ExportHeader.h>
+#pragma warning( disable : 4244 )
+//#include <luacppinterface.h>
 
+class Entity;
 class ENGINE_SHARED Component { 
 protected:
 	friend Entity;
@@ -12,5 +14,5 @@ public:
 	virtual void earlyUpdate() {}
 	virtual void update()      {}
 	virtual void lateUpdate()  {}
-	virtual LuaTable * getLuaComponent() = 0;
+	//virtual LuaTable * getLuaComponent() = 0;
 };

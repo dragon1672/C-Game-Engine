@@ -33,7 +33,6 @@
     <ClInclude Include="Engine\Entity\Component.h" />
     <ClInclude Include="Engine\Entity\Entity.h" />
     <ClInclude Include="Engine\Entity\Components\RenderableComponent.h" />
-    <ClInclude Include="Engine\Entity\Components\MatrixInfoComponent.h" />
     <ClInclude Include="Engine\Systems\Entity\GameObjectManager.h" />
     <ClInclude Include="Engine\Systems\Singletons\TimeSingle.h" />
     <ClInclude Include="Engine\Defines\SingletonsDefine.h" />
@@ -85,6 +84,7 @@
     <ClInclude Include="Engine\Renderer\Geo\Vert.h" />
     <ClInclude Include="Engine\Renderer\Geo\AutoAtrib.h" />
     <ClInclude Include="Engine\Tools\CollectionEditing.h" />
+    <ClInclude Include="Engine\Defines\VecGetSet.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -115,7 +115,6 @@
     <ClCompile Include="Engine\Systems\WidgetRenderer_mock.cpp" />
     <ClCompile Include="Engine\Entity\Entity.cpp" />
     <ClCompile Include="Engine\Entity\Components\RenderableComponent.cpp" />
-    <ClCompile Include="Engine\Entity\Components\MatrixInfoComponent.cpp" />
     <ClCompile Include="Engine\Systems\Singletons\TimeSingle.cpp" />
     <ClCompile Include="Engine\Systems\Entity\GameObjectManager.cpp" />
     <ClCompile Include="Engine\DebugTools\Logging\LogManager.cpp" />

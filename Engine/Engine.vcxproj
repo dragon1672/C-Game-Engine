@@ -101,7 +101,7 @@
     <ClInclude Include="Engine\DebugTools\Profiling\AutoProfiler.h" />
     <ClInclude Include="Engine\DebugTools\Profiling\ProfileCategory.h" />
     <ClInclude Include="Engine\Defines\SingletonsDefine.h" />
-    <ClInclude Include="Engine\Entity\Components\MatrixInfoComponent.h" />
+    <ClInclude Include="Engine\Defines\VecGetSet.h" />
     <ClInclude Include="Engine\Entity\Components\RenderableComponent.h" />
     <ClInclude Include="Engine\Pathing\AStar\AStarNode.h" />
     <ClInclude Include="Engine\Pathing\AStar\AStarPath.h" />
@@ -191,7 +191,6 @@
     <ClCompile Include="Engine\Renderer\Geo\Mesh.cpp" />
     <ClCompile Include="Engine\Renderer\Geo\Vert.cpp" />
     <ClCompile Include="Engine\Systems\Entity\GameObjectManager.cpp" />
-    <ClCompile Include="Engine\Entity\Components\MatrixInfoComponent.cpp" />
     <ClCompile Include="Engine\Entity\Components\RenderableComponent.cpp" />
     <ClCompile Include="Engine\Systems\BasicGui.cpp" />
     <ClCompile Include="Engine\Systems\BasicGui_mock.cpp" />

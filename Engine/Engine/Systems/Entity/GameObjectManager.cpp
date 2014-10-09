@@ -1,4 +1,5 @@
 #include "GameObjectManager.h"
+#include <Engine/Entity/Entity.h>
 
 GameObjectManager::GameObjectManager() : active(false) {}
 bool GameObjectManager::init() {
