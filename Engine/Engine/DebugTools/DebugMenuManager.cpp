@@ -8,6 +8,7 @@
 #include <iomanip>
 #include <Engine\Tools\QT\LinkedIntSlider.h>
 #include <Qt/qtablewidget.h>
+#include <Engine/Defines/Vectors.h>
 
 
 namespace DebugMenuControllers {
@@ -617,4 +618,9 @@ void DebugMenuManager::button(char * name, fastdelegate::FastDelegate0<> callbac
 	QHBoxLayout * newRow = new QHBoxLayout();
 	newRow->addWidget(toAdd->button);
 	getTabLayout(tabName)->addLayout(newRow);
+}
+
+DebugMenuManager::~DebugMenuManager()
+{
+	DELETE_VECTOR(controllers);
 }

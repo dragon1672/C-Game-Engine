@@ -2,7 +2,7 @@
 
 /*
 	+--------------------------+
-	|    Varables Explained    |
+	|   Variables  Explained   |
 	+--------------------------+
 
 	Double link : GUI updates model and model updates GUI
@@ -46,6 +46,7 @@ class ENGINE_SHARED DebugMenuManager {
 public:
 	//mainly used by GUI
 	DebugMenuManager();
+	~DebugMenuManager();
 	void init() {} // included for backwards compatability
 	void update();
 	void hide();
