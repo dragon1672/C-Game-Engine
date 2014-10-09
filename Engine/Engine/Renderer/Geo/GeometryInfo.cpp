@@ -50,7 +50,7 @@ void GeometryInfo::addStreamedParameter(uint layoutLocation, int numOfFloats, ui
 
 void GeometryInfo::addStreamedParameters(int * sizes,int numOfSizes)
 {
-	int stride = Collections::Sum(sizes,numOfSizes);
+	int stride = Collections::Sum(sizes,numOfSizes) * sizeof(float);
 	int offset = 0;
 	for (int i = 0; i < numOfSizes; i++)
 	{
