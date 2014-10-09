@@ -30,7 +30,7 @@ public:
 	void addUniformParameter(const char * name, const glm::mat3& value);
 	void addUniformParameter(const char * name, const glm::mat4& value);
 
-	//convenience to save varables in renderable
+	//convenience to save variables in renderable
 	void saveMatrixInfo(const char * uniformName);
 
 	//the real calls

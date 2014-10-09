@@ -143,9 +143,9 @@
     <ClInclude Include="Engine\Systems\Entity\GameObjectManager.h" />
     <ClInclude Include="Engine\Systems\Scene.h" />
     <ClInclude Include="Engine\Systems\SceneManager.h" />
-    <ClInclude Include="Engine\Systems\Singletons\TimeSingle.h" />
     <ClInclude Include="Engine\Tools\BinaryToShapeLoader.h" />
     <ClInclude Include="Engine\Tools\CollectionEditing.h" />
+    <ClInclude Include="Engine\Tools\ConstVector.h" />
     <ClInclude Include="Engine\Tools\MatrixInfo.h" />
     <ClInclude Include="Engine\Tools\MyMath\Matrix2D.h" />
     <ClInclude Include="Engine\Tools\MyMath\Matrix3D.h" />
@@ -197,8 +197,8 @@
     <ClCompile Include="Engine\Renderer\Geo\BufferManager.cpp" />
     <ClCompile Include="Engine\Renderer\Output\PassInfo.cpp" />
     <ClCompile Include="Engine\Systems\SceneManager.cpp" />
-    <ClCompile Include="Engine\Systems\Singletons\TimeSingle.cpp" />
     <ClCompile Include="Engine\Tools\BinaryToShapeLoader.cpp" />
+    <ClCompile Include="Engine\Tools\ConstVector.cpp" />
     <ClCompile Include="Engine\Tools\MatrixInfo.cpp" />
     <ClCompile Include="Engine\Tools\QT\ButtonInfo_mock.cpp" />
     <ClCompile Include="Engine\Tools\Camera.cpp" />
