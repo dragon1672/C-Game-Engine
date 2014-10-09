@@ -4,16 +4,31 @@
 
 BufferManager GeometryInfo::manager;
 
+
 void GeometryInfo::init(uint vertSize, const void * verts, uint numVerts, ushort* indices, uint numIndices, GLuint indexingMode) {
-	sizeOfVerts = vertSize;
+	init(vertSize,verts,numVerts,sizeof(ushort),indices,numIndices,indexingMode);
+}
+	void GeometryInfo::init(uint vertSize, const void * verts, uint numVerts, uint* indices, uint numIndices, GLuint indexingMode) {
+	init(vertSize,verts,numVerts,sizeof(uint),indices,numIndices,indexingMode);
+}
+void GeometryInfo::init(const Neumont::Vertex * verts, uint numVerts, ushort* indices, uint numIndices, GLuint indexingMode) {
+	init(sizeof(Neumont::Vertex),verts,numVerts,indices,numIndices,indexingMode);
+}
+void GeometryInfo::init(const Neumont::Vertex * verts, uint numVerts, uint* indices, uint numIndices, GLuint indexingMode) {
+	init(sizeof(Neumont::Vertex),verts,numVerts,indices,numIndices,indexingMode);
+}
+
+void GeometryInfo::init(uint vertSize, const void * verts, uint numVerts, uint indiceeSize, void* indices, uint numIndices, uint indexingMode)
+{
+	uint vertexBufferSize = numVerts * sizeOfVerts;
+	uint indexBufferSize = numIndices * indiceeSize;
+
+
 	glGenVertexArrays(1,&vertexArrayObjectID);
 	this->numVerts = numVerts;
 	this->numIndices = numIndices;
 	this->indexingMode = indexingMode;
-	bufferInformation = manager.addData(vertexBufferSize(),verts,indexBufferSize(),indices);
-}
-void GeometryInfo::init(const Neumont::Vertex * verts, uint numVerts, ushort* indices, uint numIndices, GLuint indexingMode) {
-	init(sizeof(Neumont::Vertex),verts,numVerts,indices,numIndices,indexingMode);
+	bufferInformation = manager.addData(vertexBufferSize,verts,indexBufferSize,indices);
 }
 
 void GeometryInfo::addStreamedParameter(uint layoutLocation, ParameterType parameterType,  uint bufferOffset, uint bufferStride) {

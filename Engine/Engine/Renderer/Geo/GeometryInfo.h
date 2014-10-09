@@ -19,9 +19,11 @@ public:
 	uint indexingMode;
 	uint sizeOfVerts;
 
+	void init(uint vertSize, const void * verts, uint numVerts, uint indiceeSize, void* indices, uint numIndices, uint indexingMode);
 	void init(uint vertSize, const void * verts, uint numVerts, ushort* indices, uint numIndices, uint indexingMode);
-	//template<class TVert>
-	void init(const Neumont::Vertex * verts, uint numVerts, ushort* indices, uint numIndices, uint indexingMode);
+	void init(uint vertSize, const void * verts, uint numVerts, uint*   indices, uint numIndices, uint indexingMode);
+	void init(const Neumont::Vertex * verts,     uint numVerts, ushort* indices, uint numIndices, uint indexingMode);
+	void init(const Neumont::Vertex * verts,     uint numVerts, uint*   indices, uint numIndices, uint indexingMode);
 	void reset();
 
 	void addStreamedParameter(uint layoutLocation, ParameterType parameterType, uint bufferOffset, uint bufferStride);
@@ -35,9 +37,6 @@ public:
 	inline void NU_VertexStreamedUv(int layoutLocation)       { addStreamedParameter(layoutLocation,ParameterType::PT_VEC2,Neumont::Vertex::UV_OFFSET,       Neumont::Vertex::STRIDE); }
 
 	inline uint vertexBufferSize() const { return numVerts   * sizeOfVerts; }
-	inline uint indexBufferSize()  const { return numIndices * sizeof(ushort); }
 	inline uint dataOffset()       const { return bufferInformation.offset; }
-	inline uint indicesOffset()    const { return bufferInformation.offset + vertexBufferSize(); };
-	inline uint endOffset()        const { return bufferInformation.offset + totalBufferSize();  };
-	inline uint totalBufferSize()  const { return indexBufferSize() + vertexBufferSize(); };
+	inline uint indicesOffset()    const { return dataOffset() + vertexBufferSize(); };
 };
