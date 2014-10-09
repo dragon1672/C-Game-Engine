@@ -81,6 +81,9 @@
     <ClInclude Include="Engine\Pathing\GameNode.h" />
     <ClInclude Include="Engine\Pathing\GameNodeConnection.h" />
     <ClInclude Include="Engine\Pathing\NodeManager.h" />
+    <ClInclude Include="Engine\Renderer\Geo\Mesh.h" />
+    <ClInclude Include="Engine\Renderer\Geo\Vert.h" />
+    <ClInclude Include="Engine\Renderer\Geo\AutoAtrib.h" />
     <ClInclude Include="Engine\Tools\CollectionEditing.h" />
   </ItemGroup>
   <ItemGroup>
@@ -126,6 +129,7 @@
     <ClCompile Include="Engine\Pathing\FileSaving\LevelSerializer.cpp" />
     <ClCompile Include="Engine\Pathing\EditorNode.cpp" />
     <ClCompile Include="Engine\Pathing\NodeManager.cpp" />
+    <ClCompile Include="Engine\Renderer\Geo\Vert.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Tools\MyMath\Matrix2D.inl" />

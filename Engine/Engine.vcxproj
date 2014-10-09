@@ -133,6 +133,9 @@
     <ClInclude Include="Engine\Physics\Particles\ParticleWorld.h" />
     <ClInclude Include="Engine\Physics\RidgidBody\RidgidBody.h" />
     <ClInclude Include="Engine\Physics\RidgidBody\RigidSpringForce.h" />
+    <ClInclude Include="Engine\Renderer\Geo\AutoAtrib.h" />
+    <ClInclude Include="Engine\Renderer\Geo\Mesh.h" />
+    <ClInclude Include="Engine\Renderer\Geo\Vert.h" />
     <ClInclude Include="Engine\Systems\BasicGui.h" />
     <ClInclude Include="Engine\Defines\Vectors.h" />
     <ClInclude Include="Engine\Renderer\Geo\BufferManager.h" />
@@ -185,6 +188,7 @@
     <ClCompile Include="Engine\Pathing\FileSaving\LevelSerializer.cpp" />
     <ClCompile Include="Engine\Pathing\NodeManager.cpp" />
     <ClCompile Include="Engine\Physics\Particles\Particle.cpp" />
+    <ClCompile Include="Engine\Renderer\Geo\Vert.cpp" />
     <ClCompile Include="Engine\Systems\Entity\GameObjectManager.cpp" />
     <ClCompile Include="Engine\Entity\Components\MatrixInfoComponent.cpp" />
     <ClCompile Include="Engine\Entity\Components\RenderableComponent.cpp" />

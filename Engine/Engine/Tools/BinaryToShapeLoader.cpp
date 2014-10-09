@@ -1,10 +1,8 @@
 #include <Engine\Tools\BinaryToShapeLoader.h>
 #include <fstream>
-#pragma warning(disable: 4201)
-#pragma warning(push)
 #include <glm\glm.hpp>
-#pragma warning(pop)
 #include <Qt\qdebug.h>
+#include <Engine\DebugTools\DebugMemHeader.h>
 
 #define GET_DATA(type, offset) *reinterpret_cast<type *>(bytes+offset);	offset += sizeof(type);
 
