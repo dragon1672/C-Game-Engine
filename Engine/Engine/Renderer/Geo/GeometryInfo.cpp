@@ -20,6 +20,7 @@ void GeometryInfo::init(const Neumont::Vertex * verts, uint numVerts, uint* indi
 
 void GeometryInfo::init(uint vertSize, const void * verts, uint numVerts, uint indiceeSize, void* indices, uint numIndices, uint indexingMode)
 {
+	sizeOfVerts = vertSize;
 	uint vertexBufferSize = numVerts * sizeOfVerts;
 	uint indexBufferSize = numIndices * indiceeSize;
 
