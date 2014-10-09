@@ -84,6 +84,7 @@
     <ClInclude Include="Engine\Renderer\Geo\AutoAtrib.h" />
     <ClInclude Include="Engine\Tools\CollectionEditing.h" />
     <ClInclude Include="Engine\Defines\VecGetSet.h" />
+    <ClInclude Include="Engine\Renderer\TextureInfo.h" />
     <ClInclude Include="Engine\Tools\ConstVector.h" />
   </ItemGroup>
   <ItemGroup>

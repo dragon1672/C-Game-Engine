@@ -136,6 +136,7 @@
     <ClInclude Include="Engine\Renderer\Geo\AutoAtrib.h" />
     <ClInclude Include="Engine\Renderer\Geo\Mesh.h" />
     <ClInclude Include="Engine\Renderer\Geo\Vert.h" />
+    <ClInclude Include="Engine\Renderer\TextureInfo.h" />
     <ClInclude Include="Engine\Systems\BasicGui.h" />
     <ClInclude Include="Engine\Defines\Vectors.h" />
     <ClInclude Include="Engine\Renderer\Geo\BufferManager.h" />
