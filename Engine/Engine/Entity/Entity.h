@@ -4,6 +4,8 @@
 #include <glm/glm.hpp>
 #include <Engine\Tools\MatrixInfo.h>
 #include <ExportHeader.h>
+#pragma warning( disable : 4244 )
+#include <luacppinterface.h>
 
 class Component;
 
@@ -17,6 +19,8 @@ private:
 		return -1;
 	}
 	int getIndex(Component * toFind);
+	int getIndex(const char * toFind);
+	int getIndex(std::string toFind);
 public:
 	virtual ~Entity(){}
 
@@ -35,6 +39,7 @@ public:
 		int index = getIndex<T>();
 		return (index < 0) ? (T*)components[index] : nullptr;
 	}
+	LuaTable * getLuaComponent(std::string name);
 	void removeComponent(Component * toKill);
 	void init();
 	void earlyUpdate();
