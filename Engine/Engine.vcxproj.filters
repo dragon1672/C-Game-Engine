@@ -130,6 +130,7 @@
     <ClCompile Include="Engine\Pathing\EditorNode.cpp" />
     <ClCompile Include="Engine\Pathing\NodeManager.cpp" />
     <ClCompile Include="Engine\Renderer\Geo\Vert.cpp" />
+    <ClCompile Include="Engine\Renderer\Geo\Mesh.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Tools\MyMath\Matrix2D.inl" />

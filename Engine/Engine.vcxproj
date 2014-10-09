@@ -188,6 +188,7 @@
     <ClCompile Include="Engine\Pathing\FileSaving\LevelSerializer.cpp" />
     <ClCompile Include="Engine\Pathing\NodeManager.cpp" />
     <ClCompile Include="Engine\Physics\Particles\Particle.cpp" />
+    <ClCompile Include="Engine\Renderer\Geo\Mesh.cpp" />
     <ClCompile Include="Engine\Renderer\Geo\Vert.cpp" />
     <ClCompile Include="Engine\Systems\Entity\GameObjectManager.cpp" />
     <ClCompile Include="Engine\Entity\Components\MatrixInfoComponent.cpp" />
