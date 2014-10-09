@@ -1,5 +1,6 @@
 #include <GL\glew.h>
 #include <Engine\Renderer\Geo\GeometryInfo.h>
+#include <Engine\Tools\CollectionEditing.h>
 
 BufferManager GeometryInfo::manager;
 
@@ -16,14 +17,28 @@ void GeometryInfo::init(const Neumont::Vertex * verts, uint numVerts, ushort* in
 }
 
 void GeometryInfo::addStreamedParameter(uint layoutLocation, ParameterType parameterType,  uint bufferOffset, uint bufferStride) {
+	addStreamedParameter(layoutLocation,parameterType/sizeof(float),bufferOffset,bufferStride);
+}
+
+void GeometryInfo::addStreamedParameter(uint layoutLocation, int numOfFloats, uint bufferOffset, uint bufferStride)
+{
 	glBindBuffer(GL_ARRAY_BUFFER, bufferInformation.bufferID);
 	glBindVertexArray(vertexArrayObjectID);
-
-	int numOfFloats = parameterType/sizeof(float);
 
 	glEnableVertexAttribArray(layoutLocation); // pos
 
 	glBindBuffer(GL_ARRAY_BUFFER, bufferInformation.bufferID);
 	glVertexAttribPointer(layoutLocation, numOfFloats, GL_FLOAT, GL_FALSE, bufferStride, (void*)(bufferOffset+bufferInformation.offset));
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, bufferInformation.bufferID);
+}
+
+void GeometryInfo::addStreamedParameters(int * sizes,int numOfSizes)
+{
+	int stride = Collections::Sum(sizes,numOfSizes);
+	int offset = 0;
+	for (int i = 0; i < numOfSizes; i++)
+	{
+		addStreamedParameter(i,sizes[i],offset,stride);
+		offset += sizes[i] * sizeof(float);
+	}
 }

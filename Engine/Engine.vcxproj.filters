@@ -81,6 +81,7 @@
     <ClInclude Include="Engine\Pathing\GameNode.h" />
     <ClInclude Include="Engine\Pathing\GameNodeConnection.h" />
     <ClInclude Include="Engine\Pathing\NodeManager.h" />
+    <ClInclude Include="Engine\Tools\CollectionEditing.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />

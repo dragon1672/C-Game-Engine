@@ -14,7 +14,7 @@ public:
 	};
 
 private:
-	static const int defaultBufferSize = 1048576;
+	static const int defaultBufferSize = 1048576; // 1 MB
 	BufferInfo myBuffers[10];
 	uint currentBufferCount;
 	

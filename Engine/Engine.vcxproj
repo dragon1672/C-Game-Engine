@@ -55,14 +55,14 @@
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ENGINE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)..\GameSolution\Core\include;$(ProjectDir)../../MiddleWare/NeumontTools/include;$(ProjectDir)../../MiddleWare/Qt/include;$(ProjectDir)../../MiddleWare/glm;$(ProjectDir)../../MiddleWare/glew/include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)..\GameSolution\Core\include;$(ProjectDir)../../MiddleWare/NeumontTools/include;$(ProjectDir)../../MiddleWare/Qt/include;$(ProjectDir)../../MiddleWare/glm;$(ProjectDir)../../MiddleWare/glew/include;$(ProjectDir)../../MiddleWare/luacppinterface/LuaCppInterface;$(ProjectDir)../../MiddleWare/luacppinterface/Lua/src</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <DisableSpecificWarnings>4251;4127;4201;4100</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)../../MiddleWare/NeumontTools/lib;$(ProjectDir)../../MiddleWare/Qt/lib;$(ProjectDir)../../MiddleWare/glew/lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)../../MiddleWare/NeumontTools/lib;$(ProjectDir)../../MiddleWare/Qt/lib;$(ProjectDir)../../MiddleWare/glew/lib;$(OutDir)</AdditionalLibraryDirectories>
       <AdditionalDependencies>NeumontTools.lib;opengl32.lib;QtOpenGLd4.lib;QtGuid4.lib;QtCored4.lib;glew32.lib;glew32d.lib;glew32s.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
@@ -142,6 +142,7 @@
     <ClInclude Include="Engine\Systems\SceneManager.h" />
     <ClInclude Include="Engine\Systems\Singletons\TimeSingle.h" />
     <ClInclude Include="Engine\Tools\BinaryToShapeLoader.h" />
+    <ClInclude Include="Engine\Tools\CollectionEditing.h" />
     <ClInclude Include="Engine\Tools\MatrixInfo.h" />
     <ClInclude Include="Engine\Tools\MyMath\Matrix2D.h" />
     <ClInclude Include="Engine\Tools\MyMath\Matrix3D.h" />
