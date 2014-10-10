@@ -19,20 +19,17 @@ namespace FileIO {
 
 			for (int i = 0; i < numOfVerts; i++) {
 				ret.verts.push_back(Vert());
-				float posX  = GET_DATA(float,offset);
-				float posY  = GET_DATA(float,offset);
-				float posZ  = GET_DATA(float,offset);
-				float UvX   = GET_DATA(float,offset);
-				float UvY   = GET_DATA(float,offset);
-				float normX = GET_DATA(float,offset);
-				float normY = GET_DATA(float,offset);
-				float normZ = GET_DATA(float,offset);
-				ret.verts[i].pos  = glm::vec3( posX,  posY,  posZ  );
-				ret.verts[i].uv   = glm::vec2( UvX,   UvY );
-				ret.verts[i].norm = glm::vec3( normX, normY, normZ );
+				ret.verts[i].pos.x = GET_DATA(float,offset);
+				ret.verts[i].pos.y = GET_DATA(float,offset);
+				ret.verts[i].pos.z = GET_DATA(float,offset);
+				ret.verts[i].uv.x  = GET_DATA(float,offset);
+				ret.verts[i].uv.y  = GET_DATA(float,offset);
+				ret.verts[i].norm.x  = GET_DATA(float,offset);
+				ret.verts[i].norm.y  = GET_DATA(float,offset);
+				ret.verts[i].norm.z  = GET_DATA(float,offset);
 			}
 			ret.indicees = Collections::Select<char,uint>(bytes+offset,numOfindices,[&offset,bytes](ushort n){
-				uint ret = (*reinterpret_cast<ushort *>(bytes+offset));	offset += sizeof(ushort); return ret;
+				uint tmp = (*reinterpret_cast<ushort *>(bytes+offset));	offset += sizeof(ushort); return tmp;
 			});
 		},
 		//v2
