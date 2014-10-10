@@ -67,48 +67,6 @@ public:
 	bool getValidPush();
 	void resetValidPush();
 
-	static QImage getImageFromFile(QString& filePath, bool flipHorz = false, bool flipVert = false);
-
-	struct ImageData {
-		ubyte * data;
-		uint width;
-		uint height;
-		GLenum type;
-		GLenum type2;
-		ImageData() : data(nullptr),
-					width((uint)-1), height((uint)-1),
-					type((GLenum)GL_RGBA), type2((GLenum)-1) {}
-		ImageData(QImage& src) {
-			init(src);
-			type = (GLenum)GL_RGBA;
-			type2 = (GLenum)-1;
-		}
-		void init(QImage& src) {
-			data = src.bits();
-			width = src.width();
-			height = src.height();
-		}
-	};
-
-	//returns the slotID
-	static GLuint load2DTexture(QImage& image, GLenum type = GL_RGBA);
-	static GLuint load2DTexture(QImage& image, GLenum type, GLenum type2);
-	static GLuint load2DTexture(QString& filePath, bool flipHorz = false, bool flipVert = false);
-	static GLuint load2DTexture(ubyte * data, uint width, uint height, GLenum type = GL_RGBA);
-	static GLuint load2DTexture(ubyte * data, uint width, uint height, GLenum type, GLenum type2);
-	static GLuint load2DTexture(ImageData& imageData);
-
-	static void update2DTexture(uint textureID, uint slot, QImage& image, GLenum type = GL_RGBA);
-	static void update2DTexture(uint textureID, uint slot, QImage& image, GLenum type, GLenum type2);
-	static void update2DTexture(uint textureID, uint slot, QString& filePath, bool flipHorz = false, bool flipVert = false);
-	static void update2DTexture(uint textureID, uint slot, ubyte * data, uint width, uint height, GLenum type = GL_RGBA);
-	static void update2DTexture(uint textureID, uint slot, ubyte * data, uint width, uint height, GLenum type, GLenum type2);
-	static void update2DTexture(uint textureID, uint slot, ImageData& imageData);
-
-	static GLuint loadCubeTexture(QString& posX,QString& negX,QString& posY,QString& negY,QString& posZ,QString& negZ);
-	static GLuint loadCubeTexture(QString& directory,QString& posX,QString& negX,QString& posY,QString& negY,QString& posZ,QString& negZ);
-	static GLuint loadCubeTexture(ImageData& posX,ImageData& negX,ImageData& posY,ImageData& negY,ImageData& posZ,ImageData& negZ);
-	static GLuint loadCubeTexture(QImage& posX,QImage& negX,QImage& posY,QImage& negY,QImage& posZ,QImage& negZ);
 };
 
 #endif

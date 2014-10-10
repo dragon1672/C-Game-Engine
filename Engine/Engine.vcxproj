@@ -139,13 +139,9 @@
     <ClInclude Include="Engine\Renderer\Geo\Mesh.h" />
     <ClInclude Include="Engine\Renderer\Geo\Vert.h" />
     <ClInclude Include="Engine\Renderer\TextureInfo.h" />
-    <ClInclude Include="Engine\Systems\BasicGui.h" />
     <ClInclude Include="Engine\Defines\Vectors.h" />
     <ClInclude Include="Engine\Renderer\Geo\BufferManager.h" />
-    <ClInclude Include="Engine\Renderer\Output\PassInfo.h" />
     <ClInclude Include="Engine\Systems\Entity\GameObjectManager.h" />
-    <ClInclude Include="Engine\Systems\Scene.h" />
-    <ClInclude Include="Engine\Systems\SceneManager.h" />
     <ClInclude Include="Engine\Tools\BinaryToShapeLoader.h" />
     <ClInclude Include="Engine\Tools\CollectionEditing.h" />
     <ClInclude Include="Engine\Tools\ConstVector.h" />
@@ -161,7 +157,6 @@
     <ClInclude Include="Engine\Tools\QT\DebugSlider.h" />
     <ClInclude Include="Engine\Tools\QT\LinkedIntSlider.h" />
     <ClInclude Include="Engine\Tools\Random\Glm.h" />
-    <ClInclude Include="Engine\Systems\WidgetRenderer.h" />
     <ClInclude Include="Engine\Entity\Component.h" />
     <ClInclude Include="Engine\Entity\Entity.h" />
     <ClInclude Include="Engine\Tools\Ray.h" />
@@ -198,11 +193,7 @@
     <ClCompile Include="Engine\Renderer\Geo\Vert.cpp" />
     <ClCompile Include="Engine\Systems\Entity\GameObjectManager.cpp" />
     <ClCompile Include="Engine\Entity\Components\RenderableComponent.cpp" />
-    <ClCompile Include="Engine\Systems\BasicGui.cpp" />
-    <ClCompile Include="Engine\Systems\BasicGui_mock.cpp" />
     <ClCompile Include="Engine\Renderer\Geo\BufferManager.cpp" />
-    <ClCompile Include="Engine\Renderer\Output\PassInfo.cpp" />
-    <ClCompile Include="Engine\Systems\SceneManager.cpp" />
     <ClCompile Include="Engine\Tools\BinaryToShapeLoader.cpp" />
     <ClCompile Include="Engine\Tools\MatrixInfo.cpp" />
     <ClCompile Include="Engine\Tools\QT\ButtonInfo_mock.cpp" />
@@ -222,8 +213,6 @@
     <ClCompile Include="Engine\Renderer\Shader\ShaderProgram.cpp" />
     <ClCompile Include="Engine\Renderer\Shader\ShaderUniformPram.cpp" />
     <ClCompile Include="Engine\Tools\Timer.cpp" />
-    <ClCompile Include="Engine\Systems\WidgetRenderer.cpp" />
-    <ClCompile Include="Engine\Systems\WidgetRenderer_mock.cpp" />
     <ClCompile Include="Engine\Entity\Entity.cpp" />
   </ItemGroup>
   <ItemGroup>
