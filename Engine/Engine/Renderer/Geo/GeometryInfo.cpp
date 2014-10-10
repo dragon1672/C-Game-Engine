@@ -18,11 +18,11 @@ void GeometryInfo::init(const Neumont::Vertex * verts, uint numVerts, uint* indi
 	init(sizeof(Neumont::Vertex),verts,numVerts,indices,numIndices,indexingMode);
 }
 
-void GeometryInfo::init(uint vertSize, const void * verts, uint numVerts, uint indiceeSize, void* indices, uint numIndices, uint indexingMode)
+void GeometryInfo::init(uint vertSize, const void * verts, uint numVerts, uint indicesize, void* indices, uint numIndices, uint indexingMode)
 {
 	sizeOfVerts = vertSize;
 	uint vertexBufferSize = numVerts * sizeOfVerts;
-	uint indexBufferSize = numIndices * indiceeSize;
+	uint indexBufferSize = numIndices * indicesize;
 
 
 	glGenVertexArrays(1,&vertexArrayObjectID);

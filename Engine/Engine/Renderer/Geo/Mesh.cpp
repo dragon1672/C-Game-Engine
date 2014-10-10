@@ -12,6 +12,6 @@ void Mesh::updateMinAndMax()
 
 void Mesh::passToHardware()
 {
-	geo.init(sizeof(Vert),(const void*)&verts[0],verts.size(),&indicees[0],indicees.size(),3);
+	geo.init(sizeof(Vert),(const void*)&verts[0],verts.size(),&indices[0],indices.size(),3);
 	geo.addStreamedParameters(Vert().getAtribs(),Vert().getNumOfAtribs());
 }

@@ -12,10 +12,10 @@ public:
 	Mesh() {}
 	Mesh(Neumont::ShapeData& NU) {
 		for (uint i = 0; i < NU.numVerts; i++)   { verts.push_back(Vert(NU.verts[i])); }
-		for (uint i = 0; i < NU.numIndices; i++) { indicees.push_back(NU.indices[i]);  }
+		for (uint i = 0; i < NU.numIndices; i++) { indices.push_back(NU.indices[i]);  }
 	}
 	std::vector<Vert> verts;
-	std::vector<uint> indicees;
+	std::vector<uint> indices;
 	glm::vec3 min;
 	glm::vec3 max;
 	void updateMinAndMax();

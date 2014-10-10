@@ -28,15 +28,16 @@ namespace FileIO {
 				ret.verts[i].norm.y  = GET_DATA(float,offset);
 				ret.verts[i].norm.z  = GET_DATA(float,offset);
 			}
-			ret.indicees = Collections::Select<char,uint>(bytes+offset,numOfindices,[&offset,bytes](ushort n){
+			ret.indices = Collections::Select<char,uint>(bytes+offset,numOfindices,[&offset,bytes](ushort n){
 				uint tmp = (*reinterpret_cast<ushort *>(bytes+offset));	offset += sizeof(ushort); return tmp;
 			});
 			return ret;
 		},
-		//v2
+		/*v2
 		[](fileByte * bytes)->Mesh{
 			return Mesh(); // TODO
 		}
+		//*/
 	};
 
 

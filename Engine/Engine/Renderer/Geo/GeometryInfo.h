@@ -19,7 +19,7 @@ public:
 	uint indexingMode;
 	uint sizeOfVerts;
 
-	void init(uint vertSize, const void * verts, uint numVerts, uint indiceeSize, void* indices, uint numIndices, uint indexingMode);
+	void init(uint vertSize, const void * verts, uint numVerts, uint indicesize, void* indices, uint numIndices, uint indexingMode);
 	void init(uint vertSize, const void * verts, uint numVerts, ushort* indices, uint numIndices, uint indexingMode);
 	void init(uint vertSize, const void * verts, uint numVerts, uint*   indices, uint numIndices, uint indexingMode);
 	void init(const Neumont::Vertex * verts,     uint numVerts, ushort* indices, uint numIndices, uint indexingMode);

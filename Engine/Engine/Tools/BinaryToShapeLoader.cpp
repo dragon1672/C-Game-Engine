@@ -41,7 +41,7 @@ Neumont::ShapeData BinaryToShapeLoader::loadFromBinary(myByte * bytes) {
 	int numOfindices = indiceSize/(sizeof (ushort)*3) * 3;
 
 	Neumont::Vertex * verts = new Neumont::Vertex[numOfVerts];
-	ushort * indicees = new ushort[numOfindices];
+	ushort * indices = new ushort[numOfindices];
 
 	for (int i = 0; i < numOfVerts; i++) {
 		verts[i].color = WHITE;
@@ -58,11 +58,11 @@ Neumont::ShapeData BinaryToShapeLoader::loadFromBinary(myByte * bytes) {
 		verts[i].normal = glm::vec3(normX,normY,normZ);
 	}
 	for (int i = 0; i < numOfindices; i++) {
-		indicees[i] = *reinterpret_cast<ushort *>(bytes+offset);	offset += sizeof(ushort);
+		indices[i] = *reinterpret_cast<ushort *>(bytes+offset);	offset += sizeof(ushort);
 	}
 
 	Neumont::ShapeData ret;
-	ret.indices = indicees;
+	ret.indices = indices;
 	ret.numIndices = numOfindices;
 	ret.verts = verts;
 	ret.numVerts = numOfVerts;
