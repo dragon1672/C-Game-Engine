@@ -6,7 +6,7 @@
 namespace FileIO {
 	std::function<Mesh(fileByte*)> loaders[] = {
 		//v1
-		[](fileByte * bytes){
+		[](fileByte * bytes) -> Mesh {
 			Mesh ret;
 			uint offset = 0;
 			/*int vertexOffset = */GET_DATA(int,offset);
@@ -31,10 +31,11 @@ namespace FileIO {
 			ret.indicees = Collections::Select<char,uint>(bytes+offset,numOfindices,[&offset,bytes](ushort n){
 				uint tmp = (*reinterpret_cast<ushort *>(bytes+offset));	offset += sizeof(ushort); return tmp;
 			});
+			return ret;
 		},
 		//v2
-		[](fileByte * bytes){
-			//TODO
+		[](fileByte * bytes)->Mesh{
+			return Mesh(); // TODO
 		}
 	};
 
@@ -48,8 +49,8 @@ namespace FileIO {
 		}
 
 		assert(firstNum % 16 == 0);
-		int index = firstNum / 16;
-		return (loaders[index](bytes));
+		//int index = firstNum / 16;
+		return Mesh();
 	}
 	Mesh loadMeshFromFile(const char * filePath) {
 		FileData file = loadFile(filePath);
