@@ -6,8 +6,16 @@
 #include <Engine\Tools\Random\MyRandom.h>
 #include <glm/gtx/transform.hpp>
 
-glm::vec3 differentMatrixMult(glm::mat4 mat, glm::vec3 vec) {
-	return glm::vec3(mat * glm::vec4(vec,1));
+
+namespace {
+	glm::vec3 differentMatrixMult(glm::mat4 mat, glm::vec3 vec) {
+		return glm::vec3(mat * glm::vec4(vec,1));
+	}
+
+	float max_withABS(float a, float b) {
+		a = abs(a);	b = abs(b);
+		return a > b ? a : b;
+	}
 }
 
 Neumont::ShapeData NUShapeEditor::noNegY(Neumont::ShapeData obj) {
@@ -25,11 +33,6 @@ Neumont::ShapeData NUShapeEditor::noNegY(Neumont::ShapeData obj) {
 		}
 	}
 	return obj;
-}
-
-float max_withABS(float a, float b) {
-	a = abs(a);	b = abs(b);
-	return a > b ? a : b;
 }
 
 Neumont::ShapeData NUShapeEditor::scaleToRange(Neumont::ShapeData obj, float xBound, float yBound, float zBound) {

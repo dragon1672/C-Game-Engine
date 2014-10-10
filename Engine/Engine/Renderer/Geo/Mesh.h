@@ -20,6 +20,14 @@ public:
 	glm::vec3 max;
 	void updateMinAndMax();
 	void updateTangents();
+	//editing
+	void noNegY();
+	void scaleToRange(float xBound=1, float yBound=1, float zBound=1);
+	void setRandomColor(int everyThisNumOfPoints=1);
+	void setColor(glm::vec4 toSet, int everyThisNumOfPoints = 1);
+	void initUVData();
+	void scale(float scale);
+	void rotate(float x, float y, float z);
 
 
 	void passToHardware();
