@@ -9,6 +9,8 @@
 #include <Engine\unsigned.h>
 #include <Engine/Tools/ConstVector.h>
 
+#include <Engine/Renderer/TextureInfo.h>
+
 #include <ExportHeader.h>
 
 
@@ -17,6 +19,7 @@ private:
 	ConstVector<Renderable> myRenderables;
 	ConstVector<ShaderProgram> allShaderProgs;
 	ConstVector<GeometryInfo> geoInfo;
+	ConstVector<TextureInfo> textures;
 
 	virtual void preDraw() {}
 	virtual void renderableAdded(Renderable * justAdded) {justAdded;}
@@ -47,19 +50,20 @@ public:
 	Renderable* getRenderable(uint index);
 	GeometryInfo* getGeometry(uint index);
 
-	GLuint addTexture(QImage image, GLenum type = GL_RGBA);
-	GLuint addTexture(QImage image, GLenum type, GLenum type2);
-	GLuint addTexture(const char * filePath, bool flipHorz = false, bool flipVert = false);
-	GLuint addTexture(ubyte * data, uint width, uint height, GLenum type = GL_RGBA);
-	GLuint addTexture(ubyte * data, uint width, uint height, GLenum type, GLenum type2);
-	GLuint addTexture(ShaderProgram::ImageData& imageData);
+	TextureInfo * add2DTexture(QImage& image, GLenum type = GL_RGBA);
+	TextureInfo * add2DTexture(QImage& image, GLenum type, GLenum type2);
+	TextureInfo * add2DTexture(const char * filePath, bool flipHorz = false, bool flipVert = false);
+	TextureInfo * add2DTexture(QString& filePath, bool flipHorz = false, bool flipVert = false);
+	TextureInfo * add2DTexture(ubyte * data, uint width, uint height, GLenum type = GL_RGBA);
+	TextureInfo * add2DTexture(ubyte * data, uint width, uint height, GLenum type, GLenum type2);
+	TextureInfo * add2DTexture(ImageData& imageData);
 
-	GLuint addCubeTexture(QString& posX,QString& negX,QString& posY,QString& negY,QString& posZ,QString& negZ);
-	GLuint addCubeTexture(const char * posX,const char * negX,const char * posY,const char * negY,const char * posZ,const char * negZ);
-	GLuint addCubeTexture(QString& directory,QString& posX,QString& negX,QString& posY,QString& negY,QString& posZ,QString& negZ);
-	GLuint addCubeTexture(const char * directory,const char * posX,const char * negX,const char * posY,const char * negY,const char * posZ,const char * negZ);
-	GLuint addCubeTexture(ShaderProgram::ImageData& posX,ShaderProgram::ImageData& negX,ShaderProgram::ImageData& posY,ShaderProgram::ImageData& negY,ShaderProgram::ImageData& posZ,ShaderProgram::ImageData& negZ);
-	GLuint addCubeTexture(QImage& posX,QImage negX,QImage& posY,QImage negY,QImage& posZ,QImage negZ);
+	TextureInfo * addCubeTexture(QString& posX,QString& negX,QString& posY,QString& negY,QString& posZ,QString& negZ);
+	TextureInfo * addCubeTexture(const char * posX,const char * negX,const char * posY,const char * negY,const char * posZ,const char * negZ);
+	TextureInfo * addCubeTexture(QString& directory,QString& posX,QString& negX,QString& posY,QString& negY,QString& posZ,QString& negZ);
+	TextureInfo * addCubeTexture(const char * directory,const char * posX,const char * negX,const char * posY,const char * negY,const char * posZ,const char * negZ);
+	TextureInfo * addCubeTexture(ImageData& posX,ImageData& negX,ImageData& posY,ImageData& negY,ImageData& posZ,ImageData& negZ);
+	TextureInfo * addCubeTexture(QImage& posX,QImage& negX,QImage& posY,QImage& negY,QImage& posZ,QImage& negZ);
 
 	void draw(GeometryInfo * toDraw);
 	void draw(GeometryInfo& toDraw);

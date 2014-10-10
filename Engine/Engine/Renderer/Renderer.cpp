@@ -3,6 +3,10 @@
 #include <Engine\Renderer\Renderer.h>
 #include <Qt\qdebug.h>
 #include <Engine\Defines\Vectors.h>
+#include <Qt\qapplication.h>
+#include <Qt\qfile.h>
+
+#define GL_RGBA 0x1908
 
 #include <Engine/DebugTools/DebugMemHeader.h>
 
@@ -85,45 +89,163 @@ ShaderProgram * Renderer::getShader(uint index) { return &allShaderProgs[index];
 Renderable    * Renderer::getRenderable(uint index) { return &myRenderables[index]; }
 GeometryInfo  * Renderer::getGeometry(uint index) { return &geoInfo[index];         }
 
-GLuint          Renderer::addTexture(QImage image, GLenum type) {
-	return ShaderProgram::load2DTexture(image,type);
-}
-GLuint          Renderer::addTexture(QImage image, GLenum type, GLenum type2) {
-	return ShaderProgram::load2DTexture(image,type,type2);
-}
-GLuint          Renderer::addTexture(const char * filePath, bool flipHorz, bool flipVert) {
-	QString data = QString(filePath);
-	return ShaderProgram::load2DTexture(data,flipHorz,flipVert);
-}
-GLuint          Renderer::addTexture(ubyte * data, uint width, uint height, GLenum type) {
-	return ShaderProgram::load2DTexture(data,width,height,type);
-}
-GLuint          Renderer::addTexture(ubyte * data, uint width, uint height, GLenum type, GLenum type2) {
-	return ShaderProgram::load2DTexture(data,width,height,type,type2);
-}
-GLuint          Renderer::addTexture(ShaderProgram::ImageData& imageData) {
-	return ShaderProgram::load2DTexture(imageData);
+namespace {
+
+	QString formatFileName(QString& fileName) {
+		QString formatedName = fileName.replace(QRegExp("[_]")," ");
+		formatedName = formatedName.remove(".jpg",Qt::CaseInsensitive);
+		formatedName = formatedName.remove(".png",Qt::CaseInsensitive);
+		int lastSlash = formatedName.lastIndexOf('/');
+		formatedName = formatedName.mid(lastSlash,formatedName.size()-lastSlash);
+		lastSlash = formatedName.lastIndexOf('\\');
+		formatedName = formatedName.mid(lastSlash,formatedName.size()-lastSlash);
+		return formatedName;
+	}
+
+	QImage getImageFromFile(QString& fileName, bool flipHorz, bool flipVert) {
+		QImage myTexture = QGLWidget::convertToGLFormat(QImage(fileName).mirrored(flipHorz,flipVert));
+
+		if(myTexture.isNull()) {
+			qDebug() << "attempt to load " << fileName << " failed";
+			assert(false);
+		} else {
+			QString formatedName = fileName.replace(QRegExp("[_]")," ");
+			formatedName = formatedName.remove(".jpg",Qt::CaseInsensitive);
+			formatedName = formatedName.remove(".png",Qt::CaseInsensitive);
+			int lastSlash = formatedName.lastIndexOf('/');
+			formatedName = formatedName.mid(lastSlash,formatedName.size()-lastSlash);
+			lastSlash = formatedName.lastIndexOf('\\');
+			formatedName = formatedName.mid(lastSlash,formatedName.size()-lastSlash);
+			qDebug() << "Texture Loaded ( " << myTexture.width() << "x" << myTexture.width() << " ): " << formatFileName(fileName);
+		}
+
+		return myTexture;
+	}
+
+	void update2DTexture(uint textureID, uint slot, ubyte * data, uint width, uint height, GLenum fileType, GLenum fileType2) {
+		glEnable(GL_TEXTURE_2D);
+		glActiveTexture(GL_TEXTURE0+slot);
+		glBindTexture(GL_TEXTURE_2D, textureID);
+
+		glTexImage2D(GL_TEXTURE_2D,0, fileType, width, height, 0, fileType2, GL_UNSIGNED_BYTE, data);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	}
+
+	void update2DTexture(uint textureID, uint slot, QImage& image, GLenum type, GLenum type2) {
+		update2DTexture(textureID,slot, image.bits(),image.width(),image.height(), type, type2);
+	}
+	void update2DTexture(uint textureID, uint slot, QImage& image, GLenum type = GL_RGBA) {
+		update2DTexture(textureID,slot, image.bits(),image.width(),image.height(), type, type);
+	}
+	void update2DTexture(uint textureID, uint slot, QString& fileName, bool flipHorz = false, bool flipVert = false) {
+		QString filePath = /**/QCoreApplication::applicationDirPath() + /**/fileName;
+		QFile tempFile(filePath);
+		if(tempFile.exists()) {
+			QImage data = getImageFromFile(filePath,flipHorz,flipVert);
+			update2DTexture(textureID,slot, data);
+		} else {
+			qDebug() << "Invalid file path " << formatFileName(filePath) << " Texture not loaded";
+			assert(false);
+		}
+	}
+	void update2DTexture(uint textureID, uint slot, ubyte * data, uint width, uint height, GLenum fileType) {
+		update2DTexture(textureID,slot,data,width,height,fileType,fileType);
+	}
+	void update2DTexture(uint textureID, uint slot, ImageData& imageData) {
+		update2DTexture(textureID,slot, imageData.data,imageData.width,imageData.height,imageData.type, imageData.type2 == -1 ? imageData.type : imageData.type2);
+	}
+	
 }
 
-GLuint          Renderer::addCubeTexture(QString& posX,QString& negX,QString& posY,QString& negY,QString& posZ,QString& negZ) {
-	return ShaderProgram::loadCubeTexture(posX,negX,posY,negY,posZ,negZ);
+TextureInfo * Renderer::add2DTexture(QImage& image, GLenum type) {
+	return add2DTexture(image,type,type);
 }
-GLuint          Renderer::addCubeTexture(QString& directory,QString& posX,QString& negX,QString& posY,QString& negY,QString& posZ,QString& negZ) {
-	return ShaderProgram::loadCubeTexture(directory,posX,negX,posY,negY,posZ,negZ);
+TextureInfo * Renderer::add2DTexture(QImage& image, GLenum type, GLenum type2) {
+	return add2DTexture(image.bits(),image.width(),image.height(), type, type2);
 }
-GLuint          Renderer::addCubeTexture(const char * posX,const char * negX,const char * posY,const char * negY,const char * posZ,const char * negZ) {
-	QString data[] =  { QString(posX),QString(negX),QString(posY),QString(negY),QString(posZ),QString(negZ) };
-	return ShaderProgram::loadCubeTexture(data[0],data[1],data[2],data[3],data[4],data[5]);
+TextureInfo * Renderer::add2DTexture(const char * fileName, bool flipHorz, bool flipVert) {
+	QString data(fileName);
+	return add2DTexture(data,flipHorz,flipVert);
 }
-GLuint          Renderer::addCubeTexture(const char * directory,const char * posX,const char * negX,const char * posY,const char * negY,const char * posZ,const char * negZ) {
-	QString data[] =  { QString(directory), QString(posX),QString(negX),QString(posY),QString(negY),QString(posZ),QString(negZ) };
-	return ShaderProgram::loadCubeTexture(data[0],data[1],data[2],data[3],data[4],data[5],data[6]);
+TextureInfo * Renderer::add2DTexture(QString& fileName, bool flipHorz, bool flipVert) {
+	QString filePath = /**/QCoreApplication::applicationDirPath() + /**/fileName;
+	QFile tempFile(filePath);
+	if(tempFile.exists()) {
+		QImage data = getImageFromFile(filePath,flipHorz,flipVert);
+		return add2DTexture(data);
+	} else {
+		qDebug() << "Invalid file path " << formatFileName(filePath) << " Texture not loaded";
+		assert(false);
+		return nullptr;
+	}
 }
-GLuint          Renderer::addCubeTexture(ShaderProgram::ImageData& posX,ShaderProgram::ImageData& negX,ShaderProgram::ImageData& posY,ShaderProgram::ImageData& negY,ShaderProgram::ImageData& posZ,ShaderProgram::ImageData& negZ) {
-	return ShaderProgram::loadCubeTexture(posX,negX,posY,negY,posZ,negZ);
+TextureInfo * Renderer::add2DTexture(ubyte * data, uint width, uint height, GLenum fileType) {
+	return add2DTexture(data,width,height,fileType,fileType);
 }
-GLuint          Renderer::addCubeTexture(QImage& posX,QImage negX,QImage& posY,QImage negY,QImage& posZ,QImage negZ) {
-	return ShaderProgram::loadCubeTexture(posX,negX,posY,negY,posZ,negZ);
+TextureInfo * Renderer::add2DTexture(ubyte * data, uint width, uint height, GLenum fileType, GLenum fileType2) {
+	static uint ID = 0;
+	textures.add(TextureInfo());
+	TextureInfo * ret = &textures.last();
+	ret->slotID = ID++;
+	glGenTextures(1,&ret->bufferID);
+	update2DTexture(ret->bufferID,ret->slotID,data,width,height,fileType,fileType2);
+	return ret;
+}
+
+TextureInfo * Renderer::addCubeTexture(QString& posX,QString& negX,QString& posY,QString& negY,QString& posZ,QString& negZ) {
+	QString paths[] = { posX, negX, posY, negY, posZ, negZ };
+	const int pathSize = sizeof(paths) / sizeof(*paths);
+	QImage imageData[pathSize];
+	ImageData ret[pathSize];
+
+	for(int i=0;i<pathSize;i++) {
+		QString filePath = /**/QCoreApplication::applicationDirPath() + /**/paths[i];
+		QFile tempFile(filePath);
+		if(tempFile.exists()) {
+			imageData[i] = getImageFromFile(filePath,false,true);
+			ret[i].init(imageData[i]);
+		} else {
+			qDebug() << "Invalid file path " << formatFileName(filePath) << " Texture not loaded";
+			assert(false);
+		}
+	}
+	return addCubeTexture(ret[0],ret[1],ret[2],ret[3],ret[4],ret[5]);
+}
+TextureInfo * Renderer::addCubeTexture(QString& directory,QString& posX,QString& negX,QString& posY,QString& negY,QString& posZ,QString& negZ) {
+	QString paths[] = { posX, negX, posY, negY, posZ, negZ };
+	const int pathSize = sizeof(paths) / sizeof(*paths);
+	for(int i=0;i<pathSize;i++) {
+		paths[i] = directory+"/"+paths[i];
+	}
+	return addCubeTexture(paths[0],paths[1],paths[2],paths[3],paths[4],paths[5]);
+}
+TextureInfo * Renderer::addCubeTexture(ImageData& posX,ImageData& negX,ImageData& posY,ImageData& negY,ImageData& posZ,ImageData& negZ) {
+	static uint ID = 0;
+	textures.add(TextureInfo());
+	TextureInfo * ret = &textures.last();
+
+	ret->slotID= ID++;
+
+	glEnable(GL_TEXTURE_2D);
+	glGenTextures(1,&ret->bufferID);
+	glActiveTexture(GL_TEXTURE0+ret->slotID);
+	glBindTexture(GL_TEXTURE_CUBE_MAP, ret->bufferID);
+
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+	ImageData images[] = { posX, negX, posY, negY, posZ, negZ };
+	const int pathSize = sizeof(images) / sizeof(*images);
+	for(int i=0;i<pathSize;i++) {
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X+i, 0, images[i].type, images[i].width, images[i].height, 0, images[i].type, GL_UNSIGNED_BYTE, images[i].data);
+	}
+
+	return ret;
+}
+TextureInfo * Renderer::addCubeTexture(QImage& posX,QImage& negX,QImage& posY,QImage& negY,QImage& posZ,QImage& negZ) {
+	ImageData data[] = { ImageData(posX),ImageData(negX),ImageData(posY),ImageData(negY),ImageData(posZ),ImageData(negZ) };
+	return addCubeTexture(data[0],data[1],data[2],data[3],data[4],data[5]);
 }
 
 void            Renderer::draw(Renderable& toDraw) {
