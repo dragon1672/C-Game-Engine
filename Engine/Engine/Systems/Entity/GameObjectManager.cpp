@@ -1,6 +1,8 @@
 #include "GameObjectManager.h"
 #include <Engine/Entity/Entity.h>
 
+IMPLEMENT_SINGLETON(GameObjectManager);
+
 GameObjectManager::GameObjectManager() : active(false) {}
 bool GameObjectManager::init() {
 	if(!active)
@@ -26,6 +28,22 @@ void GameObjectManager::update() {
 	}
 }
 void GameObjectManager::paint() {
+	/*
+	if(clear) {
+		float clearX = toDraw.clearColor.x;
+		float clearY = toDraw.clearColor.y;
+		float clearZ = toDraw.clearColor.z;
+		glClearColor(clearX,clearY,clearZ,1);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	}
+
+	const float aspectRatio = (float)width()/(float)height();
+	perspectiveMat = glm::perspective(60.0f,aspectRatio,nearPlane,farPlane);
+	viewTransform = perspectiveMat;
+	viewTransform *= toDraw.cam.enabled ? toDraw.cam.getWorld2View() : myCam.getWorld2View();
+	viewTransform *= additionalViewTransform;
+	//*/
+
 	for (uint i = 0; i < entities.size(); i++) {
 		RenderableComponent * renderable = entities[i].getComponent<RenderableComponent>();
 		if(renderable != nullptr && renderable->visable) {
