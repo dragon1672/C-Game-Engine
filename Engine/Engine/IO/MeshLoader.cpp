@@ -44,13 +44,8 @@ namespace FileIO {
 	Mesh loadFromBinary(fileByte * bytes) {
 		int offset = 0;
 		int firstNum = GET_DATA(int,offset);
-		if(firstNum % 16) {
-			//qDebug() << "Invalid Binary File";
-		}
-
-		assert(firstNum % 16 == 0);
-		//int index = firstNum / 16;
-		return Mesh();
+		int index = firstNum / 16;
+		return loaders[index](bytes);
 	}
 	Mesh loadMeshFromFile(const char * filePath) {
 		FileData file = loadFile(filePath);
