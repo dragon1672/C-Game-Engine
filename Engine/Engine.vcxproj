@@ -164,6 +164,7 @@
     <ClInclude Include="Engine\Systems\WidgetRenderer.h" />
     <ClInclude Include="Engine\Entity\Component.h" />
     <ClInclude Include="Engine\Entity\Entity.h" />
+    <ClInclude Include="Engine\Tools\Ray.h" />
     <ClInclude Include="ExportHeader.h" />
     <ClInclude Include="Engine\FastDelegate.h" />
     <ClInclude Include="Engine\Renderer\Geo\GeometryInfo.h" />
@@ -203,7 +204,6 @@
     <ClCompile Include="Engine\Renderer\Output\PassInfo.cpp" />
     <ClCompile Include="Engine\Systems\SceneManager.cpp" />
     <ClCompile Include="Engine\Tools\BinaryToShapeLoader.cpp" />
-    <ClCompile Include="Engine\Tools\ConstVector.cpp" />
     <ClCompile Include="Engine\Tools\MatrixInfo.cpp" />
     <ClCompile Include="Engine\Tools\QT\ButtonInfo_mock.cpp" />
     <ClCompile Include="Engine\Tools\Camera.cpp" />
