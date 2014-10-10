@@ -86,6 +86,7 @@
     <ClInclude Include="Engine\Defines\VecGetSet.h" />
     <ClInclude Include="Engine\Renderer\TextureInfo.h" />
     <ClInclude Include="Engine\Tools\ConstVector.h" />
+    <ClInclude Include="Engine\IO\FileIO.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -131,6 +132,7 @@
     <ClCompile Include="Engine\Renderer\Geo\Vert.cpp" />
     <ClCompile Include="Engine\Renderer\Geo\Mesh.cpp" />
     <ClCompile Include="Engine\Tools\ConstVector.cpp" />
+    <ClCompile Include="Engine\IO\FileIO.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Tools\MyMath\Matrix2D.inl" />

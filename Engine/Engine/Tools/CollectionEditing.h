@@ -34,7 +34,7 @@ namespace Collections {
 	long   Sum(std::vector<long   > array) { return SingleSelect<long  >(array,[](long   a, long   b) -> long   { return a + b; }); }
 	float  Sum(std::vector<float  > array) { return SingleSelect<float >(array,[](float  a, float  b) -> float  { return a + b; }); }
 	double Sum(std::vector<double > array) { return SingleSelect<double>(array,[](double a, double b) -> double { return a + b; }); }
-	template <typename T, typename R> std::vector<T> Select(std::vector<T> array, std::function<R(T)> selector) {
+	template <typename T, typename R> std::vector<R> Select(std::vector<T> array, std::function<R(T)> selector) {
 		std::vector<R> ret;
 		for(int i=0;i<array.size();i++) ret.push_back(selector(array[i]));
 		return ret;
@@ -69,7 +69,7 @@ namespace Collections {
 	long   Sum(long    * array, int size) { return SingleSelect<long  >(array,size,[](long   a, long   b) -> long   { return a + b; }); }
 	float  Sum(float   * array, int size) { return SingleSelect<float >(array,size,[](float  a, float  b) -> float  { return a + b; }); }
 	double Sum(double  * array, int size) { return SingleSelect<double>(array,size,[](double a, double b) -> double { return a + b; }); }
-	template <typename T, typename R> std::vector<T> Select(T * array, int size, std::function<R(T)> selector) {
+	template <typename T, typename R> std::vector<R> Select(T * array, int size, std::function<R(T)> selector) {
 		std::vector<R> ret;
 		for(int i=0;i<size;i++) ret.push_back(selector(array[i]));
 		return ret;
