@@ -104,6 +104,7 @@
     <ClInclude Include="Engine\Defines\VecGetSet.h" />
     <ClInclude Include="Engine\Entity\Components\RenderableComponent.h" />
     <ClInclude Include="Engine\IO\FileIO.h" />
+    <ClInclude Include="Engine\IO\MeshLoader.h" />
     <ClInclude Include="Engine\Pathing\AStar\AStarNode.h" />
     <ClInclude Include="Engine\Pathing\AStar\AStarPath.h" />
     <ClInclude Include="Engine\Pathing\AStar\AStarPathGenerator.h" />
@@ -183,6 +184,7 @@
     <ClCompile Include="Engine\DebugTools\Logging\LogManager.cpp" />
     <ClCompile Include="Engine\DebugTools\Profiling\AutoProfilerManager.cpp" />
     <ClCompile Include="Engine\IO\FileIO.cpp" />
+    <ClCompile Include="Engine\IO\MeshLoader.cpp" />
     <ClCompile Include="Engine\Pathing\AStar\AStarNode.cpp" />
     <ClCompile Include="Engine\Pathing\AStar\AStarPath.cpp" />
     <ClCompile Include="Engine\Pathing\AStar\AStarPathGenerator.cpp" />
