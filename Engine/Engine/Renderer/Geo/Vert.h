@@ -10,13 +10,13 @@ public:
 	glm::vec3 pos;
 	glm::vec4 col;
 	glm::vec3 norm;
-	glm::vec3 tan;
+	glm::vec4 tan;
 	glm::vec2 uv;
 	Vert() : 
 		pos(0,0,0),
 		col(1,1,1,1),
 		norm(0,0,0),
-		tan(0,0,0),
+		tan(0,0,0,0),
 		uv(0,0)
 	{}
 	Vert(Neumont::Vertex v) {

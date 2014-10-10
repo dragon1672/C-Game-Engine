@@ -19,6 +19,7 @@ public:
 	glm::vec3 min;
 	glm::vec3 max;
 	void updateMinAndMax();
+	void updateTangents();
 
 
 	void passToHardware();
