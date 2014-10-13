@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Qt/qpushbutton.h>
+#include <QtWidgets/qpushbutton.h>
 #include <Engine\FastDelegate.h>
 
 class ButtonInfo : public QObject {

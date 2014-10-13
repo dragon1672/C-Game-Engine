@@ -3,10 +3,10 @@
 #include <fstream>
 #pragma warning(disable: 4127)
 #pragma warning(push)
-#include <Qt/qdebug.h>
-#include <Qt/qcoreapplication.h>
-#include <Qt/qimage.h>
-#include <Qt/qfile.h>
+#include <QtCore\QDebug>
+#include <QtCore/QFile>
+#include <QtGui/QImage>
+#include <QtCore/QCoreApplication>
 #pragma warning(pop)
 #include <cassert>
 #include <Engine\Defines\Vectors.h>

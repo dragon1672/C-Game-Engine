@@ -4,7 +4,7 @@
 #ifdef _DEBUG
 #pragma warning(disable: 4127)
 #pragma warning(push)
-#include <Qt\qdebug.h>
+#include <QtCore\QDebug>
 #pragma warning(pop)
 #endif
 

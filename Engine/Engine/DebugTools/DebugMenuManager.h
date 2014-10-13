@@ -10,13 +10,13 @@
 //*/
 
 #include <glm\glm.hpp>
-#include <QtGui\QHBoxLayout>
-#include <QtGui\QVBoxLayout>
-#include <QtGui\qgridlayout.h>
-#include <QtGui\qwidget.h>
+#include <QtWidgets\QHBoxLayout>
+#include <QtWidgets\QVBoxLayout>
+#include <QtWidgets\qgridlayout.h>
+#include <QtWidgets\QWidget>
 #include <ExportHeader.h>
 
-#include <Qt/qtabwidget.h>
+#include <QtWidgets/QTabWidget>
 
 #include <Engine\Tools\QT\ButtonInfo.h>
 #include <Engine/FastDelegate.h>

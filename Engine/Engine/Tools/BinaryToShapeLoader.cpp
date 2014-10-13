@@ -1,7 +1,7 @@
 #include <Engine\Tools\BinaryToShapeLoader.h>
 #include <fstream>
 #include <glm\glm.hpp>
-#include <Qt\qdebug.h>
+#include <QtCore\QDebug>
 #include <Engine\DebugTools\DebugMemHeader.h>
 
 #define GET_DATA(type, offset) *reinterpret_cast<type *>(bytes+offset);	offset += sizeof(type);

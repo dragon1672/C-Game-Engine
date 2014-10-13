@@ -1,13 +1,13 @@
 #include "DebugMenuManager.h"
 #include <Engine\unsigned.h>
 
-#include <Qt/qcheckbox.h>
-#include <Qt/qlabel.h>
+#include <QtWidgets/qcheckbox.h>
+#include <QtWidgets/qlabel.h>
 #include <Engine\Tools\QT\LinkedSlider.h>
 #include <sstream>
 #include <iomanip>
 #include <Engine\Tools\QT\LinkedIntSlider.h>
-#include <Qt/qtablewidget.h>
+#include <QtWidgets/qtablewidget.h>
 #include <Engine/Defines/Vectors.h>
 
 

@@ -1,7 +1,7 @@
 #include <Engine\Tools\QT\DebugSlider.h>
-#include <QtGui\qvboxlayout>
-#include <QtGui\qslider>
-#include <QtGui\qlabel>
+#include <QtWidgets\qvboxlayout>
+#include <QtWidgets\qslider>
+#include <QtWidgets\qlabel>
 
 DebugSlider::DebugSlider(float min, float max, bool textOnLeft, float granularity) {
 	QLayout* layout;

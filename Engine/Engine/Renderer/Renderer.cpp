@@ -1,10 +1,10 @@
 #include <GL/glew.h>
 
 #include <Engine\Renderer\Renderer.h>
-#include <Qt\qdebug.h>
+#include <QtCore\QDebug>
 #include <Engine\Defines\Vectors.h>
-#include <Qt\qapplication.h>
-#include <Qt\qfile.h>
+#include <QtWidgets\QApplication>
+#include <QtCore\QFile>
 
 #define GL_RGBA 0x1908
 

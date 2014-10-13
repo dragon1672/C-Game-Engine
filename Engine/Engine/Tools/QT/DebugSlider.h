@@ -1,6 +1,7 @@
 #ifndef DEBUG_SLIDER_H
 #define DEBUG_SLIDER_H
-#include <QtGui\qwidget>
+
+#include <QtWidgets\QWidget>
 #include <ExportHeader.h>
 class QSlider;
 class QLabel;

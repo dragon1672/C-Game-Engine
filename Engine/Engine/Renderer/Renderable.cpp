@@ -1,5 +1,5 @@
 #include <Engine\Renderer\Renderable.h>
-#include <Qt/qdebug.h>
+#include <QtCore\QDebug>
 #include <Engine\Defines\Vectors.h>
 
 void Renderable::init(GeometryInfo * whatGeo, ShaderProgram * howShader, bool visible, uint textureID) {
