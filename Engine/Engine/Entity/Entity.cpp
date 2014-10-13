@@ -40,16 +40,28 @@ int Entity::getIndex(const char * toFind)
 
 int Entity::getIndex(std::string toFind)
 {
-	std::string toCheck = std::string("class ").append(toFind);
-	for(uint i=0;i<components.size();i++) {
-		if(toCheck.compare(typeid(*components[i]).name())) return i;
-	}
-	return -1;
+	return getIndex(toFind.c_str());
 }
 
-LuaTable * Entity::getLuaComponent(std::string name)
+glm::mat4 Entity::getWorldTransform()
 {
-	//int index = getIndex(name);
-	//return (index < 0) ? components[index]->getLuaComponent() : nullptr;
-	return nullptr;
+	glm::mat4 ret;
+	Entity * current = this;
+	while(current != nullptr) {
+		ret = current->getTrans()->getCompleteTransform() * ret;
+		current = current->parent;
+	}
+	return ret;
+}
+
+const char * Entity::getName()
+{
+	return name;
+}
+
+Entity::Entity(const char * name/*="New Game Object"*/, Entity * p /*= nullptr*/)  : name(name), parent(p) { }
+
+MatrixInfo * Entity::getTrans()
+{
+	return getComponent<MatrixInfo>();
 }

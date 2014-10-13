@@ -27,5 +27,5 @@ void RenderableComponent::drawWarmup() {
 }
 
 void RenderableComponent::update() {
-	transform.init(howShader,transformShaderName,ParameterType::PT_MAT4,&parent->transform.getTransform()[0][0]);
+	transform.init(howShader,transformShaderName,ParameterType::PT_MAT4,&parent->getTrans()->getTransform()[0][0]);
 }

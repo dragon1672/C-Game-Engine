@@ -11,35 +11,40 @@ class Component;
 
 class ENGINE_SHARED Entity {
 private:
+	const char * name;
 	void removeComponent(int toKill);
 	template<typename T> int getIndex() {
-		for(uint i=0;i<components.size();i++) {
-			if(typeid(*components[i]) == typeid(T)) return i;
-		}
-		return -1;
+		return getIndex(typeid(T).name());
 	}
 	int getIndex(Component * toFind);
 	int getIndex(const char * toFind);
 	int getIndex(std::string toFind);
 public:
+	Entity * parent;
+
+	Entity(const char * name="New Game Object", Entity * p = nullptr);
+	const char * getName();
 	virtual ~Entity(){}
 
-	Entity * parent;
 	std::vector<Component *> components;
-	MatrixInfo transform;
+	glm::mat4 getWorldTransform();
+	glm::mat4 localTrans;
 
-	Entity(Entity * p = nullptr) {
-		parent = p;
-	}
+	//default components getters
+	MatrixInfo * getTrans();
+
 	void addComponent(Component * toAdd);
 	template<typename T> void removeComponent() {
 		removeComponent(getIndex<T>()); 
+	}
+	template<class T> T* getComponent(std::string name) {
+		int index = getIndex(name);
+		return (index < 0) ? (T*)components[index] : nullptr;
 	}
 	template<class T> T* getComponent() {
 		int index = getIndex<T>();
 		return (index < 0) ? (T*)components[index] : nullptr;
 	}
-	LuaTable * getLuaComponent(std::string name);
 	void removeComponent(Component * toKill);
 	void init();
 	void earlyUpdate();
