@@ -1,8 +1,6 @@
 #pragma once
 
 #include <ExportHeader.h>
-#pragma warning( disable : 4244 )
-//#include <luacppinterface.h>
 
 class Entity;
 class ENGINE_SHARED Component { 
