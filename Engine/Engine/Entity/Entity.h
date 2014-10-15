@@ -41,11 +41,11 @@ public:
 	}
 	template<class T> T* getComponent(std::string name) {
 		int index = getIndex(name);
-		return (index < 0) ? (T*)components[index] : nullptr;
+		return (index <= 0) ? (T*)components[index] : nullptr;
 	}
 	template<class T> T* getComponent() {
 		int index = getIndex<T>();
-		return (index < 0) ? (T*)components[index] : nullptr;
+		return (index <= 0) ? (T*)components[index] : nullptr;
 	}
 	void removeComponent(Component * toKill);
 	void init();
