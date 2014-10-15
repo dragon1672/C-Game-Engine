@@ -1,7 +1,7 @@
 #include "Entity.h"
 #include "Component.h"
 #include <Engine\unsigned.h>
-//#include <typeinfo.h>
+#include <typeinfo.h>
 
 void Entity::removeComponent(int toKill) {
 	if(toKill >= 0 && toKill < (int)components.size()) {
@@ -48,7 +48,7 @@ glm::mat4 Entity::getWorldTransform()
 	glm::mat4 ret;
 	Entity * current = this;
 	while(current != nullptr) {
-		ret = current->getTrans()->getCompleteTransform() * ret;
+		ret = current->localTrans * ret;
 		current = current->parent;
 	}
 	return ret;
@@ -61,7 +61,12 @@ const char * Entity::getName()
 
 Entity::Entity(const char * name/*="New Game Object"*/, Entity * p /*= nullptr*/)  : name(name), parent(p) { }
 
-MatrixInfo * Entity::getTrans()
-{
-	return getComponent<MatrixInfo>();
-}
+
+#include <Engine/Tools/MatrixInfo.h>
+MatrixInfo * Entity::getTrans() { return getComponent<MatrixInfo>(); }
+
+#include <Engine/Entity/Components/RenderableComponent.h>
+RenderableComponent * Entity::getRenderable() { return getComponent<RenderableComponent>(); }
+
+#include <Engine/Entity/Components/ScriptComponent.h>
+ScriptComponent * Entity::getScript() { return getComponent<ScriptComponent>(); }

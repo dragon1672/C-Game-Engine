@@ -2,10 +2,11 @@
 
 #include <vector>
 #include <glm/glm.hpp>
-#include <Engine\Tools\MatrixInfo.h>
 #include <ExportHeader.h>
-#pragma warning( disable : 4244 )
-#include <luacppinterface.h>
+
+class MatrixInfo;
+class RenderableComponent;
+class ScriptComponent;
 
 class Component;
 
@@ -30,8 +31,9 @@ public:
 	glm::mat4 getWorldTransform();
 	glm::mat4 localTrans;
 
-	//default components getters
 	MatrixInfo * getTrans();
+	RenderableComponent * getRenderable();
+	ScriptComponent * getScript();
 
 	void addComponent(Component * toAdd);
 	template<typename T> void removeComponent() {
