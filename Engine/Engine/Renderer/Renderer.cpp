@@ -152,8 +152,8 @@ namespace {
 	void update2DTexture(uint textureID, uint slot, ubyte * data, uint width, uint height, GLenum fileType) {
 		update2DTexture(textureID,slot,data,width,height,fileType,fileType);
 	}
-	void update2DTexture(uint textureID, uint slot, ImageData& imageData) {
-		update2DTexture(textureID,slot, imageData.data,imageData.width,imageData.height,imageData.type, imageData.type2 == -1 ? imageData.type : imageData.type2);
+	void update2DTexture(uint textureID, uint slot, TextureInfo& TextureInfo) {
+		update2DTexture(textureID,slot, TextureInfo.data,TextureInfo.width,TextureInfo.height,TextureInfo.type, TextureInfo.type2 == -1 ? TextureInfo.type : TextureInfo.type2);
 	}
 	
 }
@@ -196,15 +196,15 @@ TextureInfo * Renderer::add2DTexture(ubyte * data, uint width, uint height, GLen
 TextureInfo * Renderer::addCubeTexture(QString& posX,QString& negX,QString& posY,QString& negY,QString& posZ,QString& negZ) {
 	QString paths[] = { posX, negX, posY, negY, posZ, negZ };
 	const int pathSize = sizeof(paths) / sizeof(*paths);
-	QImage imageData[pathSize];
-	ImageData ret[pathSize];
+	QImage data[pathSize];
+	TextureInfo ret[pathSize];
 
 	for(int i=0;i<pathSize;i++) {
 		QString filePath = /**/QCoreApplication::applicationDirPath() + /**/paths[i];
 		QFile tempFile(filePath);
 		if(tempFile.exists()) {
-			imageData[i] = getImageFromFile(filePath,false,true);
-			ret[i].init(imageData[i]);
+			data[i] = getImageFromFile(filePath,false,true);
+			ret[i] = TextureInfo(data[i]);
 		} else {
 			qDebug() << "Invalid file path " << formatFileName(filePath) << " Texture not loaded";
 			assert(false);
@@ -220,7 +220,7 @@ TextureInfo * Renderer::addCubeTexture(QString& directory,QString& posX,QString&
 	}
 	return addCubeTexture(paths[0],paths[1],paths[2],paths[3],paths[4],paths[5]);
 }
-TextureInfo * Renderer::addCubeTexture(ImageData& posX,ImageData& negX,ImageData& posY,ImageData& negY,ImageData& posZ,ImageData& negZ) {
+TextureInfo * Renderer::addCubeTexture(TextureInfo& posX,TextureInfo& negX,TextureInfo& posY,TextureInfo& negY,TextureInfo& posZ,TextureInfo& negZ) {
 	static uint ID = 0;
 	textures.add(TextureInfo());
 	TextureInfo * ret = &textures.last();
@@ -235,7 +235,7 @@ TextureInfo * Renderer::addCubeTexture(ImageData& posX,ImageData& negX,ImageData
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-	ImageData images[] = { posX, negX, posY, negY, posZ, negZ };
+	TextureInfo images[] = { posX, negX, posY, negY, posZ, negZ };
 	const int pathSize = sizeof(images) / sizeof(*images);
 	for(int i=0;i<pathSize;i++) {
 		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X+i, 0, images[i].type, images[i].width, images[i].height, 0, images[i].type, GL_UNSIGNED_BYTE, images[i].data);
@@ -244,7 +244,7 @@ TextureInfo * Renderer::addCubeTexture(ImageData& posX,ImageData& negX,ImageData
 	return ret;
 }
 TextureInfo * Renderer::addCubeTexture(QImage& posX,QImage& negX,QImage& posY,QImage& negY,QImage& posZ,QImage& negZ) {
-	ImageData data[] = { ImageData(posX),ImageData(negX),ImageData(posY),ImageData(negY),ImageData(posZ),ImageData(negZ) };
+	TextureInfo data[] = { TextureInfo(posX),TextureInfo(negX),TextureInfo(posY),TextureInfo(negY),TextureInfo(posZ),TextureInfo(negZ) };
 	return addCubeTexture(data[0],data[1],data[2],data[3],data[4],data[5]);
 }
 

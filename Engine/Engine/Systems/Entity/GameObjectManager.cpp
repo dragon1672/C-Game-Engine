@@ -1,8 +1,6 @@
 #include "GameObjectManager.h"
 #include <Engine/Entity/Entity.h>
 
-IMPLEMENT_SINGLETON(GameObjectManager);
-
 GameObjectManager::GameObjectManager() : active(false) {}
 bool GameObjectManager::init() {
 	if(!active)
@@ -51,4 +49,10 @@ void GameObjectManager::paint() {
 			renderer.draw(renderable->whatGeo);
 		}
 	}
+}
+
+Entity * GameObjectManager::AddEntity(const char * name)
+{
+	entities.add(Entity(name));
+	return &entities.last();
 }

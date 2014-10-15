@@ -56,13 +56,13 @@ public:
 	TextureInfo * add2DTexture(QString& filePath, bool flipHorz = false, bool flipVert = false);
 	TextureInfo * add2DTexture(ubyte * data, uint width, uint height, GLenum type = GL_RGBA);
 	TextureInfo * add2DTexture(ubyte * data, uint width, uint height, GLenum type, GLenum type2);
-	TextureInfo * add2DTexture(ImageData& imageData);
+	TextureInfo * add2DTexture(TextureInfo& imageData);
 
 	TextureInfo * addCubeTexture(QString& posX,QString& negX,QString& posY,QString& negY,QString& posZ,QString& negZ);
 	TextureInfo * addCubeTexture(const char * posX,const char * negX,const char * posY,const char * negY,const char * posZ,const char * negZ);
 	TextureInfo * addCubeTexture(QString& directory,QString& posX,QString& negX,QString& posY,QString& negY,QString& posZ,QString& negZ);
 	TextureInfo * addCubeTexture(const char * directory,const char * posX,const char * negX,const char * posY,const char * negY,const char * posZ,const char * negZ);
-	TextureInfo * addCubeTexture(ImageData& posX,ImageData& negX,ImageData& posY,ImageData& negY,ImageData& posZ,ImageData& negZ);
+	TextureInfo * addCubeTexture(TextureInfo& posX,TextureInfo& negX,TextureInfo& posY,TextureInfo& negY,TextureInfo& posZ,TextureInfo& negZ);
 	TextureInfo * addCubeTexture(QImage& posX,QImage& negX,QImage& posY,QImage& negY,QImage& posZ,QImage& negZ);
 
 	void draw(GeometryInfo * toDraw);

@@ -91,33 +91,28 @@ void ShaderProgram::passUniform(const char* name, ParameterType parameterType, c
 	uint location = getUniform(name);
 	passUniform(location,parameterType,value);
 }
-void ShaderProgram::passUniform(uint location, ParameterType parameterType, const void * value) {
-	if(parameterType == ParameterType::PT_FLOAT) {
-		glUniform1f(location, *(float*)value);
-	} else if(parameterType == ParameterType::PT_VEC2) {
-		glUniform2fv(location,1,(float*)value);
-	} else if(parameterType == ParameterType::PT_VEC3) {
-		glUniform3fv(location,1,(float*)value);
-	} else if(parameterType == ParameterType::PT_VEC4) {
-		glUniform4fv(location,1,(float*)value);
-	} else if(parameterType == ParameterType::PT_MAT3) {
-		glUniformMatrix3fv(location,1,false,(float*)value);
-	} else if(parameterType == ParameterType::PT_MAT4) {
-		glUniformMatrix4fv(location,1,false,(float*)value);
-	} else if(ParameterType::PT_BOOLEAN) {
-		bool decodedValue = *(bool*)value;
-		glUniform1i(location,decodedValue);
-	} else if(parameterType == ParameterType::PT_INT) {
-		int decodedValue = *(int*)value;
-		glUniform1i(location,decodedValue);
-	} else if(parameterType == ParameterType::PT_TEXTURE) {
-		int slot = ((TextureInfo*)value)->slotID;
-		glUniform1i(location,slot);
-	} else {
-		//wat?
-		qDebug() << "Uniform " << location << " of type: " << parameterType << " was not passed down correctly";
-		assert(false);
+
+#include <map>
+#include <functional>
+namespace {
+	std::map<ParameterType,std::function<void(uint,const void *)>> makeMap() {
+		std::map<ParameterType,std::function<void(uint,const void *)>> ret;
+		ret[ParameterType::PT_FLOAT   ] = [](uint location,const void * value)->void{ glUniform1f(       location,         *(float*)value);                 };
+		ret[ParameterType::PT_VEC2    ] = [](uint location,const void * value)->void{ glUniform2fv(      location,1,        (float*)value);                 };
+		ret[ParameterType::PT_VEC3    ] = [](uint location,const void * value)->void{ glUniform3fv(      location,1,        (float*)value);                 };
+		ret[ParameterType::PT_VEC4    ] = [](uint location,const void * value)->void{ glUniform4fv(      location,1,        (float*)value);                 };
+		ret[ParameterType::PT_MAT3    ] = [](uint location,const void * value)->void{ glUniformMatrix3fv(location,1, false, (float*)value);                 };
+		ret[ParameterType::PT_MAT4    ] = [](uint location,const void * value)->void{ glUniformMatrix4fv(location,1, false, (float*)value);                 };
+		ret[ParameterType::PT_BOOLEAN ] = [](uint location,const void * value)->void{ glUniform1i(       location,          *(bool*)value);                 };
+		ret[ParameterType::PT_INT     ] = [](uint location,const void * value)->void{ glUniform1i(       location,          *(int*) value);                 };
+		ret[ParameterType::PT_TEXTURE ] = [](uint location,const void * value)->void{ glUniform1i(       location,          ((TextureInfo*)value)->slotID); };
+		return ret;
 	}
+	std::map<ParameterType,std::function<void(uint,const void *)>> uniformPasses = makeMap();
+}
+
+void ShaderProgram::passUniform(uint location, ParameterType parameterType, const void * value) {
+	uniformPasses[parameterType](location,value);
 }
 
 void ShaderProgram::saveUniform(const char * name, const bool& value)      { saveUniform(name,ParameterType::PT_BOOLEAN,&value);    }
