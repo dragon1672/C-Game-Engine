@@ -6,6 +6,7 @@
 
 class ENGINE_SHARED ScriptComponent : public Component {
 	static Lua lua;
+	static const char * LuaTemplate;
 	LuaTable context;
 public:
 	const char * script;
