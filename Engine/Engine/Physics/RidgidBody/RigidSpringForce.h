@@ -3,7 +3,7 @@
 #include <map>
 #include <Engine/Physics/Particles/ParticleForceGenerator.h>
 #include <vector>
-#include <Engine/unsigned.h>
+#include <Engine/TypeDefs.h>
 #include "RidgidBody.h"
 #include <glm/gtx/rotate_vector.hpp>
 #include <glm/gtx/perpendicular.hpp>

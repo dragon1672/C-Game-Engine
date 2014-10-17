@@ -174,7 +174,7 @@
     <ClInclude Include="Engine\Renderer\Shader\ShaderUniformPram.h" />
     <ClInclude Include="Engine\Tools\SingleKeyManager.h" />
     <ClInclude Include="Engine\Tools\Timer.h" />
-    <ClInclude Include="Engine\unsigned.h" />
+    <ClInclude Include="Engine\TypeDefs.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\DebugTools\DebugShapeManager.cpp" />

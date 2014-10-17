@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include <Engine/unsigned.h>
+#include <Engine/TypeDefs.h>
 #include <Engine/Renderer/Geo/Mesh.h>
 
 typedef char fileByte;

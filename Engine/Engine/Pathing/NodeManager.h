@@ -7,7 +7,7 @@
 #include "GameNode.h"
 #include "GameNodeConnection.h"
 #include <Engine/Tools/Ray.h>
-#include <Engine/unsigned.h>
+#include <Engine/TypeDefs.h>
 #include <Engine/Pathing/AStar/AStarPath.h>
 
 #define UnSelectedColor glm::vec4(0,0,0,1)

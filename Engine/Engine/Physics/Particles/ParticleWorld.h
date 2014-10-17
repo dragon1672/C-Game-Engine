@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Engine/unsigned.h>
+#include <Engine/TypeDefs.h>
 #include <Engine/Physics/Particles/Collision/CollisionManager.h>
 #include "ParticleForceRegistry.h"
 

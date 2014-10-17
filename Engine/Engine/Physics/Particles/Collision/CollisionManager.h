@@ -3,7 +3,7 @@
 #include <vector>
 #include <Engine/Physics/Particles/Collision/ParticleContact.h>
 #include <Engine/Tools/Ray.h>
-#include <Engine/unsigned.h>
+#include <Engine/TypeDefs.h>
 
 class CollisionManager {
 public:

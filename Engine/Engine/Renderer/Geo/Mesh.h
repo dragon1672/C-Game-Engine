@@ -2,7 +2,7 @@
 
 #include <vector>
 #include "Vert.h"
-#include <Engine/unsigned.h>
+#include <Engine/TypeDefs.h>
 #include <ShapeData.h>
 #include <Engine/Renderer/Geo/GeometryInfo.h>
 

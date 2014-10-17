@@ -6,7 +6,7 @@
 #include <ExportHeader.h>
 #include <Engine/DebugTools/DebugShapeManager.h>
 #include <Engine/Tools/Ray.h>
-#include <Engine/unsigned.h>
+#include <Engine/TypeDefs.h>
 
 struct EditorNodeConnection;
 

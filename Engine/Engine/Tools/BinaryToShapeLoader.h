@@ -4,7 +4,7 @@
 #include <ShapeData.h>
 #pragma warning(pop)
 #include <ExportHeader.h>
-#include <Engine\unsigned.h>
+#include <Engine\TypeDefs.h>
 
 typedef char myByte;
 

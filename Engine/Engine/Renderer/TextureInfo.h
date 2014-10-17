@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Engine/unsigned.h>
+#include <Engine/TypeDefs.h>
 #include <glm/glm.hpp>
 #include <Engine/Renderer/ParameterType.h>
 

@@ -3,7 +3,7 @@
 #include <map>
 #include <Engine/Physics/Particles/ParticleForceGenerator.h>
 #include <vector>
-#include <Engine/unsigned.h>
+#include <Engine/TypeDefs.h>
 
 class SpringForceGenerator : public ParticleForceGenerator {
 	struct Spring {

@@ -2,7 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="ExportHeader.h" />
-    <ClInclude Include="Engine\unsigned.h" />
     <ClInclude Include="Engine\Tools\Random\Glm.h" />
     <ClInclude Include="Engine\Tools\NUShapeEditor.h" />
     <ClInclude Include="Engine\Tools\Camera.h" />
@@ -85,6 +84,7 @@
     <ClInclude Include="Engine\IO\MeshLoader.h" />
     <ClInclude Include="Engine\Tools\Ray.h" />
     <ClInclude Include="Engine\Entity\Components\ScriptComponent.h" />
+    <ClInclude Include="Engine\TypeDefs.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />

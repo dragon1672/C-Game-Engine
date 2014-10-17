@@ -1,6 +1,6 @@
 #include "Entity.h"
 #include "Component.h"
-#include <Engine\unsigned.h>
+#include <Engine\TypeDefs.h>
 #include <typeinfo.h>
 
 void Entity::removeComponent(int toKill) {

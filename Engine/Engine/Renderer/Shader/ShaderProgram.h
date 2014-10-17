@@ -10,7 +10,7 @@
 #include <Engine\Renderer\ParameterType.h>
 #include "ExportHeader.h"
 #include <Engine\Renderer\Shader\ShaderUniformPram.h>
-#include <Engine\unsigned.h>
+#include <Engine\TypeDefs.h>
 #include <glm\glm.hpp>
 
 class ENGINE_SHARED ShaderProgram {

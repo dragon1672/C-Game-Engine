@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Engine/unsigned.h>
+#include <Engine/TypeDefs.h>
 
 struct LevelFileHeader {
 	uint numOfNodes;

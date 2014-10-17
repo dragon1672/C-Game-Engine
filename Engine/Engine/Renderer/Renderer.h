@@ -6,7 +6,7 @@
 #include <Engine\Renderer\Shader\ShaderProgram.h>
 #include <Engine\Renderer\Shader\ShaderUniformPram.h>
 #include <Engine\Renderer\ParameterType.h>
-#include <Engine\unsigned.h>
+#include <Engine\TypeDefs.h>
 #include <Engine/Tools/ConstVector.h>
 
 #include <Engine/Renderer/TextureInfo.h>

@@ -3,7 +3,7 @@
 #include <Engine\Renderer\ParameterType.h>
 #include <string>
 #include "ExportHeader.h"
-#include <Engine\unsigned.h>
+#include <Engine\TypeDefs.h>
 
 
 class ENGINE_SHARED ShaderProgram;

@@ -2,7 +2,7 @@
 
 #include "ParticleForceGenerator.h"
 #include <vector>
-#include <Engine/unsigned.h>
+#include <Engine/TypeDefs.h>
 
 class ParticleForceRegistry {
 	struct ParticleForcePair

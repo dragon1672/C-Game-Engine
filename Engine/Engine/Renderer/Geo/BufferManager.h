@@ -1,7 +1,7 @@
 #pragma once
 
 #include <ExportHeader.h>
-#include <Engine\unsigned.h>
+#include <Engine\TypeDefs.h>
 
 class ENGINE_SHARED BufferManager {
 public:
