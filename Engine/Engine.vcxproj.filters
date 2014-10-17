@@ -84,7 +84,6 @@
     <ClInclude Include="Engine\Tools\Ray.h" />
     <ClInclude Include="Engine\Entity\Components\ScriptComponent.h" />
     <ClInclude Include="Engine\Tools\GlmWrap.h" />
-    <ClInclude Include="Engine\Tools\BindFloat.h" />
     <ClInclude Include="Engine\Defines\LuaVersion.h" />
     <ClInclude Include="Engine\Tools\MasterLua.h" />
     <ClInclude Include="Engine\TypeDefs.h" />
