@@ -5,6 +5,7 @@
 #include <ExportHeader.h>
 #include <Engine/Defines/VecGetSet.h>
 #include <Engine/Entity/Component.h>
+#include <Engine/Tools/GlmWrap.h>
 
 class ENGINE_SHARED MatrixInfo : public Component {
 	private:
