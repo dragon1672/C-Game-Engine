@@ -2,6 +2,7 @@
 
 #include <glm/glm.hpp>
 #include <Engine/Tools/MasterLua.h>
+#include <Engine/TypeDefs.h>
 
 #define LUA_VECTOR_MAKE_GETTER_SETTER(Uppercase,LowerCase)\
 	inline float get##Uppercase##() { return LowerCase; }                 \
@@ -16,11 +17,18 @@ namespace wrap {
 
 	class vec2 : glm::vec2 {
 	public:
+		inline operator glm::vec2&() { return *reinterpret_cast<glm::vec2*>(this); }
+		vec2& operator=(const glm::vec2& that) { set(that); return *this; }
 		LUA_VECTOR_MAKE_GETTER_SETTER(X,x);
 		LUA_VECTOR_MAKE_GETTER_SETTER(Y,y);
 
 		LUA_VECTOR_MAKE_GETTER_SETTER(R,r);
 		LUA_VECTOR_MAKE_GETTER_SETTER(G,g);
+
+		void  set(const glm::vec2& that) {
+			for (uint i = 0; i < that.length(); i++)
+				(*this)[i] = that[i];
+		}
 		void  set(float x, float y) {
 			this->x = x;
 			this->y = y;
@@ -38,8 +46,10 @@ namespace wrap {
 		}
 	};
 
-	class vec3 : glm::vec3 {
+	class vec3 : public glm::vec3 {
 	public:
+		inline operator glm::vec3&() { return *reinterpret_cast<glm::vec3*>(this); }
+		vec3& operator=(const glm::vec3& that) { set(that); return *this; }
 		LUA_VECTOR_MAKE_GETTER_SETTER(X,x);
 		LUA_VECTOR_MAKE_GETTER_SETTER(Y,y);
 		LUA_VECTOR_MAKE_GETTER_SETTER(Z,z);
@@ -47,6 +57,10 @@ namespace wrap {
 		LUA_VECTOR_MAKE_GETTER_SETTER(R,r);
 		LUA_VECTOR_MAKE_GETTER_SETTER(G,g);
 		LUA_VECTOR_MAKE_GETTER_SETTER(B,b);
+		void  set(const glm::vec3& that) {
+			for (uint i = 0; i < that.length(); i++)
+				(*this)[i] = that[i];
+		}
 		void  set(float x, float y, float z, float w) {
 			this->x = x;
 			this->y = y;
@@ -69,6 +83,8 @@ namespace wrap {
 
 	class vec4 : public glm::vec4 {
 	public:
+		inline operator glm::vec4&() { return *reinterpret_cast<glm::vec4*>(this); }
+		vec4& operator=(const glm::vec4& that) { set(that); return *this; }
 		LUA_VECTOR_MAKE_GETTER_SETTER(X,x);
 		LUA_VECTOR_MAKE_GETTER_SETTER(Y,y);
 		LUA_VECTOR_MAKE_GETTER_SETTER(Z,z);
@@ -78,6 +94,10 @@ namespace wrap {
 		LUA_VECTOR_MAKE_GETTER_SETTER(G,g);
 		LUA_VECTOR_MAKE_GETTER_SETTER(B,b);
 		LUA_VECTOR_MAKE_GETTER_SETTER(A,a);
+		void  set(const glm::vec4& that) {
+			for (uint i = 0; i < that.length(); i++)
+				(*this)[i] = that[i];
+		}
 		void  set(float x, float y, float z, float w) {
 			this->x = x;
 			this->y = y;
