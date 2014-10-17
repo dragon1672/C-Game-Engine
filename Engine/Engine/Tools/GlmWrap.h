@@ -11,7 +11,7 @@
 #define LUA_GLEW(a,b) LUA_STRING(a##b)
 #define LUA_VECTOR_BIND(vec_type,var_name,UppercaseLetter)\
 	var_name.Bind(LUA_GLEW(set,UppercaseLetter),&##vec_type##::set##UppercaseLetter##);\
-	var_name.Bind(LUA_GLEW(get,UppercaseLetter),&##vec_type##::set##UppercaseLetter##)
+	var_name.Bind(LUA_GLEW(get,UppercaseLetter),&##vec_type##::get##UppercaseLetter##)
 
 namespace wrap {
 
