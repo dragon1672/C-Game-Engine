@@ -4,66 +4,54 @@
 #include <Engine/Entity/Entity.h>
 
 const char * ScriptComponent::LuaTemplate = ""
-	"you have access to context.parent                     \n"
-	"--keep all vars within scope of context               \n"
-	"context.exampleVar = 5;                               \n"
-	"                                                      \n"
-	"--called first                                        \n"
-	"context.start = function()                            \n"
-	"    print(context.exampleVar)                         \n"
-	"    return true                                       \n"
-	"end                                                   \n"
-	"                                                      \n"
-	"--updates are called after start                      \n"
-	"context.earlyUpdate = function()                      \n"
-	"    context.exampleVar = context.exampleVar + 1;      \n"
-	"    return true                                       \n"
-	"end                                                   \n"
-	"context.update = function()                           \n"
-	"    print(context.exampleVar)                         \n"
-	"    return true                                       \n"
-	"end                                                   \n"
-	"context.lateUpdate = function()                       \n"
-	"    --yay                                             \n"
-	"    return true                                       \n"
-	"end                                                   \n"
+	"function context:init() -- setup vars                        \n"
+	"    self.exampleVar = 5;                                     \n"
+	"    return true                                              \n"
+	"end                                                          \n"
+	"function context:earlyUpdate()                               \n"
+	"    return true                                              \n"
+	"end                                                          \n"
+	"function context:update() -- primary place to update vars    \n"
+	"    self.a = self.a + 1                                      \n"
+	"    print(self.a)                                            \n"
+	"    return true                                              \n"
+	"end                                                          \n"
+	"function context:lateUpdate()                                \n"
+	"                                                             \n"
+	"    return true                                              \n"
+	"end                                                          \n"
 	"";
 
 class ScriptComponentPrivates {
 public:
-	LuaFunction<bool()> start,earlyUpdate,lateUpdate,update;
 	LuaTable context;
 	ScriptComponentPrivates(LuaTable context) :
-		context(context),
-		start(      context.Get<LuaFunction<bool()>>("start"      )),
-		earlyUpdate(context.Get<LuaFunction<bool()>>("earlyUpdate")),
-		update(     context.Get<LuaFunction<bool()>>("update"     )),
-		lateUpdate( context.Get<LuaFunction<bool()>>("lateUpdate" ))
-	{
-		int pony = 5;
-		pony++;
-	}
+		context(context) { }
 };
 
 void ScriptComponent::init() {
-	LUA_INSTANCE.RunScript("context = {};");
-	auto context = LUA_INSTANCE.GetGlobalEnvironment().Get<LuaTable>("context");
-	context.Set("parent",(LuaUserdata<Entity>)(*this->parent));
-	LUA_INSTANCE.GetGlobalEnvironment().Set("context",context);
+	LUA_INSTANCE.RunScript("context = class();");
 	LUA_INSTANCE.RunScript(script);
+	LUA_INSTANCE.RunScript("instance = context();");
+	auto context = LUA_INSTANCE.GetGlobalEnvironment().Get<LuaTable>("instance");
+	context.Set("parent",((LuaUserdata<Entity>)*parent));
 	this->privates = new ScriptComponentPrivates(context);
 
-	privates->start.Invoke();
+	LUA_INSTANCE.GetGlobalEnvironment().Set("CorbinEnginTmp",privates->context);
+	LUA_INSTANCE.RunScript("CorbinEnginTmp:start()");
 }
 void ScriptComponent::earlyUpdate() {
-	privates->earlyUpdate.Invoke();
+	LUA_INSTANCE.GetGlobalEnvironment().Set("CorbinEnginTmp",privates->context);
+	LUA_INSTANCE.RunScript("CorbinEnginTmp:earlyUpdate()");
 }
 void ScriptComponent::update() {
-	privates->update.Invoke();
+	LUA_INSTANCE.GetGlobalEnvironment().Set("CorbinEnginTmp",privates->context);
+	LUA_INSTANCE.RunScript("CorbinEnginTmp:update()");
 }
 
 void ScriptComponent::lateUpdate() {
-	privates->lateUpdate.Invoke();
+	LUA_INSTANCE.GetGlobalEnvironment().Set("CorbinEnginTmp",privates->context);
+	LUA_INSTANCE.RunScript("CorbinEnginTmp:lateUpdate()");
 }
 
 ScriptComponent::~ScriptComponent()
