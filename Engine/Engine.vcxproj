@@ -69,6 +69,10 @@
       <Command>
       </Command>
     </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>LuaCppInterface.lib;NeumontTools.lib;opengl32.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5OpenGLd.lib;Qt5Widgetsd.lib;glew32.lib;glew32d.lib;glew32s.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)../../MiddleWare\NeumontTools\lib;$(ProjectDir)../../MiddleWare/Qt/lib;$(ProjectDir)../../MiddleWare/glew/lib;$(OutDir)</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
