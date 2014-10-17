@@ -1,12 +1,6 @@
 #include <GL\glew.h>
 #include <Engine\Renderer\Geo\BufferManager.h>
-
-#ifdef _DEBUG
-#pragma warning(disable: 4127)
-#pragma warning(push)
 #include <QtCore\QDebug>
-#pragma warning(pop)
-#endif
 
 #include <cassert>
 BufferManager::BufferInfo BufferManager::addData(uint size1, const void * data1, uint size2, const void * data2) {

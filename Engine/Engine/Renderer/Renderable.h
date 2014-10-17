@@ -21,7 +21,6 @@ public:
 	~Renderable();
 	GeometryInfo * whatGeo;
 	ShaderProgram * howShader;
-	glm::mat4 whereMat;
 	MatrixInfo transformData;
 	bool visible;
 	uint textureID;
@@ -37,9 +36,8 @@ public:
 	void addUniformParameter(const char * name, const glm::mat3& value);
 	void addUniformParameter(const char * name, const glm::mat4& value);
 
-	//convenience to save varables in renderable
+	//convenience to save variables in renderable
 	void saveMatrixInfo(const char * uniformName);
-	void saveWhereMat(const char * uniformName); // WARNING this method is not garunteed in future releases
 	void saveVisable(const char * uniformName);
 	void saveTexture(const char * uniformName);
 

@@ -2,6 +2,7 @@
 #include <luacppinterface.h>
 #include <iostream>
 #include <Engine/Entity/Entity.h>
+#include <Engine/Tools/Printer.h>
 
 const char * ScriptComponent::LuaTemplate = ""
 	"function context:init() -- setup vars                        \n"
@@ -31,7 +32,10 @@ public:
 
 void ScriptComponent::init() {
 	LUA_INSTANCE.RunScript("context = class();");
-	LUA_INSTANCE.RunScript(script);
+	std::string errs = LUA_INSTANCE.RunScript(script);
+	if(errs != Lua::NO_ERRORS) {
+		printer.LogErr("LUA COMPILE ERR");
+	}
 	LUA_INSTANCE.RunScript("instance = context();");
 	auto context = LUA_INSTANCE.GetGlobalEnvironment().Get<LuaTable>("instance");
 	context.Set("parent",((LuaUserdata<Entity>)*parent));
