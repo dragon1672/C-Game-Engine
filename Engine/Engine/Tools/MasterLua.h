@@ -3,12 +3,13 @@
 #include <Engine/Defines/LuaVersion.h>
 #include <Engine/Defines/SingletonsDefine.h>
 
-#define LUA_INSTANCE MasterLua::getInstance()
+#define LUA_INSTANCE ((Lua)MasterLua::getInstance())
 
 class MasterLua {
 	Lua lua;
 public:
 	MasterLua();
-	DEFINE_SINGLETON_CAST(MasterLua,Lua);
+	void init();
 	inline operator Lua&() { return lua; }
+	DEFINE_SINGLETON(MasterLua);
 };
