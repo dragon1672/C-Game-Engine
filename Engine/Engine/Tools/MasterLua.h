@@ -3,8 +3,8 @@
 #include <Engine/Defines/LuaVersion.h>
 #include <Engine/Defines/SingletonsDefine.h>
 
-extern Lua lua;#define LUA_INSTANCE MasterLua::getInstance()
-/*
+#define LUA_INSTANCE MasterLua::getInstance()
+
 class MasterLua {
 	Lua lua;
 public:

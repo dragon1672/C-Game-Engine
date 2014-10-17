@@ -40,8 +40,8 @@ public:
 };
 
 void ScriptComponent::init() {
-	lua.RunScript(script);
-	LuaTable context = lua.GetGlobalEnvironment().Get<LuaTable>("context");
+	LUA_INSTANCE.RunScript(script);
+	LuaTable context = LUA_INSTANCE.GetGlobalEnvironment().Get<LuaTable>("context");
 	this->privates = new ScriptComponentPrivates(context);
 
 	privates->start.Invoke();
