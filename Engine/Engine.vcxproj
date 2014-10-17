@@ -145,8 +145,10 @@
     <ClInclude Include="Engine\Renderer\Geo\BufferManager.h" />
     <ClInclude Include="Engine\Systems\GameObjectManager.h" />
     <ClInclude Include="Engine\Tools\BinaryToShapeLoader.h" />
+    <ClInclude Include="Engine\Tools\BindFloat.h" />
     <ClInclude Include="Engine\Tools\CollectionEditing.h" />
     <ClInclude Include="Engine\Tools\ConstVector.h" />
+    <ClInclude Include="Engine\Tools\GlmWrap.h" />
     <ClInclude Include="Engine\Tools\MasterLua.h" />
     <ClInclude Include="Engine\Tools\MatrixInfo.h" />
     <ClInclude Include="Engine\Tools\MyMath\Matrix2D.h" />
