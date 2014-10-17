@@ -1,9 +1,11 @@
 #include "GameObjectManager.h"
 #include <Engine/Entity/Entity.h>
+#include <Engine/Tools/MasterLua.h>
 
 GameObjectManager::GameObjectManager() : active(false) {}
 bool GameObjectManager::init() {
 	if(!active)
+		MasterLua::getInstance().init();
 		for (uint i = 0; i < entities.size(); i++) {
 			entities[i].init();
 		}

@@ -5,6 +5,7 @@
 #include <windows.h>
 #include <ExportHeader.h>
 #include <Engine/Defines/SingletonsDefine.h>
+#include <Engine/Tools/MasterLua.h>
 
 class ENGINE_SHARED Timer {
 private:
@@ -28,6 +29,14 @@ public:
 	float deltaTime();
 	float getCurrentTime();
 	float getElapsedTime();
+
+	inline operator LuaUserdata<Timer>() const {
+		MAKE_LUA_INSTANCE_RET(Timer,ret);
+		ret.Bind("deltaTime",&Timer::deltaTime);
+		ret.Bind("runningTime",&Timer::getElapsedTime);
+
+		return ret;
+	}
 };
 
 #endif
