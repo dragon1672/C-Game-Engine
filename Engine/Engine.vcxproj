@@ -144,6 +144,7 @@
     <ClInclude Include="Engine\Defines\Vectors.h" />
     <ClInclude Include="Engine\Renderer\Geo\BufferManager.h" />
     <ClInclude Include="Engine\Systems\GameObjectManager.h" />
+    <ClInclude Include="Engine\Systems\ResourceManager.h" />
     <ClInclude Include="Engine\Tools\BinaryToShapeLoader.h" />
     <ClInclude Include="Engine\Tools\CollectionEditing.h" />
     <ClInclude Include="Engine\Tools\ConstVector.h" />
@@ -199,6 +200,7 @@
     <ClCompile Include="Engine\Systems\GameObjectManager.cpp" />
     <ClCompile Include="Engine\Entity\Components\RenderableComponent.cpp" />
     <ClCompile Include="Engine\Renderer\Geo\BufferManager.cpp" />
+    <ClCompile Include="Engine\Systems\ResourceManager.cpp" />
     <ClCompile Include="Engine\Tools\BinaryToShapeLoader.cpp" />
     <ClCompile Include="Engine\Tools\MasterLua.cpp" />
     <ClCompile Include="Engine\Tools\MatrixInfo.cpp" />
