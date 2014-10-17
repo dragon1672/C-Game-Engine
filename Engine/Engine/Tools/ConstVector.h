@@ -10,7 +10,6 @@ private:
 	unsigned int currentIndex;
 	void init(int size) {
 		startSize = size;
-		arrays.push_back(new T[startSize]);
 		currentIndex = 0;
 	}
 public:
