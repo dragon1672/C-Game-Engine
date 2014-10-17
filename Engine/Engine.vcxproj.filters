@@ -89,6 +89,7 @@
     <ClInclude Include="Engine\Tools\MasterLua.h" />
     <ClInclude Include="Engine\TypeDefs.h" />
     <ClInclude Include="Engine\Systems\GameObjectManager.h" />
+    <ClInclude Include="Engine\Tools\Printer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -132,6 +133,7 @@
     <ClCompile Include="Engine\Systems\ResourceManager.cpp" />
     <ClCompile Include="Engine\Tools\MasterLua.cpp" />
     <ClCompile Include="Engine\Systems\GameObjectManager.cpp" />
+    <ClCompile Include="Engine\Tools\Printer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Tools\MyMath\Matrix2D.inl" />

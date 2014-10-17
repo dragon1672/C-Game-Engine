@@ -160,6 +160,7 @@
     <ClInclude Include="Engine\Tools\MyMath\SquareMatrix.h" />
     <ClInclude Include="Engine\Tools\MyMath\Vector 2.h" />
     <ClInclude Include="Engine\Tools\MyMath\Vector3D.h" />
+    <ClInclude Include="Engine\Tools\Printer.h" />
     <ClInclude Include="Engine\Tools\QT\ButtonInfo.h" />
     <ClInclude Include="Engine\Tools\Camera.h" />
     <ClInclude Include="Engine\DebugTools\DebugMenuManager.h" />
@@ -208,6 +209,7 @@
     <ClCompile Include="Engine\Tools\BinaryToShapeLoader.cpp" />
     <ClCompile Include="Engine\Tools\MasterLua.cpp" />
     <ClCompile Include="Engine\Tools\MatrixInfo.cpp" />
+    <ClCompile Include="Engine\Tools\Printer.cpp" />
     <ClCompile Include="Engine\Tools\QT\ButtonInfo_mock.cpp" />
     <ClCompile Include="Engine\Tools\Camera.cpp" />
     <ClCompile Include="Engine\DebugTools\DebugMenuManager.cpp" />
