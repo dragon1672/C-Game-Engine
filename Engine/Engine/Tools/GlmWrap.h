@@ -4,15 +4,6 @@
 #include <Engine/Tools/MasterLua.h>
 #include <Engine/TypeDefs.h>
 
-#define LUA_VECTOR_MAKE_GETTER_SETTER(Uppercase,LowerCase)\
-	inline float get##Uppercase##() { return LowerCase; }                 \
-	inline void  set##Uppercase##(float LowerCase) { this->LowerCase = LowerCase; }
-#define LUA_STRING(x) #x
-#define LUA_GLEW(a,b) LUA_STRING(a##b)
-#define LUA_VECTOR_BIND(vec_type,var_name,UppercaseLetter)\
-	var_name.Bind(LUA_GLEW(set,UppercaseLetter),&##vec_type##::set##UppercaseLetter##);\
-	var_name.Bind(LUA_GLEW(get,UppercaseLetter),&##vec_type##::get##UppercaseLetter##)
-
 namespace wrap {
 
 	class vec2 : glm::vec2 {

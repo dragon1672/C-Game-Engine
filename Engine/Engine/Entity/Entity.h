@@ -3,6 +3,7 @@
 #include <vector>
 #include <glm/glm.hpp>
 #include <ExportHeader.h>
+#include <Engine/Tools/MasterLua.h>
 
 class MatrixInfo;
 class RenderableComponent;
@@ -52,4 +53,18 @@ public:
 	void earlyUpdate();
 	void update();
 	void lateUpdate();
+
+	GET_LUA_VER_PTR(Entity,parent);
+	LUA_GET_FUN_PTR(MatrixInfo,getTrans);
+	//LuaUserdata<MatrixInfo> getTrans_LUA() { return *(LuaUserdata<MatrixInfo>*)getTrans(); };
+
+	inline operator LuaUserdata<Entity>() {
+		MAKE_LUA_INSTANCE_RET(Entity,ret);
+
+		BIND_LUA_VER(Entity,ret,parent);
+		LUA_BIND_FUN(Entity,ret,getTrans);
+
+		return ret;
+	}
 };
+
