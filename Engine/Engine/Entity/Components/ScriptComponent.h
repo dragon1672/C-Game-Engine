@@ -1,13 +1,12 @@
 #pragma once
 
 #include <Engine/Entity/Component.h>
-#include <luacppinterface.h>
+#include <Engine/Tools/MasterLua.h>
 #include <ExportHeader.h>
 
 class ScriptComponentPrivates;
 
 class ENGINE_SHARED ScriptComponent : public Component {
-	static Lua lua;
 	static const char * LuaTemplate;
 	ScriptComponentPrivates * privates;
 public:

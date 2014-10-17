@@ -100,6 +100,7 @@
     <ClInclude Include="Engine\DebugTools\Profiling\AutoProfileManagerMacros.h" />
     <ClInclude Include="Engine\DebugTools\Profiling\AutoProfiler.h" />
     <ClInclude Include="Engine\DebugTools\Profiling\ProfileCategory.h" />
+    <ClInclude Include="Engine\Defines\LuaVersion.h" />
     <ClInclude Include="Engine\Defines\SingletonsDefine.h" />
     <ClInclude Include="Engine\Defines\VecGetSet.h" />
     <ClInclude Include="Engine\Entity\Components\RenderableComponent.h" />
@@ -142,10 +143,11 @@
     <ClInclude Include="Engine\Renderer\TextureInfo.h" />
     <ClInclude Include="Engine\Defines\Vectors.h" />
     <ClInclude Include="Engine\Renderer\Geo\BufferManager.h" />
-    <ClInclude Include="Engine\Systems\Entity\GameObjectManager.h" />
+    <ClInclude Include="Engine\Systems\GameObjectManager.h" />
     <ClInclude Include="Engine\Tools\BinaryToShapeLoader.h" />
     <ClInclude Include="Engine\Tools\CollectionEditing.h" />
     <ClInclude Include="Engine\Tools\ConstVector.h" />
+    <ClInclude Include="Engine\Tools\MasterLua.h" />
     <ClInclude Include="Engine\Tools\MatrixInfo.h" />
     <ClInclude Include="Engine\Tools\MyMath\Matrix2D.h" />
     <ClInclude Include="Engine\Tools\MyMath\Matrix3D.h" />
@@ -193,10 +195,11 @@
     <ClCompile Include="Engine\Physics\Particles\Particle.cpp" />
     <ClCompile Include="Engine\Renderer\Geo\Mesh.cpp" />
     <ClCompile Include="Engine\Renderer\Geo\Vert.cpp" />
-    <ClCompile Include="Engine\Systems\Entity\GameObjectManager.cpp" />
+    <ClCompile Include="Engine\Systems\GameObjectManager.cpp" />
     <ClCompile Include="Engine\Entity\Components\RenderableComponent.cpp" />
     <ClCompile Include="Engine\Renderer\Geo\BufferManager.cpp" />
     <ClCompile Include="Engine\Tools\BinaryToShapeLoader.cpp" />
+    <ClCompile Include="Engine\Tools\MasterLua.cpp" />
     <ClCompile Include="Engine\Tools\MatrixInfo.cpp" />
     <ClCompile Include="Engine\Tools\QT\ButtonInfo_mock.cpp" />
     <ClCompile Include="Engine\Tools\Camera.cpp" />

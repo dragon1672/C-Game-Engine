@@ -27,7 +27,6 @@
     <ClInclude Include="Engine\Entity\Component.h" />
     <ClInclude Include="Engine\Entity\Entity.h" />
     <ClInclude Include="Engine\Entity\Components\RenderableComponent.h" />
-    <ClInclude Include="Engine\Systems\Entity\GameObjectManager.h" />
     <ClInclude Include="Engine\Defines\SingletonsDefine.h" />
     <ClInclude Include="Engine\DebugTools\Logging\LogData.h" />
     <ClInclude Include="Engine\DebugTools\Logging\LogManager.h" />
@@ -84,7 +83,10 @@
     <ClInclude Include="Engine\IO\MeshLoader.h" />
     <ClInclude Include="Engine\Tools\Ray.h" />
     <ClInclude Include="Engine\Entity\Components\ScriptComponent.h" />
+    <ClInclude Include="Engine\Defines\LuaVersion.h" />
+    <ClInclude Include="Engine\Tools\MasterLua.h" />
     <ClInclude Include="Engine\TypeDefs.h" />
+    <ClInclude Include="Engine\Systems\GameObjectManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -109,7 +111,6 @@
     <ClCompile Include="Engine\Tools\QT\LinkedIntSlider.cpp" />
     <ClCompile Include="Engine\Entity\Entity.cpp" />
     <ClCompile Include="Engine\Entity\Components\RenderableComponent.cpp" />
-    <ClCompile Include="Engine\Systems\Entity\GameObjectManager.cpp" />
     <ClCompile Include="Engine\DebugTools\Logging\LogManager.cpp" />
     <ClCompile Include="Engine\DebugTools\Profiling\AutoProfilerManager.cpp" />
     <ClCompile Include="Engine\DebugTools\DebugShapeManager.cpp" />
@@ -126,6 +127,8 @@
     <ClCompile Include="Engine\IO\FileIO.cpp" />
     <ClCompile Include="Engine\IO\MeshLoader.cpp" />
     <ClCompile Include="Engine\Entity\Components\ScriptComponent.cpp" />
+    <ClCompile Include="Engine\Tools\MasterLua.cpp" />
+    <ClCompile Include="Engine\Systems\GameObjectManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Tools\MyMath\Matrix2D.inl" />

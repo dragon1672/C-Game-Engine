@@ -3,6 +3,7 @@
 #include <Engine/TypeDefs.h>
 #include <glm/glm.hpp>
 #include <Engine/Renderer/ParameterType.h>
+#include <QtGui/QImage>
 
 class TextureInfo {
 public:

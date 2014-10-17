@@ -2,16 +2,6 @@
 #include <luacppinterface.h>
 #include <iostream>
 
-Lua LoadLua() {
-	Lua ret;
-	ret.LoadStandardLibraries();
-
-	ret.GetGlobalEnvironment().Set("print",ret.CreateFunction<void(std::string)>([](std::string a) -> void { std::cout << "LUA Print:" << a << std::endl; })); // make and add function
-
-	return ret;
-}
-Lua ScriptComponent::lua = LoadLua();
-
 const char * ScriptComponent::LuaTemplate = ""
 	"context = {}                                          \n"
 	"--keep all vars within scope of context               \n"
