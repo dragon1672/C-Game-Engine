@@ -7,22 +7,22 @@ void MatrixInfo::lateUpdate() {
 glm::mat4& MatrixInfo::getTransform()     { return getCompleteTransform();     } // save this on in the Shader
 
 glm::mat4&  MatrixInfo::getRotMat() {
-	if(rotChanged) rotationMat = glm::rotate(rot.x,glm::vec3(1,0,0))
+	if(rot != rot_old) rotationMat = glm::rotate(rot.x,glm::vec3(1,0,0))
 		* glm::rotate(rot.y,glm::vec3(0,1,0))
 		* glm::rotate(rot.z,glm::vec3(0,0,1));
-	rotChanged = false;
+	rot_old = rot;
 	return rotationMat;
 }
 glm::mat4&  MatrixInfo::getScaleMat() {
-	if(scaleChanged) scaleMat = glm::scale(scale);
-	scaleChanged = false;
+	if(scale != scale_old) scaleMat = glm::scale(scale);
+	scale_old = scale;
 	return scaleMat;
 }
 glm::mat4&  MatrixInfo::getTranslationMat() {
-	if(posChanged) translationMat = glm::translate(pos);
-	posChanged = false;
+	if(pos != pos_old) translationMat = glm::translate(pos);
+	pos_old == pos;
 	return translationMat;
 }
 glm::mat4&  MatrixInfo::getCompleteTransform() {
-	return scaleChanged || posChanged || rotChanged ? transform = getTranslationMat() * getRotMat() * getScaleMat() : transform;
+	return pos != pos_old || rot != rot_old || scale != scale_old ? transform = getTranslationMat() * getRotMat() * getScaleMat() : transform;
 }

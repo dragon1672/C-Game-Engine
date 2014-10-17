@@ -15,28 +15,45 @@
 	inline LuaUserdata<var_type> getLua##Uppercase_name##() { return name; } \
 	inline void set##Uppercase_name##(##set_set_type##& toSet) { name = toSet; name##Changed = true; }
 
+
 class ENGINE_SHARED MatrixInfo : public Component {
-	private:
-		glm::mat4 transform;
-		glm::mat4 rotationMat;
-		glm::mat4 translationMat;
-		glm::mat4 scaleMat;
+private:
+	glm::mat4 transform;
+	glm::mat4 rotationMat;
+	glm::mat4 translationMat;
+	glm::mat4 scaleMat;
 
-		GET_SET_TRACK(wrap::vec3,glm::vec3,pos,Pos);
-		GET_SET_TRACK(wrap::vec3,glm::vec3,rot,Rot);
-		GET_SET_TRACK(wrap::vec3,glm::vec3,scale,Scale);
+	wrap::vec3 pos_old;
+	wrap::vec3 rot_old;
+	wrap::vec3 scale_old;
+public:
+	wrap::vec3 pos;
+	wrap::vec3 rot;
+	wrap::vec3 scale;
 
-	public:
-		MatrixInfo() : scale(1,1,1), posChanged(true), rotChanged(true), scaleChanged(true) {}
+	GET_LUA_VER(wrap::vec3,pos  );
+	GET_LUA_VER(wrap::vec3,scale);
+	GET_LUA_VER(wrap::vec3,rot  );
 
-		glm::mat4& getTransform();// save this on in the Shader
+	MatrixInfo() : scale(1,1,1) {}
 
-		glm::mat4&  getRotMat();
-		glm::mat4&  getScaleMat();
-		glm::mat4&  getTranslationMat();
-		glm::mat4&  getCompleteTransform();
+	glm::mat4& getTransform();// save this on in the Shader
 
-		//called by renderer in draw before passing uniforms to shader
-		void lateUpdate();
-		//LuaTable * getLuaComponent() { return LuaTable(); }
-	};
+	glm::mat4&  getRotMat();
+	glm::mat4&  getScaleMat();
+	glm::mat4&  getTranslationMat();
+	glm::mat4&  getCompleteTransform();
+
+	//called by renderer in draw before passing uniforms to shader
+	void lateUpdate();
+		
+	inline operator LuaUserdata<MatrixInfo>() {
+		MAKE_LUA_INSTANCE_RET(MatrixInfo,ret);
+
+		BIND_LUA_VER(MatrixInfo,ret,pos  ); // myObj.pos()
+		BIND_LUA_VER(MatrixInfo,ret,scale);
+		BIND_LUA_VER(MatrixInfo,ret,rot  );
+
+		return ret;
+	}
+};
