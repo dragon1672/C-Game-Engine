@@ -1,9 +1,10 @@
 #include "ScriptComponent.h"
 #include <luacppinterface.h>
 #include <iostream>
+#include <Engine/Entity/Entity.h>
 
 const char * ScriptComponent::LuaTemplate = ""
-	"context = {}                                          \n"
+	"you have access to context.parent                     \n"
 	"--keep all vars within scope of context               \n"
 	"context.exampleVar = 5;                               \n"
 	"                                                      \n"
@@ -31,17 +32,25 @@ const char * ScriptComponent::LuaTemplate = ""
 class ScriptComponentPrivates {
 public:
 	LuaFunction<bool()> start,earlyUpdate,lateUpdate,update;
+	LuaTable context;
 	ScriptComponentPrivates(LuaTable context) :
+		context(context),
 		start(      context.Get<LuaFunction<bool()>>("start"      )),
 		earlyUpdate(context.Get<LuaFunction<bool()>>("earlyUpdate")),
 		update(     context.Get<LuaFunction<bool()>>("update"     )),
 		lateUpdate( context.Get<LuaFunction<bool()>>("lateUpdate" ))
-	{ }
+	{
+		int pony = 5;
+		pony++;
+	}
 };
 
 void ScriptComponent::init() {
+	LUA_INSTANCE.RunScript("context = {};");
+	auto context = LUA_INSTANCE.GetGlobalEnvironment().Get<LuaTable>("context");
+	context.Set("parent",(LuaUserdata<Entity>)(*this->parent));
+	LUA_INSTANCE.GetGlobalEnvironment().Set("context",context);
 	LUA_INSTANCE.RunScript(script);
-	LuaTable context = LUA_INSTANCE.GetGlobalEnvironment().Get<LuaTable>("context");
 	this->privates = new ScriptComponentPrivates(context);
 
 	privates->start.Invoke();
@@ -63,3 +72,20 @@ ScriptComponent::~ScriptComponent()
 }
 
 ScriptComponent::ScriptComponent() { }
+
+ScriptComponent::ScriptComponent(const char * script)
+{
+	this->script = script;
+}
+
+LuaTable ScriptComponent::getContext()
+{
+	return privates->context;
+}
+
+ScriptComponent::operator LuaUserdata<ScriptComponent>()
+{
+	MAKE_LUA_INSTANCE_RET(ScriptComponent,ret);
+	ret.Bind("context",&ScriptComponent::getContext);
+	return ret;
+}

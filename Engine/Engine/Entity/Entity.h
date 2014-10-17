@@ -5,9 +5,11 @@
 #include <ExportHeader.h>
 #include <Engine/Tools/MasterLua.h>
 
-class MatrixInfo;
+
+#include <Engine/Tools/MatrixInfo.h>
+#include <Engine/Entity/Components/ScriptComponent.h>
+
 class RenderableComponent;
-class ScriptComponent;
 
 class Component;
 
@@ -56,13 +58,15 @@ public:
 
 	GET_LUA_VER_PTR(Entity,parent);
 	LUA_GET_FUN_PTR(MatrixInfo,getTrans);
+	LUA_GET_FUN_PTR(ScriptComponent,getScript);
 
-	inline operator LuaUserdata<Entity>() {
+	inline operator LuaUserdata<Entity>() const {
 		MAKE_LUA_INSTANCE_RET(Entity,ret);
 
 		BIND_LUA_VER(Entity,ret,parent);
 		LUA_BIND_FUN(Entity,ret,getTrans);
-		ret.Bind("name",Entity::getName);
+		LUA_BIND_FUN(Entity,ret,getScript);
+		ret.Bind("name",&Entity::getName);
 
 		return ret;
 	}

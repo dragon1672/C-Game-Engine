@@ -12,9 +12,12 @@ class ENGINE_SHARED ScriptComponent : public Component {
 public:
 	const char * script;
 	ScriptComponent();
+	ScriptComponent(const char * script);
 	~ScriptComponent();
 	virtual void init();
 	virtual void earlyUpdate();
 	virtual void update();
 	virtual void lateUpdate();
+	LuaTable getContext();
+	operator LuaUserdata<ScriptComponent>();
 };
