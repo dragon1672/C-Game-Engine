@@ -34,7 +34,8 @@ void ScriptComponent::init() {
 	LUA_INSTANCE.RunScript("context = class();");
 	std::string errs = LUA_INSTANCE.RunScript(script);
 	if(errs != Lua::NO_ERRORS) {
-		printer.LogErr("LUA COMPILE ERR");
+		printer.LogError("LUA COMPILE ERR");
+		printer.LogError(errs.c_str());
 	}
 	LUA_INSTANCE.RunScript("instance = context();");
 	auto context = LUA_INSTANCE.GetGlobalEnvironment().Get<LuaTable>("instance");
