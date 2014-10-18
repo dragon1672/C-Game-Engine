@@ -149,6 +149,7 @@
     <ClInclude Include="Engine\Renderer\Geo\BufferManager.h" />
     <ClInclude Include="Engine\Systems\GameObjectManager.h" />
     <ClInclude Include="Engine\Systems\ResourceManager.h" />
+    <ClInclude Include="Engine\Systems\Resources\Resource.h" />
     <ClInclude Include="Engine\Tools\BinaryToShapeLoader.h" />
     <ClInclude Include="Engine\Tools\CollectionEditing.h" />
     <ClInclude Include="Engine\Tools\ConstVector.h" />

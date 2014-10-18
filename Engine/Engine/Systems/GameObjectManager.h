@@ -6,6 +6,7 @@
 #include <Engine/Tools/Timer.h>
 #include <Engine/Renderer/TextureInfo.h>
 #include <Engine/Defines/SingletonsDefine.h>
+#include <Engine/Tools/MasterLua.h>
 
 #include <Engine/Tools/ConstVector.h>
 #include <Engine/Renderer/Geo/Mesh.h>
@@ -14,9 +15,6 @@
 class ENGINE_SHARED GameObjectManager {
 private:
 	ConstVector<Entity> entities;
-	ConstVector<TextureInfo> textures;
-	ConstVector<ShaderProgram> allShaderProgs;
-	ConstVector<Mesh> geos;
 	
 	Renderer renderer;
 	bool active;

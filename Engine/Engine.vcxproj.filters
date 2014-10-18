@@ -90,6 +90,7 @@
     <ClInclude Include="Engine\TypeDefs.h" />
     <ClInclude Include="Engine\Systems\GameObjectManager.h" />
     <ClInclude Include="Engine\Tools\Printer.h" />
+    <ClInclude Include="Engine\Systems\Resources\Resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
