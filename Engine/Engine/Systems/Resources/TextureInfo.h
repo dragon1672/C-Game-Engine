@@ -21,7 +21,7 @@ public:
 	uint slotID;
 
 	TextureInfo();
-	TextureInfo(QImage * src);
+	TextureInfo(const char * name);
 
 	void PassDownToHardWare();
 };
