@@ -163,6 +163,6 @@ void Mesh::rotate(float x, float y, float z) {
 
 void Mesh::PassDownToHardWare()
 {
-	geo.init(sizeof(Vert),(const void*)&verts[0],verts.size(),&indices[0],indices.size(),3);
-	geo.addStreamedParameters(Vert().getAtribs(),Vert().getNumOfAtribs());
+	geo.init(&verts[0],verts.size(),&indices[0],indices.size(),3);
+	geo.addStreamedParameters(&verts[0]);
 }
