@@ -29,7 +29,9 @@ public:
 
 
 	GameObjectManager();
-	bool init();
+	bool init(); // called with object is created
+	bool initGl();
+	bool start(); // called when scene is loaded
 	bool shutdown();
 	void update();
 	void paint();

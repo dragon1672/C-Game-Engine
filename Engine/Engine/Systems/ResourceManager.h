@@ -9,8 +9,9 @@
 #include <ShapeData.h>
 #include <functional>
 #include <ExportHeader.h>
+#include <Engine/TypeDefs.h>
 
-#define resourceManager
+#define resourceManager ResourceManager::getInstance()
 
 class ENGINE_SHARED ResourceManager : public Resource {
 	DEFINE_SINGLETON(ResourceManager);

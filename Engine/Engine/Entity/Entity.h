@@ -52,6 +52,7 @@ public:
 	}
 	void removeComponent(Component * toKill);
 	void init();
+	void start(); // called after openGL, every time scene loads, before update
 	void earlyUpdate();
 	void update();
 	void lateUpdate();

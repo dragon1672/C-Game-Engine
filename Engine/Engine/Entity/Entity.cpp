@@ -18,6 +18,7 @@ void Entity::removeComponent(Component * toKill) {
 	removeComponent(getIndex(toKill)); 
 }
 void Entity::init()        { for(uint i=0; i<components.size(); i++) components[i]->init();        }
+void Entity::start()       { for(uint i=0; i<components.size(); i++) components[i]->start();       }
 void Entity::earlyUpdate() { for(uint i=0; i<components.size(); i++) components[i]->earlyUpdate(); }
 void Entity::update()      { for(uint i=0; i<components.size(); i++) components[i]->update();      }
 void Entity::lateUpdate()  { for(uint i=0; i<components.size(); i++) components[i]->lateUpdate();  }
@@ -62,11 +63,8 @@ const char * Entity::getName()
 Entity::Entity(const char * name/*="New Game Object"*/, Entity * p /*= nullptr*/)  : parent(p) { this->name = name; }
 
 
-#include <Engine/Tools/MatrixInfo.h>
 MatrixInfo * Entity::getTrans() { return getComponent<MatrixInfo>(); }
 
-#include <Engine/Entity/Components/RenderableComponent.h>
 RenderableComponent * Entity::getRenderable() { return getComponent<RenderableComponent>(); }
 
-#include <Engine/Entity/Components/ScriptComponent.h>
 ScriptComponent * Entity::getScript() { return getComponent<ScriptComponent>(); }
