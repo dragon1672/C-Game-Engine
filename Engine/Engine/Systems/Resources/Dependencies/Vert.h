@@ -3,7 +3,6 @@
 #include <glm/glm.hpp>
 
 #include "AutoAtrib.h"
-#include <Vertex.h>
 
 class Vert : public AutoAtrib {
 public:
@@ -19,12 +18,13 @@ public:
 		tan(0,0,0,0),
 		uv(0,0)
 	{}
-	Vert(Neumont::Vertex v) {
-		pos =  v.position;
-		col =  v.color;
-		norm = v.normal;
-		uv  =  v.uv;
-	}
+	Vert(glm::vec3 pos, glm::vec4 col, glm::vec3 norm, glm::vec4 tan, glm::vec2 uv) :
+		pos (pos ),
+		col (col ),
+		norm(norm),
+		tan (tan ),
+		uv  (uv  )
+	{ }
 	int * getAtribs();
 	int getNumOfAtribs();
 };
