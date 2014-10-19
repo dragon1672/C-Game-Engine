@@ -4,4 +4,5 @@
 
 namespace FileIO {
 	Mesh loadMeshFromFile(const char * filePath);
+	Mesh loadMeshFromFile(std::string filePath);
 }

@@ -2,11 +2,17 @@
 #include <fstream>
 
 namespace FileIO {
+	std::string readFile(std::string filePath) {
+		readFile(filePath.c_str());
+	}
 	std::string readFile(const char * filePath) {
 		std::ifstream file(filePath);
 		return std::string(
 			std::istreambuf_iterator<char>(file),
 			std::istreambuf_iterator<char>());
+	}
+	FileData loadFile(std::string filePath) {
+		loadFile(filePath.c_str());
 	}
 	FileData loadFile(const char * filePath) {
 		FileData ret;
@@ -26,6 +32,9 @@ namespace FileIO {
 		input.close();
 
 		return ret;
+	}
+	bool validFile(std::string filePath) {
+		validFile(filePath.c_str());
 	}
 	bool validFile(const char * filePath) {
 		std::ifstream file(filePath);

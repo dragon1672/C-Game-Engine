@@ -12,7 +12,10 @@ namespace FileIO {
 		fileByte * data;
 		inline void cleanup() { delete [] data; }
 	};
+	std::string readFile(std::string filePath);
 	std::string readFile(const char * filePath);
+	FileData loadFile(std::string filePath);
 	FileData loadFile(const char * filePath);
+	bool validFile(std::string filePath);
 	bool validFile(const char * filePath);
 }
