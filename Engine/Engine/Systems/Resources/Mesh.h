@@ -1,23 +1,22 @@
 #pragma once
 
 #include <vector>
-#include "Vert.h"
+#include <Engine/Systems/Resources/Dependencies/Vert.h>
 #include <Engine/TypeDefs.h>
 #include <ShapeData.h>
-#include <Engine/Renderer/Geo/GeometryInfo.h>
+#include <Engine/Systems/Resources/Dependencies/GeometryInfo.h>
+#include <ExportHeader.h>
+#include <Engine/Systems/Resources/Resource.h>
 
-class Mesh {
+class ENGINE_SHARED Mesh : public Resource {
 	GeometryInfo geo;
-public:
-	Mesh() {}
-	Mesh(Neumont::ShapeData& NU) {
-		for (uint i = 0; i < NU.numVerts; i++)   { verts.push_back(Vert(NU.verts[i])); }
-		for (uint i = 0; i < NU.numIndices; i++) { indices.push_back(NU.indices[i]);  }
-	}
-	std::vector<Vert> verts;
-	std::vector<uint> indices;
 	glm::vec3 min;
 	glm::vec3 max;
+public:
+	std::vector<Vert> verts;
+	std::vector<uint> indices;
+	glm::vec3 Min() const { return min; }
+	glm::vec3 Max() const { return max; }
 	void updateMinAndMax();
 	void updateTangents();
 	//editing
@@ -30,6 +29,6 @@ public:
 	void rotate(float x, float y, float z);
 
 
-	void passToHardware();
+	virtual void PassDownToHardWare();
 
 };

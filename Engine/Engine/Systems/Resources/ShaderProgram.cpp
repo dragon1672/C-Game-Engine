@@ -1,5 +1,5 @@
 #include <GL\glew.h>
-#include <Engine\Renderer\Shader\ShaderProgram.h>
+#include "ShaderProgram.h"
 #include <fstream>
 #pragma warning(disable: 4127)
 #pragma warning(push)
@@ -10,75 +10,39 @@
 #pragma warning(pop)
 #include <cassert>
 #include <Engine\Defines\Vectors.h>
-#include <Engine\Renderer\TextureInfo.h>
+#include <Engine\Systems\Resources\TextureInfo.h>
 
 
 GLuint ShaderProgram::currentProgram;
-int ShaderProgram::numOfTextures = 0;
 
-struct CodeBlock { // used to store shader code
-	GLuint id;
-	std::string code;
-};
-
- std::string ShaderProgram::file2str(const char * filePath) {
-	std::ifstream file(filePath);
-	return std::string(
-		std::istreambuf_iterator<char>(file),
-		std::istreambuf_iterator<char>());
+void ShaderProgram::buildBasicProgram(std::string vertexShaderFile, std::string fragmentShaderFile) {
+	addProgram(vertexShaderFile,GL_VERTEX_SHADER);
+	addProgram(fragmentShaderFile,GL_FRAGMENT_SHADER);
 }
-bool ShaderProgram::validFile(const char * filePath) {
-	std::ifstream file(filePath);
-	bool valid = file.good();
-	file.close();
-	return valid;
+void ShaderProgram::buildBasicProgram(const char * vertexShaderFile, const char * fragmentShaderFile) {
+	addProgram(vertexShaderFile,GL_VERTEX_SHADER);
+	addProgram(fragmentShaderFile,GL_FRAGMENT_SHADER);
 }
-
-void ShaderProgram::startup() {
-	programID = glCreateProgram();
-	qDebug() << "Creating Shader Program ID: " << programID;
+void ShaderProgram::addProgram(const char * shaderCode, unsigned short shaderType) {
+	addProgram(std::string(shaderCode),shaderType);
 }
-ShaderProgram::~ShaderProgram() {
-	shutdown();
+void ShaderProgram::addProgram(std::string shaderCode, unsigned short shaderType) {
+	files.push_back(CodeBlock());
+	files.last().code = shaderCode;
+	files.last().type = shaderType;
 }
-void ShaderProgram::shutdown() {
-	CLEAR_VECTOR(prams);
-}
-void ShaderProgram::buildBasicProgram(const char * vertexShaderFilePath, const char * fragmentShaderFilePath) {
-	//startup();
-	bool win = false;
-	win = addProgram(vertexShaderFilePath,GL_VERTEX_SHADER);
-	if(win) win = addProgram(fragmentShaderFilePath,GL_FRAGMENT_SHADER);
-	if(win) linkAndRun();
-}
-bool ShaderProgram::addProgram(const char * filePath, unsigned short shaderType) {
-	qDebug() << "\nAttempting to load file: " << filePath;
-	
-	bool isValid = validFile(filePath);
-	if(isValid) {
-		isValid = addProgram_srcCode(file2str(filePath),shaderType);
-	} else {
-		qDebug() << "File(" << filePath << ") was not found\n";
-		assert(false);
-	}
-	return isValid;
-}
-bool ShaderProgram::addProgram_srcCode(const char * shaderCode, unsigned short shaderType) {
-	return addProgram_srcCode(std::string(shaderCode),shaderType);
-}
-bool ShaderProgram::addProgram_srcCode(std::string shaderCode, unsigned short shaderType) {
+bool ShaderProgram::compileShader(CodeBlock& block)
+{
 	bool isValid;
-	CodeBlock shaderInfo;
-	shaderInfo.code = shaderCode;
-	shaderInfo.id = glCreateShader(shaderType);
-	qDebug() << "Shader Load Successful ID: " << shaderInfo.id;
+	uint id = glCreateShader(block.type);
+	qDebug() << "Shader Load Successful ID: " << id;
 
-	isValid = complileShader(shaderInfo.code.c_str(),shaderInfo.id,true);
+	isValid = complileShader(block.code.c_str(),id,true);
 	if(isValid) {
-		glAttachShader(programID,shaderInfo.id);
-		qDebug() << "File(" << shaderInfo.id << ") Complile Successful ProgramID: " << programID << "\n";
+		glAttachShader(programID,id);
+		qDebug() << "File(" << id << ") Compile Successful ProgramID: " << programID << "\n";
 	} else {
-		qDebug() << "File(" << shaderInfo.id << ") Failed to Complile - NOT ADDED TO PROGRAM\n";
+		qDebug() << "File(" << id << ") Failed to Compile - NOT ADDED TO PROGRAM\n";
 		assert(false);
 	}
 	return isValid;
@@ -122,8 +86,8 @@ void ShaderProgram::saveUniform(const char * name, const glm::vec4& value) { sav
 void ShaderProgram::saveUniform(const char * name, const glm::mat3& value) { saveUniform(name,ParameterType::PT_MAT3,&value[0][0]); }
 void ShaderProgram::saveUniform(const char * name, const glm::mat4& value) { saveUniform(name,ParameterType::PT_MAT4,&value[0][0]); }
 void ShaderProgram::saveUniform(const char* name, ParameterType parameterType, const void * value) {
-	prams.push_back(new ShaderUniformPram());
-	prams[prams.size()-1]->init(this,name,parameterType,value);
+	prams.push_back(ShaderUniformPram());
+	prams.last().init(name,parameterType,value);
 }
 
 void ShaderProgram::passSavedUniforms_try() {
@@ -133,7 +97,7 @@ void ShaderProgram::passSavedUniforms_try() {
 void ShaderProgram::passSavedUniforms_force() {
 	for (uint i = 0; i < prams.size(); i++)
 	{
-		prams[i]->sendData();
+		prams[i].sendData(this);
 	}
 	validPush = false;
 }
@@ -188,7 +152,7 @@ bool ShaderProgram::isCurrentProgram() {
 }
 void ShaderProgram::useProgram() {
 	if(!isCurrentProgram()) {
-		//qDebug() << "Regestering Shader Program  from " << currentProgram << " to " << programID << " into pipeline";
+		qDebug() << "Registering Shader Program  from " << currentProgram << " to " << programID << " into pipeline";
 		currentProgram = programID;
 		glUseProgram(programID);
 	}
@@ -198,4 +162,21 @@ GLuint ShaderProgram::linkAndRun() {
 	link();
 	useProgram();
 	return programID;
+}
+
+void ShaderProgram::PassDownToHardWare()
+{
+	programID = glCreateProgram();
+	qDebug() << "Creating Shader Program ID: " << programID;
+	//compile and link :D
+	for (uint i = 0; i < files.size(); i++)
+	{
+		compileShader(files[i]);
+	}
+	link();
+}
+
+void ShaderProgram::update()
+{
+	passSavedUniforms_force();
 }

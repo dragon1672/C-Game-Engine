@@ -1,5 +1,5 @@
 #include <GL\glew.h>
-#include <Engine\Renderer\Geo\GeometryInfo.h>
+#include "GeometryInfo.h"
 #include <Engine\Tools\CollectionEditing.h>
 
 BufferManager GeometryInfo::manager;

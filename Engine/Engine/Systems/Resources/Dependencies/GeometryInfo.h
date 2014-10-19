@@ -1,11 +1,11 @@
 #pragma once
 
-#include <Engine\Renderer\Geo\BufferManager.h>
+#include <Engine\Systems\Resources\Dependencies\BufferManager.h>
 #pragma warning(disable: 4201)
 #pragma warning(push)
 #include <Vertex.h>
 #pragma warning(pop)
-#include <Engine\Renderer\ParameterType.h>
+#include <Engine\Systems\Resources\Dependencies\ParameterType.h>
 #include <ExportHeader.h>
 
 struct ENGINE_SHARED GeometryInfo {

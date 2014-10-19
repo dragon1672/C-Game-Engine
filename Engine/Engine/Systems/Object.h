@@ -1,13 +1,15 @@
 #pragma once
 
-class Object {
+#include <ExportHeader.h>
+
+class ENGINE_SHARED Object {
 private:
+	static int GlobalID;
 	int id;
 protected:
-	const char * name;
+	const char * name; // default nullptr
 public:
-	//should be unique
-	int getID() { return id; }
-	//can have dups
-	virtual const char * getName() { return name; }
+	Object();
+	int getID(); //will be unique across all objects
+	const char * getName();//can have dups
 };

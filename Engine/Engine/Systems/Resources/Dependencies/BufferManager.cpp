@@ -1,5 +1,5 @@
 #include <GL\glew.h>
-#include <Engine\Renderer\Geo\BufferManager.h>
+#include "BufferManager.h"
 #include <QtCore\QDebug>
 
 #include <cassert>

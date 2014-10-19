@@ -23,11 +23,6 @@ void Mesh::updateMinAndMax()
 	}
 }
 
-void Mesh::passToHardware()
-{
-	geo.init(sizeof(Vert),(const void*)&verts[0],verts.size(),&indices[0],indices.size(),3);
-	geo.addStreamedParameters(Vert().getAtribs(),Vert().getNumOfAtribs());
-}
 
 void Mesh::updateTangents()
 {
@@ -164,4 +159,10 @@ void Mesh::rotate(float x, float y, float z) {
 		verts[i].pos  = rot * verts[i].pos;
 		verts[i].norm = rot * verts[i].norm;
 	}
+}
+
+void Mesh::PassDownToHardWare()
+{
+	geo.init(sizeof(Vert),(const void*)&verts[0],verts.size(),&indices[0],indices.size(),3);
+	geo.addStreamedParameters(Vert().getAtribs(),Vert().getNumOfAtribs());
 }
