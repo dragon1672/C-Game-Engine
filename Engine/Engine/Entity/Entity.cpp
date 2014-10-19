@@ -56,10 +56,10 @@ glm::mat4 Entity::getWorldTransform()
 
 const char * Entity::getName()
 {
-	return name;
+	return Object::getName(); // stupid Lua
 }
 
-Entity::Entity(const char * name/*="New Game Object"*/, Entity * p /*= nullptr*/)  : name(name), parent(p) { }
+Entity::Entity(const char * name/*="New Game Object"*/, Entity * p /*= nullptr*/)  : parent(p) { this->name = name; }
 
 
 #include <Engine/Tools/MatrixInfo.h>

@@ -1,3 +1,4 @@
+/*
 #pragma once
 
 #include <ShapeData.h>
@@ -71,3 +72,4 @@ public:
 	void draw(Renderable& toDraw);
 	void drawPrep(int width, int height);
 };
+//*/

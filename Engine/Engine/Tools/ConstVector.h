@@ -16,16 +16,16 @@ public:
 	
 	ConstVector() { init(47); }
 	ConstVector(unsigned int startSize)    { init(startSize); }
-	void add(std::vector<T>& toAdd)        { add(&toAdd[0],toAdd.size()); }
-	void add(ConstVector<T>& toAdd)        { for (int i = 0; i < toAdd.size(); i++) add(toAdd[i]); }
-	void add(T * toAdd, unsigned int size) { for (int i = 0; i < size;         i++) add(toAdd[i]); }
+	void add(const std::vector<T>& toAdd)        { add(&toAdd[0],toAdd.size()); }
+	void add(const ConstVector<T>& toAdd)        { for (int i = 0; i < toAdd.size(); i++) add(toAdd[i]); }
+	void add(const T * toAdd, unsigned int size) { for (int i = 0; i < size;         i++) add(toAdd[i]); }
 
 	void push_back(const T& toAdd)               { add(toAdd); }
-	void push_back(std::vector<T>& toAdd)        { add(toAdd); }
-	void push_back(ConstVector<T>& toAdd)        { add(toAdd); }
-	void push_back(T * toAdd, unsigned int size) { add(toAdd,size); }
+	void push_back(const std::vector<T>& toAdd)        { add(toAdd); }
+	void push_back(const ConstVector<T>& toAdd)        { add(toAdd); }
+	void push_back(const T * toAdd, unsigned int size) { add(toAdd,size); }
 
-	void add(T& toAdd) {
+	void add(const T& toAdd) {
 		unsigned int a = currentIndex / startSize;
 		unsigned int b = currentIndex % startSize;
 		while(!(a < arrays.size() && b < startSize))

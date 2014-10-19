@@ -2,7 +2,7 @@
 
 #include <string>
 #include <Engine/TypeDefs.h>
-#include <Engine/Renderer/Geo/Mesh.h>
+#include <Engine/Systems/Resources/Mesh.h>
 
 typedef char fileByte;
 

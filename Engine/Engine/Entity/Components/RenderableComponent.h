@@ -1,20 +1,21 @@
 #pragma once
 
 #include <Engine\Entity\Component.h>
-#include <Engine\Renderer\Geo\GeometryInfo.h>
-#include <Engine\Renderer\Shader\ShaderProgram.h>
+#include <Engine\Systems\Resources\Dependencies\GeometryInfo.h>
+#include <Engine\Systems\Resources\ShaderProgram.h>
+#include <Engine\Tools\ConstVector.h>
 
 class RenderableComponent : public Component {
 private:
 	const char * transformShaderName;
-	std::vector<ShaderUniformPram *> uniformParameters;
+	ConstVector<ShaderUniformPram> uniformParameters;
 	ShaderUniformPram transform;
 public:
 	GeometryInfo * whatGeo;
 	ShaderProgram * howShader;
 	bool visable;
 
-	RenderableComponent(GeometryInfo * geo, ShaderProgram * shader, ShaderUniformPram ** uniforms = nullptr, int numOfUniforms = 0)
+	RenderableComponent(GeometryInfo * geo, ShaderProgram * shader, ShaderUniformPram * uniforms = nullptr, int numOfUniforms = 0)
 		: transformShaderName(nullptr), whatGeo(geo), howShader(shader), visable(true) {
 			for (int i = 0; i < numOfUniforms; i++)
 			{

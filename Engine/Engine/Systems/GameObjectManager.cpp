@@ -1,3 +1,4 @@
+#include <gl\glew.h>
 #include "GameObjectManager.h"
 #include <Engine/Entity/Entity.h>
 #include <Engine/Tools/MasterLua.h>
@@ -48,7 +49,11 @@ void GameObjectManager::paint() {
 		RenderableComponent * renderable = entities[i].getComponent<RenderableComponent>();
 		if(renderable != nullptr && renderable->visable) {
 			renderable->drawWarmup();
-			renderer.draw(renderable->whatGeo);
+			GeometryInfo& toDraw = *renderable->whatGeo;
+			glBindVertexArray(toDraw.vertexArrayObjectID);
+			glBindBuffer(toDraw.bufferInformation.bufferID,GL_ARRAY_BUFFER);
+			glBindBuffer(toDraw.bufferInformation.bufferID,GL_ELEMENT_ARRAY_BUFFER);
+			glDrawElements(toDraw.indexingMode,toDraw.numIndices,GL_UNSIGNED_SHORT,(void*)toDraw.indicesOffset());
 		}
 	}
 }

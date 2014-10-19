@@ -1,10 +1,11 @@
 
 #include <vector>
 #include <Engine/Systems/Object.h>
+#include <ExportHeader.h>
 
 
 class ObjectManagerPrivates;
-class ObjectManager {
+class ENGINE_SHARED ObjectManager {
 private:
 	ObjectManagerPrivates * privates;
 public:

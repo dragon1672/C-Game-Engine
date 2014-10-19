@@ -2,9 +2,9 @@
 
 #include <Engine/Defines/SingletonsDefine.h>
 #include <Engine/Tools/ConstVector.h>
-#include <Engine/Renderer/TextureInfo.h>
-#include <Engine/Renderer/Geo/Mesh.h>
-#include <Engine/Renderer/Shader/ShaderProgram.h>
+#include <Engine/Systems/Resources/TextureInfo.h>
+#include <Engine/Systems/Resources/Mesh.h>
+#include <Engine/Systems/Resources/ShaderProgram.h>
 
 #define resourceManager
 

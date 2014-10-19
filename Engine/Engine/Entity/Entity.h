@@ -4,6 +4,7 @@
 #include <glm/glm.hpp>
 #include <ExportHeader.h>
 #include <Engine/Tools/MasterLua.h>
+#include <Engine/Systems/ObjectManager.h>
 
 
 #include <Engine/Tools/MatrixInfo.h>
@@ -13,9 +14,8 @@ class RenderableComponent;
 
 class Component;
 
-class ENGINE_SHARED Entity {
+class ENGINE_SHARED Entity : public Object {
 private:
-	const char * name;
 	void removeComponent(int toKill);
 	template<typename T> int getIndex() {
 		return getIndex(typeid(T).name());

@@ -1,3 +1,4 @@
+/*
 #include <GL/glew.h>
 
 #include <Engine\Renderer\Renderer.h>
@@ -139,7 +140,7 @@ namespace {
 		update2DTexture(textureID,slot, image.bits(),image.width(),image.height(), type, type);
 	}
 	void update2DTexture(uint textureID, uint slot, QString& fileName, bool flipHorz = false, bool flipVert = false) {
-		QString filePath = /**/QCoreApplication::applicationDirPath() + /**/fileName;
+		QString filePath = QCoreApplication::applicationDirPath() + fileName;
 		QFile tempFile(filePath);
 		if(tempFile.exists()) {
 			QImage data = getImageFromFile(filePath,flipHorz,flipVert);
@@ -169,7 +170,7 @@ TextureInfo * Renderer::add2DTexture(const char * fileName, bool flipHorz, bool 
 	return add2DTexture(data,flipHorz,flipVert);
 }
 TextureInfo * Renderer::add2DTexture(QString& fileName, bool flipHorz, bool flipVert) {
-	QString filePath = /**/QCoreApplication::applicationDirPath() + /**/fileName;
+	QString filePath = QCoreApplication::applicationDirPath() + fileName;
 	QFile tempFile(filePath);
 	if(tempFile.exists()) {
 		QImage data = getImageFromFile(filePath,flipHorz,flipVert);
@@ -200,7 +201,7 @@ TextureInfo * Renderer::addCubeTexture(QString& posX,QString& negX,QString& posY
 	TextureInfo ret[pathSize];
 
 	for(int i=0;i<pathSize;i++) {
-		QString filePath = /**/QCoreApplication::applicationDirPath() + /**/paths[i];
+		QString filePath = QCoreApplication::applicationDirPath() + paths[i];
 		QFile tempFile(filePath);
 		if(tempFile.exists()) {
 			data[i] = getImageFromFile(filePath,false,true);
@@ -280,3 +281,4 @@ void            Renderer::drawPrep(int width, int height) {
 	glViewport(0,0,width,height);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
+//*/
