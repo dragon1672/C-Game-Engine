@@ -11,7 +11,9 @@ private:
 public:
 	ObjectManager();
 	~ObjectManager();
+	void Register(Object& toAdd);
 	void Register(Object * toAdd);
+	void UnRegister(Object& toKill);
 	void UnRegister(Object * toKill);
 	Object * getFirst(int id);
 	Object * getFirst(const char * name);

@@ -29,6 +29,9 @@ ObjectManager::~ObjectManager()
 	delete privates;
 }
 
+void ObjectManager::Register(Object& toAdd) {
+	Register(&toAdd);
+}
 void ObjectManager::Register(Object * toAdd)
 {
 	if(privates->ContainsId(toAdd)) {
@@ -43,6 +46,9 @@ void ObjectManager::Register(Object * toAdd)
 	privates->nameMap[toAdd->getName()].push_back(toAdd);
 }
 
+void ObjectManager::UnRegister(Object& toKill) {
+	UnRegister(&toKill);
+}
 void ObjectManager::UnRegister(Object * toKill)
 {
 	if(!privates->ContainsId(toKill))
