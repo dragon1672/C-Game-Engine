@@ -13,6 +13,8 @@ class ENGINE_SHARED Mesh : public Resource {
 	glm::vec3 min;
 	glm::vec3 max;
 public:
+	Mesh();
+	Mesh(const char * name);
 	std::vector<Vert> verts;
 	std::vector<uint> indices;
 	glm::vec3 Min() const { return min; }

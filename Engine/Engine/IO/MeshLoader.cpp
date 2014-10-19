@@ -4,10 +4,10 @@
 #define GET_DATA(type, offset) *reinterpret_cast<type *>(bytes+offset);	offset += sizeof(type);
 
 namespace FileIO {
-	std::function<Mesh(fileByte*)> loaders[] = {
+	std::function<Mesh(fileByte*, const char * name)> loaders[] = {
 		//v1
-		[](fileByte * bytes) -> Mesh {
-			Mesh ret;
+		[](fileByte * bytes, const char * name) -> Mesh {
+			Mesh ret(name);
 			uint offset = 0;
 			/*int vertexOffset = */GET_DATA(int,offset);
 			int vertexSize   = GET_DATA(int,offset);
@@ -34,7 +34,7 @@ namespace FileIO {
 			return ret;
 		},
 		/*v2
-		[](fileByte * bytes)->Mesh{
+		[](fileByte * bytes, const char * name)->Mesh{
 			return Mesh(); // TODO
 		}
 		//*/
@@ -42,18 +42,18 @@ namespace FileIO {
 
 
 
-	Mesh loadFromBinary(fileByte * bytes) {
+	Mesh loadFromBinary(fileByte * bytes, const char * name) {
 		int offset = 0;
 		int firstNum = GET_DATA(int,offset);
 		int index = firstNum / 16;
-		return loaders[index](bytes);
+		return loaders[index](bytes,name);
 	}
-	Mesh loadMeshFromFile(std::string filePath) {
-		loadMeshFromFile(filePath.c_str());
+	Mesh loadMeshFromFile(std::string filePath, const char * name) {
+		loadMeshFromFile(filePath.c_str(),name);
 	}
-	Mesh loadMeshFromFile(const char * filePath) {
+	Mesh loadMeshFromFile(const char * filePath, const char * name)) {
 		FileData file = loadFile(filePath);
-		Mesh ret = loadFromBinary(file.data);
+		Mesh ret = loadFromBinary(file.data,name);
 		file.cleanup();
 		return ret;
 	}

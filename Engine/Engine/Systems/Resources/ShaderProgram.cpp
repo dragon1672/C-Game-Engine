@@ -180,3 +180,13 @@ void ShaderProgram::update()
 {
 	passSavedUniforms_force();
 }
+
+ShaderProgram::ShaderProgram(const char * name)
+{
+	this->name = name;
+}
+
+ShaderProgram::ShaderProgram()
+{
+
+}

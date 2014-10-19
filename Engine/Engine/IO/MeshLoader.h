@@ -3,6 +3,7 @@
 #include <Engine/IO/FileIO.h>
 
 namespace FileIO {
-	Mesh loadMeshFromFile(const char * filePath);
-	Mesh loadMeshFromFile(std::string filePath);
+	Mesh loadFromBinary(fileByte * bytes, const char * name = nullptr);
+	Mesh loadMeshFromFile(const char * filePath, const char * name = nullptr);
+	Mesh loadMeshFromFile(std::string filePath, const char * name = nullptr);
 }

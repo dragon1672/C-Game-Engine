@@ -29,16 +29,15 @@ private:
 	}
 public:
 
-	Mesh * addMesh();
-	Mesh * addMesh(Neumont::ShapeData& NUCrap);
-	Mesh * addMesh(Mesh * toCopy);
-	Mesh * addMesh(std::string filePath);
-	Mesh * addMesh(const char * filePath);
+	Mesh * addMesh(const char * name);
+	Mesh * addMesh(const char * name, Neumont::ShapeData& NUCrap);
+	Mesh * addMesh(const char * name, std::string filePath);
+	Mesh * addMesh(const char * name, const char * filePath);
 
-	ShaderProgram * addShader_file(const char * vertFilePath, const char * fragFilePath);
-	ShaderProgram * addShader_file(std::string vertFilePath, std::string fragFilePath);
-	ShaderProgram * addShader_src(std::string vert, std::string frag);
-	ShaderProgram * addShader_src(const char * vert, const char * frag);
+	ShaderProgram * addShader_file(const char * name, const char * vertFilePath, const char * fragFilePath);
+	ShaderProgram * addShader_file(const char * name, std::string vertFilePath, std::string fragFilePath);
+	ShaderProgram * addShader_src (const char * name, std::string vert, std::string frag);
+	ShaderProgram * addShader_src (const char * name, const char * vert, const char * frag);
 
 
 	void init();

@@ -43,6 +43,10 @@ private:
 
 	bool compileShader(CodeBlock&);
 public:
+	ShaderProgram();
+	ShaderProgram(const char * name);
+
+
 	void buildBasicProgram(std::string  vertexShaderFile, std::string  fragmentShaderFile);
 	void buildBasicProgram(const char * vertexShaderFile, const char * fragmentShaderFile);
 	//adds singular shaders
