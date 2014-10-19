@@ -8,8 +8,6 @@
 #include <Engine/Systems/ObjectManager.h>
 #include <ShapeData.h>
 #include <functional>
-#include <Engine/IO/FileIO.h>
-#include <Engine/IO/MeshLoader.h>
 
 #define resourceManager
 
@@ -23,9 +21,9 @@ private:
 	ConstVector<TextureInfo> textures;
 	ObjectManager TextureObjs;
 	void foreachOnAll(std::function<void(Resource&)> func) {
-		for (int i = 0; i < shaders.size();  i++) func(shaders[i]);
-		for (int i = 0; i < geos.size();     i++) func(geos[i]);
-		for (int i = 0; i < textures.size(); i++) func(textures[i]);
+		for (uint i = 0; i < shaders.size();  i++) func(shaders[i]);
+		for (uint i = 0; i < geos.size();     i++) func(geos[i]);
+		for (uint i = 0; i < textures.size(); i++) func(textures[i]);
 	}
 public:
 

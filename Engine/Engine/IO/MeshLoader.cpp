@@ -49,9 +49,9 @@ namespace FileIO {
 		return loaders[index](bytes,name);
 	}
 	Mesh loadMeshFromFile(std::string filePath, const char * name) {
-		loadMeshFromFile(filePath.c_str(),name);
+		return loadMeshFromFile(filePath.c_str(),name);
 	}
-	Mesh loadMeshFromFile(const char * filePath, const char * name)) {
+	Mesh loadMeshFromFile(const char * filePath, const char * name) {
 		FileData file = loadFile(filePath);
 		Mesh ret = loadFromBinary(file.data,name);
 		file.cleanup();

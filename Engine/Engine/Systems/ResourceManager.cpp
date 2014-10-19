@@ -1,4 +1,5 @@
 #include "ResourceManager.h"
+#include <Engine/IO/MeshLoader.h>
 
 IMPLEMENT_SINGLETON(ResourceManager);
 
@@ -12,11 +13,11 @@ Mesh * ResourceManager::addMesh(const char * name, Neumont::ShapeData& NUCrap)
 {
 	geos.push_back(Mesh(name));
 	Mesh& ret = geos.last();
-	for (int i = 0; i < NUCrap.numVerts; i++) {
+	for (uint i = 0; i < NUCrap.numVerts; i++) {
 		auto& v = NUCrap.verts[i];
 		ret.verts.push_back(Vert(v.position,v.color,v.position,glm::vec4(),v.uv));
 	}
-	for (int i = 0; i < NUCrap.numIndices; i++) {
+	for (uint i = 0; i < NUCrap.numIndices; i++) {
 		ret.indices.push_back(NUCrap.indices[i]);
 	}
 	MeshObjs.Register(geos.last());
@@ -28,7 +29,7 @@ Mesh * ResourceManager::addMesh(const char * name, std::string filePath)
 }
 Mesh * ResourceManager::addMesh(const char * name, const char * filePath)
 {
-	geos.push_back(FileIO::loadMeshFromFile(filePath),name);
+	geos.push_back(FileIO::loadMeshFromFile(filePath,name));
 	MeshObjs.Register(geos.last());
 	return &geos.last();
 }
@@ -51,6 +52,9 @@ ShaderProgram * ResourceManager::addShader_src (const char * name, const char * 
 	shaders.last().buildBasicProgram(vert,frag);
 	return &shaders.last();
 }
+
+
+
 void ResourceManager::init()
 {
 	foreachOnAll([](Resource& data) { data.init(); });

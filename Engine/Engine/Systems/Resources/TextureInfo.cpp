@@ -4,7 +4,7 @@
 
 
 
-TextureInfo::TextureInfo() : data(nullptr), type((GLenum)GL_RGBA), type2((GLenum)-1), slotID(-1) { }
+TextureInfo::TextureInfo() : data(nullptr), type((GLenum)GL_RGBA), type2((GLenum)-1), slotID((uint)-1) { }
 
 TextureInfo::TextureInfo(QImage * src)
 {

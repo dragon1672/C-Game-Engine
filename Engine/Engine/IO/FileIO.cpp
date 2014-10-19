@@ -3,7 +3,7 @@
 
 namespace FileIO {
 	std::string readFile(std::string filePath) {
-		readFile(filePath.c_str());
+		return readFile(filePath.c_str());
 	}
 	std::string readFile(const char * filePath) {
 		std::ifstream file(filePath);
@@ -12,7 +12,7 @@ namespace FileIO {
 			std::istreambuf_iterator<char>());
 	}
 	FileData loadFile(std::string filePath) {
-		loadFile(filePath.c_str());
+		return loadFile(filePath.c_str());
 	}
 	FileData loadFile(const char * filePath) {
 		FileData ret;
@@ -34,7 +34,7 @@ namespace FileIO {
 		return ret;
 	}
 	bool validFile(std::string filePath) {
-		validFile(filePath.c_str());
+		return validFile(filePath.c_str());
 	}
 	bool validFile(const char * filePath) {
 		std::ifstream file(filePath);
