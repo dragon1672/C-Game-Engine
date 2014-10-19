@@ -1,5 +1,6 @@
 #include "ResourceManager.h"
 #include <Engine/IO/MeshLoader.h>
+#include <Engine/IO/QImageIO.h>
 
 IMPLEMENT_SINGLETON(ResourceManager);
 
@@ -66,4 +67,47 @@ void ResourceManager::PassDownToHardWare()
 void ResourceManager::update()
 {
 	foreachOnAll([](Resource& data) { data.update(); });
+}
+
+void ResourceManager::foreachOnAll(std::function<void(Resource&)> func)
+{
+	for (uint i = 0; i < shaders.size();  i++) func(shaders[i]);
+	for (uint i = 0; i < geos.size();     i++) func(geos[i]);
+	for (uint i = 0; i < textures.size(); i++) func(textures[i]);
+}
+
+TextureInfo * ResourceManager::add2DTexture(const char * name, QImage& image, GLenum type /*= GL_RGBA*/)
+{
+	return add2DTexture(name,image,type,type);
+}
+
+TextureInfo * ResourceManager::add2DTexture(const char * name, QImage& image, GLenum type, GLenum type2)
+{
+	return add2DTexture(name,image.bits(),image.byteCount(),image.width(),image.height(),type,type);
+}
+
+TextureInfo * ResourceManager::add2DTexture(const char * name, const char * filePath, bool flipHorz /*= false*/, bool flipVert /*= false*/)
+{
+	QImage data = FileIO::loadImage(filePath);
+	if(flipVert || flipHorz) data = data.mirrored(flipHorz,flipVert);
+	return add2DTexture(name,data);
+}
+
+TextureInfo * ResourceManager::add2DTexture(const char * name, std::string& filePath, bool flipHorz /*= false*/, bool flipVert /*= false*/)
+{
+	return add2DTexture(name,filePath.c_str(),flipHorz,flipVert);
+}
+
+TextureInfo * ResourceManager::add2DTexture(const char * name, ubyte * data, uint sizeofData, uint width, uint height, GLenum type, GLenum type2)
+{
+	textures.push_back(TextureInfo(name));
+	TextureObjs.Register(textures.last());
+	textures.last().data = new ubyte[sizeofData];
+	FileIO::myMemCopy(data,textures.last().data,sizeofData);
+
+	textures.last().width  = width;
+	textures.last().height = height;
+	textures.last().type   = type;
+	textures.last().type2  = type2;
+	return &textures.last();
 }
