@@ -2,7 +2,6 @@
 
 #include <string>
 #include <Engine/TypeDefs.h>
-#include <Engine/Systems/Resources/Mesh.h>
 
 typedef char fileByte;
 

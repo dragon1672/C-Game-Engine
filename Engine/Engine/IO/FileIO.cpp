@@ -1,5 +1,6 @@
 #include "FileIO.h"
 #include <fstream>
+#include <cassert>
 
 namespace FileIO {
 	std::string readFile(std::string filePath) {
