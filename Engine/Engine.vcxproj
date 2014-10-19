@@ -131,7 +131,6 @@
     <ClInclude Include="Engine\Systems\Resources\Dependencies\AutoAtrib.h" />
     <ClInclude Include="Engine\Systems\Resources\Dependencies\Vert.h" />
     <ClInclude Include="Engine\Systems\Resources\Resource.h" />
-    <ClInclude Include="Engine\Systems\TextureInfo.h" />
     <ClInclude Include="Engine\Defines\Vectors.h" />
     <ClInclude Include="Engine\Systems\Resources\Dependencies\BufferManager.h" />
     <ClInclude Include="Engine\Systems\GameObjectManager.h" />
@@ -139,7 +138,6 @@
     <ClInclude Include="Engine\Systems\ObjectManager.h" />
     <ClInclude Include="Engine\Systems\ResourceManager.h" />
     <ClInclude Include="Engine\Systems\Resources\Script.h" />
-    <ClInclude Include="Engine\Systems\Resources\TextureInfo.h" />
     <ClInclude Include="Engine\Tools\BinaryToShapeLoader.h" />
     <ClInclude Include="Engine\Tools\CollectionEditing.h" />
     <ClInclude Include="Engine\Tools\ConstVector.h" />
@@ -190,7 +188,7 @@
     <ClCompile Include="Engine\Systems\ObjectManager.cpp" />
     <ClCompile Include="Engine\Systems\ResourceManager.cpp" />
     <ClCompile Include="Engine\Systems\Resources\ShaderProgram.cpp" />
-    <ClCompile Include="Engine\Systems\TextureInfo.cpp" />
+    <ClCompile Include="Engine\Systems\Resources\TextureInfo.cpp" />
     <ClCompile Include="Engine\Tools\BinaryToShapeLoader.cpp" />
     <ClCompile Include="Engine\Tools\MasterLua.cpp" />
     <ClCompile Include="Engine\Tools\MatrixInfo.cpp" />

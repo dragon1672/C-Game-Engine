@@ -3,10 +3,13 @@
 #include <Engine/TypeDefs.h>
 #include <Engine/Systems/Object.h>
 #include <ExportHeader.h>
+#include <Engine/Systems/Resources/Resource.h>
 
 class QImage;
 
-class ENGINE_SHARED TextureInfo : public Object {
+class ENGINE_SHARED TextureInfo : public Resource {
+private:
+	static int NumTextures;
 public:
 	uint width;
 	uint height;
@@ -19,4 +22,6 @@ public:
 
 	TextureInfo();
 	TextureInfo(QImage * src);
+
+	void PassDownToHardWare();
 };

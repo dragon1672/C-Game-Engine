@@ -70,7 +70,6 @@
     <ClInclude Include="Engine\Systems\Object.h" />
     <ClInclude Include="Engine\Systems\ObjectManager.h" />
     <ClInclude Include="Engine\Systems\Resources\Script.h" />
-    <ClInclude Include="Engine\Systems\Resources\TextureInfo.h" />
     <ClInclude Include="Engine\Systems\Resources\Dependencies\ShaderUniformPram.h" />
     <ClInclude Include="Engine\Systems\Resources\ShaderProgram.h" />
     <ClInclude Include="Engine\Systems\Resources\Dependencies\AutoAtrib.h" />
@@ -79,8 +78,8 @@
     <ClInclude Include="Engine\Systems\Resources\Dependencies\Vert.h" />
     <ClInclude Include="Engine\Systems\Resources\Mesh.h" />
     <ClInclude Include="Engine\Systems\Resources\Dependencies\ParameterType.h" />
-    <ClInclude Include="Engine\Systems\TextureInfo.h" />
     <ClInclude Include="Engine\Systems\Resources\Resource.h" />
+    <ClInclude Include="Engine\Systems\Resources\TextureInfo.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -117,8 +116,8 @@
     <ClCompile Include="Engine\Systems\Resources\Dependencies\GeometryInfo.cpp" />
     <ClCompile Include="Engine\Systems\Resources\Dependencies\Vert.cpp" />
     <ClCompile Include="Engine\Systems\Resources\Mesh.cpp" />
-    <ClCompile Include="Engine\Systems\TextureInfo.cpp" />
     <ClCompile Include="Engine\Systems\Object.cpp" />
+    <ClCompile Include="Engine\Systems\Resources\TextureInfo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Tools\MyMath\Matrix2D.inl" />
