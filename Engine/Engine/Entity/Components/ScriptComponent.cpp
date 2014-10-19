@@ -5,7 +5,7 @@
 #include <Engine/Tools/Printer.h>
 
 const char * ScriptComponent::LuaTemplate = ""
-	"function context:init() -- setup vars                        \n"
+	"function context:start() -- setup vars                       \n"
 	"    self.exampleVar = 5;                                     \n"
 	"    return true                                              \n"
 	"end                                                          \n"
@@ -26,12 +26,23 @@ const char * ScriptComponent::LuaTemplate = ""
 class ScriptComponentPrivates {
 public:
 	LuaTable context;
+	void runMethod(std::string methodName) {
+		LUA_INSTANCE.GetGlobalEnvironment().Set("CorbinEnginTmp",context);
+		LUA_INSTANCE.RunScript("CorbinEnginTmp:"+methodName+"()");
+	}
 	ScriptComponentPrivates(LuaTable context) :
 		context(context) { }
 };
 
 void ScriptComponent::init() {
-	LUA_INSTANCE.RunScript("context = class();");
+	LUA_INSTANCE.RunScript("context = class();"
+		//setting up defaults for functions
+		"function context:init()        return true end \n"
+		"function context:start()       return true end \n"
+		"function context:earlyUpdate() return true end \n"
+		"function context:update()      return true end \n"
+		"function context:lateUpdate()  return true end \n"
+		"");
 	std::string errs = LUA_INSTANCE.RunScript(script);
 	if(errs != Lua::NO_ERRORS) {
 		printer.LogError("LUA COMPILE ERR");
@@ -42,21 +53,21 @@ void ScriptComponent::init() {
 	context.Set("parent",((LuaUserdata<Entity>)*parent));
 	this->privates = new ScriptComponentPrivates(context);
 
-	LUA_INSTANCE.GetGlobalEnvironment().Set("CorbinEnginTmp",privates->context);
-	LUA_INSTANCE.RunScript("CorbinEnginTmp:start()");
+	privates->runMethod("init");
+}
+
+void ScriptComponent::start() {
+	privates->runMethod("start");
 }
 void ScriptComponent::earlyUpdate() {
-	LUA_INSTANCE.GetGlobalEnvironment().Set("CorbinEnginTmp",privates->context);
-	LUA_INSTANCE.RunScript("CorbinEnginTmp:earlyUpdate()");
+	privates->runMethod("earlyUpdate");
 }
 void ScriptComponent::update() {
-	LUA_INSTANCE.GetGlobalEnvironment().Set("CorbinEnginTmp",privates->context);
-	LUA_INSTANCE.RunScript("CorbinEnginTmp:update()");
+	privates->runMethod("update");
 }
 
 void ScriptComponent::lateUpdate() {
-	LUA_INSTANCE.GetGlobalEnvironment().Set("CorbinEnginTmp",privates->context);
-	LUA_INSTANCE.RunScript("CorbinEnginTmp:lateUpdate()");
+	privates->runMethod("lateUpdate");
 }
 
 ScriptComponent::~ScriptComponent()

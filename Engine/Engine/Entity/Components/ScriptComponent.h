@@ -15,6 +15,7 @@ public:
 	ScriptComponent(const char * script);
 	~ScriptComponent();
 	virtual void init();
+	virtual void start();
 	virtual void earlyUpdate();
 	virtual void update();
 	virtual void lateUpdate();
