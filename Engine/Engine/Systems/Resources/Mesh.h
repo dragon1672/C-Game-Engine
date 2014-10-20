@@ -6,7 +6,7 @@
 #include <ShapeData.h>
 #include <Engine/Systems/Resources/Dependencies/GeometryInfo.h>
 #include <ExportHeader.h>
-#include <Engine/Systems/Resources/Resource.h>
+#include <Engine\Systems\Resource.h>
 
 class ENGINE_SHARED Mesh : public Resource {
 	GeometryInfo geo;

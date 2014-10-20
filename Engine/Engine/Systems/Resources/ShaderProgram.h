@@ -13,7 +13,7 @@
 #include <Engine\TypeDefs.h>
 #include <glm\glm.hpp>
 #include <Engine\Tools\ConstVector.h>
-#include <Engine\Systems\Resources\Resource.h>
+#include <Engine\Systems\Resource.h>
 
 class ENGINE_SHARED ShaderProgram : public Resource {
 private:

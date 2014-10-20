@@ -78,11 +78,11 @@
     <ClInclude Include="Engine\Systems\Resources\Dependencies\Vert.h" />
     <ClInclude Include="Engine\Systems\Resources\Mesh.h" />
     <ClInclude Include="Engine\Systems\Resources\Dependencies\ParameterType.h" />
-    <ClInclude Include="Engine\Systems\Resources\Resource.h" />
     <ClInclude Include="Engine\Systems\Resources\TextureInfo.h" />
     <ClInclude Include="Engine\IO\QImageIO.h" />
     <ClInclude Include="Engine\Systems\InputManager.h" />
     <ClInclude Include="Engine\Tools\Random\StringRandom.h" />
+    <ClInclude Include="Engine\Systems\Resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -124,6 +124,7 @@
     <ClCompile Include="Engine\IO\QImageIO.cpp" />
     <ClCompile Include="Engine\Systems\InputManager.cpp" />
     <ClCompile Include="Engine\Tools\Random\StringRandom.cpp" />
+    <ClCompile Include="Engine\Systems\Resources\Script.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Tools\MyMath\Matrix2D.inl" />

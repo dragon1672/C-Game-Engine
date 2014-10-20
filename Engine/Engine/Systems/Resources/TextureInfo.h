@@ -3,7 +3,7 @@
 #include <Engine/TypeDefs.h>
 #include <Engine/Systems/Object.h>
 #include <ExportHeader.h>
-#include <Engine/Systems/Resources/Resource.h>
+#include <Engine\Systems\Resource.h>
 
 class QImage;
 
