@@ -5,9 +5,6 @@
 
 class ENGINE_SHARED LinkedSlider : public DebugSlider {
 	float * boundValue;
-
-	//override
-	void valueChanged(float newValue);
 public:
 
 	
@@ -19,6 +16,7 @@ public:
 			: DebugSlider(min, max,textOnLeft,granularity)
 	{
 			boundValue = boundFloat;
+			connect( this, &DebugSlider::valueChanged, [this](float newValue){*(this->boundValue) = newValue;});
 	}
 	inline void setBoundValue(float * toSet) {
 		boundValue = toSet;

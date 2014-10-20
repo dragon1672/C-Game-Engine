@@ -16,8 +16,9 @@ DebugSlider::DebugSlider(float min, float max, bool textOnLeft, float granularit
 	slider->setOrientation(Qt::Horizontal);
 	slider->setMinimum(0);
 	slider->setMaximum(sliderGranularity);
-	connect(slider, SIGNAL(valueChanged(int)), 
-	this, SLOT(sliderValueChanged()));
+
+	connect( slider, &QSlider::valueChanged, [this](){this->sliderValueChanged();});
+
 	sliderValueChanged();
 }
 

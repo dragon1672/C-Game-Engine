@@ -8,7 +8,7 @@ class QLabel;
 
 class ENGINE_SHARED DebugSlider : public QWidget {
 	
-	Q_OBJECT
+	Q_OBJECT;
 
 	QSlider* slider;
 	QLabel* label;
