@@ -1,6 +1,7 @@
 #include "ResourceManager.h"
 #include <Engine/IO/MeshLoader.h>
 #include <Engine/IO/QImageIO.h>
+#include <Engine/Tools/CollectionEditing.h>
 
 IMPLEMENT_SINGLETON(ResourceManager);
 
@@ -49,7 +50,7 @@ ShaderProgram * ResourceManager::addShader_src (const char * name, std::string v
 ShaderProgram * ResourceManager::addShader_src (const char * name, const char * vert, const char * frag)
 {
 	shaders.push_back(ShaderProgram(name));
-	ShaderObjs.Register(geos.last());
+	ShaderProgramObjs.Register(geos.last());
 	shaders.last().buildBasicProgram(vert,frag);
 	return &shaders.last();
 }
@@ -80,28 +81,24 @@ TextureInfo * ResourceManager::add2DTexture(const char * name, QImage& image, GL
 {
 	return add2DTexture(name,image,type,type);
 }
-
 TextureInfo * ResourceManager::add2DTexture(const char * name, QImage& image, GLenum type, GLenum type2)
 {
 	return add2DTexture(name,image.bits(),image.byteCount(),image.width(),image.height(),type,type);
 }
-
 TextureInfo * ResourceManager::add2DTexture(const char * name, const char * filePath, bool flipHorz /*= false*/, bool flipVert /*= false*/)
 {
 	QImage data = FileIO::loadImage(filePath);
 	if(flipVert || flipHorz) data = data.mirrored(flipHorz,flipVert);
 	return add2DTexture(name,data);
 }
-
 TextureInfo * ResourceManager::add2DTexture(const char * name, std::string& filePath, bool flipHorz /*= false*/, bool flipVert /*= false*/)
 {
 	return add2DTexture(name,filePath.c_str(),flipHorz,flipVert);
 }
-
 TextureInfo * ResourceManager::add2DTexture(const char * name, ubyte * data, uint sizeofData, uint width, uint height, GLenum type, GLenum type2)
 {
 	textures.push_back(TextureInfo(name));
-	TextureObjs.Register(textures.last());
+	TextureInfoObjs.Register(textures.last());
 	textures.last().data = new ubyte[sizeofData];
 	FileIO::myMemCopy(data,textures.last().data,sizeofData);
 
@@ -111,3 +108,36 @@ TextureInfo * ResourceManager::add2DTexture(const char * name, ubyte * data, uin
 	textures.last().type2  = type2;
 	return &textures.last();
 }
+
+
+Script * ResourceManager::addScript_file(const char * name, const char * filePath)
+{
+	return addScript_src(name, FileIO::readFile(filePath));
+}
+Script * ResourceManager::addScript_file(const char * name, std::string filePath)
+{
+	return addScript_src(name, FileIO::readFile(filePath));
+}
+Script * ResourceManager::addScript_src (const char * name, const char * file)
+{
+	return addScript_src(name, std::string(file));
+}
+Script * ResourceManager::addScript_src (const char * name, std::string file)
+{
+	scripts.push_back(Script(name));
+	ScriptObjs.Register(scripts.last());
+	scripts.last().src = file;
+	return &scripts.last();
+}
+
+
+#define RESOURCE_GET_METHODS_IMP(class_name, TYPE) \
+	TYPE * class_name##::getFirst##TYPE##(int id) { return (##TYPE##*)TYPE##Objs.getFirst(id); } \
+	TYPE * class_name##::getFirst##TYPE##(std::string name)  { return getFirst##TYPE##(name.c_str()); } \
+	TYPE * class_name##::getFirst##TYPE##(const char * name) { return (##TYPE##*)TYPE##Objs.getFirst(name); } \
+	std::vector<TYPE*> class_name##::getAll##TYPE##(std::string name) { return Collections::RICVec<##TYPE##*>(TYPE##Objs.getAll(name.c_str())); }
+
+RESOURCE_GET_METHODS_IMP(ResourceManager,Mesh);
+RESOURCE_GET_METHODS_IMP(ResourceManager,ShaderProgram);
+RESOURCE_GET_METHODS_IMP(ResourceManager,TextureInfo);
+RESOURCE_GET_METHODS_IMP(ResourceManager,Script);

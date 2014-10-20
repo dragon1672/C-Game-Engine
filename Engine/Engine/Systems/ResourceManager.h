@@ -5,6 +5,7 @@
 #include <Engine/Systems/Resources/TextureInfo.h>
 #include <Engine/Systems/Resources/Mesh.h>
 #include <Engine/Systems/Resources/ShaderProgram.h>
+#include <Engine/Systems/Resources/Script.h>
 #include <Engine/Systems/ObjectManager.h>
 #include <ShapeData.h>
 #include <functional>
@@ -17,11 +18,13 @@ class ENGINE_SHARED ResourceManager : public Resource {
 	DEFINE_SINGLETON(ResourceManager);
 private:
 	ConstVector<ShaderProgram> shaders;
-	ObjectManager ShaderObjs;
+	ObjectManager ShaderProgramObjs;
 	ConstVector<Mesh> geos;
 	ObjectManager MeshObjs;
 	ConstVector<TextureInfo> textures;
-	ObjectManager TextureObjs;
+	ObjectManager TextureInfoObjs;
+	ConstVector<Script> scripts;
+	ObjectManager ScriptObjs;
 	void foreachOnAll(std::function<void(Resource&)> func);
 public:
 
@@ -40,6 +43,23 @@ public:
 	TextureInfo * add2DTexture(const char * name, const char * filePath, bool flipHorz = false, bool flipVert = false);
 	TextureInfo * add2DTexture(const char * name, std::string& filePath, bool flipHorz = false, bool flipVert = false);
 	TextureInfo * add2DTexture(const char * name, ubyte * data, uint sizeofData, uint width, uint height, GLenum type, GLenum type2);
+
+	Script * addScript_file(const char * name, const char * filePath);
+	Script * addScript_file(const char * name, std::string filePath);
+	Script * addScript_src (const char * name, std::string file);
+	Script * addScript_src (const char * name, const char * file);
+
+
+#define RESOURCE_GET_METHODS(TYPE) \
+	TYPE * getFirst##TYPE##(int id); \
+	TYPE * getFirst##TYPE##(const char * name); \
+	TYPE * getFirst##TYPE##(std::string name); \
+	std::vector<TYPE*> getAll##TYPE##(std::string name)
+
+	RESOURCE_GET_METHODS(Mesh);
+	RESOURCE_GET_METHODS(ShaderProgram);
+	RESOURCE_GET_METHODS(TextureInfo);
+	RESOURCE_GET_METHODS(Script);
 
 	void init();
 
