@@ -17,8 +17,8 @@ public:
 	Mesh(const char * name);
 	std::vector<Vert> verts;
 	std::vector<uint> indices;
-	glm::vec3 Min() const { return min; }
-	glm::vec3 Max() const { return max; }
+	inline glm::vec3 Min() const { return min; }
+	inline glm::vec3 Max() const { return max; }
 	void updateMinAndMax();
 	void updateTangents();
 	//editing

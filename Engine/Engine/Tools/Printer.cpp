@@ -61,4 +61,5 @@ void Printer::Log(const char * msg, Color color)
 {
 	SetColor(color);
 	std::cout << msg << std::endl;
+	SetColor(Color::GREEN);
 }
