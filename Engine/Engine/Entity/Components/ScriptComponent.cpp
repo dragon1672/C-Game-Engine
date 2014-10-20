@@ -3,6 +3,18 @@
 #include <iostream>
 #include <Engine/Entity/Entity.h>
 #include <Engine/Tools/Printer.h>
+#include <Engine/Tools/Random/StringRandom.h>
+
+
+namespace {
+	void runLua(std::string toRun) {
+		std::string errs = LUA_INSTANCE.RunScript(toRun);
+		if(errs != Lua::NO_ERRORS) {
+			printer.LogError("LUA COMPILE ERR");
+			printer.LogError(errs.c_str());
+		}
+	}
+}
 
 const char * ScriptComponent::LuaTemplate = ""
 	"function context:start() -- setup vars                       \n"
@@ -35,7 +47,7 @@ public:
 };
 
 void ScriptComponent::init() {
-	LUA_INSTANCE.RunScript("context = class();"
+	runLua("context = class();"
 		//setting up defaults for functions
 		"function context:init()        return true end \n"
 		"function context:start()       return true end \n"
@@ -43,12 +55,8 @@ void ScriptComponent::init() {
 		"function context:update()      return true end \n"
 		"function context:lateUpdate()  return true end \n"
 		"");
-	std::string errs = LUA_INSTANCE.RunScript(script);
-	if(errs != Lua::NO_ERRORS) {
-		printer.LogError("LUA COMPILE ERR");
-		printer.LogError(errs.c_str());
-	}
-	LUA_INSTANCE.RunScript("instance = context();");
+	runLua(script->src);
+	runLua("instance = context();");
 	auto context = LUA_INSTANCE.GetGlobalEnvironment().Get<LuaTable>("instance");
 	context.Set("parent",((LuaUserdata<Entity>)*parent));
 	this->privates = new ScriptComponentPrivates(context);
@@ -77,11 +85,6 @@ ScriptComponent::~ScriptComponent()
 
 ScriptComponent::ScriptComponent() { }
 
-ScriptComponent::ScriptComponent(const char * script)
-{
-	this->script = script;
-}
-
 LuaTable ScriptComponent::getContext()
 {
 	return privates->context;
@@ -90,6 +93,6 @@ LuaTable ScriptComponent::getContext()
 ScriptComponent::operator LuaUserdata<ScriptComponent>()
 {
 	MAKE_LUA_INSTANCE_RET(ScriptComponent,ret);
-	ret.Bind("context",&ScriptComponent::getContext);
+	//ret.Bind("context",&ScriptComponent::getContext);
 	return ret;
 }
