@@ -38,6 +38,9 @@ public:
 	RenderableComponent * getRenderable();
 	ScriptComponent * getScript();
 
+	template<typename T> void addComponent() { addComponent(new T()); }
+	template<typename T> void addComponent(const char * data) { addComponent(new T(data)); }
+	template<typename T> void addComponent(std::string  data) { addComponent(new T(data)); }
 	void addComponent(Component * toAdd);
 	template<typename T> void removeComponent() {
 		removeComponent(getIndex<T>()); 
