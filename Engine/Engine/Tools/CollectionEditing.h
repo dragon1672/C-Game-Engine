@@ -74,4 +74,11 @@ namespace Collections {
 		for(int i=0;i<size;i++) ret.push_back(selector(array[i]));
 		return ret;
 	}
+
+
+	template<typename T, typename R, typename X> std::vector<T> RICVec(std::vector<R,X> vec) {
+		std::vector<T> ret(vec.size());
+		for (uint i = 0; i < vec.size(); i++) ret.push_back((T)vec[i]);
+		return ret;
+	}
 }
