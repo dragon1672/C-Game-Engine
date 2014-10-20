@@ -117,9 +117,9 @@ void Mesh::scaleToRange(float xBound, float yBound, float zBound) {
 void Mesh::setRandomColor(int everyThisNumOfPoints) {
 	for (uint i = 0; i < verts.size(); i++) {
 		if(i % everyThisNumOfPoints == 0) {
-			float r = Random::randomFloat(0,1);
-			float g = Random::randomFloat(0,1);
-			float b = Random::randomFloat(0,1);
+			float r = Random::Float(0,1);
+			float g = Random::Float(0,1);
+			float b = Random::Float(0,1);
 			//float a = Random::randomFloat(0,1);
 			verts[i].col = glm::vec4(r,g,b,1);
 		}

@@ -57,7 +57,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ENGINE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)..\GameSolution\Core\include;$(ProjectDir)../../MiddleWare/NeumontTools/include;$(ProjectDir)../../MiddleWare/Qt/include;$(ProjectDir)../../MiddleWare/glm;$(ProjectDir)../../MiddleWare/glew/include;$(ProjectDir)../../MiddleWare/luacppinterface/LuaCppInterface;$(ProjectDir)../../MiddleWare/luacppinterface/Lua/src</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <DisableSpecificWarnings>4251;4127;4201;4100</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4251;4127;4201;4100;4239</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -160,6 +160,7 @@
     <ClInclude Include="Engine\Tools\Random\Glm.h" />
     <ClInclude Include="Engine\Entity\Component.h" />
     <ClInclude Include="Engine\Entity\Entity.h" />
+    <ClInclude Include="Engine\Tools\Random\StringRandom.h" />
     <ClInclude Include="Engine\Tools\Ray.h" />
     <ClInclude Include="ExportHeader.h" />
     <ClInclude Include="Engine\FastDelegate.h" />
@@ -211,6 +212,7 @@
     <ClCompile Include="Engine\Tools\NUShapeEditor.cpp" />
     <ClCompile Include="Engine\Renderer\Renderer.cpp" />
     <ClCompile Include="Engine\Systems\Resources\Dependencies\ShaderUniformPram.cpp" />
+    <ClCompile Include="Engine\Tools\Random\StringRandom.cpp" />
     <ClCompile Include="Engine\Tools\Timer.cpp" />
     <ClCompile Include="Engine\Entity\Entity.cpp" />
   </ItemGroup>

@@ -5,6 +5,7 @@
 //singletons
 #include <Engine/Tools/Timer.h>
 #include <engine/Tools/Random/MyRandom.h>
+#include <Engine/Tools/Random/StringRandom.h>
 
 
 IMPLEMENT_SINGLETON(MasterLua);
@@ -23,10 +24,16 @@ MasterLua::MasterLua()
 	//random
 	auto rand = lua.CreateTable();
 
-	rand.Set("float",     lua.CreateFunction<float()>([]() { return Random::randomFloat(); }));
-	rand.Set("bool",      lua.CreateFunction<bool()>([]() { return Random::randomBool(); }));
-	rand.Set("RangeFloat",lua.CreateFunction<float(float,float)>([](float low, float high) { return Random::randomFloat(low,high); }));
-	rand.Set("RangeInt",  lua.CreateFunction<int(int,int)>([](int low, int high) { return Random::randomInt(low,high); }));
+	rand.Set("float",     lua.CreateFunction<float()>([]() { return Random::Float(); }));
+	rand.Set("bool",      lua.CreateFunction<bool()>([]() { return Random::Bool(); }));
+	rand.Set("RangeFloat",lua.CreateFunction<float(float,float)>([](float low, float high) { return Random::Float(low,high); }));
+	rand.Set("RangeInt",  lua.CreateFunction<int(int,int)>([](int low, int high) { return Random::Int(low,high); }));
+	LuaTable randStr = lua.CreateTable();
+	rand.Set("String",    randStr);
+	randStr.Set("String",    lua.CreateFunction<std::string(int,int,int)>([](int len, int start, int end) { return Random::rString::makeString(len, start, end); }));
+	randStr.Set("Letters",   lua.CreateFunction<std::string(int)>([](int len) { return Random::rString::Letters(len); }));
+	randStr.Set("UppercaseLetters",   lua.CreateFunction<std::string(int)>([](int len) { return Random::rString::UppercaseLetters(len); }));
+	randStr.Set("LowercaseLetters",   lua.CreateFunction<std::string(int)>([](int len) { return Random::rString::LowercaseLetters(len); }));
 	lua.GetGlobalEnvironment().Set("Random",rand);
 }
 

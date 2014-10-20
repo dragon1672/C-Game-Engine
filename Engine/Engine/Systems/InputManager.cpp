@@ -6,13 +6,13 @@ IMPLEMENT_SINGLETON(InputManager);
 
 void InputManager::init()
 {
-	mouse.lastMouse = mouse.currentMouse = wrap::vec2(QCursor::pos().x,QCursor::pos().y);
+	mouse.lastMouse = mouse.currentMouse = wrap::vec2(QCursor::pos().x(),QCursor::pos().y());
 }
 
 void InputManager::update()
 {
 	mouse.lastMouse = mouse.currentMouse;
-	mouse.currentMouse = wrap::vec2(QCursor::pos().x,QCursor::pos().y);
+	mouse.currentMouse = wrap::vec2(QCursor::pos().x(),QCursor::pos().y());
 }
 
 bool InputManager::getKeyDown(int key)
@@ -20,9 +20,9 @@ bool InputManager::getKeyDown(int key)
 	GetAsyncKeyState(key); // double tap
 	return GetAsyncKeyState(key)==0;
 }
-bool InputManager::getKeyDown(int key)
+bool InputManager::getKeyUp(int key)
 {
-	return !getKeyUp(key);
+	return !getKeyDown(key);
 }
 
 
@@ -45,5 +45,6 @@ wrap::vec2 InputManager::Mouse::mousePos()
 
 wrap::vec2 InputManager::Mouse::delta()
 {
-	QCursor::
+	//QCursor::
+	return currentMouse-lastMouse;
 }

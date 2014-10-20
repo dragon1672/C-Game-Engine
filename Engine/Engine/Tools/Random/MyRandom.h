@@ -1,12 +1,11 @@
 #pragma once
 
 #include <ExportHeader.h>
-#include <glm\glm.hpp>
 
 namespace Random {
-	ENGINE_SHARED int      randomInt(int low, int high);
-	ENGINE_SHARED int      randomSign();
-	ENGINE_SHARED bool     randomBool(int weightFalse = 1);
-	ENGINE_SHARED float    randomFloat();
-	ENGINE_SHARED float    randomFloat(float low, float high);
+	ENGINE_SHARED int      Int(int low, int high);
+	ENGINE_SHARED int      Sign();
+	ENGINE_SHARED bool     Bool(int weightFalse = 1);
+	ENGINE_SHARED float    Float();
+	ENGINE_SHARED float    Float(float low, float high);
 };

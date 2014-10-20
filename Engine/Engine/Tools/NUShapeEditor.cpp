@@ -58,9 +58,9 @@ Neumont::ShapeData NUShapeEditor::scaleToRange(Neumont::ShapeData obj, float xBo
 Neumont::ShapeData NUShapeEditor::setRandomColor(Neumont::ShapeData obj, int everyThisNumOfPoints) {
 	for (uint i = 0; i < obj.numVerts; i++) {
 		if(i % everyThisNumOfPoints == 0) {
-			float r = Random::randomFloat(0,1);
-			float g = Random::randomFloat(0,1);
-			float b = Random::randomFloat(0,1);
+			float r = Random::Float(0,1);
+			float g = Random::Float(0,1);
+			float b = Random::Float(0,1);
 			//float a = Random::randomFloat(0,1);
 			obj.verts[i].color = glm::vec4(r,g,b,1);
 		}

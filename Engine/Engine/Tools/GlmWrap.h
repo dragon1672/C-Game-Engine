@@ -6,12 +6,13 @@
 
 namespace wrap {
 
-	class vec2 : glm::vec2 {
+	class vec2 : public glm::vec2 {
 	public:
 		vec2() { }
 		vec2(glm::vec2& that) { set(that); }
 		vec2(float x, float y) { set(x,y); }
 		inline operator glm::vec2&() { return *reinterpret_cast<glm::vec2*>(this); }
+		inline operator glm::vec2()  { return *reinterpret_cast<glm::vec2*>(this); }
 		vec2& operator=(const glm::vec2& that) { set(that); return *this; }
 		LUA_VECTOR_MAKE_GETTER_SETTER(X,x);
 		LUA_VECTOR_MAKE_GETTER_SETTER(Y,y);
@@ -46,6 +47,7 @@ namespace wrap {
 		vec3(glm::vec3& that) { set(that); }
 		vec3(float x, float y, float z) { set(x,y,z); }
 		inline operator glm::vec3&() { return *reinterpret_cast<glm::vec3*>(this); }
+		inline operator glm::vec3()  { return *reinterpret_cast<glm::vec3*>(this); }
 		vec3& operator=(const glm::vec3& that) { set(that); return *this; }
 		LUA_VECTOR_MAKE_GETTER_SETTER(X,x);
 		LUA_VECTOR_MAKE_GETTER_SETTER(Y,y);
@@ -84,6 +86,7 @@ namespace wrap {
 		vec4(glm::vec4& that) { set(that); }
 		vec4(float x, float y, float z, float w) { set(x,y,z,w); }
 		inline operator glm::vec4&() { return *reinterpret_cast<glm::vec4*>(this); }
+		inline operator glm::vec4()  { return *reinterpret_cast<glm::vec4*>(this); }
 		vec4& operator=(const glm::vec4& that) { set(that); return *this; }
 		LUA_VECTOR_MAKE_GETTER_SETTER(X,x);
 		LUA_VECTOR_MAKE_GETTER_SETTER(Y,y);
