@@ -71,18 +71,18 @@
     <ClInclude Include="Engine\Systems\ObjectManager.h" />
     <ClInclude Include="Engine\Systems\Resources\Script.h" />
     <ClInclude Include="Engine\Systems\Resources\Dependencies\ShaderUniformPram.h" />
-    <ClInclude Include="Engine\Systems\Resources\ShaderProgram.h" />
     <ClInclude Include="Engine\Systems\Resources\Dependencies\AutoAtrib.h" />
     <ClInclude Include="Engine\Systems\Resources\Dependencies\BufferManager.h" />
     <ClInclude Include="Engine\Systems\Resources\Dependencies\GeometryInfo.h" />
     <ClInclude Include="Engine\Systems\Resources\Dependencies\Vert.h" />
-    <ClInclude Include="Engine\Systems\Resources\Mesh.h" />
     <ClInclude Include="Engine\Systems\Resources\Dependencies\ParameterType.h" />
-    <ClInclude Include="Engine\Systems\Resources\TextureInfo.h" />
     <ClInclude Include="Engine\IO\QImageIO.h" />
     <ClInclude Include="Engine\Systems\InputManager.h" />
     <ClInclude Include="Engine\Tools\Random\StringRandom.h" />
     <ClInclude Include="Engine\Systems\Resource.h" />
+    <ClInclude Include="Engine\Systems\Resources\ShaderProgram.h" />
+    <ClInclude Include="Engine\Systems\Resources\Mesh.h" />
+    <ClInclude Include="Engine\Systems\Resources\TextureInfo.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -92,14 +92,10 @@
     <ClCompile Include="Engine\Tools\Random\MyRandom.cpp" />
     <ClCompile Include="Engine\Tools\Timer.cpp" />
     <ClCompile Include="Engine\Renderer\Renderer.cpp" />
-    <ClCompile Include="Engine\Tools\QT\ButtonInfo_mock.cpp" />
     <ClCompile Include="Engine\Tools\QT\DebugSlider.cpp" />
-    <ClCompile Include="Engine\Tools\QT\DebugSlider_mock.cpp" />
-    <ClCompile Include="Engine\Tools\QT\LinkedSlider.cpp" />
     <ClCompile Include="Engine\DebugTools\DebugMenuManager.cpp" />
     <ClCompile Include="Engine\Tools\BinaryToShapeLoader.cpp" />
     <ClCompile Include="Engine\Tools\MatrixInfo.cpp" />
-    <ClCompile Include="Engine\Tools\QT\LinkedIntSlider.cpp" />
     <ClCompile Include="Engine\Entity\Entity.cpp" />
     <ClCompile Include="Engine\Entity\Components\RenderableComponent.cpp" />
     <ClCompile Include="Engine\DebugTools\Logging\LogManager.cpp" />
@@ -124,7 +120,7 @@
     <ClCompile Include="Engine\IO\QImageIO.cpp" />
     <ClCompile Include="Engine\Systems\InputManager.cpp" />
     <ClCompile Include="Engine\Tools\Random\StringRandom.cpp" />
-    <ClCompile Include="Engine\Systems\Resources\Script.cpp" />
+    <ClCompile Include="Engine\Tools\QT\DebugSlider_mock.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Tools\MyMath\Matrix2D.inl" />
