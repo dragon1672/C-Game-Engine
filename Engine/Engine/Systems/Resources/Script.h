@@ -3,14 +3,11 @@
 #include <ExportHeader.h>
 #include <string>
 #include <Engine\Systems\Resource.h>
-#include <luacppinterface.h>
 
 class ENGINE_SHARED	Script : public Resource {
-private:
-	LuaTable * context;
 public:
-	Script();
+	Script() {}
+	Script(const char * name) { this->name = name; }
 	std::string src;
-	LuaTable& getContext();
-	void callFunction(std::string methodName);
+	virtual void PassDownToHardWare() {}
 };
