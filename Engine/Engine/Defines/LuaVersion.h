@@ -56,6 +56,7 @@
 //calls function de-refs and casts as LuaUserdata
 #define LUA_GET_FUN_PTR(var_type,fun_name) LuaUserdata<##var_type##> fun_name##_LUA() { return (LuaUserdata<##var_type##>)*##fun_name##(); }
 
+#define LUA_GET_FUN(var_type,fun_name) LuaUserdata<##var_type##> fun_name##_LUA() { return (LuaUserdata<##var_type##>)##fun_name##(); }
 
 
 
