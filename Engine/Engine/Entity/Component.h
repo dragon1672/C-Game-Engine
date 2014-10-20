@@ -8,6 +8,7 @@ protected:
 	friend Entity;
 	Entity * parent;
 public:
+	inline Entity * Parent() { return parent; }
 	virtual void init()        {} // called once
 	virtual void start()       {} // called every scene load before update starts
 	virtual void earlyUpdate() {}

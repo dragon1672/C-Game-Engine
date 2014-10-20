@@ -40,6 +40,8 @@ public:
 
 	template<typename T> void addComponent() { addComponent(new T()); }
 	template<typename T> void addComponent(const char * data) { addComponent(new T(data)); }
+	template<typename T> void addComponent(Resource * data)   { addComponent(new T(data)); }
+	template<typename T> void addComponent(int resouceId)     { addComponent(new T(resouceId)); }
 	template<typename T> void addComponent(std::string  data) { addComponent(new T(data)); }
 	void addComponent(Component * toAdd);
 	template<typename T> void removeComponent() {
