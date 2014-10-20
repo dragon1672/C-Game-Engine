@@ -81,6 +81,7 @@
     <ClInclude Include="Engine\Systems\Resources\Resource.h" />
     <ClInclude Include="Engine\Systems\Resources\TextureInfo.h" />
     <ClInclude Include="Engine\IO\QImageIO.h" />
+    <ClInclude Include="Engine\Systems\InputManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -120,6 +121,7 @@
     <ClCompile Include="Engine\Systems\Object.cpp" />
     <ClCompile Include="Engine\Systems\Resources\TextureInfo.cpp" />
     <ClCompile Include="Engine\IO\QImageIO.cpp" />
+    <ClCompile Include="Engine\Systems\InputManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Tools\MyMath\Matrix2D.inl" />

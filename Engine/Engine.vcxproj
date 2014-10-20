@@ -129,6 +129,7 @@
     <ClInclude Include="Engine\Physics\Particles\ParticleWorld.h" />
     <ClInclude Include="Engine\Physics\RidgidBody\RidgidBody.h" />
     <ClInclude Include="Engine\Physics\RidgidBody\RigidSpringForce.h" />
+    <ClInclude Include="Engine\Systems\InputManager.h" />
     <ClInclude Include="Engine\Systems\Resources\Dependencies\AutoAtrib.h" />
     <ClInclude Include="Engine\Systems\Resources\Dependencies\Vert.h" />
     <ClInclude Include="Engine\Systems\Resources\Resource.h" />
@@ -181,6 +182,7 @@
     <ClCompile Include="Engine\IO\MeshLoader.cpp" />
     <ClCompile Include="Engine\IO\QImageIO.cpp" />
     <ClCompile Include="Engine\Physics\Particles\Particle.cpp" />
+    <ClCompile Include="Engine\Systems\InputManager.cpp" />
     <ClCompile Include="Engine\Systems\Object.cpp" />
     <ClCompile Include="Engine\Systems\Resources\Mesh.cpp" />
     <ClCompile Include="Engine\Systems\Resources\Dependencies\Vert.cpp" />
