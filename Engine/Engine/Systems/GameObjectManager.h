@@ -11,12 +11,19 @@
 #include <Engine/Tools/ConstVector.h>
 #include <Engine/Systems/Resources/Mesh.h>
 #include <ExportHeader.h>
+#include <Engine/Tools/PropertyWrapper.h>
+
+#include <Engine/Tools/Camera.h>
 
 class ENGINE_SHARED GameObjectManager {
 private:
 	ConstVector<Entity> entities;
-	
+
 	bool active;
+
+	Camera cam;
+	glm::mat4 viewTransform;
+	void updateViewTransform();
 
 	void passDataDownAllShaders_force();
 	void passDataDownAllShaders_try();
@@ -25,8 +32,11 @@ public:
 
 	//add
 	Entity * AddEntity(const char * name = "GameObject");
-
-
+	PropertyGetSet<int> width;
+	PropertyGetSet<int> height;
+	PropertyGetSet<float> nearPlane;
+	PropertyGetSet<float> farPlane;
+	
 
 	GameObjectManager();
 	bool init(); // called before openGL, setup cars
@@ -35,4 +45,6 @@ public:
 	bool shutdown();
 	void update();
 	void paint();
+private:
+	void passStandardUniforms(RenderableComponent * renderable);
 };

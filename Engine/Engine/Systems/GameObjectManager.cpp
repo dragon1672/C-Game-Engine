@@ -4,8 +4,16 @@
 #include <Engine/Tools/MasterLua.h>
 #include <Engine/Systems/ResourceManager.h>
 #include <Engine/Systems/InputManager.h>
+#include <glm/gtc/matrix_transform.hpp>
 
-GameObjectManager::GameObjectManager() : active(false) {}
+GameObjectManager::GameObjectManager() : active(false) {
+	nearPlane.setter = [this](float& val, float&newGuy) { val = newGuy; updateViewTransform(); };
+	farPlane.setter  = [this](float& val, float&newGuy) { val = newGuy; updateViewTransform(); };
+	width.setter     = [this](int& val, int&newGuy) { val = newGuy; updateViewTransform(); };
+	height.setter    = [this](int& val, int&newGuy) { val = newGuy; updateViewTransform(); };
+	nearPlane = .1f;
+	farPlane = 100;
+}
 bool GameObjectManager::init() {
 	if(!active)
 		MasterLua::getInstance().init();
@@ -56,6 +64,7 @@ void GameObjectManager::paint() {
 	for (uint i = 0; i < entities.size(); i++) {
 		RenderableComponent * renderable = entities[i].getComponent<RenderableComponent>();
 		if(renderable != nullptr && renderable->visable) {
+			passStandardUniforms(renderable);
 			renderable->drawWarmup();
 			GeometryInfo& toDraw = *renderable->whatGeo;
 			glBindVertexArray(toDraw.vertexArrayObjectID);
@@ -79,4 +88,24 @@ bool GameObjectManager::initGl()
 	glEnable(GL_DEPTH_TEST);
 	resourceManager.PassDownToHardWare();
 	return true;
+}
+
+void GameObjectManager::passStandardUniforms(RenderableComponent * renderable)
+{
+	ShaderProgram * prog = renderable->howShader;
+	auto model2World = renderable->Parent()->getWorldTransform();
+	auto world2cam = cam.getWorld2View();
+	auto model2cam = world2cam * model2World;
+	auto MVP = viewTransform * model2cam;
+	prog->passUniform("model2WorldTransform",model2World);
+	prog->passUniform("world2Cam",world2cam);
+	prog->passUniform("model2Cam",model2cam);
+	prog->passUniform("viewTransform",viewTransform);
+	prog->passUniform("MVP",MVP);
+}
+
+void GameObjectManager::updateViewTransform()
+{
+	const float aspectRatio = (float)width/(float)height;
+	viewTransform = glm::perspective(60.0f,aspectRatio,(float)nearPlane,(float)farPlane);
 }
