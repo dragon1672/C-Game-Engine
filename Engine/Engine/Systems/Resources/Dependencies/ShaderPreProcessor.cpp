@@ -31,12 +31,8 @@ std::string ENGINE_SHARED ShaderPreProcessor::processGLSL(std::string src)
 	auto lines = StringManapulation::split(src,'\n');
 	std::string ret = "";
 	for (uint i = 0; i < lines.size(); i++) {
-		if(lines[i][0] == '#') {
-			ret += replaceLine(lines[i]);
-		} else {
-			ret += lines[i];
-		}
-		if(i!=lines.size()-1)
+		ret += replaceLine(lines[i]);
+		if(i!=lines.size()-1) // not last line
 			ret += "\n";
 	}
 	return ret;
