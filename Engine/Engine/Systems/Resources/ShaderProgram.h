@@ -14,6 +14,7 @@
 #include <glm\glm.hpp>
 #include <Engine\Tools\ConstVector.h>
 #include <Engine\Systems\Resource.h>
+#include <Engine\Systems\Resources\Shaders\ShaderObject.h>
 
 class ENGINE_SHARED ShaderProgram : public Resource {
 private:
@@ -72,6 +73,8 @@ public:
 	//only passes data down once, will not update every paint
 	void passUniform(ShaderUniformPram * pram);
 	void passUniform(ShaderUniformPram& pram);
+	void passUniform(ShaderObject* pram);
+	void passUniform(ShaderObject& pram);
 	void passUniform(const char* name, ParameterType parameterType, const void * value);
 	void passUniform(uint location, ParameterType parameterType, const void * value);
 };
