@@ -45,9 +45,21 @@ namespace {
 			"   fragTan = tangent;                                  \n"
 			"   fragUv = uv;                                        \n"
 			"";
-		ret["#vert_main_setglPos"] = ""
+		ret["#vert_main_setglpos"] = ""
 			//"[set gl_pos using matrix]"
 			"gl_Position = fragWorldPos;";
+			"";
+		ret["#frag_main_import"]   = ""
+			//"[get outs from layouts]"
+			"int vec3 fragModelPos;  \n"
+			"int vec3 fragModelPos;  \n"
+			"int vec3 fragWorldPos;  \n"
+			"int vec3 fragCameraPos; \n"
+			"int vec3 fragScreenPos; \n"
+			"int vec3 fragCol;       \n"
+			"int vec3 fragNorm;      \n"
+			"int vec3 fragTan;       \n"
+			"int vec3 fragUv;        \n"
 			"";
 
 
