@@ -8,26 +8,9 @@ namespace {
 	std::map<std::string,std::string> initReplacements() {
 		// all keys should be lowercase
 		std::map<std::string,std::string> ret;
-		//default ids
-		ret["define"]   = "#define";
-		ret["undef"]    = "#undef";
-		ret["if"]       = "#if";
-		ret["ifdef"]    = "#ifdef";
-		ret["ifndef"]   = "#ifndef";
-		ret["else"]     = "#else";
-		ret["elif"]     = "#elif";
-		ret["endif"]    = "#endif";
-		ret["error"]    = "#error";
-		ret["pragma"]   = "#pragma";
-		ret["xtension"] = "#xtension";
-		ret["version"]  = "#version";
-		ret["line"]     = "#line";
-		//end of defaults
-		ret["shaderStart"]   = "";
-		ret["shaderStart"]   = "";
-		ret["main_export"]   = "";
-		ret["main_setglPos"] = "";
-
+		ret["#vert_shaderstart"]   = "[layouts, outs for each of the layouts to the frag, default matrix]";
+		ret["#vert_main_export"]   = "[assign outs from layouts]";
+		ret["#vert_main_setglPos"] = "[set gl_pos using matrix]";
 
 
 		return ret;
@@ -45,19 +28,16 @@ namespace {
 
 std::string ENGINE_SHARED ShaderPreProcessor::processGLSL(std::string src)
 {
-	std::string s("Somewhere down the road");
-	std::istringstream iss(s);
-	std::string ret;
-	do
-	{
-		std::string sub;
-		iss >> sub;
-		//work with sub
-		if(sub[0] == '#') {
-
+	auto lines = StringManapulation::split(src,'\n');
+	std::string ret = "";
+	for (uint i = 0; i < lines.size(); i++) {
+		if(lines[i][0] == '#') {
+			ret += replaceLine(lines[i]);
 		} else {
-			ret += sub;
+			ret += lines[i];
 		}
-	} while (iss);
+		if(i!=lines.size()-1)
+			ret += "\n";
+	}
 	return ret;
 }
