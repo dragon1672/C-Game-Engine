@@ -131,6 +131,7 @@
     <ClInclude Include="Engine\Physics\RidgidBody\RigidSpringForce.h" />
     <ClInclude Include="Engine\Systems\InputManager.h" />
     <ClInclude Include="Engine\Systems\Resources\Dependencies\AutoAtrib.h" />
+    <ClInclude Include="Engine\Systems\Resources\Material.h" />
     <ClInclude Include="Engine\Systems\Resources\Shaders\ShaderObject.h" />
     <ClInclude Include="Engine\Systems\Resources\Shaders\ShaderPreProcessor.h" />
     <ClInclude Include="Engine\Systems\Resources\Dependencies\Vert.h" />
@@ -192,6 +193,7 @@
     <ClCompile Include="Engine\Physics\Particles\Particle.cpp" />
     <ClCompile Include="Engine\Systems\InputManager.cpp" />
     <ClCompile Include="Engine\Systems\Object.cpp" />
+    <ClCompile Include="Engine\Systems\Resources\Material.cpp" />
     <ClCompile Include="Engine\Systems\Resources\Shaders\ShaderPreProcessor.cpp" />
     <ClCompile Include="Engine\Systems\Resources\Mesh.cpp" />
     <ClCompile Include="Engine\Systems\Resources\Dependencies\Vert.cpp" />

@@ -87,6 +87,7 @@
     <ClInclude Include="Engine\Systems\Resources\Shaders\ParameterType.h" />
     <ClInclude Include="Engine\Systems\Resources\Shaders\ShaderObject.h" />
     <ClInclude Include="Engine\Tools\PropertyWrapper.h" />
+    <ClInclude Include="Engine\Systems\Resources\Material.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -127,6 +128,7 @@
     <ClCompile Include="Engine\Tools\StringManapulation.cpp" />
     <ClCompile Include="Engine\Systems\Resources\Shaders\ShaderPreProcessor.cpp" />
     <ClCompile Include="Engine\Systems\Resources\Shaders\ShaderUniformPram.cpp" />
+    <ClCompile Include="Engine\Systems\Resources\Material.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Tools\MyMath\Matrix2D.inl" />
