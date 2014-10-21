@@ -16,7 +16,24 @@ namespace {
 
 		return ret;
 	}
-	std::map<std::string,std::string> replacements = initReplacements();
+	std::map<std::string,std::string>   replacements = initReplacements();
+	std::map<ParameterType,std::string> initPrams() {
+		std::map<ParameterType,std::string> ret;
+		ret[ParameterType::PT_BOOLEAN]    =  "bool" ;
+		ret[ParameterType::PT_FLOAT]      =  "float";
+		ret[ParameterType::PT_INT]        =  "int"  ;
+		ret[ParameterType::PT_MAT3]       =  "mat3" ;
+		ret[ParameterType::PT_MAT4]       =  "mat4" ;
+		ret[ParameterType::PT_TEXTURE]    =  "sampler2D"  ;
+		ret[ParameterType::PT_TEXTURE2D]  =  "sampler2D"  ;
+		ret[ParameterType::PT_TEXTURE3D]  =  "samplerCube";
+		ret[ParameterType::PT_VEC2]       =  "vec2";
+		ret[ParameterType::PT_VEC3]       =  "vec3";
+		ret[ParameterType::PT_VEC4]       =  "vec4";
+
+		return ret;
+	}
+	std::map<ParameterType,std::string> typeToGLSL   = initPrams();
 
 	std::string replaceLine(std::string line) {
 		std::string code = StringManapulation::ToLower(StringManapulation::split(line,' ')[0]);
@@ -27,7 +44,7 @@ namespace {
 
 
 
-std::string ENGINE_SHARED ShaderPreProcessor::processGLSL(std::string src)
+std::string ShaderPreProcessor::processGLSL(std::string src)
 {
 	auto lines = StringManapulation::split(src,'\n');
 	std::string ret = "";
@@ -37,4 +54,17 @@ std::string ENGINE_SHARED ShaderPreProcessor::processGLSL(std::string src)
 			ret += "\n";
 	}
 	return ret;
+}
+
+void ShaderPreProcessor::registerShaderObject(ShaderObject * obj,std::string componentName)
+{
+	std::string index = "#component_"+StringManapulation::ToLower(componentName);
+	if(replacements.find(index) == replacements.end()) return; // already entered
+	std::string uniformInclude = "";
+	for (int i = 0; i < obj->numOfUniforms(); i++)
+	{
+		ShaderUniformPram& pram = obj->getUniforms()[i];
+		uniformInclude += "uniform "+typeToGLSL[pram.Type()]+" "+pram.Title() + "\n";
+	}
+	replacements[index] = uniformInclude;
 }

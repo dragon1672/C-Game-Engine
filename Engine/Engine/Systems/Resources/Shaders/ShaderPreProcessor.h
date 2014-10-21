@@ -2,7 +2,9 @@
 
 #include <string>
 #include <ExportHeader.h>
+#include <Engine/Systems/Resources/Shaders/ShaderObject.h>
 
 namespace ShaderPreProcessor {
-	std::string ENGINE_SHARED processGLSL(std::string src);
+	ENGINE_SHARED std::string processGLSL(std::string src);
+	ENGINE_SHARED void registerShaderObject(ShaderObject * obj,std::string componentName); // #component_[componentname] <- #include for shader
 };
