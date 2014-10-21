@@ -67,7 +67,7 @@ void ShaderPreProcessor::registerShaderObject(ShaderObject * obj)
 	for (int i = 0; i < obj->numOfUniforms(); i++)
 	{
 		ShaderUniformPram& pram = obj->getUniforms()[i];
-		uniformInclude += "uniform "+typeToGLSL[pram.Type()]+" "+pram.Title() + "\n";
+		uniformInclude += "uniform "+typeToGLSL[pram.Type()]+" "+pram.Title() + ";\n";
 	}
 	replacements[index] = uniformInclude;
 }

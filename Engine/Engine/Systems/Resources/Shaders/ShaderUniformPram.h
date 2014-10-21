@@ -15,11 +15,11 @@ private:
 	const void * cashedPointer;
 public:
 	ShaderUniformPram();
+	ShaderUniformPram(const char * name, ParameterType type, const void * val);
 	inline ParameterType Type()   const { return type; }
 	inline const char * Title()   const { return title; }
 	inline const void * Pointer() const { return cashedPointer; }
 	
-	void init(const char * name, ParameterType type);
 	void init(const char * name, ParameterType type, const void * val);
 	
 	void sendData(ShaderProgram * shader);

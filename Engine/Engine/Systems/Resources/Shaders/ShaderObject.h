@@ -5,7 +5,7 @@
 
 class ENGINE_SHARED ShaderObject {
 public:
-	virtual ShaderUniformPram * getUniforms() = 0;
+	virtual ShaderUniformPram * getUniforms() = 0; // uniform [type] [title]; <- var names are used in shader
 	virtual int numOfUniforms() = 0;
-	virtual std::string getName() = 0;
+	virtual std::string getName() = 0; // #component_name <- put this in the shader to get all the vars
 };
