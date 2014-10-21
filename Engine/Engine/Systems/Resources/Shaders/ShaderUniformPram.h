@@ -21,6 +21,4 @@ public:
 	inline const void * Pointer() const { return cashedPointer; }
 	
 	void init(const char * name, ParameterType type, const void * val);
-	
-	void sendData(ShaderProgram * shader);
 };

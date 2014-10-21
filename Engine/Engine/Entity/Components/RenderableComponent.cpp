@@ -10,9 +10,24 @@ void RenderableComponent::addUniformParameter(const char * name, const glm::mat3
 void RenderableComponent::addUniformParameter(const char * name, const glm::mat4& value) { addUniformParameter(name,ParameterType::PT_MAT4,   &value[0][0]); }
 
 void RenderableComponent::addUniformParameter(const char * name, ParameterType parameterType, const void * value) {
-	uniformParameters.push_back(ShaderUniformPram());
-	uniformParameters.last().init(name,parameterType,value);
+	ShaderUniformPram ret;
+	ret.init(name,parameterType,value);
+	addUniformParameter(ret);
 }
+
+void RenderableComponent::addUniformParameter(ShaderObject * obj)
+{
+	for (int i = 0; i < obj->numOfUniforms(); i++)
+	{
+		addUniformParameter(obj->getUniforms()[i]);
+	}
+}
+
+void RenderableComponent::addUniformParameter(ShaderUniformPram& obj)
+{
+	uniformParameters.push_back(obj);
+}
+
 void RenderableComponent::saveMatrixInfo(const char * uniformName) {
 	this->transformShaderName = uniformName;
 }
@@ -20,9 +35,9 @@ void RenderableComponent::saveMatrixInfo(const char * uniformName) {
 void RenderableComponent::drawWarmup() {
 	howShader->useProgram();
 
-	if(transformShaderName != nullptr) this->transform.sendData(howShader);
+	if(transformShaderName != nullptr) howShader->passUniform(transform);
 	for (uint i = 0; i < uniformParameters.size(); i++) {
-		uniformParameters[i].sendData(howShader);
+		howShader->passUniform(uniformParameters[i]);
 	}
 }
 

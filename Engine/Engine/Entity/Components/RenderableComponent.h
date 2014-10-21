@@ -3,12 +3,12 @@
 #include <Engine\Entity\Component.h>
 #include <Engine\Systems\Resources\Dependencies\GeometryInfo.h>
 #include <Engine\Systems\Resources\ShaderProgram.h>
-#include <Engine\Tools\ConstVector.h>
+#include <Engine\Systems\Resources\Shaders\ShaderObject.h>
 
 class RenderableComponent : public Component {
 private:
 	const char * transformShaderName;
-	ConstVector<ShaderUniformPram> uniformParameters;
+	std::vector<ShaderUniformPram> uniformParameters;
 	ShaderUniformPram transform;
 public:
 	GeometryInfo * whatGeo;
@@ -30,6 +30,8 @@ public:
 	void addUniformParameter(const char * name, const glm::vec4& value);
 	void addUniformParameter(const char * name, const glm::mat3& value);
 	void addUniformParameter(const char * name, const glm::mat4& value);
+	void addUniformParameter(ShaderObject * obj);
+	void addUniformParameter(ShaderUniformPram& obj);
 
 	//convenience to save variables in renderable
 	void saveMatrixInfo(const char * uniformName);

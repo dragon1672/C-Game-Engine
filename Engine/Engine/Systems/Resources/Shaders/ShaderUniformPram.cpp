@@ -7,10 +7,6 @@ void ShaderUniformPram::init(const char * name, ParameterType type, const void *
 	cashedPointer = val;
 }
 
-void ShaderUniformPram::sendData(ShaderProgram * shader) {
-	if(cashedPointer!=nullptr)   shader->passUniform(this);
-}
-
 ShaderUniformPram::ShaderUniformPram() : cashedPointer(nullptr)
 {
 
