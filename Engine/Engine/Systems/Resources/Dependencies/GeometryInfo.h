@@ -5,7 +5,7 @@
 #pragma warning(push)
 #include <Vertex.h>
 #pragma warning(pop)
-#include <Engine\Systems\Resources\Dependencies\ParameterType.h>
+#include <Engine\Systems\Resources\Shaders\ParameterType.h>
 #include <ExportHeader.h>
 #include <Engine/Systems/Resources/Dependencies/AutoAtrib.h>
 

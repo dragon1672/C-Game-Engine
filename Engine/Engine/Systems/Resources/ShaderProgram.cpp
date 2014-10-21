@@ -11,7 +11,7 @@
 #include <cassert>
 #include <Engine\Defines\Vectors.h>
 #include <Engine\Systems\Resources\TextureInfo.h>
-#include <Engine/Systems/Resources/Dependencies/ShaderPreProcessor.h>
+#include <Engine/Systems/Resources/Shaders/ShaderPreProcessor.h>
 
 
 GLuint ShaderProgram::currentProgram;

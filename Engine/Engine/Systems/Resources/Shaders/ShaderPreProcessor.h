@@ -1,6 +1,6 @@
 #pragma once
 
-#include <xstring>
+#include <string>
 #include <ExportHeader.h>
 
 namespace ShaderPreProcessor {

@@ -70,12 +70,10 @@
     <ClInclude Include="Engine\Systems\Object.h" />
     <ClInclude Include="Engine\Systems\ObjectManager.h" />
     <ClInclude Include="Engine\Systems\Resources\Script.h" />
-    <ClInclude Include="Engine\Systems\Resources\Dependencies\ShaderUniformPram.h" />
     <ClInclude Include="Engine\Systems\Resources\Dependencies\AutoAtrib.h" />
     <ClInclude Include="Engine\Systems\Resources\Dependencies\BufferManager.h" />
     <ClInclude Include="Engine\Systems\Resources\Dependencies\GeometryInfo.h" />
     <ClInclude Include="Engine\Systems\Resources\Dependencies\Vert.h" />
-    <ClInclude Include="Engine\Systems\Resources\Dependencies\ParameterType.h" />
     <ClInclude Include="Engine\IO\QImageIO.h" />
     <ClInclude Include="Engine\Systems\InputManager.h" />
     <ClInclude Include="Engine\Tools\Random\StringRandom.h" />
@@ -83,8 +81,10 @@
     <ClInclude Include="Engine\Systems\Resources\ShaderProgram.h" />
     <ClInclude Include="Engine\Systems\Resources\Mesh.h" />
     <ClInclude Include="Engine\Systems\Resources\TextureInfo.h" />
-    <ClInclude Include="Engine\Systems\Resources\Dependencies\ShaderPreProcessor.h" />
     <ClInclude Include="Engine\Tools\StringManapulation.h" />
+    <ClInclude Include="Engine\Systems\Resources\Shaders\ShaderPreProcessor.h" />
+    <ClInclude Include="Engine\Systems\Resources\Shaders\ShaderUniformPram.h" />
+    <ClInclude Include="Engine\Systems\Resources\Shaders\ParameterType.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -111,7 +111,6 @@
     <ClCompile Include="Engine\Systems\GameObjectManager.cpp" />
     <ClCompile Include="Engine\Tools\Printer.cpp" />
     <ClCompile Include="Engine\Systems\ObjectManager.cpp" />
-    <ClCompile Include="Engine\Systems\Resources\Dependencies\ShaderUniformPram.cpp" />
     <ClCompile Include="Engine\Systems\Resources\ShaderProgram.cpp" />
     <ClCompile Include="Engine\Systems\Resources\Dependencies\BufferManager.cpp" />
     <ClCompile Include="Engine\Systems\Resources\Dependencies\GeometryInfo.cpp" />
@@ -123,8 +122,9 @@
     <ClCompile Include="Engine\Systems\InputManager.cpp" />
     <ClCompile Include="Engine\Tools\Random\StringRandom.cpp" />
     <ClCompile Include="Engine\Tools\QT\DebugSlider_mock.cpp" />
-    <ClCompile Include="Engine\Systems\Resources\Dependencies\ShaderPreProcessor.cpp" />
     <ClCompile Include="Engine\Tools\StringManapulation.cpp" />
+    <ClCompile Include="Engine\Systems\Resources\Shaders\ShaderPreProcessor.cpp" />
+    <ClCompile Include="Engine\Systems\Resources\Shaders\ShaderUniformPram.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Tools\MyMath\Matrix2D.inl" />

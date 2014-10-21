@@ -7,9 +7,9 @@
 #include <QtOpenGL\qglwidget>
 #pragma warning(pop)
 #include <string>
-#include <Engine\Systems\Resources\Dependencies\ParameterType.h>
+#include <Engine\Systems\Resources\Shaders\ParameterType.h>
 #include "ExportHeader.h"
-#include <Engine\Systems\Resources\Dependencies\ShaderUniformPram.h>
+#include <Engine\Systems\Resources\Shaders\ShaderUniformPram.h>
 #include <Engine\TypeDefs.h>
 #include <glm\glm.hpp>
 #include <Engine\Tools\ConstVector.h>
