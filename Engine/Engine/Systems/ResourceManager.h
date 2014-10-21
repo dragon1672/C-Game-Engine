@@ -29,7 +29,7 @@ private:
 public:
 
 	Mesh * addMesh(const char * name);
-	Mesh * addMesh(const char * name, Neumont::ShapeData& NUCrap);
+	Mesh * addMesh(const char * name, Neumont::ShapeData NUCrap);
 	Mesh * addMesh(const char * name, std::string filePath);
 	Mesh * addMesh(const char * name, const char * filePath);
 

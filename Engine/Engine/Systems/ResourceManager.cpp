@@ -11,7 +11,7 @@ Mesh * ResourceManager::addMesh(const char * name)
 	MeshObjs.Register(geos.last());
 	return &geos.last();
 }
-Mesh * ResourceManager::addMesh(const char * name, Neumont::ShapeData& NUCrap)
+Mesh * ResourceManager::addMesh(const char * name, Neumont::ShapeData NUCrap)
 {
 	geos.push_back(Mesh(name));
 	Mesh& ret = geos.last();
