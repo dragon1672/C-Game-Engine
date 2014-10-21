@@ -12,10 +12,12 @@ class ENGINE_SHARED ShaderUniformPram {
 private:
 	ParameterType type;
 	const char * title;
-	uint location;
-	void sendData(ShaderProgram * shader, const void * val);
-public:
 	const void * cashedPointer;
+public:
+	ShaderUniformPram();
+	inline ParameterType Type()   const { return type; }
+	inline const char * Title()   const { return title; }
+	inline const void * Pointer() const { return cashedPointer; }
 	
 	void init(const char * name, ParameterType type);
 	void init(const char * name, ParameterType type, const void * val);

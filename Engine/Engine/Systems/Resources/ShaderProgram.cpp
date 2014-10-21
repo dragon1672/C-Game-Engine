@@ -78,6 +78,12 @@ namespace {
 	std::map<ParameterType,std::function<void(uint,const void *)>> uniformPasses = makeMap();
 }
 
+void ShaderProgram::passUniform(ShaderUniformPram * pram) {
+	passUniform(pram->Title(),pram->Type(),pram->Pointer());
+}
+void ShaderProgram::passUniform(ShaderUniformPram& pram) {
+	passUniform(&pram);
+}
 void ShaderProgram::passUniform(uint location, ParameterType parameterType, const void * value) {
 	uniformPasses[parameterType](location,value);
 }

@@ -12,5 +12,10 @@ void ShaderUniformPram::init(const char * name, ParameterType type, const void *
 }
 
 void ShaderUniformPram::sendData(ShaderProgram * shader) {
-	if(cashedPointer!=nullptr)   shader->passUniform(title,type,cashedPointer);
+	if(cashedPointer!=nullptr)   shader->passUniform(this);
+}
+
+ShaderUniformPram::ShaderUniformPram() : cashedPointer(nullptr)
+{
+
 }
