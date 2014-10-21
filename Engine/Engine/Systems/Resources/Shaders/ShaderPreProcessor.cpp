@@ -9,9 +9,46 @@ namespace {
 	std::map<std::string,std::string> initReplacements() {
 		// all keys should be lowercase
 		std::map<std::string,std::string> ret;
-		ret["#vert_shaderstart"]   = "[layouts, outs for each of the layouts to the frag, default matrix]";
-		ret["#vert_main_export"]   = "[assign outs from layouts]";
-		ret["#vert_main_setglPos"] = "[set gl_pos using matrix]";
+		ret["#vert_shaderstart"]   = ""
+			//"[layouts, outs for each of the layouts to the frag, default matrix]"
+			"#version 400                                                              \n"
+			"in layout(location=0) vec3 pos;                                           \n"
+			"in layout(location=1) vec4 col;                                           \n"
+			"in layout(location=2) vec3 norm;                                          \n"
+			"in layout(location=3) vec4 tangent                                        \n"
+			"in layout(location=4) vec2 uv;                                            \n"
+			"                                                                          \n"
+			"out vec3 fragModelPos; // pos with no transform                           \n"
+			"out vec3 fragWorldPos; // pos with model to world transform               \n"
+			"out vec3 fragCameraPos; // pos with model to world and camera transform   \n"
+			"out vec3 fragScreenPos; // pos fully transformed (used as gl_pos)         \n"
+			"out vec4 fragCol;                                                         \n"
+			"out vec3 fragNorm;                                                        \n"
+			"out vec4 fragTan;                                                         \n"
+			"out vec2 fragUv;                                                          \n"
+			"                                                                          \n"
+			"uniform mat4x4 model2WorldTransform;                                      \n"
+			"uniform mat4x4 world2Cam;                                                 \n"
+			"uniform mat4x4 model2Cam; // world2Cam * model2WorldTransform             \n"
+			"uniform mat4x4 viewTransform; // projection matrix                        \n"
+			"uniform mat4x4 MVP;                                                       \n"
+			"";
+		ret["#vert_main_export"]   = ""
+			//"[assign outs from layouts]"
+			"   fragModelPos  = pos;                                \n"
+			"   fragModelPos  = model2WorldTransform * vec4(pos,1); \n"
+			"   fragWorldPos  = world2Cam * vec4(pos,1);            \n"
+			"   fragCameraPos = model2Cam * vec4(pos,1);            \n"
+			"   fragScreenPos = MVP * vec4(pos,1);                  \n"
+			"   fragCol = col;                                      \n"
+			"   fragNorm = norm;                                    \n"
+			"   fragTan = tangent;                                  \n"
+			"   fragUv = uv;                                        \n"
+			"";
+		ret["#vert_main_setglPos"] = ""
+			//"[set gl_pos using matrix]"
+			"gl_Position = fragWorldPos;";
+			"";
 
 
 		return ret;
