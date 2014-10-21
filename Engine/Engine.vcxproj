@@ -165,6 +165,7 @@
     <ClInclude Include="Engine\Entity\Entity.h" />
     <ClInclude Include="Engine\Tools\Random\StringRandom.h" />
     <ClInclude Include="Engine\Tools\Ray.h" />
+    <ClInclude Include="Engine\Tools\StringManapulation.h" />
     <ClInclude Include="ExportHeader.h" />
     <ClInclude Include="Engine\FastDelegate.h" />
     <ClInclude Include="Engine\Systems\Resources\Dependencies\GeometryInfo.h" />
@@ -213,6 +214,7 @@
     <ClCompile Include="Engine\Renderer\Renderer.cpp" />
     <ClCompile Include="Engine\Systems\Resources\Dependencies\ShaderUniformPram.cpp" />
     <ClCompile Include="Engine\Tools\Random\StringRandom.cpp" />
+    <ClCompile Include="Engine\Tools\StringManapulation.cpp" />
     <ClCompile Include="Engine\Tools\Timer.cpp" />
     <ClCompile Include="Engine\Entity\Entity.cpp" />
   </ItemGroup>

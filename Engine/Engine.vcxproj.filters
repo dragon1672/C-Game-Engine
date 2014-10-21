@@ -83,6 +83,7 @@
     <ClInclude Include="Engine\Systems\Resources\ShaderProgram.h" />
     <ClInclude Include="Engine\Systems\Resources\Mesh.h" />
     <ClInclude Include="Engine\Systems\Resources\TextureInfo.h" />
+    <ClInclude Include="Engine\Tools\StringManapulation.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -121,6 +122,7 @@
     <ClCompile Include="Engine\Systems\InputManager.cpp" />
     <ClCompile Include="Engine\Tools\Random\StringRandom.cpp" />
     <ClCompile Include="Engine\Tools\QT\DebugSlider_mock.cpp" />
+    <ClCompile Include="Engine\Tools\StringManapulation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Tools\MyMath\Matrix2D.inl" />
