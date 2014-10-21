@@ -28,9 +28,10 @@ void ShaderProgram::addProgram(const char * shaderCode, unsigned short shaderTyp
 	addProgram(std::string(shaderCode),shaderType);
 }
 void ShaderProgram::addProgram(std::string shaderCode, unsigned short shaderType) {
-	files.push_back(CodeBlock());
-	files.last().code = shaderCode;
-	files.last().type = shaderType;
+	CodeBlock newGuy;
+	newGuy.code = shaderCode;
+	newGuy.type = shaderType;
+	files.push_back(newGuy);
 }
 bool ShaderProgram::compileShader(CodeBlock& block)
 {
@@ -103,10 +104,14 @@ void ShaderProgram::saveUniform(const char * name, const glm::vec3& value) { sav
 void ShaderProgram::saveUniform(const char * name, const glm::vec4& value) { saveUniform(name,ParameterType::PT_VEC4,&value[0]);    }
 void ShaderProgram::saveUniform(const char * name, const glm::mat3& value) { saveUniform(name,ParameterType::PT_MAT3,&value[0][0]); }
 void ShaderProgram::saveUniform(const char * name, const glm::mat4& value) { saveUniform(name,ParameterType::PT_MAT4,&value[0][0]); }
-void ShaderProgram::saveUniform(const char* name, ParameterType parameterType, const void * value) {
-	prams.push_back(ShaderUniformPram());
-	prams.last().init(name,parameterType,value);
+void ShaderProgram::saveUniform(ShaderObject * obj) {
+	ShaderPreProcessor::registerShaderObject(obj);
+	for (int i = 0; i < obj->numOfUniforms(); i++)
+		saveUniform(obj->getUniforms()[i]);
 }
+void ShaderProgram::saveUniform(const char* name, ParameterType parameterType, const void * value) { saveUniform(ShaderUniformPram(name,parameterType,value)); }
+void ShaderProgram::saveUniform(ShaderUniformPram * pram) { saveUniform(*pram); }
+void ShaderProgram::saveUniform(ShaderUniformPram& pram) { prams.push_back(pram); }
 
 void ShaderProgram::passSavedUniforms_try() {
 	if(validPush)

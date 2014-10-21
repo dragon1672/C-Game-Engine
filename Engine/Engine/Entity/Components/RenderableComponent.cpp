@@ -1,6 +1,7 @@
 #include "RenderableComponent.h"
 #include <Engine/Entity/Entity.h>
 #include <Engine/Tools/MatrixInfo.h>
+#include <Engine/Systems/Resources/Shaders/ShaderPreProcessor.h>
 
 void RenderableComponent::addUniformParameter(const char * name, const bool& value)      { addUniformParameter(name,ParameterType::PT_BOOLEAN,&value);       }
 void RenderableComponent::addUniformParameter(const char * name, const float& value)     { addUniformParameter(name,ParameterType::PT_FLOAT,  &value);       }
@@ -10,13 +11,12 @@ void RenderableComponent::addUniformParameter(const char * name, const glm::mat3
 void RenderableComponent::addUniformParameter(const char * name, const glm::mat4& value) { addUniformParameter(name,ParameterType::PT_MAT4,   &value[0][0]); }
 
 void RenderableComponent::addUniformParameter(const char * name, ParameterType parameterType, const void * value) {
-	ShaderUniformPram ret;
-	ret.init(name,parameterType,value);
-	addUniformParameter(ret);
+	addUniformParameter(ShaderUniformPram(name,parameterType,value));
 }
 
 void RenderableComponent::addUniformParameter(ShaderObject * obj)
 {
+	ShaderPreProcessor::registerShaderObject(obj);
 	for (int i = 0; i < obj->numOfUniforms(); i++)
 	{
 		addUniformParameter(obj->getUniforms()[i]);

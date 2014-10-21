@@ -12,7 +12,6 @@
 #include <Engine\Systems\Resources\Shaders\ShaderUniformPram.h>
 #include <Engine\TypeDefs.h>
 #include <glm\glm.hpp>
-#include <Engine\Tools\ConstVector.h>
 #include <Engine\Systems\Resource.h>
 #include <Engine\Systems\Resources\Shaders\ShaderObject.h>
 
@@ -20,14 +19,14 @@ class ENGINE_SHARED ShaderProgram : public Resource {
 private:
 	static GLuint currentProgram;
 	
-	ConstVector<ShaderUniformPram> prams;
+	std::vector<ShaderUniformPram> prams;
 
 	struct CodeBlock { // used to store shader code
 		GLuint type;
 		std::string code;
 	};
 
-	ConstVector<CodeBlock> files;
+	std::vector<CodeBlock> files;
 
 	GLuint programID;
 
@@ -66,7 +65,10 @@ public:
 	void saveUniform(const char * name, const glm::vec4& value);
 	void saveUniform(const char * name, const glm::mat3& value);
 	void saveUniform(const char * name, const glm::mat4& value);
+	void saveUniform(ShaderObject * obj);
 	void saveUniform(const char* name, ParameterType parameterType, const void * value);
+	void saveUniform(ShaderUniformPram * obj);
+	void saveUniform(ShaderUniformPram& obj);
 
 	virtual void PassDownToHardWare();
 	virtual void update();
