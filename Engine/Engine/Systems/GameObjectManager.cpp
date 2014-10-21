@@ -66,11 +66,7 @@ void GameObjectManager::paint() {
 		if(renderable != nullptr && renderable->visable) {
 			passStandardUniforms(renderable);
 			renderable->drawWarmup();
-			GeometryInfo& toDraw = *renderable->whatGeo;
-			glBindVertexArray(toDraw.vertexArrayObjectID);
-			glBindBuffer(toDraw.bufferInformation.bufferID,GL_ARRAY_BUFFER);
-			glBindBuffer(toDraw.bufferInformation.bufferID,GL_ELEMENT_ARRAY_BUFFER);
-			glDrawElements(toDraw.indexingMode,toDraw.numIndices,GL_UNSIGNED_SHORT,(void*)toDraw.indicesOffset());
+			renderable->whatGeo->paint();
 		}
 	}
 }

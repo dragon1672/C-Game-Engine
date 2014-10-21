@@ -1,3 +1,4 @@
+#include <gl/glew.h>
 #include "Mesh.h"
 #include <Engine\Tools\Random\MyRandom.h>
 #include <glm/gtx/transform.hpp>
@@ -175,4 +176,13 @@ Mesh::Mesh(const char * name)
 Mesh::Mesh()
 {
 
+}
+
+void Mesh::paint()
+{
+	GeometryInfo& toDraw = geo;
+	glBindVertexArray(toDraw.vertexArrayObjectID);
+	glBindBuffer(toDraw.bufferInformation.bufferID,GL_ARRAY_BUFFER);
+	glBindBuffer(toDraw.bufferInformation.bufferID,GL_ELEMENT_ARRAY_BUFFER);
+	glDrawElements(toDraw.indexingMode,toDraw.numIndices,GL_UNSIGNED_SHORT,(void*)toDraw.indicesOffset());
 }

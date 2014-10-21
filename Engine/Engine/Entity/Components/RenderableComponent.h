@@ -4,18 +4,20 @@
 #include <Engine\Systems\Resources\Dependencies\GeometryInfo.h>
 #include <Engine\Systems\Resources\ShaderProgram.h>
 #include <Engine\Systems\Resources\Shaders\ShaderObject.h>
+#include <Engine\Systems\Resources\Mesh.h>
+#include <ExportHeader.h>
 
-class RenderableComponent : public Component {
+class ENGINE_SHARED RenderableComponent : public Component {
 private:
 	const char * transformShaderName;
 	std::vector<ShaderUniformPram> uniformParameters;
 	ShaderUniformPram transform;
 public:
-	GeometryInfo * whatGeo;
+	Mesh * whatGeo;
 	ShaderProgram * howShader;
 	bool visable;
 
-	RenderableComponent(GeometryInfo * geo, ShaderProgram * shader, ShaderUniformPram * uniforms = nullptr, int numOfUniforms = 0)
+	RenderableComponent(Mesh * geo, ShaderProgram * shader, ShaderUniformPram * uniforms = nullptr, int numOfUniforms = 0)
 		: transformShaderName(nullptr), whatGeo(geo), howShader(shader), visable(true) {
 			for (int i = 0; i < numOfUniforms; i++)
 			{

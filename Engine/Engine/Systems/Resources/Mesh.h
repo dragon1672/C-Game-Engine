@@ -32,5 +32,6 @@ public:
 
 
 	virtual void PassDownToHardWare();
+	void paint();
 
 };
