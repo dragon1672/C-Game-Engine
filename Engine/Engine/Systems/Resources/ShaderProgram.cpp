@@ -79,6 +79,7 @@ namespace {
 }
 
 void ShaderProgram::passUniform(ShaderObject* obj) {
+	ShaderPreProcessor::registerShaderObject(obj);
 	for (int i = 0; i < obj->numOfUniforms(); i++) {
 		passUniform(obj->getUniforms()[i]);
 	}

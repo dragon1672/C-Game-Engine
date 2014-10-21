@@ -56,9 +56,12 @@ std::string ShaderPreProcessor::processGLSL(std::string src)
 	return ret;
 }
 
-void ShaderPreProcessor::registerShaderObject(ShaderObject * obj,std::string componentName)
+void ShaderPreProcessor::registerShaderObject(ShaderObject& obj) {
+	registerShaderObject(&obj);
+}
+void ShaderPreProcessor::registerShaderObject(ShaderObject * obj)
 {
-	std::string index = "#component_"+StringManapulation::ToLower(componentName);
+	std::string index = "#component_"+StringManapulation::ToLower(obj->getName());
 	if(replacements.find(index) == replacements.end()) return; // already entered
 	std::string uniformInclude = "";
 	for (int i = 0; i < obj->numOfUniforms(); i++)

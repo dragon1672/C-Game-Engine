@@ -6,5 +6,6 @@
 
 namespace ShaderPreProcessor {
 	ENGINE_SHARED std::string processGLSL(std::string src);
-	ENGINE_SHARED void registerShaderObject(ShaderObject * obj,std::string componentName); // #component_[componentname] <- #include for shader
+	ENGINE_SHARED void registerShaderObject(ShaderObject * obj);
+	ENGINE_SHARED void registerShaderObject(ShaderObject& obj);
 };
