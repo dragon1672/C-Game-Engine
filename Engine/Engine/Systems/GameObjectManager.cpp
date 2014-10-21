@@ -3,6 +3,7 @@
 #include <Engine/Entity/Entity.h>
 #include <Engine/Tools/MasterLua.h>
 #include <Engine/Systems/ResourceManager.h>
+#include <Engine/Systems/InputManager.h>
 
 GameObjectManager::GameObjectManager() : active(false) {}
 bool GameObjectManager::init() {
@@ -13,6 +14,7 @@ bool GameObjectManager::init() {
 			entities[i].init();
 		}
 		Timer::getInstance().start();
+		inputManager.init();
 		return true;
 }
 bool GameObjectManager::start() {
@@ -23,6 +25,7 @@ bool GameObjectManager::shutdown() {
 	return true;
 }
 void GameObjectManager::update() {
+	inputManager.update();
 	Timer::getInstance().interval();
 	resourceManager.update();
 	for (uint i = 0; i < entities.size(); i++) { entities[i].earlyUpdate(); }
@@ -45,6 +48,10 @@ void GameObjectManager::paint() {
 	viewTransform *= toDraw.cam.enabled ? toDraw.cam.getWorld2View() : myCam.getWorld2View();
 	viewTransform *= additionalViewTransform;
 	//*/
+
+
+
+
 
 	for (uint i = 0; i < entities.size(); i++) {
 		RenderableComponent * renderable = entities[i].getComponent<RenderableComponent>();
