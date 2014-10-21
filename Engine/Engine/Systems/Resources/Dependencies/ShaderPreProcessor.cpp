@@ -3,6 +3,7 @@
 #include <map>
 #include <vector>
 #include <Engine/Tools/StringManapulation.h>
+#include <Engine/TypeDefs.h>
 
 namespace {
 	std::map<std::string,std::string> initReplacements() {

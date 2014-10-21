@@ -11,6 +11,7 @@
 #include <cassert>
 #include <Engine\Defines\Vectors.h>
 #include <Engine\Systems\Resources\TextureInfo.h>
+#include <Engine/Systems/Resources/Dependencies/ShaderPreProcessor.h>
 
 
 GLuint ShaderProgram::currentProgram;
@@ -36,8 +37,8 @@ bool ShaderProgram::compileShader(CodeBlock& block)
 	bool isValid;
 	uint id = glCreateShader(block.type);
 	qDebug() << "Shader Load Successful ID: " << id;
-
-	isValid = complileShader(block.code.c_str(),id,true);
+	std::string code = ShaderPreProcessor::processGLSL(block.code);
+	isValid = complileShader(code.c_str(),id,true);
 	if(isValid) {
 		glAttachShader(programID,id);
 		qDebug() << "File(" << id << ") Compile Successful ProgramID: " << programID << "\n";
