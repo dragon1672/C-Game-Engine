@@ -49,17 +49,21 @@ namespace {
 			//"[set gl_pos using matrix]"
 			"gl_Position = fragWorldPos;";
 			"";
-		ret["#frag_main_import"]   = ""
+		ret["#frag_start"]   = ""
 			//"[get outs from layouts]"
-			"int vec3 fragModelPos;  \n"
-			"int vec3 fragModelPos;  \n"
-			"int vec3 fragWorldPos;  \n"
-			"int vec3 fragCameraPos; \n"
-			"int vec3 fragScreenPos; \n"
-			"int vec3 fragCol;       \n"
-			"int vec3 fragNorm;      \n"
-			"int vec3 fragTan;       \n"
-			"int vec3 fragUv;        \n"
+			"#version 400\n"
+			"";
+		ret["#frag_import"]   = ""
+			//"[get outs from layouts]"
+			"in vec3 fragModelPos;  \n"
+			"in vec3 fragModelPos;  \n"
+			"in vec3 fragWorldPos;  \n"
+			"in vec3 fragCameraPos; \n"
+			"in vec3 fragScreenPos; \n"
+			"in vec3 fragCol;       \n"
+			"in vec3 fragNorm;      \n"
+			"in vec3 fragTan;       \n"
+			"in vec3 fragUv;        \n"
 			"";
 
 
