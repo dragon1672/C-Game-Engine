@@ -132,6 +132,7 @@
     <ClInclude Include="Engine\Systems\InputManager.h" />
     <ClInclude Include="Engine\Systems\Resources\Dependencies\AutoAtrib.h" />
     <ClInclude Include="Engine\Systems\Resources\Material.h" />
+    <ClInclude Include="Engine\Systems\Resources\Shaders\DefaultShaders.h" />
     <ClInclude Include="Engine\Systems\Resources\Shaders\ShaderObject.h" />
     <ClInclude Include="Engine\Systems\Resources\Shaders\ShaderPreProcessor.h" />
     <ClInclude Include="Engine\Systems\Resources\Dependencies\Vert.h" />

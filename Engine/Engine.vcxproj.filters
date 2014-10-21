@@ -88,6 +88,7 @@
     <ClInclude Include="Engine\Systems\Resources\Shaders\ShaderObject.h" />
     <ClInclude Include="Engine\Tools\PropertyWrapper.h" />
     <ClInclude Include="Engine\Systems\Resources\Material.h" />
+    <ClInclude Include="Engine\Systems\Resources\Shaders\DefaultShaders.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
