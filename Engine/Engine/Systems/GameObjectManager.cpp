@@ -67,6 +67,9 @@ Entity * GameObjectManager::AddEntity(const char * name)
 
 bool GameObjectManager::initGl()
 {
+	glewInit();
+	glClearColor(0.1f, 0.1f, 0.1f, 0.0f);
+	glEnable(GL_DEPTH_TEST);
 	resourceManager.PassDownToHardWare();
 	return true;
 }

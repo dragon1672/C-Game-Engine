@@ -29,9 +29,9 @@ public:
 
 
 	GameObjectManager();
-	bool init(); // called with object is created
-	bool initGl();
-	bool start(); // called when scene is loaded
+	bool init(); // called before openGL, setup cars
+	bool initGl(); // pass data down to HW
+	bool start(); // called when scene is loaded (use for setting variable starting values)
 	bool shutdown();
 	void update();
 	void paint();
