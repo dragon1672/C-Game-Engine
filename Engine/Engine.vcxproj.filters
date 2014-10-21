@@ -85,6 +85,7 @@
     <ClInclude Include="Engine\Systems\Resources\Shaders\ShaderPreProcessor.h" />
     <ClInclude Include="Engine\Systems\Resources\Shaders\ShaderUniformPram.h" />
     <ClInclude Include="Engine\Systems\Resources\Shaders\ParameterType.h" />
+    <ClInclude Include="Engine\Systems\Resources\Shaders\ShaderObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
