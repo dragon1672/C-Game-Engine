@@ -157,6 +157,7 @@
     <ClInclude Include="Engine\Tools\MyMath\Vector 2.h" />
     <ClInclude Include="Engine\Tools\MyMath\Vector3D.h" />
     <ClInclude Include="Engine\Tools\Printer.h" />
+    <ClInclude Include="Engine\Tools\PropertyWrapper.h" />
     <ClInclude Include="Engine\Tools\QT\ButtonInfo.h" />
     <ClInclude Include="Engine\Tools\Camera.h" />
     <ClInclude Include="Engine\DebugTools\DebugMenuManager.h" />
