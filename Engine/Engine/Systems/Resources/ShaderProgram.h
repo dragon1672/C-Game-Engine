@@ -73,6 +73,12 @@ public:
 	virtual void PassDownToHardWare();
 	virtual void update();
 	//only passes data down once, will not update every paint
+	void passUniform(const char * name, const bool& value);
+	void passUniform(const char * name, const float& value);
+	void passUniform(const char * name, const glm::vec3& value);
+	void passUniform(const char * name, const glm::vec4& value);
+	void passUniform(const char * name, const glm::mat3& value);
+	void passUniform(const char * name, const glm::mat4& value);
 	void passUniform(ShaderUniformPram * pram);
 	void passUniform(ShaderUniformPram& pram);
 	void passUniform(ShaderObject* pram);

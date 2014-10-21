@@ -85,18 +85,17 @@ void ShaderProgram::passUniform(ShaderObject* obj) {
 		passUniform(obj->getUniforms()[i]);
 	}
 }
-void ShaderProgram::passUniform(ShaderObject& obj) {
-	passUniform(&obj);
-}
-void ShaderProgram::passUniform(ShaderUniformPram * pram) {
-	passUniform(pram->Title(),pram->Type(),pram->Pointer());
-}
-void ShaderProgram::passUniform(ShaderUniformPram& pram) {
-	passUniform(&pram);
-}
-void ShaderProgram::passUniform(uint location, ParameterType parameterType, const void * value) {
-	uniformPasses[parameterType](location,value);
-}
+void ShaderProgram::passUniform(const char * name, const bool& value)      { passUniform(name,ParameterType::PT_BOOLEAN,&value);    }
+void ShaderProgram::passUniform(const char * name, const float& value)     { passUniform(name,ParameterType::PT_FLOAT,&value);      }
+void ShaderProgram::passUniform(const char * name, const glm::vec3& value) { passUniform(name,ParameterType::PT_VEC3,&value[0]);    }
+void ShaderProgram::passUniform(const char * name, const glm::vec4& value) { passUniform(name,ParameterType::PT_VEC4,&value[0]);    }
+void ShaderProgram::passUniform(const char * name, const glm::mat3& value) { passUniform(name,ParameterType::PT_MAT3,&value[0][0]); }
+void ShaderProgram::passUniform(const char * name, const glm::mat4& value) { passUniform(name,ParameterType::PT_MAT4,&value[0][0]); }
+
+void ShaderProgram::passUniform(ShaderObject& obj) { passUniform(&obj); }
+void ShaderProgram::passUniform(ShaderUniformPram * pram) { passUniform(pram->Title(),pram->Type(),pram->Pointer()); }
+void ShaderProgram::passUniform(ShaderUniformPram& pram) { passUniform(&pram); }
+void ShaderProgram::passUniform(uint location, ParameterType parameterType, const void * value) { uniformPasses[parameterType](location,value); }
 
 void ShaderProgram::saveUniform(const char * name, const bool& value)      { saveUniform(name,ParameterType::PT_BOOLEAN,&value);    }
 void ShaderProgram::saveUniform(const char * name, const float& value)     { saveUniform(name,ParameterType::PT_FLOAT,&value);      }
