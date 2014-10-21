@@ -1,5 +1,6 @@
 #include "StringManapulation.h"
 #include <sstream>
+#include <Engine/TypeDefs.h>
 
 
 
@@ -41,7 +42,7 @@ std::string StringManapulation::ToUpper(std::string str)
 
 std::string StringManapulation::trimStart(std::string src,char toTrim)
 {
-	int offset = 0;
+	uint offset = 0;
 	for (; offset < src.length() && src[offset] == toTrim; offset++);
 	return src.substr(offset);
 }
