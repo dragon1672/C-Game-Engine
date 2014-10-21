@@ -38,3 +38,58 @@ std::string StringManapulation::ToUpper(std::string str)
 	}
 	return str;
 }
+
+std::string StringManapulation::trimStart(std::string src,char toTrim)
+{
+	int offset = 0;
+	for (; offset < src.length() && src[offset] == toTrim; offset++);
+	return src.substr(offset);
+}
+
+std::string StringManapulation::trimStart(std::string src, char * list, int count)
+{
+	std::string ret = src;
+	for (int i = 0; i < count; i++)
+		ret = trimEnd(ret,list[i]);
+	return ret;
+}
+
+std::string StringManapulation::trimEnd(std::string src,char toTrim)
+{
+	int offset = src.length()-1;
+	for (; offset >= 0 && src[offset] == toTrim; offset--);
+	return src.substr(0,offset+1);
+}
+
+std::string StringManapulation::trimEnd(std::string src, char * list, int count)
+{
+	std::string ret = src;
+	for (int i = 0; i < count; i++)
+		ret = trimStart(ret,list[i]);
+	return ret;
+}
+
+std::string StringManapulation::trim(std::string src,char toTrim)
+{
+	return trimEnd(trimStart(src,toTrim),toTrim);
+}
+
+std::string StringManapulation::trim(std::string src, char * list, int count)
+{
+	std::string ret = src;
+	for (int i = 0; i < count; i++)
+		ret = trim(ret,list[i]);
+	return ret;
+}
+
+std::string StringManapulation::trimWhiteSpace(std::string src)
+{
+	char list[] = {' ','\n','\t'};
+	return trim(src,list,sizeof(list)/sizeof(*list));
+}
+
+std::string StringManapulation::trimWhiteSpaceStart(std::string src)
+{
+	char list[] = {' ','\n','\t'};
+	return trimStart(src,list,sizeof(list)/sizeof(*list));
+}

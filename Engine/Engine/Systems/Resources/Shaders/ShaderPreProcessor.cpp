@@ -85,7 +85,7 @@ namespace {
 	std::map<ParameterType,std::string> typeToGLSL   = initPrams();
 
 	std::string replaceLine(std::string line) {
-		std::string code = StringManapulation::ToLower(StringManapulation::split(line,' ')[0]);
+		std::string code = StringManapulation::trimWhiteSpaceStart(StringManapulation::ToLower(StringManapulation::split(line,' ')[0]));
 		return replacements.find(code) == replacements.end() ? line : replacements[code];
 	}
 }
