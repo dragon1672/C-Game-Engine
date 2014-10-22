@@ -10,7 +10,7 @@ int Material::numOfUniforms()
 {
 	return uniforms.size();
 }
-std::string Material::getName()
+std::string Material::getShaderName()
 {
 	return "Material";
 }

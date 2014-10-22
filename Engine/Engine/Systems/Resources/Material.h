@@ -27,6 +27,6 @@ public:
 
 	virtual int numOfUniforms();
 
-	virtual std::string getName();
+	virtual std::string getShaderName();
 
 };
