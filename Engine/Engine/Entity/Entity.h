@@ -32,7 +32,7 @@ public:
 
 	std::vector<Component *> components;
 	glm::mat4 getWorldTransform();
-	glm::mat4 localTrans;
+	MatrixInfo localTrans;
 
 	MatrixInfo * getTrans();
 	RenderableComponent * getRenderable();

@@ -54,7 +54,7 @@ glm::mat4 Entity::getWorldTransform()
 	glm::mat4 ret;
 	Entity * current = this;
 	while(current != nullptr) {
-		ret = current->localTrans * ret;
+		ret = current->localTrans.getCompleteTransform() * ret;
 		current = current->parent;
 	}
 	return ret;
@@ -68,7 +68,7 @@ const char * Entity::getName()
 Entity::Entity(const char * name/*="New Game Object"*/, Entity * p /*= nullptr*/)  : parent(p) { this->name = name; }
 
 
-MatrixInfo * Entity::getTrans() { return getComponent<MatrixInfo>(); }
+MatrixInfo * Entity::getTrans() { return &localTrans; }
 
 RenderableComponent * Entity::getRenderable() { return getComponent<RenderableComponent>(); }
 
