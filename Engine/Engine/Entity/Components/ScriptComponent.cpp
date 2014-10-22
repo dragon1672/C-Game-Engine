@@ -40,7 +40,7 @@ public:
 	LuaTable context;
 	void runMethod(std::string methodName) {
 		LUA_INSTANCE.GetGlobalEnvironment().Set("CorbinEnginTmp",context);
-		LUA_INSTANCE.RunScript("CorbinEnginTmp:"+methodName+"()");
+		runLua("CorbinEnginTmp:"+methodName+"()");
 	}
 	ScriptComponentPrivates(LuaTable context) :
 		context(context) { }
