@@ -51,6 +51,7 @@ public:
 
 	inline PropertyGetSet & operator=(const PropertyGet<T>& that) { val = that; }
 	inline void set(T toSet) { setter(val,toSet); }
+	inline PropertyGetSet& operator=(T& that){ (set(that)); return *this; }
 	inline PropertyGetSet& operator+=(PropertyGet<T>& that){ (set(get()+that)); return *this; }
 	inline PropertyGetSet& operator-=(PropertyGet<T>& that){ (set(get()-that)); return *this; }
 	inline PropertyGetSet& operator*=(PropertyGet<T>& that){ (set(get()*that)); return *this; }
