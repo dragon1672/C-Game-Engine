@@ -3,8 +3,9 @@
 #include <glm/glm.hpp>
 
 #include "AutoAtrib.h"
+#include <ExportHeader.h>
 
-class Vert : public AutoAtrib {
+class ENGINE_SHARED	Vert : public AutoAtrib {
 public:
 	glm::vec3 pos;
 	glm::vec4 col;
