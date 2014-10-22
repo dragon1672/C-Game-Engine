@@ -7,7 +7,6 @@
 #pragma warning(pop)
 #include <Engine\Systems\Resources\Shaders\ParameterType.h>
 #include <ExportHeader.h>
-#include <Engine/Systems/Resources/Dependencies/AutoAtrib.h>
 
 struct ENGINE_SHARED GeometryInfo {
 private:
@@ -30,8 +29,8 @@ public:
 	void addStreamedParameter(uint layoutLocation, ParameterType parameterType, uint bufferOffset, uint bufferStride);
 	void addStreamedParameter(uint layoutLocation, int numOfFloats, uint bufferOffset, uint bufferStride);
 	//Vertex Data
-	void addStreamedParameters(AutoAtrib * obj);
-	void addStreamedParameters(int * sizes,int numOfSizes);
+	template <typename T> void addStreamedParameters(int * sizes,int numOfSizes) { addStreamedParameters(sizes,numOfSizes,sizeof(T)); }
+	void addStreamedParameters(int * sizes,int numOfSizes, int stride);
 
 	inline uint vertexBufferSize() const { return numVerts   * sizeOfVerts; }
 	inline uint dataOffset()       const { return bufferInformation.offset; }

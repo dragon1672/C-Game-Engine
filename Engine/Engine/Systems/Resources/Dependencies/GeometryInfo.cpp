@@ -28,20 +28,15 @@ void GeometryInfo::addStreamedParameter(uint layoutLocation, int numOfFloats, ui
 	glBindBuffer(GL_ARRAY_BUFFER, bufferInformation.bufferID);
 	glBindVertexArray(vertexArrayObjectID);
 
-	glEnableVertexAttribArray(layoutLocation); // pos
+	glEnableVertexAttribArray(layoutLocation);
 
 	glBindBuffer(GL_ARRAY_BUFFER, bufferInformation.bufferID);
 	glVertexAttribPointer(layoutLocation, numOfFloats, GL_FLOAT, GL_FALSE, bufferStride, (void*)(bufferOffset+bufferInformation.offset));
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, bufferInformation.bufferID);
 }
 
-void GeometryInfo::addStreamedParameters(AutoAtrib * obj)
+void GeometryInfo::addStreamedParameters(int * sizes,int numOfSizes, int stride)
 {
-	addStreamedParameters(obj->getAtribs(),obj->getNumOfAtribs());
-}
-void GeometryInfo::addStreamedParameters(int * sizes,int numOfSizes)
-{
-	int stride = Collections::Sum(sizes,numOfSizes) * sizeof(float);
 	int offset = 0;
 	for (int i = 0; i < numOfSizes; i++)
 	{
