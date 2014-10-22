@@ -1,7 +1,7 @@
 #include "Vert.h"
 
 namespace {
-int data[] = { 3,4,3,3,2 };
+int data[] = { 3,4,3,4,2 };
 }
 
 int * Vert::getAtribs()
