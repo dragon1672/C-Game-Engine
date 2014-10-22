@@ -184,5 +184,5 @@ void Mesh::paint()
 	glBindVertexArray(toDraw.vertexArrayObjectID);
 	glBindBuffer(toDraw.bufferInformation.bufferID,GL_ARRAY_BUFFER);
 	glBindBuffer(toDraw.bufferInformation.bufferID,GL_ELEMENT_ARRAY_BUFFER);
-	glDrawElements(toDraw.indexingMode,toDraw.numIndices,GL_UNSIGNED_SHORT,(void*)toDraw.indicesOffset());
+	glDrawElements(toDraw.indexingMode,toDraw.numIndices,GL_UNSIGNED_INT,(void*)toDraw.indicesOffset());
 }
