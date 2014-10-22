@@ -6,6 +6,8 @@
 #include <Engine/Defines/VecGetSet.h>
 #include <Engine/Entity/Component.h>
 #include <Engine/Tools/GlmWrap.h>
+#include <Engine/Systems/Resources/Shaders/ShaderObject.h>
+#include <vector>
 
 
 #define GET_SET_TRACK(var_type,set_set_type, name,Uppercase_name)\
@@ -16,7 +18,7 @@
 	inline void set##Uppercase_name##(##set_set_type##& toSet) { name = toSet; name##Changed = true; }
 
 
-class ENGINE_SHARED MatrixInfo : public Component {
+class ENGINE_SHARED MatrixInfo : public Component, public ShaderObject {
 private:
 	glm::mat4 transform;
 	glm::mat4 rotationMat;
@@ -26,6 +28,7 @@ private:
 	wrap::vec3 pos_old;
 	wrap::vec3 rot_old;
 	wrap::vec3 scale_old;
+	std::vector<ShaderUniformPram> uniforms;
 public:
 	wrap::vec3 pos;
 	wrap::vec3 rot;
@@ -35,7 +38,14 @@ public:
 	GET_LUA_VER(wrap::vec3,scale);
 	GET_LUA_VER(wrap::vec3,rot  );
 
-	MatrixInfo() : scale(1,1,1) {}
+	MatrixInfo() : scale(1,1,1) {
+		uniforms.push_back(ShaderUniformPram("MatrixInfo_TransformMat",  ParameterType::PT_MAT4,  &translationMat[0][0]   ));
+		uniforms.push_back(ShaderUniformPram("MatrixInfo_RotationMat",   ParameterType::PT_MAT4,  &rotationMat[0][0]      ));
+		uniforms.push_back(ShaderUniformPram("MatrixInfo_ScaleMat",      ParameterType::PT_MAT4,  &scaleMat[0][0]         ));
+		uniforms.push_back(ShaderUniformPram("MatrixInfo_Pos",           ParameterType::PT_VEC3,  &pos[0]   ));
+		uniforms.push_back(ShaderUniformPram("MatrixInfo_Scale",         ParameterType::PT_VEC3,  &scale[0] ));
+		uniforms.push_back(ShaderUniformPram("MatrixInfo_Rotation",      ParameterType::PT_VEC3,  &rot[0]   ));
+	}
 
 	glm::mat4& getTransform();// save this on in the Shader
 
@@ -56,4 +66,11 @@ public:
 
 		return ret;
 	}
+
+	virtual ShaderUniformPram * getUniforms();
+
+	virtual int numOfUniforms();
+
+	virtual std::string getShaderName();
+
 };

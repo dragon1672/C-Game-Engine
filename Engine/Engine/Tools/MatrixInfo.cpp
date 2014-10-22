@@ -26,3 +26,16 @@ glm::mat4&  MatrixInfo::getTranslationMat() {
 glm::mat4&  MatrixInfo::getCompleteTransform() {
 	return pos != pos_old || rot != rot_old || scale != scale_old ? transform = getTranslationMat() * getRotMat() * getScaleMat() : transform;
 }
+
+ShaderUniformPram * MatrixInfo::getUniforms()
+{
+	return &uniforms[0];
+}
+int MatrixInfo::numOfUniforms()
+{
+	return uniforms.size();
+}
+std::string MatrixInfo::getShaderName()
+{
+	return "MatrixInfo";
+}
