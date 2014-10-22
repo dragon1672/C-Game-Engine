@@ -174,7 +174,7 @@ bool ShaderProgram::isCurrentProgram() {
 }
 void ShaderProgram::useProgram() {
 	if(!isCurrentProgram()) {
-		qDebug() << "Registering Shader Program  from " << currentProgram << " to " << programID << " into pipeline";
+		//qDebug() << "Registering Shader Program  from " << currentProgram << " to " << programID << " into pipeline";
 		currentProgram = programID;
 		glUseProgram(programID);
 	}

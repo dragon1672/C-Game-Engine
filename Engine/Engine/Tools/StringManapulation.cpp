@@ -51,7 +51,7 @@ std::string StringManapulation::trimStart(std::string src, char * list, int coun
 {
 	std::string ret = src;
 	for (int i = 0; i < count; i++)
-		ret = trimEnd(ret,list[i]);
+		ret = trimStart(ret,list[i]);
 	return ret;
 }
 
