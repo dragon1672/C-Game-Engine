@@ -23,10 +23,7 @@
 #include <vector>
 
 namespace DebugMenuControllers {
-	class Controller {
-	public:
-		virtual void update() = 0;
-	};
+	class Controller;
 }
 
 class ENGINE_SHARED DebugMenuManager {
