@@ -88,6 +88,7 @@
     <ClInclude Include="Engine\Tools\PropertyWrapper.h" />
     <ClInclude Include="Engine\Systems\Resources\Material.h" />
     <ClInclude Include="Engine\Systems\Resources\Shaders\DefaultShaders.h" />
+    <ClInclude Include="CorbinGui\BasicGui.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -129,6 +130,8 @@
     <ClCompile Include="Engine\Systems\Resources\Shaders\ShaderPreProcessor.cpp" />
     <ClCompile Include="Engine\Systems\Resources\Shaders\ShaderUniformPram.cpp" />
     <ClCompile Include="Engine\Systems\Resources\Material.cpp" />
+    <ClCompile Include="CorbinGui\BasicGui.cpp" />
+    <ClCompile Include="CorbinGui\BasicGui_mock.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Tools\MyMath\Matrix2D.inl" />
