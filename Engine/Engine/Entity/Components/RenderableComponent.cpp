@@ -28,19 +28,10 @@ void RenderableComponent::addUniformParameter(ShaderUniformPram& obj)
 	uniformParameters.push_back(obj);
 }
 
-void RenderableComponent::saveMatrixInfo(const char * uniformName) {
-	this->transformShaderName = uniformName;
-}
-
 void RenderableComponent::drawWarmup() {
 	howShader->useProgram();
 
-	if(transformShaderName != nullptr) howShader->passUniform(transform);
 	for (uint i = 0; i < uniformParameters.size(); i++) {
 		howShader->passUniform(uniformParameters[i]);
 	}
-}
-
-void RenderableComponent::update() {
-	transform.init(transformShaderName,ParameterType::PT_MAT4,&parent->getTrans()->getTransform()[0][0]);
 }

@@ -11,12 +11,14 @@ class ENGINE_SHARED RenderableComponent : public Component {
 private:
 	const char * transformShaderName;
 	std::vector<ShaderUniformPram> uniformParameters;
-	ShaderUniformPram transform;
 public:
 	Mesh * whatGeo;
 	ShaderProgram * howShader;
 	bool visable;
 
+	RenderableComponent(): whatGeo(nullptr), howShader(nullptr), visable(true) {
+
+	}
 	RenderableComponent(Mesh * geo, ShaderProgram * shader, ShaderUniformPram * uniforms = nullptr, int numOfUniforms = 0)
 		: transformShaderName(nullptr), whatGeo(geo), howShader(shader), visable(true) {
 			for (int i = 0; i < numOfUniforms; i++)
@@ -42,6 +44,5 @@ public:
 	void addUniformParameter(const char * name, ParameterType parameterType, const void * value);
 	
 
-	void update();
 	void drawWarmup();
 };
