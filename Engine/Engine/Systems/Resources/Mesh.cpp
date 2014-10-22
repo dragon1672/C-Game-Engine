@@ -24,7 +24,7 @@ void Mesh::updateMinAndMax()
 	}
 }
 
-
+/*
 void Mesh::updateTangents()
 {
 	glm::vec3 * tan1 = new glm::vec3[verts.size()];// * 2];
@@ -161,7 +161,7 @@ void Mesh::rotate(float x, float y, float z) {
 		verts[i].norm = rot * verts[i].norm;
 	}
 }
-
+//*/
 void Mesh::PassDownToHardWare()
 {
 	geo.init(&verts[0],verts.size(),&indices[0],indices.size(),GL_TRIANGLES);
