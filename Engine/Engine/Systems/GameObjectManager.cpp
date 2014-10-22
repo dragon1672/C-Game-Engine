@@ -16,7 +16,7 @@ GameObjectManager::GameObjectManager() : active(false) {
 }
 bool GameObjectManager::init() {
 	if(!active)
-		cam.lookAt(glm::vec3(10,10,10),glm::vec3(0,0,0));
+		cam.lookAt(glm::vec3(0,10,10),glm::vec3(0,0,0));
 		MasterLua::getInstance().init();
 		resourceManager.init();
 		for (uint i = 0; i < entities.size(); i++) {
@@ -40,8 +40,6 @@ void GameObjectManager::update() {
 	for (uint i = 0; i < entities.size(); i++) { entities[i].earlyUpdate(); }
 	for (uint i = 0; i < entities.size(); i++) { entities[i].update();      }
 	for (uint i = 0; i < entities.size(); i++) { entities[i].lateUpdate();  }
-	glm::vec3 t = Timer::getInstance().deltaTime() * glm::vec3(0,-.2,0);
-	//cam.setPos(cam.getPos()+t,cam.getViewDir());
 }
 void GameObjectManager::paint() {
 	glClearColor(.1f,.1f,.1f,1);
