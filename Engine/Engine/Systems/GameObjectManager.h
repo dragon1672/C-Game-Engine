@@ -22,7 +22,7 @@ private:
 	bool active;
 
 	Camera cam;
-	glm::mat4 viewTransform;
+	glm::mat4 perspective;
 	void updateViewTransform();
 
 	void passDataDownAllShaders_force();

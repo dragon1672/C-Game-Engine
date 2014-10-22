@@ -16,6 +16,7 @@ GameObjectManager::GameObjectManager() : active(false) {
 }
 bool GameObjectManager::init() {
 	if(!active)
+		cam.lookAt(glm::vec3(10,10,10),glm::vec3(0,0,0));
 		MasterLua::getInstance().init();
 		resourceManager.init();
 		for (uint i = 0; i < entities.size(); i++) {
@@ -39,6 +40,8 @@ void GameObjectManager::update() {
 	for (uint i = 0; i < entities.size(); i++) { entities[i].earlyUpdate(); }
 	for (uint i = 0; i < entities.size(); i++) { entities[i].update();      }
 	for (uint i = 0; i < entities.size(); i++) { entities[i].lateUpdate();  }
+	glm::vec3 t = Timer::getInstance().deltaTime() * glm::vec3(0,-.2,0);
+	cam.setPos(cam.getPos()+t,cam.getViewDir());
 }
 void GameObjectManager::paint() {
 	/*
@@ -57,7 +60,8 @@ void GameObjectManager::paint() {
 	viewTransform *= additionalViewTransform;
 	//*/
 
-
+	glClearColor(.1f,1,.1f,1);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
 
@@ -89,19 +93,20 @@ bool GameObjectManager::initGl()
 void GameObjectManager::passStandardUniforms(RenderableComponent * renderable)
 {
 	ShaderProgram * prog = renderable->howShader;
+	prog->useProgram();
 	auto model2World = renderable->Parent()->getWorldTransform();
 	auto world2cam = cam.getWorld2View();
 	auto model2cam = world2cam * model2World;
-	auto MVP = viewTransform * model2cam;
+	auto MVP = perspective * model2cam;
 	prog->passUniform("model2WorldTransform",model2World);
 	prog->passUniform("world2Cam",world2cam);
 	prog->passUniform("model2Cam",model2cam);
-	prog->passUniform("viewTransform",viewTransform);
+	prog->passUniform("perspective",perspective);
 	prog->passUniform("MVP",MVP);
 }
 
 void GameObjectManager::updateViewTransform()
 {
 	const float aspectRatio = (float)width/(float)height;
-	viewTransform = glm::perspective(60.0f,aspectRatio,(float)nearPlane,(float)farPlane);
+	perspective = glm::perspective(60.0f,aspectRatio,(float)nearPlane,(float)farPlane);
 }
