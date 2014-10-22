@@ -10,14 +10,19 @@ void Entity::removeComponent(int toKill) {
 		components.erase(components.begin() + toKill);
 	}
 }
-void Entity::addComponent(Component * toAdd) {
+Component* Entity::addComponent(Component * toAdd) {
 	toAdd->parent = this;
 	components.push_back(toAdd);
+	return toAdd;
 }
 void Entity::removeComponent(Component * toKill) {
 	removeComponent(getIndex(toKill)); 
 }
-void Entity::init()        { for(uint i=0; i<components.size(); i++) components[i]->init();        }
+void Entity::init()        {
+	auto& t = components.at(0);
+	(void)t;
+	for(uint i=0; i<components.size(); i++) components[i]->init();
+}
 void Entity::start()       { for(uint i=0; i<components.size(); i++) components[i]->start();       }
 void Entity::earlyUpdate() { for(uint i=0; i<components.size(); i++) components[i]->earlyUpdate(); }
 void Entity::update()      { for(uint i=0; i<components.size(); i++) components[i]->update();      }

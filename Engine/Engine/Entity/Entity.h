@@ -38,12 +38,12 @@ public:
 	RenderableComponent * getRenderable();
 	ScriptComponent * getScript();
 
-	template<typename T> void addComponent() { addComponent(new T()); }
-	template<typename T> void addComponent(const char * data) { addComponent(new T(data)); }
-	template<typename T> void addComponent(Resource * data)   { addComponent(new T(data)); }
-	template<typename T> void addComponent(int resouceId)     { addComponent(new T(resouceId)); }
-	template<typename T> void addComponent(std::string  data) { addComponent(new T(data)); }
-	void addComponent(Component * toAdd);
+	template<typename T> T* addComponent() { return (T*)addComponent(new T()); }
+	template<typename T> T* addComponent(const char * data) { return (T*)addComponent(new T(data)); }
+	template<typename T> T* addComponent(Resource * data)   { return (T*)addComponent(new T(data)); }
+	template<typename T> T* addComponent(int resouceId)     { return (T*)addComponent(new T(resouceId)); }
+	template<typename T> T* addComponent(std::string  data) { return (T*)addComponent(new T(data)); }
+	Component* addComponent(Component * toAdd);
 	template<typename T> void removeComponent() {
 		removeComponent(getIndex<T>()); 
 	}
