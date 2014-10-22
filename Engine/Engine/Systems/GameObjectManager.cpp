@@ -41,25 +41,9 @@ void GameObjectManager::update() {
 	for (uint i = 0; i < entities.size(); i++) { entities[i].update();      }
 	for (uint i = 0; i < entities.size(); i++) { entities[i].lateUpdate();  }
 	glm::vec3 t = Timer::getInstance().deltaTime() * glm::vec3(0,-.2,0);
-	cam.setPos(cam.getPos()+t,cam.getViewDir());
+	//cam.setPos(cam.getPos()+t,cam.getViewDir());
 }
 void GameObjectManager::paint() {
-	/*
-	if(clear) {
-		float clearX = toDraw.clearColor.x;
-		float clearY = toDraw.clearColor.y;
-		float clearZ = toDraw.clearColor.z;
-		glClearColor(clearX,clearY,clearZ,1);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	}
-
-	const float aspectRatio = (float)width()/(float)height();
-	perspectiveMat = glm::perspective(60.0f,aspectRatio,nearPlane,farPlane);
-	viewTransform = perspectiveMat;
-	viewTransform *= toDraw.cam.enabled ? toDraw.cam.getWorld2View() : myCam.getWorld2View();
-	viewTransform *= additionalViewTransform;
-	//*/
-
 	glClearColor(.1f,.1f,.1f,1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
