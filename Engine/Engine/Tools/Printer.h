@@ -1,10 +1,11 @@
 #pragma once
 
 #include <Engine/Defines/SingletonsDefine.h>
+#include <ExportHeader.h>
 
 #define printer Printer::getInstance()
 
-class Printer {
+class ENGINE_SHARED Printer {
 	DEFINE_SINGLETON(Printer);
 public:
 

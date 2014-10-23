@@ -1,5 +1,5 @@
 #include <gl/glew.h>
-#include "BasicGui.h"
+#include "BasicQGLGui.h"
 
 
 
