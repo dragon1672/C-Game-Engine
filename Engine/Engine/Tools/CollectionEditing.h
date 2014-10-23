@@ -8,11 +8,17 @@
 
 namespace Collections {
 
+	//sets
 	template<typename Key, typename Hash, typename Pred, typename Alloc> bool contains(std::unordered_set<Key,Hash,Pred,Alloc> map, Key toFind) {
 		return map.find(toFind) != map.end();
 	}
 
 	//vector
+	template <typename T> bool	 contains(std::vector<T>& array, T toFind) {
+		for (int i = 0; i < array.size(); i++)
+			if(array[i] == toFind) return true;
+		return false
+	}
 	template <typename T> std::vector<T> Where(std::vector<T>& array, std::function<bool(T&)> condition) {
 		std::vector<T> ret;
 		for(uint i=0;i<array.size();i++) if(condition(array[i])) ret.push_back(array[i]);
@@ -49,6 +55,11 @@ namespace Collections {
 
 
 	//const vec
+	template <typename T> bool	 contains(ConstVector<T>& array, T toFind) {
+		for (int i = 0; i < array.size(); i++)
+			if(array[i] == toFind) return true;
+		return false
+	}
 	template <typename T> std::vector<T> Where(ConstVector<T>& array, std::function<bool(T&)> condition) {
 		std::vector<T> ret;
 		for(int i=0;i<array.size();i++) if(condition(array[i])) ret.push_back(array[i]);
@@ -86,6 +97,11 @@ namespace Collections {
 
 
 	//raw array
+	template <typename T> bool	 contains(T * array, int size, T toFind) {
+		for (int i = 0; i < size; i++)
+			if(array[i] == toFind) return true;
+		return false
+	}
 	template <typename T> std::vector<T> Where(T * array, int size, std::function<bool(T&)> condition) {
 		std::vector<T> ret;
 		for(int i=0;i<size;i++)
