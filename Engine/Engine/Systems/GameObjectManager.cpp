@@ -9,8 +9,8 @@
 #include <string>
 
 GameObjectManager::GameObjectManager() : active(false) {
-	nearPlane.setter = [this](float& val, float&newGuy) { val = newGuy; perspectiveOutOfDate = true;; };
-	farPlane.setter  = [this](float& val, float&newGuy) { val = newGuy; perspectiveOutOfDate = true;; };
+	nearPlane.setter = [this](float& val, float&newGuy) { val = newGuy; perspectiveOutOfDate = true; };
+	farPlane.setter  = [this](float& val, float&newGuy) { val = newGuy; perspectiveOutOfDate = true; };
 	width.setter     = [this](int& val,   int&newGuy)   { val = newGuy; perspectiveOutOfDate = true; };
 	height.setter    = [this](int& val,   int&newGuy)   { val = newGuy; perspectiveOutOfDate = true; };
 	nearPlane = .1f;
@@ -101,5 +101,9 @@ void GameObjectManager::updateViewTransform()
 std::vector<Entity *> GameObjectManager::getTopLevelEntities()
 {
 	//ConstVec<Entity> entities <- class of my creation bascally an array of Entities
-	return Collections::Where<Entity*>(Collections::Select<Entity,Entity*>(entities,[](Entity& dude){return &dude;}),[](Entity*& a){ return a->Parent() == nullptr; });
+	//return Collections::Where<Entity*>(Collections::Select<Entity,Entity*>(entities,[](Entity& dude){return &dude;}),[](Entity*& a){ return a->Parent() == nullptr; });
+	std::vector<Entity*> tmp;
+	for (uint i = 0; i < entities.size(); i++)
+		tmp.push_back(&entities[i]);
+	return Collections::Where<Entity*>(tmp,[](Entity*& a){ return a->Parent() == nullptr; });
 }
