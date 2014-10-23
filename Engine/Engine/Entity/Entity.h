@@ -26,7 +26,7 @@ private:
 	int getIndex(std::string toFind);
 
 	Entity * parent;
-	std::unordered_set<Entity *> children;
+public:std::unordered_set<Entity *> children;
 public:
 	Entity * Parent();
 	void Parent(Entity * newGuy);
