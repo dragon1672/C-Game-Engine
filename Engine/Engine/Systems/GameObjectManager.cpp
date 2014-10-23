@@ -11,8 +11,8 @@
 GameObjectManager::GameObjectManager() : active(false) {
 	nearPlane.setter = [this](float& val, float&newGuy) { val = newGuy; perspectiveOutOfDate = true;; };
 	farPlane.setter  = [this](float& val, float&newGuy) { val = newGuy; perspectiveOutOfDate = true;; };
-	width.setter     = [this](int& val, int&newGuy) { val = newGuy; perspectiveOutOfDate = true; };
-	height.setter    = [this](int& val, int&newGuy) { val = newGuy; perspectiveOutOfDate = true; };
+	width.setter     = [this](int& val,   int&newGuy)   { val = newGuy; perspectiveOutOfDate = true; };
+	height.setter    = [this](int& val,   int&newGuy)   { val = newGuy; perspectiveOutOfDate = true; };
 	nearPlane = .1f;
 	farPlane = 100;
 }
@@ -100,6 +100,6 @@ void GameObjectManager::updateViewTransform()
 
 std::vector<Entity *> GameObjectManager::getTopLevelEntities()
 {
-	//std::vector<Entity *> guys = ;
+	//ConstVec<Entity> entities <- class of my creation bascally an array of Entities
 	return Collections::Where<Entity*>(Collections::Select<Entity,Entity*>(entities,[](Entity& dude){return &dude;}),[](Entity*& a){ return a->Parent() == nullptr; });
 }

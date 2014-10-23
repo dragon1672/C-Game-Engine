@@ -47,16 +47,16 @@ public:
 		fileMenu->addAction(action = new QAction("Exit Program", this));	connect(action, &QAction::triggered, [this](){ printer.LogMessage("Exit Clicked"); });
 
 		fileMenu = menuBar()->addMenu("Resources");
-		fileMenu->addAction(action = new QAction("Load Obj", this));	connect(action, &QAction::triggered, [this](){ printer.LogMessage("Load Obj Clicked"); });
+		fileMenu->addAction(action = new QAction("Load Obj", this));		connect(action, &QAction::triggered, [this](){ printer.LogMessage("Load Obj Clicked"); });
 		fileMenu->addAction(action = new QAction("Load Texture", this));	connect(action, &QAction::triggered, [this](){ printer.LogMessage("Load Texture Clicked"); });
-		fileMenu->addAction(action = new QAction("Load Shader", this));	connect(action, &QAction::triggered, [this](){ printer.LogMessage("Load Shader Clicked"); });
-		fileMenu->addAction(action = new QAction("Load Script", this));	connect(action, &QAction::triggered, [this](){ printer.LogMessage("Load Script Clicked"); });
+		fileMenu->addAction(action = new QAction("Load Shader", this));		connect(action, &QAction::triggered, [this](){ printer.LogMessage("Load Shader Clicked"); });
+		fileMenu->addAction(action = new QAction("Load Script", this));		connect(action, &QAction::triggered, [this](){ printer.LogMessage("Load Script Clicked"); });
 		fileMenu = menuBar()->addMenu("GameObject");
 		fileMenu->addAction(action = new QAction("New Game Object", this));	connect(action, &QAction::triggered, [this](){ printer.LogMessage("New Game Object Clicked"); });
 		fileMenu = fileMenu->addMenu("Add Component");
 		fileMenu->addAction(action = new QAction("Renderable Component", this));	connect(action, &QAction::triggered, [this](){ printer.LogMessage("Add Renderable Clicked"); });
-		fileMenu->addAction(action = new QAction("collider Component", this));	connect(action, &QAction::triggered, [this](){ printer.LogMessage("Add collider Clicked"); });
-		fileMenu->addAction(action = new QAction("Script Component", this));	connect(action, &QAction::triggered, [this](){ printer.LogMessage("Add Script Clicked"); });
+		fileMenu->addAction(action = new QAction("collider Component", this));		connect(action, &QAction::triggered, [this](){ printer.LogMessage("Add collider Clicked"); });
+		fileMenu->addAction(action = new QAction("Script Component", this));		connect(action, &QAction::triggered, [this](){ printer.LogMessage("Add Script Clicked"); });
 
 
 
