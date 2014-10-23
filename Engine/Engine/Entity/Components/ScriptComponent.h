@@ -15,8 +15,8 @@ class ENGINE_SHARED ScriptComponent : public Component {
 public:
 	Script * script;
 	ScriptComponent();
-	ScriptComponent(Script * script) :script(script) { }
-	ScriptComponent(int scriptId) :script(resourceManager.getFirstScript(scriptId)) { }
+	ScriptComponent(Script * script);
+	ScriptComponent(int scriptId);
 	~ScriptComponent();
 	virtual void init();
 	virtual void start();

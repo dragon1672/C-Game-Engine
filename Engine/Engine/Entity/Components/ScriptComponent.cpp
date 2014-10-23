@@ -85,6 +85,16 @@ ScriptComponent::~ScriptComponent()
 
 ScriptComponent::ScriptComponent() { }
 
+ScriptComponent::ScriptComponent(int scriptId) :script(resourceManager.getScript(scriptId))
+{
+
+}
+
+ScriptComponent::ScriptComponent(Script * script) :script(script)
+{
+
+}
+
 LuaTable ScriptComponent::getContext()
 {
 	return privates->context;
