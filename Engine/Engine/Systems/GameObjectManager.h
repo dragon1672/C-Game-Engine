@@ -12,6 +12,7 @@
 #include <Engine/Systems/Resources/Mesh.h>
 #include <ExportHeader.h>
 #include <Engine/Tools/PropertyWrapper.h>
+#include <Engine/Entity/Entity.h>
 
 #include <Engine/Tools/Camera.h>
 
@@ -24,6 +25,7 @@ private:
 	Camera cam;
 	glm::mat4 perspective;
 	void updateViewTransform();
+	bool perspectiveOutOfDate;
 
 	void passDataDownAllShaders_force();
 	void passDataDownAllShaders_try();

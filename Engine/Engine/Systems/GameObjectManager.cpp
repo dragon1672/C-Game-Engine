@@ -7,10 +7,10 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 GameObjectManager::GameObjectManager() : active(false) {
-	nearPlane.setter = [this](float& val, float&newGuy) { val = newGuy; updateViewTransform(); };
-	farPlane.setter  = [this](float& val, float&newGuy) { val = newGuy; updateViewTransform(); };
-	width.setter     = [this](int& val, int&newGuy) { val = newGuy; updateViewTransform(); };
-	height.setter    = [this](int& val, int&newGuy) { val = newGuy; updateViewTransform(); };
+	nearPlane.setter = [this](float& val, float&newGuy) { val = newGuy; perspectiveOutOfDate = true;; };
+	farPlane.setter  = [this](float& val, float&newGuy) { val = newGuy; perspectiveOutOfDate = true;; };
+	width.setter     = [this](int& val, int&newGuy) { val = newGuy; perspectiveOutOfDate = true; };
+	height.setter    = [this](int& val, int&newGuy) { val = newGuy; perspectiveOutOfDate = true; };
 	nearPlane = .1f;
 	farPlane = 100;
 }
@@ -42,6 +42,8 @@ void GameObjectManager::update() {
 	for (uint i = 0; i < entities.size(); i++) { entities[i].lateUpdate();  }
 }
 void GameObjectManager::paint() {
+	if(perspectiveOutOfDate) updateViewTransform();
+
 	glClearColor(.1f,.1f,.1f,1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -91,4 +93,5 @@ void GameObjectManager::updateViewTransform()
 {
 	const float aspectRatio = (float)width/(float)height;
 	perspective = glm::perspective(60.0f,aspectRatio,(float)nearPlane,(float)farPlane);
+	perspectiveOutOfDate = false;
 }
