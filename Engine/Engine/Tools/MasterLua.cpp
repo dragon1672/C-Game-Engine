@@ -6,6 +6,7 @@
 #include <Engine/Tools/Timer.h>
 #include <engine/Tools/Random/MyRandom.h>
 #include <Engine/Tools/Random/StringRandom.h>
+#include <Engine/Systems/InputManager.h>
 
 
 IMPLEMENT_SINGLETON(MasterLua);
@@ -35,6 +36,12 @@ MasterLua::MasterLua()
 	randStr.Set("UppercaseLetters",   lua.CreateFunction<std::string(int)>([](int len) { return Random::rString::UppercaseLetters(len); }));
 	randStr.Set("LowercaseLetters",   lua.CreateFunction<std::string(int)>([](int len) { return Random::rString::LowercaseLetters(len); }));
 	lua.GetGlobalEnvironment().Set("Random",rand);
+
+
+	auto KeyCodes = lua.CreateTable();
+	for (int i = KeyCode::A; i < KeyCode::Z; i++) KeyCodes.Set(std::string(1,(char)i),i);
+	for (int i = KeyCode::ZERO; i < KeyCode::NINE; i++) KeyCodes.Set(std::string(1,(char)i),i);
+	lua.GetGlobalEnvironment().Set("KeyCode",KeyCodes);
 }
 
 void MasterLua::init()
@@ -42,4 +49,5 @@ void MasterLua::init()
 	//register all singletons here
 	auto global = lua.GetGlobalEnvironment();
 	global.Set("Timer",(LuaUserdata<Timer>)Timer::getInstance());
+	global.Set("Input",(LuaUserdata<InputManager>)InputManager::getInstance());
 }
