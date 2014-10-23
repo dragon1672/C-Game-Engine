@@ -52,7 +52,7 @@ int Entity::getIndex(std::string toFind)
 glm::mat4 Entity::getWorldTransform()
 {
 	glm::mat4 ret;
-	if(parent != nullptr) ret = parent->localTrans.getCompleteTransform();
+	if(parent != nullptr) ret = parent->getWorldTransform();
 	return ret * localTrans.getCompleteTransform();
 }
 
