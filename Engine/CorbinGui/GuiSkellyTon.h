@@ -15,6 +15,7 @@ class ENGINE_SHARED GuiSkellyTon : public QMainWindow  {
 	QTimer myTimer;
 	BasicQGLGui * scene;
 	QVBoxLayout * layout;
+	QTreeWidget *gameObjectList;
 public:
 	GuiSkellyTon()
 		: scene(new BasicQGLGui())
@@ -60,21 +61,9 @@ public:
 
 
 
-		QTreeWidget *treeWidget = new QTreeWidget();
-		treeWidget->setColumnCount(1);
-		QList<QTreeWidgetItem *> items;
-		for (int i = 0; i < 5; ++i) {
-			QTreeWidgetItem *treeWidget2 = new QTreeWidgetItem((QTreeWidget*)0,QStringList(QString("item: %1").arg(i)));
-			QList<QTreeWidgetItem *> items2;
-			for (int i = 0; i < 5; ++i) {
-				items2.append(new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString("item: %1").arg(i))));
-			}
-			treeWidget2->addChildren(items2);
-			items.append(treeWidget2);
-		}
-		treeWidget->insertTopLevelItems(0, items);
-
-		layout->addWidget(treeWidget);
+		gameObjectList = new QTreeWidget();
+		gameObjectList->setColumnCount(1);
+		layout->addWidget(gameObjectList);
 	}
 
 	Entity * addEntity(const char * name) {
@@ -84,6 +73,26 @@ public:
 	void init() {
 		scene->init();
 		scene->startGameLoop();
+
+		QList<QTreeWidgetItem *> items;
+		auto topLevelGameObjects = scene->meGame.getTopLevelEntities();
+		for (uint i = 0; i < topLevelGameObjects.size(); ++i) {
+			items.append(getItem(topLevelGameObjects[i]));
+		}
+		gameObjectList->insertTopLevelItems(0, items);
+
+	}
+	QTreeWidgetItem* getItem(Entity * dude) {
+		QTreeWidgetItem * ret = new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString(dude->getName())));
+		if(dude->children.size() > 0)
+		{
+			QList<QTreeWidgetItem *> items;
+			for (const auto& elem : dude->children) {
+				items.append(getItem(elem));
+			}
+			ret->addChildren(items);
+		}
+		return ret;
 	}
 	void update() {
 		scene->update();
