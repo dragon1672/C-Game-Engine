@@ -163,6 +163,8 @@ void Mesh::rotate(float x, float y, float z) {
 
 void Mesh::PassDownToHardWare()
 {
+	updateTangents();
+	updateMinAndMax();
 	geo.init(&verts[0],verts.size(),&indices[0],indices.size(),GL_TRIANGLES);
 	geo.addStreamedParameters<Vert>(Vert::getAtribs(),Vert::getNumOfAtribs());
 }

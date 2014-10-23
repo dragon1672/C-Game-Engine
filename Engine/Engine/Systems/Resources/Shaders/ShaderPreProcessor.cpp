@@ -46,11 +46,7 @@ namespace {
 			"";
 		ret["#vert_main_setglpos"] = ""
 			//"[set gl_pos using matrix]"
-			//"gl_Position = MVP * vec4(pos,1); "
-			"gl_Position = vec4(1,1,1,1); "
-		//"gl_Position.x -= 0;";
-		//"gl_Position.y -= 0;";
-		//"gl_Position.z -= 0;";
+			"gl_Position = MVP * vec4(pos,1); "
 			"";
 		ret["#frag_start"]   = ""
 			//"[get outs from layouts]"
