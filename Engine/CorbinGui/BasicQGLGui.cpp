@@ -4,7 +4,7 @@
 
 
 
-void BasicGui::initializeGL()
+void BasicQGLGui::initializeGL()
 {
 	meGame.initGl();
 	meGame.start();

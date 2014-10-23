@@ -95,7 +95,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="CorbinGui\BasicGui.h" />
+    <ClInclude Include="CorbinGui\BasicQGLGui.h" />
+    <ClInclude Include="CorbinGui\Dependents\Command.h" />
+    <ClInclude Include="CorbinGui\Dependents\Commands\EditFloat.h" />
+    <ClInclude Include="CorbinGui\GuiSkellyTon.h" />
     <ClInclude Include="Engine\DebugTools\DebugMemHeader.h" />
     <ClInclude Include="Engine\DebugTools\Logging\LogData.h" />
     <ClInclude Include="Engine\DebugTools\Logging\LogManager.h" />
@@ -185,8 +188,8 @@
     <ClInclude Include="Engine\TypeDefs.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CorbinGui\BasicGui.cpp" />
-    <ClCompile Include="CorbinGui\BasicGui_mock.cpp" />
+    <ClCompile Include="CorbinGui\BasicQGLGui.cpp" />
+    <ClCompile Include="CorbinGui\BasicQGLGui_mock.cpp" />
     <ClCompile Include="Engine\DebugTools\Logging\LogManager.cpp" />
     <ClCompile Include="Engine\DebugTools\Profiling\AutoProfilerManager.cpp" />
     <ClCompile Include="Engine\Entity\Components\ScriptComponent.cpp" />

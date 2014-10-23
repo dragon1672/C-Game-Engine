@@ -7,7 +7,7 @@
 #include <Engine/Entity/Entity.h>
 
 
-class ENGINE_SHARED BasicGui : public QGLWidget {
+class ENGINE_SHARED BasicQGLGui : public QGLWidget {
 private:
 	Q_OBJECT;
 public: GameObjectManager meGame;

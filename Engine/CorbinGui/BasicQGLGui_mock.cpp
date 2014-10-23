@@ -51,7 +51,7 @@ static const uint qt_meta_data_BasicGui[] = {
        0        // eod
 };
 
-void BasicGui::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void BasicQGLGui::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     Q_UNUSED(_o);
     Q_UNUSED(_id);
@@ -59,26 +59,26 @@ void BasicGui::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
     Q_UNUSED(_a);
 }
 
-const QMetaObject BasicGui::staticMetaObject = {
+const QMetaObject BasicQGLGui::staticMetaObject = {
     { &QGLWidget::staticMetaObject, qt_meta_stringdata_BasicGui.data,
       qt_meta_data_BasicGui,  qt_static_metacall, 0, 0}
 };
 
 
-const QMetaObject *BasicGui::metaObject() const
+const QMetaObject *BasicQGLGui::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
 }
 
-void *BasicGui::qt_metacast(const char *_clname)
+void *BasicQGLGui::qt_metacast(const char *_clname)
 {
     if (!_clname) return 0;
     if (!strcmp(_clname, qt_meta_stringdata_BasicGui.stringdata))
-        return static_cast<void*>(const_cast< BasicGui*>(this));
+        return static_cast<void*>(const_cast< BasicQGLGui*>(this));
     return QGLWidget::qt_metacast(_clname);
 }
 
-int BasicGui::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int BasicQGLGui::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QGLWidget::qt_metacall(_c, _id, _a);
     if (_id < 0)
