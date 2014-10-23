@@ -31,7 +31,7 @@ private:
 	void passDataDownAllShaders_try();
 	void resetAllShaders_validPush();
 public:
-
+	std::vector<Entity *> getTopLevelEntities();
 	//add
 	Entity * AddEntity(const char * name = "GameObject");
 	PropertyGetSet<int> width;

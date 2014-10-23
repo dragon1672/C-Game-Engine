@@ -56,7 +56,7 @@ public:
 
 	T& operator[](std::size_t idx) {
 		if(idx >= size())
-			throw std::range_error(std::to_string(idx)+" is out of "+std::to_string(size())+" bounds");
+			throw std::range_error("Out Of Bounds");//std::to_string(idx)+" is out of "+std::to_string(size())+" bounds");
 		unsigned int a = idx / startSize;
 		unsigned int b = idx % startSize;
 		return arrays[a][b];

@@ -5,6 +5,8 @@
 #include <Engine/Systems/ResourceManager.h>
 #include <Engine/Systems/InputManager.h>
 #include <glm/gtc/matrix_transform.hpp>
+#include <Engine/Tools/CollectionEditing.h>
+#include <string>
 
 GameObjectManager::GameObjectManager() : active(false) {
 	nearPlane.setter = [this](float& val, float&newGuy) { val = newGuy; perspectiveOutOfDate = true;; };
@@ -94,4 +96,10 @@ void GameObjectManager::updateViewTransform()
 	const float aspectRatio = (float)width/(float)height;
 	perspective = glm::perspective(60.0f,aspectRatio,(float)nearPlane,(float)farPlane);
 	perspectiveOutOfDate = false;
+}
+
+std::vector<Entity *> GameObjectManager::getTopLevelEntities()
+{
+	//std::vector<Entity *> guys = ;
+	return Collections::Where<Entity*>(Collections::Select<Entity,Entity*>(entities,[](Entity& dude){return &dude;}),[](Entity*& a){ return a->Parent() == nullptr; });
 }
