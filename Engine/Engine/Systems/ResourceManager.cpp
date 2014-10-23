@@ -132,7 +132,7 @@ Script * ResourceManager::addScript_src (const char * name, std::string file)
 
 
 #define RESOURCE_GET_METHODS_IMP(class_name, TYPE) \
-	TYPE * class_name##::getFirst##TYPE##(int id) { return (##TYPE##*)TYPE##Objs.getFirst(id); } \
+	TYPE * class_name##::get##TYPE##(int id) { return (##TYPE##*)TYPE##Objs.getFirst(id); } \
 	TYPE * class_name##::getFirst##TYPE##(std::string name)  { return getFirst##TYPE##(name.c_str()); } \
 	TYPE * class_name##::getFirst##TYPE##(const char * name) { return (##TYPE##*)TYPE##Objs.getFirst(name); } \
 	std::vector<TYPE*> class_name##::getAll##TYPE##(std::string name) { return Collections::RICVec<##TYPE##*>(TYPE##Objs.getAll(name.c_str())); }
