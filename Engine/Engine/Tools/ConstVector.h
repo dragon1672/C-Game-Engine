@@ -13,7 +13,7 @@ private:
 		currentIndex = 0;
 	}
 public:
-	
+
 	ConstVector() { init(47); }
 	ConstVector(unsigned int startSize)    { init(startSize); }
 	void add(const std::vector<T>& toAdd)        { add(&toAdd[0],toAdd.size()); }
@@ -36,6 +36,20 @@ public:
 	T& get(int index)   { return (*this)[index]; }
 	T& ConstVector<T>::first() { return (*this)[0]; }
 	T& ConstVector<T>::last() { return (*this)[size()-1]; }
+	inline void swap(int indexA, int indexB) {
+		T& tmp = (*this)[indexA];
+		(*this)[indexA] = (*this)[indexB];
+		(*this)[indexB] = tmp;
+	}
+	inline void remove(int index) {
+		(*this)[index];
+		if((unsigned)index < size()-1) {
+			(*this)[index] = (*this)[index+1];
+			remove(index+1);
+			return;
+		}
+		pop_back();
+	}
 
 	void ConstVector<T>::pop_back() { if(currentIndex > 0) currentIndex--; }
 
@@ -43,6 +57,8 @@ public:
 	const T& operator[](std::size_t idx) const { return const_cast<T&>(*this)[idx]; };
 
 	T& operator[](std::size_t idx) {
+		if(idx >= size())
+			throw std::range_error(std::to_string(idx)+" is out of "+std::to_string(size())+" bounds");
 		unsigned int a = idx / startSize;
 		unsigned int b = idx % startSize;
 		return arrays[a][b];
