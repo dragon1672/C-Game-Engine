@@ -52,12 +52,8 @@ int Entity::getIndex(std::string toFind)
 glm::mat4 Entity::getWorldTransform()
 {
 	glm::mat4 ret;
-	Entity * current = this;
-	while(current != nullptr) {
-		ret = current->localTrans.getCompleteTransform() * ret;
-		current = current->parent;
-	}
-	return ret;
+	if(parent != nullptr) ret = parent->localTrans.getCompleteTransform();
+	return ret * localTrans.getCompleteTransform();
 }
 
 const char * Entity::getName()
@@ -65,7 +61,7 @@ const char * Entity::getName()
 	return Object::getName(); // stupid Lua
 }
 
-Entity::Entity(const char * name/*="New Game Object"*/, Entity * p /*= nullptr*/)  : parent(p) { this->name = name; }
+Entity::Entity(const char * name/*="New Game Object"*/, Entity * p /*= nullptr*/)  : parent(nullptr) { this->name = name; Parent(p); }
 
 
 MatrixInfo * Entity::getTrans() { return &localTrans; }
@@ -73,3 +69,15 @@ MatrixInfo * Entity::getTrans() { return &localTrans; }
 RenderableComponent * Entity::getRenderable() { return getComponent<RenderableComponent>(); }
 
 ScriptComponent * Entity::getScript() { return getComponent<ScriptComponent>(); }
+
+Entity * Entity::Parent()
+{
+	return parent;
+}
+
+void Entity::Parent(Entity * newGuy)
+{
+	if(parent != nullptr) parent->children.erase(this);
+	if(newGuy != nullptr) newGuy->children.emplace(this);
+	parent = newGuy;
+}

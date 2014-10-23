@@ -5,6 +5,7 @@
 #include <ExportHeader.h>
 #include <Engine/Tools/MasterLua.h>
 #include <Engine/Systems/ObjectManager.h>
+#include <unordered_set>
 
 
 #include <Engine/Tools/MatrixInfo.h>
@@ -23,8 +24,13 @@ private:
 	int getIndex(Component * toFind);
 	int getIndex(const char * toFind);
 	int getIndex(std::string toFind);
-public:
+
 	Entity * parent;
+	std::unordered_set<Entity *> children;
+public:
+	Entity * Parent();
+	void Parent(Entity * newGuy);
+
 
 	Entity(const char * name="New Game Object", Entity * p = nullptr);
 	const char * getName();
