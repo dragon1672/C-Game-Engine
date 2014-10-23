@@ -43,12 +43,10 @@ public:
 	}
 	inline void remove(int index) {
 		(*this)[index];
-		if((unsigned)index < size()-1) {
+		while((unsigned)index < size()-1) {
 			(*this)[index] = (*this)[index+1];
-			remove(index+1);
-			return;
+			index--;
 		}
-		pop_back();
 	}
 
 	void ConstVector<T>::pop_back() { if(currentIndex > 0) currentIndex--; }
