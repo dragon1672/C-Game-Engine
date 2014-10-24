@@ -9,19 +9,22 @@
 #include <string>
 #include <Engine/Tools/Printer.h>
 
-GameObjectManager::GameObjectManager() : active(false) {
+GameObjectManager::GameObjectManager() {
 	entityAddEvent.push_back([this](Entity* e){ for(uint i=0;i<entityListChange.size();i++) entityListChange[i](e); });
 	entityRemoveEvent.push_back([this](Entity* e){ for(uint i=0;i<entityListChange.size();i++) entityListChange[i](e); });
 }
 bool GameObjectManager::init() {
-	if(!active)
-		MasterLua::getInstance().init();
-		resourceManager.init();
-		for (uint i = 0; i < entities.size(); i++) {
-			entities[i].init();
-		}
-		inputManager.init();
-		return true;
+	for (uint i = 0; i < entities.size(); i++)
+	{
+		if(!entities[i].ComponentsAreReady()) throw std::invalid_argument("Some component is not init");
+	}
+	MasterLua::getInstance().init();
+	resourceManager.init();
+	for (uint i = 0; i < entities.size(); i++) {
+		entities[i].init();
+	}
+	inputManager.init();
+	return true;
 }
 bool GameObjectManager::start() {
 	Timer::getInstance().start();
@@ -95,8 +98,6 @@ void GameObjectManager::passStandardUniforms(RenderableComponent * renderable)
 
 std::vector<Entity *> GameObjectManager::getTopLevelEntities()
 {
-	//ConstVec<Entity> entities <- class of my creation bascally an array of Entities
-	//return Collections::Where<Entity*>(Collections::Select<Entity,Entity*>(entities,[](Entity& dude){return &dude;}),[](Entity*& a){ return a->Parent() == nullptr; });
 	std::vector<Entity*> tmp;
 	for (uint i = 0; i < entities.size(); i++)
 		tmp.push_back(&entities[i]);

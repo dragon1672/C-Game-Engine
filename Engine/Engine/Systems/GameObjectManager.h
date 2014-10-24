@@ -21,8 +21,6 @@ class ENGINE_SHARED GameObjectManager {
 private:
 public:ConstVector<Entity> entities;
 
-	bool active;
-
 	void passDataDownAllShaders_force();
 	void passDataDownAllShaders_try();
 	void resetAllShaders_validPush();
