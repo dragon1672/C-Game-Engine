@@ -9,6 +9,7 @@
 #include <Engine/Defines/SingletonsDefine.h>
 
 class ENGINE_SHARED Camera {
+protected:
 	static glm::vec3 UP;
 	glm::vec3 pos;
 	glm::vec3 viewDir;
@@ -17,9 +18,8 @@ class ENGINE_SHARED Camera {
 	glm::mat4 lookAtMat;
 
 	glm::vec2 oldMousePos;
-
-	DEFINE_SINGLETON(Camera);
 	void init(bool enabled);
+	DEFINE_SINGLETON(Camera);
 public:
 	bool enabled;
 	float LARGEST_MOUSE_CHANGE;// = 50;
@@ -28,8 +28,10 @@ public:
 
 	Camera();
 	Camera(bool enabled);
+	void setPos(glm::vec3& position);
 	void setPos(glm::vec3& position, glm::vec3& viewDirection);
-	void lookAt(glm::vec3& position, glm::vec3& toLookAt);
+	void lookAt(glm::vec3& toLookAt, glm::vec3& position);
+	void lookAt(glm::vec3& toLookAt);
 	
 	
 	void moveForward(float  dt = 1);

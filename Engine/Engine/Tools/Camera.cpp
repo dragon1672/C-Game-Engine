@@ -23,6 +23,9 @@ void Camera::init(bool enabled)
 	this->enabled = enabled;
 }
 
+void Camera::setPos(glm::vec3& position) {
+	setPos(position,viewDir);
+}
 void Camera::setPos(glm::vec3& position, glm::vec3& viewDirection) {
 	pos = position;
 	float lenSquared = glm::dot(viewDirection,viewDirection);
@@ -31,7 +34,10 @@ void Camera::setPos(glm::vec3& position, glm::vec3& viewDirection) {
 		: viewDirection;
 	strafeDir= glm::normalize(glm::cross(viewDir, UP));
 }
-void Camera::lookAt(glm::vec3& position, glm::vec3& toLookAt) {
+void Camera::lookAt(glm::vec3& toLookAt) {
+	lookAt(toLookAt,pos);
+}
+void Camera::lookAt(glm::vec3& toLookAt,glm::vec3& position) {
 	glm::vec3 dir = toLookAt - position;
 	setPos(position,dir);
 }
