@@ -56,31 +56,26 @@ std::string MatrixInfo::getShaderName()
 #include <cmath>
 #include <glm/gtc/matrix_transform.hpp>
 
+//currently broken, DO NOT USE
 void MatrixInfo::lookAt(glm::vec3 posToLookAt)
 {
 	auto matrix = glm::lookAt(pos,posToLookAt-pos,glm::vec3(0,1,0));
-	double thetaX, thetaY, thetaZ = 0.0;
-	thetaX = asin(matrix[3][2]);
 
-	if (thetaX < (PI / 2))
-	{
-		if (thetaX > (-PI / 2))
-		{
-			thetaZ = atan2(-matrix[1][2], matrix[2][2]);
-			thetaY = atan2(-matrix[3][1], matrix[3][3]);
-		}
-		else
-		{
-			thetaZ = -atan2(-matrix[1][3], matrix[1][1]);
-			thetaY = 0;
-		}
-	}
-	else
-	{
-		thetaZ = atan2(matrix[1][3], matrix[1][1]);
-		thetaY = 0;
-	}
-	rot.x = (float)thetaX;
-	rot.y = (float)thetaY;
-	rot.z = (float)thetaZ;
+	double x,y,z;
+	x = (atan2( matrix[2][1], matrix[2][2]));
+	y = (atan2(-matrix[2][0], sqrt(pow(matrix[2][1],2) + pow(matrix[2][2],2))));
+	z = (atan2( matrix[1][0], matrix[0][0]));
+
+	x = (atan2( matrix[1][2], matrix[2][2]));
+	y = (atan2(-matrix[0][2], sqrt(pow(matrix[1][2],2) + pow(matrix[2][2],2))));
+	z = (atan2( matrix[0][1], matrix[0][0]));
+
+	x = x * 180 / PI;
+	y = y * 180 / PI;
+	z = z * 180 / PI;
+
+	rot.x = (float)x;
+	rot.y = (float)y;
+	rot.z = (float)z;
+	throw std::logic_error("method broken");
 }
