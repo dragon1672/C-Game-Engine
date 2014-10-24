@@ -20,8 +20,15 @@ public:
 
 	void initializeGL();
 
+	void startup() {
+		meGame.start();
+	}
+
 	void startGameLoop() {
 		timer.start();
+	}
+	void stopGameLoop() {
+		timer.stop();
 	}
 
 	void update() {
