@@ -38,6 +38,7 @@ void GameObjectManager::update() {
 	inputManager.update();
 	Timer::getInstance().interval();
 	resourceManager.update();
+	auto componentTmp = entities[1].components;
 	for (uint i = 0; i < entities.size(); i++) { entities[i].earlyUpdate(); }
 	for (uint i = 0; i < entities.size(); i++) { entities[i].update();      }
 	for (uint i = 0; i < entities.size(); i++) { entities[i].lateUpdate();  }
@@ -50,8 +51,6 @@ void GameObjectManager::paint() {
 	}
 	glClearColor(.1f,.1f,.1f,1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-
 
 	for (uint i = 0; i < entities.size(); i++) {
 		RenderableComponent * renderable = entities[i].getComponent<RenderableComponent>();

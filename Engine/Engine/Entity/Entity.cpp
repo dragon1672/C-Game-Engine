@@ -47,12 +47,18 @@ int Entity::getIndex(Component * toFind) {
 	}
 	return -1;
 }
-
+int Entity::getIndexFromClassName(const char * toFind) {
+	std::string toCheck(toFind);
+	for(uint i=0;i<components.size();i++) {
+		if(toCheck.compare(std::string(typeid(*components[i]).name()))==0) return i;
+	}
+	return -1;
+}
 int Entity::getIndex(const char * toFind)
 {
 	std::string toCheck = std::string("class ").append(std::string(toFind));
 	for(uint i=0;i<components.size();i++) {
-		if(toCheck.compare(typeid(*components[i]).name())) return i;
+		if(toCheck.compare(std::string(typeid(*components[i]).name()))==0) return i;
 	}
 	return -1;
 }

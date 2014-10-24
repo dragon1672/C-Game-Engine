@@ -20,10 +20,11 @@ class ENGINE_SHARED Entity : public Object {
 private:
 	void removeComponent(int toKill);
 	template<typename T> int getIndex() {
-		return getIndex(typeid(T).name());
+		return getIndexFromClassName(typeid(T).name());
 	}
 	int getIndex(Component * toFind);
 	int getIndex(const char * toFind);
+	int getIndexFromClassName(const char * toFind);
 	int getIndex(std::string toFind);
 
 	Entity * parent;
@@ -61,7 +62,7 @@ public:
 	}
 	template<class T> T* getComponent() {
 		int index = getIndex<T>();
-		return (index <= 0) ? (T*)components[index] : nullptr;
+		return (index >= 0) ? (T*)components[index] : nullptr;
 	}
 
 	template<> RenderableComponent* addComponent();
