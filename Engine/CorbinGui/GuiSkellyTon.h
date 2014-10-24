@@ -16,10 +16,12 @@ class ENGINE_SHARED GuiSkellyTon : public QMainWindow  {
 	BasicQGLGui * scene;
 	QVBoxLayout * layout;
 	QTreeWidget *gameObjectList;
+	GameObjectManager * game;
 public:
 	GuiSkellyTon()
 		: scene(new BasicQGLGui())
 	{
+		game = &scene->meGame;
 		scene->setMinimumSize(500,500);
 		connect(&myTimer,&QTimer::timeout,[this](){ this->update(); });
 
@@ -56,7 +58,7 @@ public:
 		fileMenu->addAction(action = new QAction("New Game Object", this));	connect(action, &QAction::triggered, [this](){ printer.LogMessage("New Game Object Clicked"); });
 		fileMenu = fileMenu->addMenu("Add Component");
 		fileMenu->addAction(action = new QAction("Renderable Component", this));	connect(action, &QAction::triggered, [this](){ printer.LogMessage("Add Renderable Clicked"); });
-		fileMenu->addAction(action = new QAction("collider Component", this));		connect(action, &QAction::triggered, [this](){ printer.LogMessage("Add collider Clicked"); });
+		fileMenu->addAction(action = new QAction("Collider Component", this));		connect(action, &QAction::triggered, [this](){ printer.LogMessage("Add Collider Clicked"); });
 		fileMenu->addAction(action = new QAction("Script Component", this));		connect(action, &QAction::triggered, [this](){ printer.LogMessage("Add Script Clicked"); });
 
 
@@ -73,6 +75,7 @@ public:
 	void init() {
 		scene->init();
 		scene->startGameLoop();
+		scene->startup();
 
 		QList<QTreeWidgetItem *> items;
 		auto topLevelGameObjects = scene->meGame.getTopLevelEntities();
@@ -95,6 +98,6 @@ public:
 		return ret;
 	}
 	void update() {
-		scene->update();
+		
 	}
 };
