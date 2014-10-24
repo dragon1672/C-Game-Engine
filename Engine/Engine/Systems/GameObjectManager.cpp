@@ -9,6 +9,8 @@
 #include <string>
 
 GameObjectManager::GameObjectManager() : active(false) {
+	entityAddEvent.push_back([this](Entity* e){ for(uint i=0;i<entityListChange.size();i++) entityListChange[i](e); });
+	entityRemoveEvent.push_back([this](Entity* e){ for(uint i=0;i<entityListChange.size();i++) entityListChange[i](e); });
 	nearPlane.setter = [this](float& val, float&newGuy) { val = newGuy; perspectiveOutOfDate = true; };
 	farPlane.setter  = [this](float& val, float&newGuy) { val = newGuy; perspectiveOutOfDate = true; };
 	width.setter     = [this](int& val,   int&newGuy)   { val = newGuy; perspectiveOutOfDate = true; };
@@ -63,8 +65,10 @@ void GameObjectManager::paint() {
 Entity * GameObjectManager::AddEntity(const char * name)
 {
 	entities.add(Entity(name));
-	for (int i = 0; i < entityAddEvent.size(); i++) entityAddEvent[i](&entities.last());
-	return &entities.last();
+	Entity * ret = &entities.last();
+	ret->parentChangedEvent.push_back([this,ret](Entity* a,Entity *b){ for(uint i=0;i<entityListChange.size();i++) entityListChange[i](ret); });
+	for (uint i = 0; i < entityAddEvent.size(); i++) entityAddEvent[i](ret);
+	return ret;
 }
 
 bool GameObjectManager::initGl()
@@ -110,7 +114,9 @@ std::vector<Entity *> GameObjectManager::getTopLevelEntities()
 
 void GameObjectManager::RemoveEntity(Entity * toRemove)
 {
-	if(entities.remove(*toRemove)) {
-		for (int i = 0; i < entityRemoveEvent.size(); i++) entityRemoveEvent[i](toRemove);
+	int index = entities.find(toRemove);
+	if(index >= 0) {
+		entities.remove(index);
+		for (uint i = 0; i < entityRemoveEvent.size(); i++) entityRemoveEvent[i](toRemove);
 	}
 }

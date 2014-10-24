@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QMenu.h>
@@ -9,19 +11,21 @@
 
 #include <Engine/Tools/Printer.h>
 #include <CorbinGui/BasicQGLGui.h>
+#include <CorbinGui/Dependents/GameObjectViewer.h>
 
 class ENGINE_SHARED GuiSkellyTon : public QMainWindow  {
 	QMenu * fileMenu;
 	QTimer myTimer;
 	BasicQGLGui * scene;
 	QVBoxLayout * layout;
-	QTreeWidget *gameObjectList;
+	GameObjectViewer *gameObjectList;
 	GameObjectManager * game;
 public:
 	GuiSkellyTon()
 		: scene(new BasicQGLGui())
 	{
 		game = &scene->meGame;
+		gameObjectList = new GameObjectViewer(game);
 		scene->setMinimumSize(500,500);
 		connect(&myTimer,&QTimer::timeout,[this](){ this->update(); });
 
@@ -63,7 +67,12 @@ public:
 
 
 
-		gameObjectList = new QTreeWidget();
+		connect(gameObjectList,&QTreeWidget::currentItemChanged,[this](QTreeWidgetItem *current, QTreeWidgetItem *previous){
+			//selection changed, time to update current object
+			std::cout << "changed" << std::endl;
+			this->update();
+		});
+
 		gameObjectList->setColumnCount(1);
 		layout->addWidget(gameObjectList);
 	}
@@ -76,28 +85,8 @@ public:
 		scene->init();
 		scene->startGameLoop();
 		scene->startup();
-
-		QList<QTreeWidgetItem *> items;
-		auto topLevelGameObjects = scene->meGame.getTopLevelEntities();
-		for (uint i = 0; i < topLevelGameObjects.size(); ++i) {
-			items.append(getItem(topLevelGameObjects[i]));
-		}
-		gameObjectList->insertTopLevelItems(0, items);
-
-	}
-	QTreeWidgetItem* getItem(Entity * dude) {
-		QTreeWidgetItem * ret = new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString(dude->getName())));
-		if(dude->children.size() > 0)
-		{
-			QList<QTreeWidgetItem *> items;
-			for (const auto& elem : dude->children) {
-				items.append(getItem(elem));
-			}
-			ret->addChildren(items);
-		}
-		return ret;
 	}
 	void update() {
-		
+		//gameObjectList->update();
 	}
 };

@@ -25,11 +25,6 @@ public:
 	inline void push_back(const ConstVector<T>& toAdd)        { add(toAdd); }
 	inline void push_back(const T * toAdd, unsigned int size) { add(toAdd,size); }
 
-	inline int find(T& toMatch) {
-		for (int i = 0; i < size(); i++)
-			if((*this)[i] == toMatch) return i;
-		return -1;
-	}
 	inline int find(T * toMatch) {
 		for (uint i = 0; i < size(); i++)
 			if(&(*this)[i] == toMatch) return i;
@@ -60,12 +55,6 @@ public:
 		}
 		return true;
 	}
-	inline bool remove(T& toKill) {
-		int index = find(toKill);
-		if(index >= 0) remove(index);
-		return index >= 0;
-	}
-
 
 	inline void ConstVector<T>::pop_back() { if(currentIndex > 0) currentIndex--; }
 

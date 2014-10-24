@@ -28,6 +28,7 @@ private:
 	Entity * parent;
 public:std::unordered_set<Entity *> children;
 public:
+	std::vector<std::function<void(Entity*oldParent,Entity*newParent)>> parentChangedEvent;
 	Entity * Parent();
 	void Parent(Entity * newGuy);
 

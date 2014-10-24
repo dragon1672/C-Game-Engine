@@ -18,7 +18,7 @@
 
 class ENGINE_SHARED GameObjectManager {
 private:
-	ConstVector<Entity> entities;
+public:ConstVector<Entity> entities;
 
 	bool active;
 
@@ -33,6 +33,7 @@ private:
 public:
 	std::vector<std::function<void(Entity*)>> entityAddEvent;
 	std::vector<std::function<void(Entity*)>> entityRemoveEvent;
+	std::vector<std::function<void(Entity*)>> entityListChange;
 	std::vector<Entity *> getTopLevelEntities();
 	//add
 	Entity * AddEntity(const char * name = "GameObject");

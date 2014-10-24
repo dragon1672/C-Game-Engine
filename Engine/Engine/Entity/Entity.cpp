@@ -78,12 +78,14 @@ Entity * Entity::Parent()
 
 void Entity::Parent(Entity * newGuy)
 {
+	Entity * old = parent;
 	if(Collections::contains(getAllChildren(),newGuy)) {
 		throw std::invalid_argument("Recursive children detected");
 	}
 	if(parent != nullptr) parent->children.erase(this);
 	if(newGuy != nullptr) newGuy->children.emplace(this);
 	parent = newGuy;
+	for (uint i = 0; i < parentChangedEvent.size(); i++) parentChangedEvent[i](old,parent);
 }
 
 std::unordered_set<Entity *> Entity::getAllChildren()
