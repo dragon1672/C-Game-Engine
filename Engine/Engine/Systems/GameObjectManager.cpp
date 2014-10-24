@@ -18,7 +18,6 @@ GameObjectManager::GameObjectManager() : active(false) {
 }
 bool GameObjectManager::init() {
 	if(!active)
-		cam.lookAt(glm::vec3(0,10,10),glm::vec3(0,0,0));
 		MasterLua::getInstance().init();
 		resourceManager.init();
 		for (uint i = 0; i < entities.size(); i++) {

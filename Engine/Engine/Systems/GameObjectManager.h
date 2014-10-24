@@ -22,7 +22,6 @@ private:
 
 	bool active;
 
-	Camera cam;
 	glm::mat4 perspective;
 	void updateViewTransform();
 	bool perspectiveOutOfDate;
@@ -38,6 +37,7 @@ public:
 	PropertyGetSet<int> height;
 	PropertyGetSet<float> nearPlane;
 	PropertyGetSet<float> farPlane;
+	PropertyGetSet<Camera> cam;
 	
 
 	GameObjectManager();

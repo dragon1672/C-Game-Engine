@@ -11,7 +11,8 @@ class ENGINE_SHARED BasicQGLGui : public QGLWidget {
 private:
 	Q_OBJECT;
 public: GameObjectManager meGame;
-	QTimer timer;
+		QTimer timer;
+		QTimer junkTimer;
 public:
 	void init() {
 		meGame.init();
