@@ -47,6 +47,8 @@ public:
 		uniforms.push_back(ShaderUniformPram("MatrixInfo_Rotation",      ParameterType::PT_VEC3,  &rot[0]   ));
 	}
 
+	void lookAt(glm::vec3 posToLookAt);
+
 	glm::mat4& getTransform();// save this on in the Shader
 
 	glm::mat4&  getRotMat();

@@ -52,3 +52,35 @@ std::string MatrixInfo::getShaderName()
 {
 	return "MatrixInfo";
 }
+
+#include <cmath>
+#include <glm/gtc/matrix_transform.hpp>
+
+void MatrixInfo::lookAt(glm::vec3 posToLookAt)
+{
+	auto matrix = glm::lookAt(pos,posToLookAt-pos,glm::vec3(0,1,0));
+	double thetaX, thetaY, thetaZ = 0.0;
+	thetaX = asin(matrix[3][2]);
+
+	if (thetaX < (PI / 2))
+	{
+		if (thetaX > (-PI / 2))
+		{
+			thetaZ = atan2(-matrix[1][2], matrix[2][2]);
+			thetaY = atan2(-matrix[3][1], matrix[3][3]);
+		}
+		else
+		{
+			thetaZ = -atan2(-matrix[1][3], matrix[1][1]);
+			thetaY = 0;
+		}
+	}
+	else
+	{
+		thetaZ = atan2(matrix[1][3], matrix[1][1]);
+		thetaY = 0;
+	}
+	rot.x = (float)thetaX;
+	rot.y = (float)thetaY;
+	rot.z = (float)thetaZ;
+}
