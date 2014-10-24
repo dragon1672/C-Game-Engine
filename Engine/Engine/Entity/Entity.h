@@ -12,8 +12,9 @@
 #include <Engine/Entity/Components/ScriptComponent.h>
 
 class RenderableComponent;
-
+class GameObjectManager;
 class Component;
+class CameraComponent;
 
 class ENGINE_SHARED Entity : public Object {
 private:
@@ -26,6 +27,7 @@ private:
 	int getIndex(std::string toFind);
 
 	Entity * parent;
+	GameObjectManager * manager;
 	Component* addComponent(Component * toAdd);
 	std::unordered_set<Entity *> children;
 public:
@@ -37,7 +39,7 @@ public:
 	std::unordered_set<Entity *> getAllChildren();
 
 
-	Entity(const char * name="New Game Object", Entity * p = nullptr);
+	Entity(const char * name="New Game Object", GameObjectManager * manager = nullptr, Entity * p = nullptr);
 	const char * getName();
 	virtual ~Entity(){}
 
@@ -63,6 +65,7 @@ public:
 	}
 
 	template<> RenderableComponent* addComponent();
+	template<> CameraComponent* addComponent();
 	void removeComponent(Component * toKill);
 	void init();
 	void start(); // called after openGL, every time scene loads, before update

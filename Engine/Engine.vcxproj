@@ -111,6 +111,7 @@
     <ClInclude Include="Engine\Defines\LuaVersion.h" />
     <ClInclude Include="Engine\Defines\SingletonsDefine.h" />
     <ClInclude Include="Engine\Defines\VecGetSet.h" />
+    <ClInclude Include="Engine\Entity\Components\CameraComponent.h" />
     <ClInclude Include="Engine\Entity\Components\RenderableComponent.h" />
     <ClInclude Include="Engine\Entity\Components\ScriptComponent.h" />
     <ClInclude Include="Engine\IO\FileIO.h" />
@@ -134,6 +135,7 @@
     <ClInclude Include="Engine\Physics\Particles\ParticleWorld.h" />
     <ClInclude Include="Engine\Physics\RidgidBody\RidgidBody.h" />
     <ClInclude Include="Engine\Physics\RidgidBody\RigidSpringForce.h" />
+    <ClInclude Include="Engine\Systems\CameraManager.h" />
     <ClInclude Include="Engine\Systems\InputManager.h" />
     <ClInclude Include="Engine\Systems\Resources\Material.h" />
     <ClInclude Include="Engine\Systems\Resources\Shaders\DefaultShaders.h" />
@@ -193,11 +195,13 @@
     <ClCompile Include="CorbinGui\BasicQGLGui_mock.cpp" />
     <ClCompile Include="Engine\DebugTools\Logging\LogManager.cpp" />
     <ClCompile Include="Engine\DebugTools\Profiling\AutoProfilerManager.cpp" />
+    <ClCompile Include="Engine\Entity\Components\CameraComponent.cpp" />
     <ClCompile Include="Engine\Entity\Components\ScriptComponent.cpp" />
     <ClCompile Include="Engine\IO\FileIO.cpp" />
     <ClCompile Include="Engine\IO\MeshLoader.cpp" />
     <ClCompile Include="Engine\IO\QImageIO.cpp" />
     <ClCompile Include="Engine\Physics\Particles\Particle.cpp" />
+    <ClCompile Include="Engine\Systems\CameraManager.cpp" />
     <ClCompile Include="Engine\Systems\InputManager.cpp" />
     <ClCompile Include="Engine\Systems\Object.cpp" />
     <ClCompile Include="Engine\Systems\Resources\Material.cpp" />

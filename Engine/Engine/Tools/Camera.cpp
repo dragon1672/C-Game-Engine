@@ -72,7 +72,7 @@ void Camera::rotate(glm::vec2& change) {
 
 void Camera::updateMousePos(const glm::vec2& newMousePos) {
 	glm::vec2 diff = newMousePos - oldMousePos;
-	if(glm::length(diff) < LARGEST_MOUSE_CHANGE)
+	if(glm::dot(diff,diff) < LARGEST_MOUSE_CHANGE*LARGEST_MOUSE_CHANGE)
 	{
 		glm::vec2 result = MOUSE_SPEED_SCALE*diff;
 		rotate(result);

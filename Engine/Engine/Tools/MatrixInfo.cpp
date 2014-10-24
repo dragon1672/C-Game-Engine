@@ -55,27 +55,13 @@ std::string MatrixInfo::getShaderName()
 
 #include <cmath>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/quaternion.hpp>
 
-//currently broken, DO NOT USE
 void MatrixInfo::lookAt(glm::vec3 posToLookAt)
 {
-	auto matrix = glm::lookAt(pos,posToLookAt-pos,glm::vec3(0,1,0));
+	auto lookatMat = glm::lookAt(pos,posToLookAt,glm::vec3(0,1,0));
+	pos = glm::vec3(lookatMat * glm::vec4(0,0,0,1));
+	auto quat = glm::toQuat( glm::mat3(lookatMat) );
+	rot = glm::eulerAngles(quat);
 
-	double x,y,z;
-	x = (atan2( matrix[2][1], matrix[2][2]));
-	y = (atan2(-matrix[2][0], sqrt(pow(matrix[2][1],2) + pow(matrix[2][2],2))));
-	z = (atan2( matrix[1][0], matrix[0][0]));
-
-	x = (atan2( matrix[1][2], matrix[2][2]));
-	y = (atan2(-matrix[0][2], sqrt(pow(matrix[1][2],2) + pow(matrix[2][2],2))));
-	z = (atan2( matrix[0][1], matrix[0][0]));
-
-	x = x * 180 / PI;
-	y = y * 180 / PI;
-	z = z * 180 / PI;
-
-	rot.x = (float)x;
-	rot.y = (float)y;
-	rot.z = (float)z;
-	throw std::logic_error("method broken");
 }

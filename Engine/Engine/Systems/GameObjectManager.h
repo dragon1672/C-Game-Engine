@@ -13,19 +13,15 @@
 #include <ExportHeader.h>
 #include <Engine/Tools/PropertyWrapper.h>
 #include <Engine/Entity/Entity.h>
+#include <Engine/Systems/ObjectManager.h>
 
-#include <Engine/Tools/Camera.h>
+#include <Engine/Systems/CameraManager.h>
 
 class ENGINE_SHARED GameObjectManager {
 private:
 public:ConstVector<Entity> entities;
 
 	bool active;
-
-	glm::mat4 perspective;
-	void updateViewTransform();
-	bool perspectiveOutOfDate;
-
 
 	void passDataDownAllShaders_force();
 	void passDataDownAllShaders_try();
@@ -38,12 +34,8 @@ public:
 	//add
 	Entity * AddEntity(const char * name = "GameObject");
 	void RemoveEntity(Entity * toRemove);
-	PropertyGetSet<int> width;
-	PropertyGetSet<int> height;
-	PropertyGetSet<float> nearPlane;
-	PropertyGetSet<float> farPlane;
-	Camera cam;
-	
+	int width;
+	int height;
 
 	GameObjectManager();
 	bool init(); // called before openGL, setup cars

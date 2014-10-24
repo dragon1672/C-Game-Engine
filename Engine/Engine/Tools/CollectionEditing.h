@@ -4,6 +4,7 @@
 #include <functional>
 #include <unordered_set>
 #include <Engine/Tools/ConstVector.h>
+#include <Engine/TypeDefs.h>
 //included here since templates don't export well
 
 namespace Collections {

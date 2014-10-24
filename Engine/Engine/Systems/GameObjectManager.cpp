@@ -7,16 +7,11 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <Engine/Tools/CollectionEditing.h>
 #include <string>
+#include <Engine/Tools/Printer.h>
 
 GameObjectManager::GameObjectManager() : active(false) {
 	entityAddEvent.push_back([this](Entity* e){ for(uint i=0;i<entityListChange.size();i++) entityListChange[i](e); });
 	entityRemoveEvent.push_back([this](Entity* e){ for(uint i=0;i<entityListChange.size();i++) entityListChange[i](e); });
-	nearPlane.setter = [this](float& val, float&newGuy) { val = newGuy; perspectiveOutOfDate = true; };
-	farPlane.setter  = [this](float& val, float&newGuy) { val = newGuy; perspectiveOutOfDate = true; };
-	width.setter     = [this](int& val,   int&newGuy)   { val = newGuy; perspectiveOutOfDate = true; };
-	height.setter    = [this](int& val,   int&newGuy)   { val = newGuy; perspectiveOutOfDate = true; };
-	nearPlane = .1f;
-	farPlane = 100;
 }
 bool GameObjectManager::init() {
 	if(!active)
@@ -45,8 +40,11 @@ void GameObjectManager::update() {
 	for (uint i = 0; i < entities.size(); i++) { entities[i].lateUpdate();  }
 }
 void GameObjectManager::paint() {
-	if(perspectiveOutOfDate) updateViewTransform();
-
+	CameraComponent * current = camManager.ActiveCam();
+	if(current == nullptr) {
+		printer.LogError("No camera in scene");
+		return;
+	}
 	glClearColor(.1f,.1f,.1f,1);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -85,21 +83,14 @@ void GameObjectManager::passStandardUniforms(RenderableComponent * renderable)
 	ShaderProgram * prog = renderable->howShader;
 	prog->useProgram();
 	auto model2World = renderable->Parent()->getWorldTransform();
-	auto world2cam = cam.getWorld2View();
+	auto world2cam = camManager.ActiveCam()->getWorld2View();
 	auto model2cam = world2cam * model2World;
-	auto MVP = perspective * model2cam;
+	auto MVP = camManager.ActiveCam()->getPerspective() * model2cam;
 	prog->passUniform("model2WorldTransform",model2World);
 	prog->passUniform("world2Cam",world2cam);
 	prog->passUniform("model2Cam",model2cam);
-	prog->passUniform("perspective",perspective);
+	prog->passUniform("perspective",camManager.ActiveCam()->getPerspective());
 	prog->passUniform("MVP",MVP);
-}
-
-void GameObjectManager::updateViewTransform()
-{
-	const float aspectRatio = (float)width/(float)height;
-	perspective = glm::perspective(60.0f,aspectRatio,(float)nearPlane,(float)farPlane);
-	perspectiveOutOfDate = false;
 }
 
 std::vector<Entity *> GameObjectManager::getTopLevelEntities()
@@ -117,6 +108,8 @@ void GameObjectManager::RemoveEntity(Entity * toRemove)
 	int index = entities.find(toRemove);
 	if(index >= 0) {
 		entities.remove(index);
+		for (auto i : toRemove->Children())
+			RemoveEntity(i);
 		for (uint i = 0; i < entityRemoveEvent.size(); i++) entityRemoveEvent[i](toRemove);
 	}
 }

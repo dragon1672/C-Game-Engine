@@ -4,6 +4,7 @@
 #include <typeinfo.h>
 #include <Engine/Tools/CollectionEditing.h>
 #include <Engine/Entity/Components/RenderableComponent.h>
+#include <Engine/Systems/CameraManager.h>
 
 void Entity::removeComponent(int toKill) {
 	if(toKill >= 0 && toKill < (int)components.size()) {
@@ -22,6 +23,11 @@ template<>
 RenderableComponent* Entity::addComponent()
 {
 	return (RenderableComponent*)addComponent(new RenderableComponent());
+}
+template<>
+CameraComponent* Entity::addComponent()
+{
+	return (CameraComponent*)addComponent(camManager.getNewCam("newCam"));
 }
 
 void Entity::removeComponent(Component * toKill) {
@@ -70,7 +76,7 @@ const char * Entity::getName()
 	return Object::getName(); // stupid Lua
 }
 
-Entity::Entity(const char * name/*="New Game Object"*/, Entity * p /*= nullptr*/)  : parent(nullptr) { this->name = name; Parent(p); }
+Entity::Entity(const char * name/*="New Game Object"*/, GameObjectManager * manager, Entity * p /*= nullptr*/)  : manager(manager), parent(nullptr) { this->name = name; Parent(p); }
 
 
 MatrixInfo * Entity::getTrans() { return &localTrans; }

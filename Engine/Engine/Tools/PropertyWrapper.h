@@ -1,6 +1,7 @@
 #pragma once
 
 #include <ExportHeader.h>
+#include <functional>
 
 template <typename T>
 class ENGINE_SHARED PropertyGet {
