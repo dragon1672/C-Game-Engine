@@ -26,13 +26,17 @@ private:
 	void updateViewTransform();
 	bool perspectiveOutOfDate;
 
+
 	void passDataDownAllShaders_force();
 	void passDataDownAllShaders_try();
 	void resetAllShaders_validPush();
 public:
+	std::vector<std::function<void(Entity*)>> entityAddEvent;
+	std::vector<std::function<void(Entity*)>> entityRemoveEvent;
 	std::vector<Entity *> getTopLevelEntities();
 	//add
 	Entity * AddEntity(const char * name = "GameObject");
+	void RemoveEntity(Entity * toRemove);
 	PropertyGetSet<int> width;
 	PropertyGetSet<int> height;
 	PropertyGetSet<float> nearPlane;

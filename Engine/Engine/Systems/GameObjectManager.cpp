@@ -63,6 +63,7 @@ void GameObjectManager::paint() {
 Entity * GameObjectManager::AddEntity(const char * name)
 {
 	entities.add(Entity(name));
+	for (int i = 0; i < entityAddEvent.size(); i++) entityAddEvent[i](&entities.last());
 	return &entities.last();
 }
 
@@ -105,4 +106,11 @@ std::vector<Entity *> GameObjectManager::getTopLevelEntities()
 	for (uint i = 0; i < entities.size(); i++)
 		tmp.push_back(&entities[i]);
 	return Collections::Where<Entity*>(tmp,[](Entity*& a){ return a->Parent() == nullptr; });
+}
+
+void GameObjectManager::RemoveEntity(Entity * toRemove)
+{
+	if(entities.remove(*toRemove)) {
+		for (int i = 0; i < entityRemoveEvent.size(); i++) entityRemoveEvent[i](toRemove);
+	}
 }
