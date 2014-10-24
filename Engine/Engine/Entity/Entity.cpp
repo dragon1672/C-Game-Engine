@@ -3,6 +3,7 @@
 #include <Engine\TypeDefs.h>
 #include <typeinfo.h>
 #include <Engine/Tools/CollectionEditing.h>
+#include <Engine/Entity/Components/RenderableComponent.h>
 
 void Entity::removeComponent(int toKill) {
 	if(toKill >= 0 && toKill < (int)components.size()) {
@@ -16,6 +17,13 @@ Component* Entity::addComponent(Component * toAdd) {
 	components.push_back(toAdd);
 	return toAdd;
 }
+
+template<>
+RenderableComponent* Entity::addComponent()
+{
+	return (RenderableComponent*)addComponent(new RenderableComponent());
+}
+
 void Entity::removeComponent(Component * toKill) {
 	removeComponent(getIndex(toKill)); 
 }
@@ -95,4 +103,9 @@ std::unordered_set<Entity *> Entity::getAllChildren()
 		for (auto toAdd : var->getAllChildren())
 			ret.emplace(toAdd);
 	return ret;
+}
+
+std::unordered_set<Entity *> Entity::Children()
+{
+	return children;
 }

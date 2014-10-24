@@ -26,8 +26,10 @@ private:
 	int getIndex(std::string toFind);
 
 	Entity * parent;
-public:std::unordered_set<Entity *> children;
+	Component* addComponent(Component * toAdd);
+	std::unordered_set<Entity *> children;
 public:
+	std::unordered_set<Entity *> Children();
 	std::vector<std::function<void(Entity*oldParent,Entity*newParent)>> parentChangedEvent;
 	Entity * Parent();
 	void Parent(Entity * newGuy);
@@ -48,11 +50,6 @@ public:
 	ScriptComponent * getScript();
 
 	template<typename T> T* addComponent() { return (T*)addComponent(new T()); }
-	template<typename T> T* addComponent(const char * data) { return (T*)addComponent(new T(data)); }
-	template<typename T> T* addComponent(Resource * data)   { return (T*)addComponent(new T(data)); }
-	template<typename T> T* addComponent(int resouceId)     { return (T*)addComponent(new T(resouceId)); }
-	template<typename T> T* addComponent(std::string  data) { return (T*)addComponent(new T(data)); }
-	Component* addComponent(Component * toAdd);
 	template<typename T> void removeComponent() {
 		removeComponent(getIndex<T>()); 
 	}
@@ -64,6 +61,8 @@ public:
 		int index = getIndex<T>();
 		return (index <= 0) ? (T*)components[index] : nullptr;
 	}
+
+	template<> RenderableComponent* addComponent();
 	void removeComponent(Component * toKill);
 	void init();
 	void start(); // called after openGL, every time scene loads, before update
