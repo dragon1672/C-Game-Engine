@@ -50,7 +50,7 @@ ShaderProgram * ResourceManager::addShader_src (const char * name, std::string v
 ShaderProgram * ResourceManager::addShader_src (const char * name, const char * vert, const char * frag)
 {
 	shaders.push_back(ShaderProgram(name));
-	ShaderProgramObjs.Register(geos.last());
+	ShaderProgramObjs.Register(shaders.last());
 	shaders.last().buildBasicProgram(vert,frag);
 	return &shaders.last();
 }

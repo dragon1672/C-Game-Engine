@@ -5,6 +5,7 @@
 #include <Engine\Systems\Resources\ShaderProgram.h>
 #include <Engine\Systems\Resources\Shaders\ShaderObject.h>
 #include <Engine\Systems\Resources\Mesh.h>
+#include <Engine\Systems\Resources\Material.h>
 #include <ExportHeader.h>
 
 class ENGINE_SHARED RenderableComponent : public Component {
@@ -14,15 +15,10 @@ private:
 public:
 	Mesh * whatGeo;
 	ShaderProgram * howShader;
+	Material material;
 	bool visable;
 
-	RenderableComponent(Mesh * geo = nullptr, ShaderProgram * shader = nullptr, ShaderUniformPram * uniforms = nullptr, int numOfUniforms = 0)
-		: transformShaderName(nullptr), whatGeo(geo), howShader(shader), visable(true) {
-			for (int i = 0; i < numOfUniforms; i++)
-			{
-				uniformParameters.push_back(uniforms[i]);
-			}
-	}
+	RenderableComponent(Mesh * geo = nullptr, ShaderProgram * shader = nullptr, ShaderUniformPram * uniforms = nullptr, int numOfUniforms = 0);
 	
 	//convenience overloads
 	void addUniformParameter(const char * name, const bool& value);

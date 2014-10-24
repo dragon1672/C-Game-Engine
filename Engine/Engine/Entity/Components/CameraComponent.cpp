@@ -30,3 +30,19 @@ CameraComponent::CameraComponent(const char * name /*= nullptr*/)
 	nearPlane = .1f;
 	farPlane  = 100;
 }
+
+bool CameraComponent::isActive()
+{
+	return camManager.ActiveCam() == this;
+}
+
+void CameraComponent::setActive()
+{
+	camManager.ActiveCam(this);
+}
+
+bool CameraComponent::isValid()
+{
+	//I WAS BORN READY!!!
+	return true;
+}

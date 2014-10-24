@@ -7,8 +7,44 @@
 void BasicQGLGui::initializeGL()
 {
 	meGame.initGl();
-	junkTimer.setInterval(1000);
 	connect(&timer,&QTimer::timeout,[this](){ this->update(); });
-	connect(&junkTimer,&QTimer::timeout,[](){ LUA_INSTANCE.CollectGarbage(); });
 	
+}
+
+void BasicQGLGui::init()
+{
+	meGame.init();
+}
+
+void BasicQGLGui::startup()
+{
+	meGame.start();
+}
+
+void BasicQGLGui::startGameLoop()
+{
+	timer.start();
+}
+
+void BasicQGLGui::stopGameLoop()
+{
+	timer.stop();
+}
+
+void BasicQGLGui::update()
+{
+	meGame.update();
+	repaint();
+}
+
+void BasicQGLGui::resizeGL(int w, int h)
+{
+	glViewport(0, 0, w, h);
+	meGame.width = w;
+	meGame.height = h;
+}
+
+void BasicQGLGui::paintGL()
+{
+	meGame.paint();
 }

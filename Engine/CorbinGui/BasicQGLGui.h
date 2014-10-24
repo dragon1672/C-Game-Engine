@@ -10,42 +10,22 @@
 class ENGINE_SHARED BasicQGLGui : public QGLWidget {
 private:
 	Q_OBJECT;
-public: GameObjectManager meGame;
-		QTimer timer;
-		QTimer junkTimer;
+	QTimer timer;
 public:
-	void init() {
-		meGame.init();
-	}
+	GameObjectManager meGame;
+	void init();
 
 	void initializeGL();
 
-	void startup() {
-		meGame.start();
-	}
+	void startup();
 
-	void startGameLoop() {
-		timer.start();
-	}
-	void stopGameLoop() {
-		timer.stop();
-	}
+	void startGameLoop();
+	void stopGameLoop();
 
-	void update() {
-		meGame.update();
-		repaint();
-	}
+	void update();
 
-	void resizeGL(int w, int h)
-	{
-		glViewport(0, 0, w, h);
-		meGame.width = w;
-		meGame.height = h;
-	}
+	void resizeGL(int w, int h);
 
-	void paintGL()
-	{
-		meGame.paint();
-	}
+	void paintGL();
 
 };
