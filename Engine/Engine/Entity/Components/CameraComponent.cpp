@@ -1,5 +1,6 @@
 #include "CameraComponent.h"
 #include <Engine/Entity/Entity.h>
+#include <Engine/Systems/CameraManager.h>
 
 
 

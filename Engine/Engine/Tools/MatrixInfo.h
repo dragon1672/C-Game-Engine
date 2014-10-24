@@ -18,7 +18,7 @@
 	inline void set##Uppercase_name##(##set_set_type##& toSet) { name = toSet; name##Changed = true; }
 
 
-class ENGINE_SHARED MatrixInfo : public Component, public ShaderObject {
+class ENGINE_SHARED MatrixInfo : public Component {
 private:
 	glm::mat4 transform;
 	glm::mat4 rotationMat;
@@ -74,5 +74,7 @@ public:
 	virtual int numOfUniforms();
 
 	virtual std::string getShaderName();
+
+	virtual bool isValid();
 
 };

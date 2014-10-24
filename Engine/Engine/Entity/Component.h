@@ -17,4 +17,5 @@ public:
 	virtual void earlyUpdate() {}
 	virtual void update()      {}
 	virtual void lateUpdate()  {}
+	virtual bool isValid() = 0;
 };

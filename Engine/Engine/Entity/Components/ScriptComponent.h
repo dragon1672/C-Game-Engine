@@ -25,4 +25,7 @@ public:
 	virtual void lateUpdate();
 	LuaTable getContext();
 	operator LuaUserdata<ScriptComponent>();
+
+	virtual bool isValid();
+
 };

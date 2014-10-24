@@ -31,6 +31,7 @@ public:
 	void addUniformParameter(const char * name, const glm::vec4& value);
 	void addUniformParameter(const char * name, const glm::mat3& value);
 	void addUniformParameter(const char * name, const glm::mat4& value);
+	void addUniformParameter(ShaderObject&  obj);
 	void addUniformParameter(ShaderObject * obj);
 	void addUniformParameter(ShaderUniformPram& obj);
 
@@ -42,4 +43,7 @@ public:
 	
 
 	void drawWarmup();
+
+	virtual bool isValid();
+
 };

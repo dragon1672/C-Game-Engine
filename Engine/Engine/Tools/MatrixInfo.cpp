@@ -65,3 +65,9 @@ void MatrixInfo::lookAt(glm::vec3 posToLookAt)
 	rot = glm::eulerAngles(quat);
 
 }
+
+bool MatrixInfo::isValid()
+{
+	//I WAS BORN READY!!!!
+	return true;
+}

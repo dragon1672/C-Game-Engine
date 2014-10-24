@@ -28,10 +28,29 @@ void RenderableComponent::addUniformParameter(ShaderUniformPram& obj)
 	uniformParameters.push_back(obj);
 }
 
+void RenderableComponent::addUniformParameter(ShaderObject& obj)
+{
+	addUniformParameter(&obj);
+}
+
 void RenderableComponent::drawWarmup() {
 	howShader->useProgram();
 
 	for (uint i = 0; i < uniformParameters.size(); i++) {
 		howShader->passUniform(uniformParameters[i]);
 	}
+}
+
+bool RenderableComponent::isValid()
+{
+	return this->howShader != nullptr && this->whatGeo != nullptr;
+}
+
+RenderableComponent::RenderableComponent(Mesh * geo /*= nullptr*/, ShaderProgram * shader /*= nullptr*/, ShaderUniformPram * uniforms /*= nullptr*/, int numOfUniforms /*= 0*/) : transformShaderName(nullptr), whatGeo(geo), howShader(shader), visable(true)
+{
+	for (int i = 0; i < numOfUniforms; i++)
+	{
+		uniformParameters.push_back(uniforms[i]);
+	}
+	addUniformParameter(material);
 }

@@ -83,7 +83,7 @@ ScriptComponent::~ScriptComponent()
 	delete privates;
 }
 
-ScriptComponent::ScriptComponent() { }
+ScriptComponent::ScriptComponent() :script(nullptr) { }
 
 ScriptComponent::ScriptComponent(int scriptId) :script(resourceManager.getScript(scriptId))
 {
@@ -105,4 +105,9 @@ ScriptComponent::operator LuaUserdata<ScriptComponent>()
 	MAKE_LUA_INSTANCE_RET(ScriptComponent,ret);
 	//ret.Bind("context",&ScriptComponent::getContext);
 	return ret;
+}
+
+bool ScriptComponent::isValid()
+{
+	return script != nullptr;
 }
