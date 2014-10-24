@@ -34,8 +34,6 @@ void Entity::removeComponent(Component * toKill) {
 	removeComponent(getIndex(toKill)); 
 }
 void Entity::init()        {
-	auto& t = components.at(0);
-	(void)t;
 	for(uint i=0; i<components.size(); i++) components[i]->init();
 }
 void Entity::start()       { for(uint i=0; i<components.size(); i++) components[i]->start();       }
@@ -114,4 +112,13 @@ std::unordered_set<Entity *> Entity::getAllChildren()
 std::unordered_set<Entity *> Entity::Children()
 {
 	return children;
+}
+
+bool Entity::ComponentsAreReady()
+{
+	for (uint i = 0; i < components.size(); i++)
+	{
+		if(!components[i]->isValid()) return false;
+	}
+	return true;
 }

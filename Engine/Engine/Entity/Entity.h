@@ -73,6 +73,8 @@ public:
 	void update();
 	void lateUpdate();
 
+	bool ComponentsAreReady();
+
 	GET_LUA_VER_PTR(Entity,parent);
 	LUA_GET_FUN_PTR(MatrixInfo,getTrans);
 	LUA_GET_FUN_PTR(ScriptComponent,getScript);
