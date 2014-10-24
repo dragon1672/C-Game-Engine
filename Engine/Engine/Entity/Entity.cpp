@@ -2,6 +2,7 @@
 #include "Component.h"
 #include <Engine\TypeDefs.h>
 #include <typeinfo.h>
+#include <Engine/Tools/CollectionEditing.h>
 
 void Entity::removeComponent(int toKill) {
 	if(toKill >= 0 && toKill < (int)components.size()) {
@@ -77,7 +78,19 @@ Entity * Entity::Parent()
 
 void Entity::Parent(Entity * newGuy)
 {
+	if(Collections::contains(getAllChildren(),newGuy)) {
+		throw std::invalid_argument("Recursive children detected");
+	}
 	if(parent != nullptr) parent->children.erase(this);
 	if(newGuy != nullptr) newGuy->children.emplace(this);
 	parent = newGuy;
+}
+
+std::unordered_set<Entity *> Entity::getAllChildren()
+{
+	std::unordered_set<Entity *> ret = children;
+	for (auto var : children)
+		for (auto toAdd : var->getAllChildren())
+			ret.emplace(toAdd);
+	return ret;
 }

@@ -31,6 +31,17 @@ public:
 	Entity * Parent();
 	void Parent(Entity * newGuy);
 
+	std::unordered_set<Entity *> getAllChildren() {
+		std::unordered_set<Entity *> ret = children;
+		for (auto var : children)
+		{
+			auto tmp = var->getAllChildren();
+			for (auto toAdd : tmp) ret.emplace(toAdd);
+		}
+		return ret;
+
+	}
+
 
 	Entity(const char * name="New Game Object", Entity * p = nullptr);
 	const char * getName();
