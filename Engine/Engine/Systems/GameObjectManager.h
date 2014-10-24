@@ -37,7 +37,7 @@ public:
 	PropertyGetSet<int> height;
 	PropertyGetSet<float> nearPlane;
 	PropertyGetSet<float> farPlane;
-	PropertyGetSet<Camera> cam;
+	Camera cam;
 	
 
 	GameObjectManager();
