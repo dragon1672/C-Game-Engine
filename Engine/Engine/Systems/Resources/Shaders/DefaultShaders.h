@@ -2,6 +2,10 @@
 
 #include <ExportHeader.h>
 
+//#compnent_Material
+//TODO: make texture shader
+//get lights into the shader :/
+
 namespace DefaultShaders {
 	namespace VertexShader {
 		//inline to display code for easy understanding
