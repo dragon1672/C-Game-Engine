@@ -16,16 +16,27 @@ public:
 
 	ConstVector() { init(47); }
 	ConstVector(unsigned int startSize)    { init(startSize); }
-	void add(const std::vector<T>& toAdd)        { add(&toAdd[0],toAdd.size()); }
-	void add(const ConstVector<T>& toAdd)        { for (int i = 0; i < toAdd.size(); i++) add(toAdd[i]); }
-	void add(const T * toAdd, unsigned int size) { for (int i = 0; i < size;         i++) add(toAdd[i]); }
+	inline void add(const std::vector<T>& toAdd)        { add(&toAdd[0],toAdd.size()); }
+	inline void add(const ConstVector<T>& toAdd)        { for (int i = 0; i < toAdd.size(); i++) add(toAdd[i]); }
+	inline void add(const T * toAdd, unsigned int size) { for (int i = 0; i < size;         i++) add(toAdd[i]); }
 
-	void push_back(const T& toAdd)               { add(toAdd); }
-	void push_back(const std::vector<T>& toAdd)        { add(toAdd); }
-	void push_back(const ConstVector<T>& toAdd)        { add(toAdd); }
-	void push_back(const T * toAdd, unsigned int size) { add(toAdd,size); }
+	inline void push_back(const T& toAdd)				      { add(toAdd); }
+	inline void push_back(const std::vector<T>& toAdd)        { add(toAdd); }
+	inline void push_back(const ConstVector<T>& toAdd)        { add(toAdd); }
+	inline void push_back(const T * toAdd, unsigned int size) { add(toAdd,size); }
 
-	void add(const T& toAdd) {
+	inline int find(T& toMatch) {
+		for (int i = 0; i < size(); i++)
+			if((*this)[i] == toMatch) return i;
+		return -1;
+	}
+	inline int find(T * toMatch) {
+		for (int i = 0; i < size(); i++)
+			if(&(*this)[i] == toMatch) return i;
+		return -1;
+	}
+
+	inline void add(const T& toAdd) {
 		unsigned int a = currentIndex / startSize;
 		unsigned int b = currentIndex % startSize;
 		while(!(a < arrays.size() && b < startSize))
@@ -33,9 +44,9 @@ public:
 		arrays[a][b] = toAdd;
 		currentIndex++;
 	}
-	T& get(int index)   { return (*this)[index]; }
-	T& ConstVector<T>::first() { return (*this)[0]; }
-	T& ConstVector<T>::last() { return (*this)[size()-1]; }
+	inline T& get(int index)   { return (*this)[index]; }
+	inline T& ConstVector<T>::first() { return (*this)[0]; }
+	inline T& ConstVector<T>::last() { return (*this)[size()-1]; }
 	inline void swap(int indexA, int indexB) {
 		T& tmp = (*this)[indexA];
 		(*this)[indexA] = (*this)[indexB];
@@ -49,12 +60,13 @@ public:
 		}
 	}
 
-	void ConstVector<T>::pop_back() { if(currentIndex > 0) currentIndex--; }
 
-	unsigned int size() { return currentIndex;   }
-	const T& operator[](std::size_t idx) const { return const_cast<T&>(*this)[idx]; };
+	inline void ConstVector<T>::pop_back() { if(currentIndex > 0) currentIndex--; }
 
-	T& operator[](std::size_t idx) {
+	inline unsigned int size() { return currentIndex;   }
+	inline const T& operator[](std::size_t idx) const { return const_cast<T&>(*this)[idx]; };
+
+	inline T& operator[](std::size_t idx) {
 		if(idx >= size())
 			throw std::range_error("Out Of Bounds");//std::to_string(idx)+" is out of "+std::to_string(size())+" bounds");
 		unsigned int a = idx / startSize;
