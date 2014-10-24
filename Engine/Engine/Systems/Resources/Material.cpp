@@ -8,7 +8,7 @@ ShaderUniformPram * Material::getUniforms()
 }
 int Material::numOfUniforms()
 {
-	return uniforms.size();
+	return sizeof(uniforms)/sizeof(*uniforms);
 }
 std::string Material::getShaderName()
 {
