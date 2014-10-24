@@ -92,6 +92,7 @@
     <ClInclude Include="CorbinGui\Dependents\Commands\EditFloat.h" />
     <ClInclude Include="CorbinGui\BasicQGLGui.h" />
     <ClInclude Include="CorbinGui\GuiSkellyTon.h" />
+    <ClInclude Include="CorbinGui\Dependents\GameObjectViewer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
