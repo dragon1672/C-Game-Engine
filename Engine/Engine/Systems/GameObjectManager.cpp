@@ -23,11 +23,11 @@ bool GameObjectManager::init() {
 		for (uint i = 0; i < entities.size(); i++) {
 			entities[i].init();
 		}
-		Timer::getInstance().start();
 		inputManager.init();
 		return true;
 }
 bool GameObjectManager::start() {
+	Timer::getInstance().start();
 	for (uint i = 0; i < entities.size(); i++) { entities[i].start(); }
 	return true;
 }
