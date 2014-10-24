@@ -3,6 +3,7 @@
 #include <QtWidgets/QTreeWidget>
 #include <QtWidgets/QWidget>
 #include <Engine/Systems/GameObjectManager.h>
+#include <QtGui/QKeyEvent>
 
 class GameObjectViewer : public QTreeWidget {
 	GameObjectManager * game;
@@ -26,14 +27,27 @@ public:
 	}
 	QTreeWidgetItem* getItem(Entity * dude) {
 		QTreeWidgetItem * ret = new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString(dude->getName())));
-		if(dude->children.size() > 0)
+		auto kids = dude->Children();
+		if(kids.size() > 0)
 		{
 			QList<QTreeWidgetItem *> items;
-			for (const auto& elem : dude->children) {
+			for (const auto& elem : kids) {
 				items.append(getItem(elem));
 			}
 			ret->addChildren(items);
 		}
 		return ret;
 	}
+	void keyPressEvent(QKeyEvent *ev)
+	{
+		if(ev->key() == Qt::Key_Delete)
+			printer.LogMessage(ev->text().toStdString().c_str());
+	}
+
+	void keyReleaseEvent(QKeyEvent *ev)
+	{
+		//printer.LogMessage(ev->text().toStdString().c_str());
+	}
+
+
 };
