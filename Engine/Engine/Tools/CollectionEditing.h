@@ -14,10 +14,13 @@ namespace Collections {
 	}
 
 	//vector
-	template <typename T> bool	 contains(std::vector<T>& array, T toFind) {
+	template <typename T> int	 find(std::vector<T>& array, T toFind) {
 		for (int i = 0; i < array.size(); i++)
-			if(array[i] == toFind) return true;
-		return false
+			if(array[i] == toFind) return i;
+		return -1
+	}
+	template <typename T> bool	 contains(std::vector<T>& array, T toFind) {
+		return find(array,toFind) >= 0;
 	}
 	template <typename T> std::vector<T> Where(std::vector<T>& array, std::function<bool(T&)> condition) {
 		std::vector<T> ret;
@@ -55,10 +58,13 @@ namespace Collections {
 
 
 	//const vec
-	template <typename T> bool	 contains(ConstVector<T>& array, T toFind) {
+	template <typename T> int	 find(ConstVector<T>& array, T toFind) {
 		for (int i = 0; i < array.size(); i++)
-			if(array[i] == toFind) return true;
-		return false
+			if(array[i] == toFind) return i;
+		return -1
+	}
+	template <typename T> bool	 contains(ConstVector<T>& array, T toFind) {
+		return find(array,toFind) >= 0;
 	}
 	template <typename T> std::vector<T> Where(ConstVector<T>& array, std::function<bool(T&)> condition) {
 		std::vector<T> ret;
@@ -97,10 +103,13 @@ namespace Collections {
 
 
 	//raw array
+	template <typename T> int	 find(T * array, int size, T toFind) {
+		for (int i = 0; i < array.size(); i++)
+			if(array[i] == toFind) return i;
+		return -1
+	}
 	template <typename T> bool	 contains(T * array, int size, T toFind) {
-		for (int i = 0; i < size; i++)
-			if(array[i] == toFind) return true;
-		return false
+		return find(array,toFind) >= 0;
 	}
 	template <typename T> std::vector<T> Where(T * array, int size, std::function<bool(T&)> condition) {
 		std::vector<T> ret;
