@@ -31,7 +31,7 @@ public:
 		return -1;
 	}
 	inline int find(T * toMatch) {
-		for (int i = 0; i < size(); i++)
+		for (uint i = 0; i < size(); i++)
 			if(&(*this)[i] == toMatch) return i;
 		return -1;
 	}
@@ -52,12 +52,18 @@ public:
 		(*this)[indexA] = (*this)[indexB];
 		(*this)[indexB] = tmp;
 	}
-	inline void remove(int index) {
+	inline bool remove(int index) {
 		(*this)[index];
 		while((unsigned)index < size()-1) {
 			(*this)[index] = (*this)[index+1];
 			index--;
 		}
+		return true;
+	}
+	inline bool remove(T& toKill) {
+		int index = find(toKill);
+		if(index >= 0) remove(index);
+		return index >= 0;
 	}
 
 
