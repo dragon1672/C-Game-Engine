@@ -16,10 +16,7 @@ public:
 	ShaderProgram * howShader;
 	bool visable;
 
-	RenderableComponent(): whatGeo(nullptr), howShader(nullptr), visable(true) {
-
-	}
-	RenderableComponent(Mesh * geo, ShaderProgram * shader, ShaderUniformPram * uniforms = nullptr, int numOfUniforms = 0)
+	RenderableComponent(Mesh * geo = nullptr, ShaderProgram * shader = nullptr, ShaderUniformPram * uniforms = nullptr, int numOfUniforms = 0)
 		: transformShaderName(nullptr), whatGeo(geo), howShader(shader), visable(true) {
 			for (int i = 0; i < numOfUniforms; i++)
 			{
