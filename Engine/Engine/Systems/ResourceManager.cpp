@@ -2,6 +2,7 @@
 #include <Engine/IO/MeshLoader.h>
 #include <Engine/IO/QImageIO.h>
 #include <Engine/Tools/CollectionEditing.h>
+#include <Engine/Systems/Resources/Shaders/DefaultShaders.h>
 
 IMPLEMENT_SINGLETON(ResourceManager);
 
@@ -128,6 +129,23 @@ Script * ResourceManager::addScript_src (const char * name, std::string file)
 	ScriptObjs.Register(scripts.last());
 	scripts.last().src = file;
 	return &scripts.last();
+}
+
+ResourceManager::ResourceManager()
+{
+	defaultShader = addShader_src("basic Shader",DefaultShaders::VertexShader::DefaultVertShader(),DefaultShaders::FragShader::FragModelColor());
+}
+
+template<>
+ShaderProgram * ResourceManager::getDefault()
+{
+	return defaultShader;
+}
+
+template<>
+Mesh * ResourceManager::getDefault()
+{
+	return addMesh("Meshy");
 }
 
 

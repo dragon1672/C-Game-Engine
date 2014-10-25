@@ -26,7 +26,11 @@ private:
 	ConstVector<Script> scripts;
 	ObjectManager ScriptObjs;
 	void foreachOnAll(std::function<void(Resource&)> func);
+
+	ShaderProgram * defaultShader;
 public:
+	ResourceManager();
+
 
 	Mesh * addMesh(const char * name);
 	Mesh * addMesh(const char * name, Neumont::ShapeData NUCrap);
@@ -48,6 +52,10 @@ public:
 	Script * addScript_file(const char * name, std::string filePath);
 	Script * addScript_src (const char * name, std::string file);
 	Script * addScript_src (const char * name, const char * file);
+
+	template<typename T> T* getDefault() { return nullptr; }
+	template<> Mesh * getDefault();
+	template<> ShaderProgram * getDefault();
 
 
 #define RESOURCE_GET_METHODS(TYPE) \
