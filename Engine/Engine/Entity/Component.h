@@ -2,9 +2,10 @@
 
 #include <ExportHeader.h>
 #include <Engine/Systems/Object.h>
+#include <Engine/Systems/Resources/Shaders/ShaderObject.h>
 
 class Entity;
-class ENGINE_SHARED Component : public Object { 
+class ENGINE_SHARED Component : public Object, public ShaderObject { 
 protected:
 	friend Entity;
 	Entity * parent;
