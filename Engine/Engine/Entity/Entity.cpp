@@ -36,10 +36,58 @@ void Entity::removeComponent(Component * toKill) {
 void Entity::init()        {
 	for(uint i=0; i<components.size(); i++) components[i]->init();
 }
-void Entity::start()       { for(uint i=0; i<components.size(); i++) components[i]->start();       }
-void Entity::earlyUpdate() { for(uint i=0; i<components.size(); i++) components[i]->earlyUpdate(); }
-void Entity::update()      { for(uint i=0; i<components.size(); i++) components[i]->update();      }
-void Entity::lateUpdate()  { for(uint i=0; i<components.size(); i++) components[i]->lateUpdate();  }
+void Entity::start()       {
+	if(selectorFunction) {
+		for(uint i=0; i<components.size(); i++) {
+			if(selectorFunction(components[i])) {
+				components[i]->start();
+			}
+		}
+	} else {
+		for(uint i=0; i<components.size(); i++) {
+			components[i]->start();
+		}
+	}
+}
+void Entity::earlyUpdate() {
+	if(selectorFunction) {
+		for(uint i=0; i<components.size(); i++) {
+			if(selectorFunction(components[i])) {
+				components[i]->earlyUpdate();
+			}
+		}
+	} else {
+		for(uint i=0; i<components.size(); i++) {
+			components[i]->earlyUpdate();
+		}
+	}
+}
+void Entity::update()      {
+	if(selectorFunction) {
+		for(uint i=0; i<components.size(); i++) {
+			if(selectorFunction(components[i])) {
+			components[i]->update();     
+			}
+		}
+	} else {
+		for(uint i=0; i<components.size(); i++) {
+			components[i]->update();     
+		}
+	}
+}
+void Entity::lateUpdate()  {
+	if(selectorFunction) {
+		for(uint i=0; i<components.size(); i++) {
+			if(selectorFunction(components[i])) {
+				components[i]->lateUpdate(); 
+			}
+		}
+	} else {
+		for(uint i=0; i<components.size(); i++) {
+			components[i]->lateUpdate(); 
+		}
+	}
+}
 
 int Entity::getIndex(Component * toFind) {
 	for(uint i=0;i<components.size();i++) {

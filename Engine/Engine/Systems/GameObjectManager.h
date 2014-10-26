@@ -24,7 +24,14 @@ public:ConstVector<Entity> entities;
 	void passDataDownAllShaders_force();
 	void passDataDownAllShaders_try();
 	void resetAllShaders_validPush();
+	std::function<bool(Entity*)> selectorFunction;
+	std::function<bool(Component*)> componentSelectorFunction;
 public:
+	std::function<bool(Entity*)> SelectorFunction() const;
+	void SelectorFunction(std::function<bool(Entity*)> val);
+	std::function<bool(Component*)> ComponentSelectorFunction() const;
+	void ComponentSelectorFunction(std::function<bool(Component*)> val);
+
 	std::vector<std::function<void(Entity*)>> entityAddEvent;
 	std::vector<std::function<void(Entity*)>> entityRemoveEvent;
 	std::vector<std::function<void(Entity*)>> entityListChange;

@@ -38,11 +38,17 @@ void GameObjectManager::update() {
 	inputManager.update();
 	Timer::getInstance().interval();
 	resourceManager.update();
-	auto componentTmp = entities[1].components;
-	for (uint i = 0; i < entities.size(); i++) { entities[i].earlyUpdate(); }
-	for (uint i = 0; i < entities.size(); i++) { entities[i].update();      }
-	for (uint i = 0; i < entities.size(); i++) { entities[i].lateUpdate();  }
+	if(selectorFunction) {
+		for (uint i = 0; i < entities.size(); i++) { if(selectorFunction(&entities[i])) entities[i].earlyUpdate(); }
+		for (uint i = 0; i < entities.size(); i++) { if(selectorFunction(&entities[i])) entities[i].update();      }
+		for (uint i = 0; i < entities.size(); i++) { if(selectorFunction(&entities[i])) entities[i].lateUpdate();  }
+	} else {
+		for (uint i = 0; i < entities.size(); i++) { entities[i].earlyUpdate(); }
+		for (uint i = 0; i < entities.size(); i++) { entities[i].update();      }
+		for (uint i = 0; i < entities.size(); i++) { entities[i].lateUpdate();  }
+	}
 }
+
 void GameObjectManager::paint() {
 	CameraComponent * current = camManager.ActiveCam();
 	if(current == nullptr) {
@@ -70,6 +76,7 @@ Entity * GameObjectManager::AddEntity(const char * name)
 	Entity * ret = &entities.last();
 	ret->parentChangedEvent.push_back([this,ret](Entity* a,Entity *b){ for(uint i=0;i<entityListChange.size();i++) entityListChange[i](ret); });
 	for (uint i = 0; i < entityAddEvent.size(); i++) entityAddEvent[i](ret);
+	if(componentSelectorFunction) ret->SelectorFunction(componentSelectorFunction);
 	return ret;
 }
 
@@ -114,4 +121,27 @@ void GameObjectManager::RemoveEntity(Entity * toRemove)
 			RemoveEntity(i);
 		for (uint i = 0; i < entityRemoveEvent.size(); i++) entityRemoveEvent[i](toRemove);
 	}
+}
+
+void GameObjectManager::ComponentSelectorFunction(std::function<bool(Component*)> val)
+{
+	componentSelectorFunction = val;
+	for (uint i = 0; i < entities.size(); i++) {
+		entities[i].SelectorFunction(val);
+	}
+}
+
+std::function<bool(Component*)> GameObjectManager::ComponentSelectorFunction() const
+{
+	return componentSelectorFunction;
+}
+
+void GameObjectManager::SelectorFunction(std::function<bool(Entity*)> val)
+{
+	selectorFunction = val;
+}
+
+std::function<bool(Entity*)> GameObjectManager::SelectorFunction() const
+{
+	return selectorFunction;
 }

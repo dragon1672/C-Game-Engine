@@ -36,7 +36,10 @@ private:
 	GameObjectManager * manager;
 	Component* addComponent(Component * toAdd);
 	std::unordered_set<Entity *> children;
+	std::function<bool(Component*)> selectorFunction;
 public:
+	std::function<bool(Component*)> SelectorFunction() const;
+	void SelectorFunction(std::function<bool(Component*)> val);
 	std::unordered_set<Entity *> Children();
 	std::vector<std::function<void(Entity*oldParent,Entity*newParent)>> parentChangedEvent;
 	Entity * Parent();
