@@ -13,6 +13,7 @@ class ENGINE_SHARED Mesh : public Resource {
 	glm::vec3 min;
 	glm::vec3 max;
 public:
+	int drawStyle;
 	Mesh();
 	Mesh(const char * name);
 	std::vector<Vert> verts;

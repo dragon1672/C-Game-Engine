@@ -165,18 +165,19 @@ void Mesh::PassDownToHardWare()
 {
 	updateTangents();
 	updateMinAndMax();
-	geo.init(&verts[0],verts.size(),&indices[0],indices.size(),GL_TRIANGLES);
+	geo.init(&verts[0],verts.size(),&indices[0],indices.size(),drawStyle);
 	geo.addStreamedParameters<Vert>(Vert::getAtribs(),Vert::getNumOfAtribs());
 }
 
 Mesh::Mesh(const char * name)
 {
 	this->name = name;
+	drawStyle = GL_TRIANGLES;
 }
 
 Mesh::Mesh()
 {
-
+	drawStyle = GL_TRIANGLES;
 }
 
 void Mesh::paint()
