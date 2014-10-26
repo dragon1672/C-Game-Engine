@@ -26,6 +26,11 @@ private:
 	int getIndex(const char * toFind);
 	int getIndexFromClassName(const char * toFind);
 	int getIndex(std::string toFind);
+	std::vector<int> getAllFromClassName(const char * toFind);
+	template<typename T> std::vector<int> getAllIndexs() {
+		return getAllFromClassName(typeid(T).name());
+	}
+
 
 	Entity * parent;
 	GameObjectManager * manager;
@@ -63,6 +68,11 @@ public:
 	template<class T> T* getComponent() {
 		int index = getIndex<T>();
 		return (index >= 0) ? (T*)components[index] : nullptr;
+	}
+	template<class T> std::vector<T*> getComponents() {
+		std::vector<int> tmp = getAllIndexs<T>();
+		auto vec = Collections::Select<int,Component*>(tmp,[this](int index) {return components[index];} );
+		return Collections::RICVec<T*>(vec);
 	}
 
 	template<> RenderableComponent* addComponent();

@@ -53,11 +53,13 @@ void GameObjectManager::paint() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	for (uint i = 0; i < entities.size(); i++) {
-		RenderableComponent * renderable = entities[i].getComponent<RenderableComponent>();
-		if(renderable != nullptr && renderable->visable) {
-			passStandardUniforms(renderable);
-			renderable->drawWarmup();
-			renderable->whatGeo->paint();
+		auto renderables = entities[i].getComponents<RenderableComponent>();
+		for (RenderableComponent * renderable : renderables) {
+			if(renderable != nullptr && renderable->visable) {
+				passStandardUniforms(renderable);
+				renderable->drawWarmup();
+				renderable->whatGeo->paint();
+			}
 		}
 	}
 }

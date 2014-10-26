@@ -128,3 +128,23 @@ bool Entity::ComponentsAreReady()
 	}
 	return true;
 }
+
+std::vector<int> Entity::getAllFromClassName(const char * toFind)
+{
+	std::vector<int> ret;
+	std::string toCheck(toFind);
+	for(uint i=0;i<components.size();i++) {
+		if(toCheck.compare(std::string(typeid(*components[i]).name()))==0) ret.push_back(i);
+	}
+	return ret;
+}
+
+std::function<bool(Component*)> Entity::SelectorFunction() const
+{
+	return selectorFunction;
+}
+
+void Entity::SelectorFunction(std::function<bool(Component*)> val)
+{
+	selectorFunction = val;
+}
