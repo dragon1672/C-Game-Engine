@@ -13,6 +13,7 @@ void InputManager::update()
 {
 	mouse.lastMouse = mouse.currentMouse;
 	mouse.currentMouse = wrap::vec2(QCursor::pos().x(),QCursor::pos().y());
+	mouse.mouseDelta = mouse.currentMouse - mouse.lastMouse;
 }
 
 bool InputManager::getKeyDown(KeyCode key)
@@ -29,25 +30,22 @@ bool InputManager::getKeyUp(KeyCode key)
 	return !getKeyDown(key);
 }
 
-
-bool InputManager::Mouse::getMouseButtondown(int btn)
+bool InputManager::Mouse::getMouseButtondown(MouseCodes btn)
 {
-	GetAsyncKeyState(btn==0 ? WM_LBUTTONDOWN : WM_RBUTTONDOWN); // double tap
-	return GetAsyncKeyState(btn==0 ? WM_LBUTTONDOWN: WM_RBUTTONDOWN)!=0;
+	return GetAsyncKeyState(btn)!=0;
 }
 
-bool InputManager::Mouse::getMouseButtonup(int btn)
+bool InputManager::Mouse::getMouseButtonup(MouseCodes btn)
 {
 	return !getMouseButtondown(btn);
 }
 
-wrap::vec2 InputManager::Mouse::mousePos()
+wrap::vec2&InputManager::Mouse::mousePos()
 {
 	return currentMouse;
 }
 
-wrap::vec2 InputManager::Mouse::delta()
+wrap::vec2& InputManager::Mouse::delta()
 {
-	//QCursor::
-	return currentMouse-lastMouse;
+	return mouseDelta;
 }

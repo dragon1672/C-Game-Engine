@@ -19,45 +19,52 @@ enum KeyCode {
 	U = 85,		V = 86,		W = 87,		X = 88,	
 	Y = 89,		Z = 90,		ZERO = 48,	One = 49,
 	TWO = 50,	THREE = 51, FOUR = 52,	FIVE = 53,
-	SIX = 54,	SEVEN = 55,	EIGHT = 56,	NINE = 57,
+	SIX = 54,	SEVEN = 55,	EIGHT = 56,	NINE = 57
+};
+enum MouseCodes {
+	LEFT_MOUSE = 2, RIGHT_MOUSE = 1, MIDDLE_MOUSE = 4
 };
 
 class ENGINE_SHARED	 InputManager {
-	DEFINE_SINGLETON(InputManager);
 public:
 	struct ENGINE_SHARED Mouse {
 	private:
+
+		wrap::vec2 mouseDelta;
 		wrap::vec2 lastMouse;
 		wrap::vec2 currentMouse;
-	public:
-		bool getMouseButtondown(int btn);
-		bool getMouseButtonup(int btn);
-		wrap::vec2 mousePos();
-		wrap::vec2 delta();
-		friend InputManager;
-
 		LUA_GET_FUN(wrap::vec2,mousePos);
 		LUA_GET_FUN(wrap::vec2,delta);
+		bool getMouseButtondown_LUA(int btn) { return getMouseButtondown((MouseCodes)btn); }
+		bool getMouseButtonup_LUA(int btn)   { return getMouseButtonup((MouseCodes)btn); }
+	public:
+		bool getMouseButtondown(MouseCodes btn);
+		bool getMouseButtonup(MouseCodes btn);
+		wrap::vec2& mousePos();
+		wrap::vec2& delta();
+		friend InputManager;
 
 		operator LuaUserdata<Mouse>() {
 			MAKE_LUA_INSTANCE_RET(Mouse,ret);
-			ret.Bind("getMouseDown",&Mouse::getMouseButtondown);
-			ret.Bind("getMouseDown",&Mouse::getMouseButtondown);
+			ret.Bind("getMouseDown",&Mouse::getMouseButtondown_LUA);
+			ret.Bind("getMouseUp"  ,&Mouse::getMouseButtonup_LUA);
 			LUA_BIND_FUN(Mouse,ret,mousePos);
 			LUA_BIND_FUN(Mouse,ret,delta);
 
 			return ret;
 		}
 	};
+private:
+	LUA_GET_FUN(Mouse,getMouse);
+	inline bool getKeyDown_Lua(uchar key) { return getKeyDown((KeyCode)key); }
+	inline bool getKeyUp_Lua(uchar key) { return getKeyUp((KeyCode)key); }
+	DEFINE_SINGLETON(InputManager);
+public:
 	Mouse mouse;
 
 	bool getKeyDown(KeyCode key);
 	bool getKeyUp(KeyCode key);
-	Mouse getMouse() { return mouse; }
-
-	LUA_GET_FUN(Mouse,getMouse);
-	inline bool getKeyDown_Lua(uchar key) { return getKeyDown((KeyCode)key); }
-	inline bool getKeyUp_Lua(uchar key) { return getKeyUp((KeyCode)key); }
+	Mouse& getMouse() { return mouse; }
 
 	void init();
 	void update();
