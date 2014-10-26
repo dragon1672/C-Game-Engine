@@ -31,12 +31,8 @@ public:
 	void addUniformParameter(ShaderObject * obj);
 	void addUniformParameter(ShaderUniformPram& obj);
 
-	//convenience to save variables in renderable
-	void saveMatrixInfo(const char * uniformName);
-
 	//the real calls
 	void addUniformParameter(const char * name, ParameterType parameterType, const void * value);
-	
 
 	void drawWarmup();
 
