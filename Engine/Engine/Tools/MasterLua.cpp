@@ -42,6 +42,14 @@ MasterLua::MasterLua()
 	for (int i = KeyCode::A; i < KeyCode::Z; i++) KeyCodes.Set(std::string(1,(char)i),i);
 	for (int i = KeyCode::ZERO; i < KeyCode::NINE; i++) KeyCodes.Set(std::string(1,(char)i),i);
 	lua.GetGlobalEnvironment().Set("KeyCode",KeyCodes);
+
+
+	auto mCodes = lua.CreateTable();
+	mCodes.Set("LEFT_MOUSE",  (int)MouseCodes::LEFT_MOUSE  );
+	mCodes.Set("RIGHT_MOUSE", (int)MouseCodes::RIGHT_MOUSE );
+	mCodes.Set("MIDDLE_MOUSE",(int)MouseCodes::MIDDLE_MOUSE);
+	lua.GetGlobalEnvironment().Set("MouseCodes",mCodes);
+
 }
 
 void MasterLua::init()
