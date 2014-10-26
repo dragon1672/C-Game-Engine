@@ -8,15 +8,28 @@
 
 #define MATERIAL_TEXTURE_GET_SET_WRAP(name,properCase) \
 	TextureInfo * properCase##() const { return name##; }\
-	void properCase##(TextureInfo * val) { name = val; has##properCase = name != nullptr; }
+	void properCase##(TextureInfo * val) { name = val; has##properCase = name != nullptr; } \
+	glm::vec2& properCase##Scale()  { return name##Scale; } \
+	glm::vec2& properCase##Offset() { return name##Offset; }
+
 #define MATERIAL_INIT_TEXTURE(name,properCase)\
-	TextureInfo * name; bool has##properCase;
+	TextureInfo * name; bool has##properCase; glm::vec2 name##Scale, name##Offset;
 #define MATERIAL_CONSTR_TEXTURE(name,properCase)\
 	name = nullptr; \
-	has##properCase = false;
+	has##properCase = false; \
+	name##Scale.x = name##Scale.y = name##Offset.x = name##Offset.y = 0;
+
+#define MATERIAL_STRING(a) #a
+#define MATERIAL_STRINGY(a,b) MATERIAL_STRING(a##b)
+
+#define MATERIAL_ADD_UNIFORM(arrayName,indexName,name,properCase)\
+	arrayName##[##indexName##++] = ShaderUniformPram( MATERIAL_STRING(name)            , ParameterType::PT_TEXTURE2D, name             );\
+	arrayName##[##indexName##++] = ShaderUniformPram( MATERIAL_STRINGY(has,properCase) , ParameterType::PT_BOOLEAN,   &has##properCase );\
+	arrayName##[##indexName##++] = ShaderUniformPram( MATERIAL_STRINGY(name,Scale)     , ParameterType::PT_VEC2,      &name##Scale[0]  );\
+	arrayName##[##indexName##++] = ShaderUniformPram( MATERIAL_STRINGY(name,Offset)    , ParameterType::PT_VEC2,      &name##Offset[0] )
 
 class ENGINE_SHARED Material : public ShaderObject {
-	ShaderUniformPram uniforms[8];
+	ShaderUniformPram uniforms[16];
 	MATERIAL_INIT_TEXTURE(diffuse,  Diffuse  );
 	MATERIAL_INIT_TEXTURE(normalMap,NormalMap);
 	MATERIAL_INIT_TEXTURE(ambOcc,   AmbOcc   );
@@ -36,14 +49,11 @@ public:
 		MATERIAL_CONSTR_TEXTURE(ambOcc,   AmbOcc   );
 		MATERIAL_CONSTR_TEXTURE(alphaMask,AlphaMask);
 
-		uniforms[0] = ShaderUniformPram("diffuse",   ParameterType::PT_TEXTURE2D,  diffuse      );
-		uniforms[1] = ShaderUniformPram("normalMap", ParameterType::PT_TEXTURE2D,  normalMap    );
-		uniforms[2] = ShaderUniformPram("ambOcc",    ParameterType::PT_TEXTURE2D,  ambOcc       );
-		uniforms[3] = ShaderUniformPram("alphaMask", ParameterType::PT_TEXTURE2D,  alphaMask    );
-		uniforms[4] = ShaderUniformPram("hasDiffuse",ParameterType::PT_BOOLEAN,   &hasDiffuse   );
-		uniforms[5] = ShaderUniformPram("hasNormal", ParameterType::PT_BOOLEAN,   &hasNormalMap );
-		uniforms[6] = ShaderUniformPram("hasAmbOcc", ParameterType::PT_BOOLEAN,   &hasAmbOcc    );
-		uniforms[7] = ShaderUniformPram("hasAlpha",  ParameterType::PT_BOOLEAN,   &hasAlphaMask );
+		int index = 0;
+		MATERIAL_ADD_UNIFORM(uniforms,index,diffuse,  Diffuse  );
+		MATERIAL_ADD_UNIFORM(uniforms,index,normalMap,NormalMap);
+		MATERIAL_ADD_UNIFORM(uniforms,index,ambOcc,   AmbOcc   );
+		MATERIAL_ADD_UNIFORM(uniforms,index,alphaMask,AlphaMask);
 	}
 	wrap::vec4 color;
 
