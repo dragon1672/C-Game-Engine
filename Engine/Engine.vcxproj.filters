@@ -95,6 +95,9 @@
     <ClInclude Include="CorbinGui\Dependents\GameObjectViewer.h" />
     <ClInclude Include="Engine\Entity\Components\CameraComponent.h" />
     <ClInclude Include="Engine\Systems\CameraManager.h" />
+    <ClInclude Include="CorbinGui\EditorGame.h" />
+    <ClInclude Include="CorbinGui\Dependents\EditorComponents\EditorRenderableComponent.h" />
+    <ClInclude Include="CorbinGui\Dependents\EditorComponents\EditorCamComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />

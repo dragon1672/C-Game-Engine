@@ -98,7 +98,10 @@
     <ClInclude Include="CorbinGui\BasicQGLGui.h" />
     <ClInclude Include="CorbinGui\Dependents\Command.h" />
     <ClInclude Include="CorbinGui\Dependents\Commands\EditFloat.h" />
+    <ClInclude Include="CorbinGui\Dependents\EditorComponents\EditorCamComponent.h" />
+    <ClInclude Include="CorbinGui\Dependents\EditorComponents\EditorRenderableComponent.h" />
     <ClInclude Include="CorbinGui\Dependents\GameObjectViewer.h" />
+    <ClInclude Include="CorbinGui\EditorGame.h" />
     <ClInclude Include="CorbinGui\GuiSkellyTon.h" />
     <ClInclude Include="Engine\DebugTools\DebugMemHeader.h" />
     <ClInclude Include="Engine\DebugTools\Logging\LogData.h" />
