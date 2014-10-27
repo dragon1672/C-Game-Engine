@@ -17,7 +17,8 @@
 #define MATERIAL_CONSTR_TEXTURE(name,properCase)\
 	name = nullptr; \
 	has##properCase = false; \
-	name##Scale.x = name##Scale.y = name##Offset.x = name##Offset.y = 0;
+	name##Offset.x = name##Offset.y = 0; \
+	name##Scale.x  = name##Scale.y  = 1; \
 
 #define MATERIAL_STRING(a) #a
 #define MATERIAL_STRINGY(a,b) MATERIAL_STRING(a##b)
