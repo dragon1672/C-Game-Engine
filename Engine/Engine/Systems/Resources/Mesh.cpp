@@ -2,10 +2,14 @@
 #include "Mesh.h"
 #include <Engine\Tools\Random\MyRandom.h>
 #include <glm/gtx/transform.hpp>
+#include <Engine/Tools/MatrixInfo.h>
 
 namespace {
 	glm::vec3 differentMatrixMult(glm::mat4 mat, glm::vec3 vec) {
 		return glm::vec3(mat * glm::vec4(vec,1));
+	}
+	glm::vec4 differentMatrixMult(glm::mat4 mat, glm::vec4 vec) {
+		return mat * vec;
 	}
 
 	float max_withABS(float a, float b) {
@@ -143,11 +147,23 @@ void Mesh::initUVData() {
 	}
 }
 void Mesh::scale(float scale) {
-	for(unsigned int i = 0; i<verts.size(); i++)
-	{
+	for(unsigned int i = 0; i<verts.size(); i++) {
 		verts[i].pos *= scale;
 	}
 }
+
+void Mesh::scale(float x,float y, float z)
+{
+	scale(glm::vec3(x,y,z));
+}
+
+void Mesh::scale(glm::vec3 scale)
+{
+	MatrixInfo trans;
+	trans.scale = scale;
+	generalTransform(trans);
+}
+
 void Mesh::rotate(float x, float y, float z) {
 	glm::mat3 rot = glm::mat3(
 		glm::rotate(x,glm::vec3(1,0,0))
@@ -187,4 +203,33 @@ void Mesh::paint()
 	glBindBuffer(toDraw.bufferInformation.bufferID,GL_ARRAY_BUFFER);
 	glBindBuffer(toDraw.bufferInformation.bufferID,GL_ELEMENT_ARRAY_BUFFER);
 	glDrawElements(toDraw.indexingMode,toDraw.numIndices,GL_UNSIGNED_INT,(void*)toDraw.indicesOffset());
+}
+
+void Mesh::generalTransform(MatrixInfo& transform)
+{
+	generalTransform(transform.getCompleteTransform());
+}
+
+void Mesh::generalTransform(MatrixInfo * transform)
+{
+	generalTransform(transform->getCompleteTransform());
+}
+
+void Mesh::generalTransform(glm::mat4 transform)
+{
+	for (uint i = 0; i < verts.size(); i++) {
+		verts[i].pos = differentMatrixMult(transform,verts[i].pos);
+	}
+}
+
+void Mesh::translate(float x, float y, float z)
+{
+	translate(glm::vec3(x,y,z));
+}
+
+void Mesh::translate(glm::vec3 pos)
+{
+	MatrixInfo trans;
+	trans.pos = pos;
+	generalTransform(trans);
 }

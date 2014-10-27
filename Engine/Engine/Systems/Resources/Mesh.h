@@ -8,6 +8,8 @@
 #include <ExportHeader.h>
 #include <Engine\Systems\Resource.h>
 
+class MatrixInfo;
+
 class ENGINE_SHARED Mesh : public Resource {
 	GeometryInfo geo;
 	glm::vec3 min;
@@ -29,7 +31,14 @@ public:
 	void setColor(glm::vec4 toSet, int everyThisNumOfPoints = 1);
 	void initUVData();
 	void scale(float scale);
+	void scale(float x,float y, float z);
+	void scale(glm::vec3 scale);
+	void translate(float x, float y, float z);
+	void translate(glm::vec3 pos);
 	void rotate(float x, float y, float z);
+	void generalTransform(glm::mat4 transform);
+	void generalTransform(MatrixInfo * transform);
+	void generalTransform(MatrixInfo& transform);
 
 
 	virtual void PassDownToHardWare();
