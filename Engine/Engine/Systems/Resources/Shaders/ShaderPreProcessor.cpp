@@ -122,7 +122,7 @@ void ShaderPreProcessor::registerShaderObject(ShaderObject& obj) {
 void ShaderPreProcessor::registerShaderObject(ShaderObject * obj)
 {
 	std::string index = "#component_"+StringManapulation::ToLower(obj->getShaderName());
-	if(replacements.find(index) == replacements.end()) return; // already entered
+	if(replacements.find(index) != replacements.end()) return; // already entered
 	std::string uniformInclude = "";
 	for (int i = 0; i < obj->numOfUniforms(); i++)
 	{
