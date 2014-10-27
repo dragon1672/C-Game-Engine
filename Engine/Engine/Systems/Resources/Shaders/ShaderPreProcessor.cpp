@@ -63,11 +63,6 @@ namespace {
 			"in vec4 fragTan;       \n"
 			"in vec3 fragUv;        \n"
 			"";
-		"1"
-			"2"
-			"3"
-			"4"
-			"5";
 
 		return ret;
 	}
@@ -94,7 +89,7 @@ namespace {
 		auto elements = StringManapulation::split(StringManapulation::trimWhiteSpaceStart(line),' ');
 		if(elements.size() > 0) {
 			std::string code = StringManapulation::ToLower(elements[0]);
-			std::string ret = replacements.find(code) == replacements.end() ? line : replacements[code];
+			std::string ret = replacements.find(code) == replacements.end() ? line : ShaderPreProcessor::processGLSL(replacements[code]); // allows macros inside of macros
 			return ret;
 		}
 		return line;
