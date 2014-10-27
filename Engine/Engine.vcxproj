@@ -103,6 +103,9 @@
     <ClInclude Include="CorbinGui\Dependents\GameObjectViewer.h" />
     <ClInclude Include="CorbinGui\EditorGame.h" />
     <ClInclude Include="CorbinGui\GuiSkellyTon.h" />
+    <ClInclude Include="CorbinGui\ToolWindowManager\ToolWindowManager.h" />
+    <ClInclude Include="CorbinGui\ToolWindowManager\ToolWindowManagerArea.h" />
+    <ClInclude Include="CorbinGui\ToolWindowManager\ToolWindowManagerWrapper.h" />
     <ClInclude Include="Engine\DebugTools\DebugMemHeader.h" />
     <ClInclude Include="Engine\DebugTools\Logging\LogData.h" />
     <ClInclude Include="Engine\DebugTools\Logging\LogManager.h" />
@@ -196,6 +199,12 @@
   <ItemGroup>
     <ClCompile Include="CorbinGui\BasicQGLGui.cpp" />
     <ClCompile Include="CorbinGui\BasicQGLGui_mock.cpp" />
+    <ClCompile Include="CorbinGui\ToolWindowManager\ToolWindowManager.cpp" />
+    <ClCompile Include="CorbinGui\ToolWindowManager\ToolWindowManagerArea.cpp" />
+    <ClCompile Include="CorbinGui\ToolWindowManager\ToolWindowManagerArea_mock.cpp" />
+    <ClCompile Include="CorbinGui\ToolWindowManager\ToolWindowManagerWrapper.cpp" />
+    <ClCompile Include="CorbinGui\ToolWindowManager\ToolWindowManagerWrapper_mock.cpp" />
+    <ClCompile Include="CorbinGui\ToolWindowManager\ToolWindowManager_mock.cpp" />
     <ClCompile Include="Engine\DebugTools\Logging\LogManager.cpp" />
     <ClCompile Include="Engine\DebugTools\Profiling\AutoProfilerManager.cpp" />
     <ClCompile Include="Engine\Entity\Components\CameraComponent.cpp" />
