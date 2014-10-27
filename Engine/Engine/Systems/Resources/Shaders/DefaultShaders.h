@@ -27,7 +27,7 @@ namespace DefaultShaders {
 				"#frag_import                       \n"
 				"                                   \n"
 				"void main() {                      \n"
-				"   gl_FragColor = fragCol; \n"
+				"   #frag_material_setcolor         \n"
 				"}                                  \n"
 				"";
 		}

@@ -61,7 +61,18 @@ namespace {
 			"in vec4 fragCol;       \n"
 			"in vec3 fragNorm;      \n"
 			"in vec4 fragTan;       \n"
-			"in vec3 fragUv;        \n"
+			"in vec2 fragUv;        \n"
+			"#component_material    \n"
+			"vec4 getColorFromTexture(sampler2D tex, vec2 uv, vec2 offset, vec2 scale) { \n"
+			"    vec2 newUv = uv * scale + offset;										 \n"
+			"    return texture(tex,newUv);												 \n"
+			"}                                                                           \n"
+			"";
+		ret["#frag_material_setcolor"]   = ""
+			//"[get outs from layouts]"
+			"vec4 outCol;                                                   \n"
+			"outCol = hasDiffuse ? getColorFromTexture(diffuse,fragUv,diffuseScale,diffuseOffset) : fragCol;       \n"
+			"gl_FragColor = outCol;                                         \n"
 			"";
 
 		return ret;
