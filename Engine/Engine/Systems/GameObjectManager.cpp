@@ -64,7 +64,7 @@ void GameObjectManager::paint() {
 			if(renderable != nullptr && renderable->visable) {
 				passStandardUniforms(renderable);
 				renderable->drawWarmup();
-				renderable->whatGeo->paint();
+				renderable->geo->paint();
 			}
 		}
 	}
@@ -91,7 +91,7 @@ bool GameObjectManager::initGl()
 
 void GameObjectManager::passStandardUniforms(RenderableComponent * renderable)
 {
-	ShaderProgram * prog = renderable->howShader;
+	ShaderProgram * prog = renderable->shader;
 	prog->useProgram();
 	auto model2World = renderable->Parent()->getWorldTransform();
 	auto world2cam = camManager.ActiveCam()->getWorld2View();
