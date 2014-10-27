@@ -10,11 +10,13 @@
 
 class ENGINE_SHARED RenderableComponent : public Component {
 private:
-	const char * transformShaderName;
 	std::vector<ShaderUniformPram> uniformParameters;
 public:
-	Mesh * whatGeo;
-	ShaderProgram * howShader;
+	union {
+		Mesh * geo;
+		Mesh * mesh;
+	};
+	ShaderProgram * shader;
 	Material material;
 	bool visable;
 
@@ -22,6 +24,7 @@ public:
 	
 	//convenience overloads
 	void addUniformParameter(const char * name, const bool& value);
+	void addUniformParameter(const char * name, const int&  value);
 	void addUniformParameter(const char * name, const float& value);
 	void addUniformParameter(const char * name, const glm::vec3& value);
 	void addUniformParameter(const char * name, const glm::vec4& value);
