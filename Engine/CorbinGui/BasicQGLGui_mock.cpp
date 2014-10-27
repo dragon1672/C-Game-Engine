@@ -1,5 +1,5 @@
 /****************************************************************************
-** Meta object code from reading C++ file 'BasicGui.h'
+** Meta object code from reading C++ file 'BasicQGLGui.h'
 **
 ** Created by: The Qt Meta Object Compiler version 67 (Qt 5.3.2)
 **
@@ -10,7 +10,7 @@
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
-#error "The header file 'BasicGui.h' doesn't include <QObject>."
+#error "The header file 'BasicQGLGui.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
 #error "This file was generated using the moc from 5.3.2. It"
 #error "cannot be used with the include files from this version of Qt."
@@ -18,24 +18,24 @@
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
-struct qt_meta_stringdata_BasicGui_t {
+struct qt_meta_stringdata_BasicQGLGui_t {
     QByteArrayData data[1];
-    char stringdata[9];
+    char stringdata[12];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    qptrdiff(offsetof(qt_meta_stringdata_BasicGui_t, stringdata) + ofs \
+    qptrdiff(offsetof(qt_meta_stringdata_BasicQGLGui_t, stringdata) + ofs \
         - idx * sizeof(QByteArrayData)) \
     )
-static const qt_meta_stringdata_BasicGui_t qt_meta_stringdata_BasicGui = {
+static const qt_meta_stringdata_BasicQGLGui_t qt_meta_stringdata_BasicQGLGui = {
     {
-QT_MOC_LITERAL(0, 0, 8)
+QT_MOC_LITERAL(0, 0, 11)
     },
-    "BasicGui"
+    "BasicQGLGui"
 };
 #undef QT_MOC_LITERAL
 
-static const uint qt_meta_data_BasicGui[] = {
+static const uint qt_meta_data_BasicQGLGui[] = {
 
  // content:
        7,       // revision
@@ -60,8 +60,8 @@ void BasicQGLGui::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
 }
 
 const QMetaObject BasicQGLGui::staticMetaObject = {
-    { &QGLWidget::staticMetaObject, qt_meta_stringdata_BasicGui.data,
-      qt_meta_data_BasicGui,  qt_static_metacall, 0, 0}
+    { &QGLWidget::staticMetaObject, qt_meta_stringdata_BasicQGLGui.data,
+      qt_meta_data_BasicQGLGui,  qt_static_metacall, 0, 0}
 };
 
 
@@ -73,7 +73,7 @@ const QMetaObject *BasicQGLGui::metaObject() const
 void *BasicQGLGui::qt_metacast(const char *_clname)
 {
     if (!_clname) return 0;
-    if (!strcmp(_clname, qt_meta_stringdata_BasicGui.stringdata))
+    if (!strcmp(_clname, qt_meta_stringdata_BasicQGLGui.stringdata))
         return static_cast<void*>(const_cast< BasicQGLGui*>(this));
     return QGLWidget::qt_metacast(_clname);
 }
