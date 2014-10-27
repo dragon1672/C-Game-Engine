@@ -12,6 +12,8 @@
 #include <Engine/Tools/Printer.h>
 #include <CorbinGui/BasicQGLGui.h>
 #include <CorbinGui/Dependents/GameObjectViewer.h>
+#include <CorbinGui/ToolWindowManager/ToolWindowManager.h>
+#include <CorbinGui/ToolWindowManager/ToolWindowManagerArea.h>
 
 class ENGINE_SHARED GuiSkellyTon : public QMainWindow  {
 	QMenu * fileMenu;
@@ -20,21 +22,22 @@ class ENGINE_SHARED GuiSkellyTon : public QMainWindow  {
 	QVBoxLayout * layout;
 	GameObjectViewer *gameObjectList;
 	GameObjectManager * game;
+	ToolWindowManager * toolManager;
 public:
 	GuiSkellyTon()
 		: scene(new BasicQGLGui())
 	{
+		toolManager = new ToolWindowManager();
 		game = &scene->meGame;
 		gameObjectList = new GameObjectViewer(game);
 		scene->setMinimumSize(500,500);
 		connect(&myTimer,&QTimer::timeout,[this](){ this->update(); });
 
-		layout = new QVBoxLayout;
-		//setup mainwidget
-		QWidget * window = new QWidget();
-		window->setLayout(layout);
-		layout->addWidget(scene);
-		setCentralWidget(window);
+		scene->setWindowTitle("Game");
+
+		toolManager->addToolWindow(scene,ToolWindowManager::AreaReferenceType::EmptySpace);
+
+		setCentralWidget(toolManager);
 
 		fileMenu = menuBar()->addMenu("File");
 		//setting up file actions
@@ -74,7 +77,7 @@ public:
 		});
 
 		gameObjectList->setColumnCount(1);
-		layout->addWidget(gameObjectList);
+		toolManager->addToolWindow(gameObjectList,ToolWindowManager::AreaReferenceType::EmptySpace);
 	}
 
 	Entity * addEntity(const char * name) {
