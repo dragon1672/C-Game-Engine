@@ -29,6 +29,11 @@ CameraComponent::CameraComponent(const char * name /*= nullptr*/)
 	height.setter    = [this](int& val,   int&newGuy)   { perspectiveNeedsUpdate = perspectiveNeedsUpdate || val != newGuy; val = newGuy; };
 	nearPlane = .1f;
 	farPlane  = 100;
+	
+	uniforms[0] = ShaderUniformPram("nearPlane",nearPlane);
+	uniforms[1] = ShaderUniformPram("nearPlane",farPlane );
+	uniforms[2] = ShaderUniformPram("nearPlane",width    );
+	uniforms[3] = ShaderUniformPram("nearPlane",height   );
 }
 
 bool CameraComponent::isActive()
@@ -45,4 +50,19 @@ bool CameraComponent::isValid()
 {
 	//I WAS BORN READY!!!
 	return true;
+}
+
+ShaderUniformPram * CameraComponent::getUniforms()
+{
+	throw std::logic_error("The method or operation is not implemented.");
+}
+
+int CameraComponent::numOfUniforms()
+{
+	throw std::logic_error("The method or operation is not implemented.");
+}
+
+std::string CameraComponent::getShaderName()
+{
+	return "Camera";
 }

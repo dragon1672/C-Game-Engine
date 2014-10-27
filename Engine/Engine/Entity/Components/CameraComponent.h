@@ -8,6 +8,7 @@
 class ENGINE_SHARED CameraComponent : public Component {
 	bool perspectiveNeedsUpdate;
 	glm::mat4 perspective;
+	ShaderUniformPram uniforms[4];
 public:
 	CameraComponent(const char * name = nullptr);
 	bool isActive();
@@ -20,5 +21,11 @@ public:
 	glm::mat4& getPerspective();
 
 	virtual bool isValid();
+
+	virtual ShaderUniformPram * getUniforms();
+
+	virtual int numOfUniforms();
+
+	virtual std::string getShaderName();
 
 };
