@@ -14,10 +14,6 @@ GameObjectManager::GameObjectManager() {
 	entityRemoveEvent.push_back([this](Entity* e){ for(uint i=0;i<entityListChange.size();i++) entityListChange[i](e); });
 }
 bool GameObjectManager::init() {
-	for (uint i = 0; i < entities.size(); i++)
-	{
-		if(!entities[i].ComponentsAreReady()) throw std::invalid_argument("Some component is not init");
-	}
 	MasterLua::getInstance().init();
 	resourceManager.init();
 	for (uint i = 0; i < entities.size(); i++) {
@@ -27,6 +23,10 @@ bool GameObjectManager::init() {
 	return true;
 }
 bool GameObjectManager::start() {
+	for (uint i = 0; i < entities.size(); i++) {
+		if(!entities[i].ComponentsAreReady())
+			throw std::invalid_argument("Some component is not init");
+	}
 	Timer::getInstance().start();
 	for (uint i = 0; i < entities.size(); i++) { entities[i].start(); }
 	return true;
