@@ -19,15 +19,15 @@ class CameraComponent;
 class ENGINE_SHARED Entity : public Object {
 private:
 	void removeComponent(int toKill);
-	template<typename T> int getIndex() {
+	template<typename T> int getIndex() const {
 		return getIndexFromClassName(typeid(T).name());
 	}
-	int getIndex(Component * toFind);
-	int getIndex(const char * toFind);
-	int getIndexFromClassName(const char * toFind);
-	int getIndex(std::string toFind);
-	std::vector<int> getAllFromClassName(const char * toFind);
-	template<typename T> std::vector<int> getAllIndexs() {
+	int getIndex(Component * toFind) const;
+	int getIndex(const char * toFind) const;
+	int getIndexFromClassName(const char * toFind) const;
+	int getIndex(std::string toFind) const;
+	std::vector<int> getAllFromClassName(const char * toFind) const;
+	template<typename T> std::vector<int> getAllIndexs() const {
 		return getAllFromClassName(typeid(T).name());
 	}
 
@@ -49,7 +49,7 @@ public:
 
 
 	Entity(const char * name="New Game Object", GameObjectManager * manager = nullptr, Entity * p = nullptr);
-	const char * getName();
+	const char * Name() const;
 	virtual ~Entity(){}
 
 	std::vector<Component *> components;
@@ -74,8 +74,12 @@ public:
 	}
 	template<class T> std::vector<T*> getComponents() {
 		std::vector<int> tmp = getAllIndexs<T>();
-		auto vec = Collections::Select<int,Component*>(tmp,[this](int index) {return components[index];} );
-		return Collections::RICVec<T*>(vec);
+		if(selectorFunction)
+			tmp = Collections::Where<int>(tmp,[this](int&index){ return selectorFunction(components[index]); });
+		return Collections::Select<int,T*>(tmp,[this](int index) {return (T*)components[index];} );
+	}
+	std::vector<Component *> getAllComponents() {
+		return components;
 	}
 
 	template<> RenderableComponent* addComponent();
@@ -99,7 +103,7 @@ public:
 		BIND_LUA_VER(Entity,ret,parent);
 		LUA_BIND_FUN(Entity,ret,getTrans);
 		LUA_BIND_FUN(Entity,ret,getScript);
-		ret.Bind("name",&Entity::getName);
+		ret.Bind("name",&Entity::Name);
 
 		return ret;
 	}

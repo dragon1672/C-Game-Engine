@@ -89,20 +89,20 @@ void Entity::lateUpdate()  {
 	}
 }
 
-int Entity::getIndex(Component * toFind) {
+int Entity::getIndex(Component * toFind) const {
 	for(uint i=0;i<components.size();i++) {
 		if(components[i] == toFind) return i;
 	}
 	return -1;
 }
-int Entity::getIndexFromClassName(const char * toFind) {
+int Entity::getIndexFromClassName(const char * toFind) const {
 	std::string toCheck(toFind);
 	for(uint i=0;i<components.size();i++) {
 		if(toCheck.compare(std::string(typeid(*components[i]).name()))==0) return i;
 	}
 	return -1;
 }
-int Entity::getIndex(const char * toFind)
+int Entity::getIndex(const char * toFind) const
 {
 	std::string toCheck = std::string("class ").append(std::string(toFind));
 	for(uint i=0;i<components.size();i++) {
@@ -111,7 +111,7 @@ int Entity::getIndex(const char * toFind)
 	return -1;
 }
 
-int Entity::getIndex(std::string toFind)
+int Entity::getIndex(std::string toFind) const 
 {
 	return getIndex(toFind.c_str());
 }
@@ -123,9 +123,9 @@ glm::mat4 Entity::getWorldTransform()
 	return ret * localTrans.getCompleteTransform();
 }
 
-const char * Entity::getName()
+const char * Entity::Name() const
 {
-	return Object::getName(); // stupid Lua
+	return Object::Name(); // stupid Lua
 }
 
 Entity::Entity(const char * name/*="New Game Object"*/, GameObjectManager * manager, Entity * p /*= nullptr*/)  : manager(manager), parent(nullptr) { this->name = name; Parent(p); }
@@ -172,12 +172,13 @@ bool Entity::ComponentsAreReady()
 {
 	for (uint i = 0; i < components.size(); i++)
 	{
-		if(!components[i]->isValid()) return false;
+		if(!components[i]->isValid())
+			return false;
 	}
 	return true;
 }
 
-std::vector<int> Entity::getAllFromClassName(const char * toFind)
+std::vector<int> Entity::getAllFromClassName(const char * toFind) const 
 {
 	std::vector<int> ret;
 	std::string toCheck(toFind);
