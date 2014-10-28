@@ -29,6 +29,21 @@ RenderableComponent * EditorGame::scoper::addComponent()
 	return ret;
 }
 
+template<>
+ScriptComponent * EditorGame::scoper::addComponent()
+{
+	auto ret = currentlySelectedEntity->addComponent<ScriptComponent>();
+	return ret;
+}
+
+template<>
+CameraComponent * EditorGame::scoper::addComponent()
+{
+	auto ret = currentlySelectedEntity->addComponent<CameraComponent>();
+
+	return ret;
+}
+
 MatrixInfo * EditorGame::scoper::getTrans()
 {
 	return currentlySelectedEntity->getTrans();
@@ -69,4 +84,14 @@ void EditorGame::scoper::Parent(const char * name)
 	int index = editor->game.entities.find([name](const Entity& e){ return e.Name() == name; });
 	Entity * parent = (index < 0 ? nullptr : &(editor->game.entities[index]));
 	currentlySelectedEntity->Parent(parent);
+}
+
+std::vector<Component*> EditorGame::scoper::getAllComponents()
+{
+	return currentlySelectedEntity->getAllComponents();
+}
+
+std::vector<Component*> EditorGame::scoper::getAllGameComponents()
+{
+	return Collections::Where<Component*>(currentlySelectedEntity->getAllComponents(),[this](Component*c){ return !this->editor->game.ComponentSelectorFunction()(c); });
 }

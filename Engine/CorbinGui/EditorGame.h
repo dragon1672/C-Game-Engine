@@ -28,22 +28,14 @@ public:
 
 		//adds component to current entity
 		template<typename T> T * addComponent() {
-			static_assert(false);
+			static_assert(false,"Component not valid, unable to add");
 		}
-		template<> ScriptComponent * addComponent<ScriptComponent>() {
-			auto ret = currentlySelectedEntity->addComponent<ScriptComponent>();
-			return ret;
-		}
+		template<> ScriptComponent * addComponent<ScriptComponent>();
 		template<> RenderableComponent * addComponent<RenderableComponent>();
-		template<> CameraComponent * addComponent<CameraComponent>() {
-			auto ret = currentlySelectedEntity->addComponent<CameraComponent>();
-
-			return ret;
-		}
+		template<> CameraComponent * addComponent<CameraComponent>();
 		//returns all the components on the current object
-		std::vector<Component*> getAllComponents() {
-			return currentlySelectedEntity->getAllComponents();
-		}
+		std::vector<Component*> getAllComponents();
+		std::vector<Component*> getAllGameComponents();
 		MatrixInfo          * getTrans();
 		ScriptComponent     * getScript();
 		RenderableComponent * getRenderable();
