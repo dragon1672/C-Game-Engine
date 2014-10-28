@@ -16,7 +16,6 @@
 #include <CorbinGui/ToolWindowManager/ToolWindowManagerArea.h>
 
 class ENGINE_SHARED GuiSkellyTon : public QMainWindow  {
-	QMenu * fileMenu;
 	QTimer myTimer;
 	BasicQGLGui * scene;
 	QVBoxLayout * layout;
@@ -39,7 +38,26 @@ public:
 
 		setCentralWidget(toolManager);
 
-		fileMenu = menuBar()->addMenu("File");
+		
+
+
+
+		connect(gameObjectList,&QTreeWidget::currentItemChanged,[this](QTreeWidgetItem *current, QTreeWidgetItem *previous){
+			//selection changed, time to update current object
+			std::cout << "changed" << std::endl;
+			this->update();
+		});
+
+		gameObjectList->setColumnCount(1);
+		toolManager->addToolWindow(gameObjectList,ToolWindowManager::AreaReferenceType::EmptySpace);
+	}
+
+	Entity * addEntity(const char * name) {
+		return scene->meGame.AddEntity(name);
+	}
+
+	void initBar() {
+		QMenu * fileMenu = menuBar()->addMenu("File");
 		//setting up file actions
 		QAction* action;
 		fileMenu->addAction(action = new QAction("New Project", this));
@@ -67,21 +85,6 @@ public:
 		fileMenu->addAction(action = new QAction("Renderable Component", this));	connect(action, &QAction::triggered, [this](){ printer.LogMessage("Add Renderable Clicked"); });
 		fileMenu->addAction(action = new QAction("Collider Component", this));		connect(action, &QAction::triggered, [this](){ printer.LogMessage("Add Collider Clicked"); });
 		fileMenu->addAction(action = new QAction("Script Component", this));		connect(action, &QAction::triggered, [this](){ printer.LogMessage("Add Script Clicked"); });
-
-
-
-		connect(gameObjectList,&QTreeWidget::currentItemChanged,[this](QTreeWidgetItem *current, QTreeWidgetItem *previous){
-			//selection changed, time to update current object
-			std::cout << "changed" << std::endl;
-			this->update();
-		});
-
-		gameObjectList->setColumnCount(1);
-		toolManager->addToolWindow(gameObjectList,ToolWindowManager::AreaReferenceType::EmptySpace);
-	}
-
-	Entity * addEntity(const char * name) {
-		return scene->meGame.AddEntity(name);
 	}
 
 	void init() {
