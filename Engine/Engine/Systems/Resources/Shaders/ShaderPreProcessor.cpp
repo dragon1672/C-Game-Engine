@@ -63,7 +63,7 @@ namespace {
 			"in vec4 fragTan;       \n"
 			"in vec2 fragUv;        \n"
 			"#component_material    \n"
-			"vec4 getColorFromTexture(sampler2D tex, vec2 uv, vec2 offset, vec2 scale) { \n"
+			"vec4 getColorFromTexture(sampler2D tex, vec2 uv, vec2 scale, vec2 offset) { \n"
 			"    vec2 newUv = uv * scale + offset;										 \n"
 			"    return texture(tex,newUv);												 \n"
 			"}                                                                           \n"
