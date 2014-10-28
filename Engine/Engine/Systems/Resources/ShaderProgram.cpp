@@ -70,10 +70,10 @@ namespace {
 		ret[ParameterType::PT_MAT3      ] = [](uint location,const void * value)->void{ glUniformMatrix3fv(location,1, false, (float*)value);                 };
 		ret[ParameterType::PT_MAT4      ] = [](uint location,const void * value)->void{ glUniformMatrix4fv(location,1, false, (float*)value);                 };
 		ret[ParameterType::PT_BOOLEAN   ] = [](uint location,const void * value)->void{ glUniform1i(       location,          *(bool*)value);                 };
-		ret[ParameterType::PT_INT       ] = [](uint location,const void * value)->void{ glUniform1i(       location,          *(int*) value);                 };
-		ret[ParameterType::PT_TEXTURE   ] = [](uint location,const void * value)->void{ if(value != nullptr) glUniform1i(       location,          ((TextureInfo*)value)->slotID); };
-		ret[ParameterType::PT_TEXTURE2D ] = [](uint location,const void * value)->void{ if(value != nullptr) glUniform1i(       location,          ((TextureInfo*)value)->slotID); };
-		ret[ParameterType::PT_TEXTURE3D ] = [](uint location,const void * value)->void{ if(value != nullptr) glUniform1i(       location,          ((TextureInfo*)value)->slotID); };
+		ret[ParameterType::PT_INT       ] = [](uint location,const void * value)->void{ glUniform1i(       location,          *(int *)value);                 };
+		ret[ParameterType::PT_TEXTURE   ] = [](uint location,const void * value)->void{ if(value != nullptr) glUniform1i(location, ((TextureInfo*)value)->slotID); }; 
+		ret[ParameterType::PT_TEXTURE2D ] = [](uint location,const void * value)->void{ if(value != nullptr) glUniform1i(location, ((TextureInfo*)value)->slotID); };
+		ret[ParameterType::PT_TEXTURE3D ] = [](uint location,const void * value)->void{ if(value != nullptr) glUniform1i(location, ((TextureInfo*)value)->slotID); };
 		return ret;
 	}
 	std::map<ParameterType,std::function<void(uint,const void *)>> uniformPasses = makeMap();
