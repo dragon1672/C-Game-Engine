@@ -38,11 +38,11 @@ Mesh * ResourceManager::addMesh(const char * name, const char * filePath)
 }
 ShaderProgram * ResourceManager::addShader_file(const char * name, const char * vertFilePath, const char * fragFilePath)
 {
-	return addShader_src(name, FileIO::readFile(vertFilePath),FileIO::readFile(fragFilePath));
+	return addShader_file(name,std::string(vertFilePath),std::string(fragFilePath));
 }
 ShaderProgram * ResourceManager::addShader_file(const char * name, std::string vertFilePath, std::string fragFilePath)
 {
-	return addShader_src(name, FileIO::readFile(vertFilePath),FileIO::readFile(fragFilePath));
+	return addShader_src(name, FileIO::readFile(workingDir + vertFilePath),FileIO::readFile(workingDir + fragFilePath));
 }
 ShaderProgram * ResourceManager::addShader_src (const char * name, std::string vert, std::string frag)
 {
@@ -88,13 +88,13 @@ TextureInfo * ResourceManager::add2DTexture(const char * name, QImage& image, GL
 }
 TextureInfo * ResourceManager::add2DTexture(const char * name, const char * filePath, bool flipHorz /*= false*/, bool flipVert /*= false*/)
 {
-	QImage data = FileIO::loadImage(filePath);
-	if(flipVert || flipHorz) data = data.mirrored(flipHorz,flipVert);
-	return add2DTexture(name,data);
+	return add2DTexture(name,std::string(filePath),flipHorz,flipVert);
 }
 TextureInfo * ResourceManager::add2DTexture(const char * name, std::string& filePath, bool flipHorz /*= false*/, bool flipVert /*= false*/)
 {
-	return add2DTexture(name,filePath.c_str(),flipHorz,flipVert);
+	QImage data = FileIO::loadImage(workingDir + filePath);
+	if(flipVert || flipHorz) data = data.mirrored(flipHorz,flipVert);
+	return add2DTexture(name,data);
 }
 TextureInfo * ResourceManager::add2DTexture(const char * name, ubyte * data, uint sizeofData, uint width, uint height, GLenum type, GLenum type2)
 {
@@ -113,11 +113,11 @@ TextureInfo * ResourceManager::add2DTexture(const char * name, ubyte * data, uin
 
 Script * ResourceManager::addScript_file(const char * name, const char * filePath)
 {
-	return addScript_src(name, FileIO::readFile(filePath));
+	return addScript_file(name, std::string(filePath));
 }
 Script * ResourceManager::addScript_file(const char * name, std::string filePath)
 {
-	return addScript_src(name, FileIO::readFile(filePath));
+	return addScript_src(name, FileIO::readFile(workingDir + filePath));
 }
 Script * ResourceManager::addScript_src (const char * name, const char * file)
 {

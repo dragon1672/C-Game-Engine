@@ -28,9 +28,12 @@ private:
 	void foreachOnAll(std::function<void(Resource&)> func);
 
 	ShaderProgram * defaultShader;
+	std::string workingDir;
 public:
 	ResourceManager();
 
+	std::string WorkingDir() const { return workingDir; }
+	void WorkingDir(std::string val) { workingDir = val; }
 
 	Mesh * addMesh(const char * name);
 	Mesh * addMesh(const char * name, Neumont::ShapeData NUCrap);
