@@ -20,15 +20,17 @@ class ENGINE_SHARED GuiSkellyTon : public QMainWindow  {
 	BasicQGLGui * scene;
 	QVBoxLayout * layout;
 	GameObjectViewer *gameObjectList;
-	GameObjectManager * game;
+	EditorGame * game;
 	ToolWindowManager * toolManager;
 public:
+	EditorGame * Game() const { return game; }
 	GuiSkellyTon()
 		: scene(new BasicQGLGui())
 	{
 		toolManager = new ToolWindowManager();
 		game = &scene->meGame;
-		gameObjectList = new GameObjectViewer(game);
+
+		gameObjectList = new GameObjectViewer(game->Game());
 		scene->setMinimumSize(500,500);
 		connect(&myTimer,&QTimer::timeout,[this](){ this->update(); });
 
@@ -50,10 +52,6 @@ public:
 
 		gameObjectList->setColumnCount(1);
 		toolManager->addToolWindow(gameObjectList,ToolWindowManager::AreaReferenceType::EmptySpace);
-	}
-
-	Entity * addEntity(const char * name) {
-		return scene->meGame.AddEntity(name);
 	}
 
 	void initBar() {
