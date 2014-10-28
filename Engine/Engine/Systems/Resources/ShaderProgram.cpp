@@ -105,8 +105,7 @@ void ShaderProgram::saveUniform(const char * name, const glm::mat3& value) { sav
 void ShaderProgram::saveUniform(const char * name, const glm::mat4& value) { saveUniform(name,ParameterType::PT_MAT4,&value[0][0]); }
 void ShaderProgram::saveUniform(ShaderObject * obj) {
 	ShaderPreProcessor::registerShaderObject(obj);
-	for (int i = 0; i < obj->numOfUniforms(); i++)
-		saveUniform(obj->getUniforms()[i]);
+	objUniforms.push_back(obj);
 }
 void ShaderProgram::saveUniform(const char* name, ParameterType parameterType, const void * value) { saveUniform(ShaderUniformPram(name,parameterType,value)); }
 void ShaderProgram::saveUniform(ShaderUniformPram * pram) { saveUniform(*pram); }
@@ -117,9 +116,11 @@ void ShaderProgram::passSavedUniforms_try() {
 		passSavedUniforms_force();
 }
 void ShaderProgram::passSavedUniforms_force() {
-	for (uint i = 0; i < prams.size(); i++)
-	{
+	for (uint i = 0; i < prams.size(); i++) {
 		passUniform(prams[i]);
+	}
+	for (uint i = 0; i < objUniforms.size(); i++) {
+		passUniform(objUniforms[i]);
 	}
 	validPush = false;
 }

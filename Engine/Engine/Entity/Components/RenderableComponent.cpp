@@ -18,10 +18,7 @@ void RenderableComponent::addUniformParameter(const char * name, ParameterType p
 void RenderableComponent::addUniformParameter(ShaderObject * obj)
 {
 	ShaderPreProcessor::registerShaderObject(obj);
-	for (int i = 0; i < obj->numOfUniforms(); i++)
-	{
-		addUniformParameter(obj->getUniforms()[i]);
-	}
+	objUniforms.push_back(obj);
 }
 
 void RenderableComponent::addUniformParameter(ShaderUniformPram& obj)
@@ -39,6 +36,10 @@ void RenderableComponent::drawWarmup() {
 
 	for (uint i = 0; i < uniformParameters.size(); i++) {
 		shader->passUniform(uniformParameters[i]);
+	}
+	for (uint i = 0; i < objUniforms.size(); i++)
+	{
+		shader->passUniform(objUniforms[i]);
 	}
 }
 

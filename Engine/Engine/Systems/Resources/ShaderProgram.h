@@ -20,6 +20,7 @@ private:
 	static GLuint currentProgram;
 	
 	std::vector<ShaderUniformPram> prams;
+	std::vector<ShaderObject*> objUniforms;
 
 	struct CodeBlock { // used to store shader code
 		GLuint type;

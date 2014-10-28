@@ -11,6 +11,7 @@
 class ENGINE_SHARED RenderableComponent : public Component {
 private:
 	std::vector<ShaderUniformPram> uniformParameters;
+	std::vector<ShaderObject*> objUniforms;
 public:
 	union {
 		Mesh * geo;
