@@ -4,12 +4,13 @@
 
 
 
-TextureInfo::TextureInfo() : data(nullptr), type((GLenum)GL_RGBA), type2((GLenum)-1), slotID((uint)-1) { }
-TextureInfo::TextureInfo(const char * name) : data(nullptr), type((GLenum)GL_RGBA), type2((GLenum)-1), slotID((uint)-1) { this->name = name; }
+TextureInfo::TextureInfo() : data(nullptr), type((GLenum)GL_RGBA), type2((GLenum)-1), slotID((uint)-1), bufferID((uint)-1) { }
+TextureInfo::TextureInfo(const char * name) : data(nullptr), type((GLenum)GL_RGBA), type2((GLenum)-1), slotID((uint)-1), bufferID((uint)-1) { this->name = name; }
 
 void TextureInfo::PassDownToHardWare()
 {
-	if(slotID < 0) slotID = NumTextures++;
+	if((int)slotID   < 0) slotID = NumTextures++;
+	if((int)bufferID < 0) glGenTextures(1,&bufferID);
 	glEnable(GL_TEXTURE_2D);
 	glActiveTexture(GL_TEXTURE0+slotID);
 	glBindTexture(GL_TEXTURE_2D, bufferID);
