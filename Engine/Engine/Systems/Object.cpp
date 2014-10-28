@@ -10,12 +10,17 @@ Object::Object() : id(GlobalID++), name(nullptr)
 
 }
 
-const char * Object::getName()
+const char * Object::Name() const
 {
 	return name;
 }
 
-int Object::getID()
+void Object::Name(const char * name)
+{
+	this->name = name;
+}
+
+int Object::getID() const
 {
 	return id;
 }

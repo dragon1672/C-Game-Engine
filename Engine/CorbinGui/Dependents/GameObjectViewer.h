@@ -26,7 +26,7 @@ public:
 		insertTopLevelItems(0, items);
 	}
 	QTreeWidgetItem* getItem(Entity * dude) {
-		QTreeWidgetItem * ret = new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString(dude->getName())));
+		QTreeWidgetItem * ret = new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString(dude->Name())));
 		auto kids = dude->Children();
 		if(kids.size() > 0)
 		{

@@ -10,6 +10,7 @@ protected:
 	const char * name; // default nullptr
 public:
 	Object();
-	int getID(); //will be unique across all objects
-	const char * getName();//can have dups
+	int getID() const; //will be unique across all objects
+	const char * Name() const;//can have dups
+	void Name(const char * name);
 };

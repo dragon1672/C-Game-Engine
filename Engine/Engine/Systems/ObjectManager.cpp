@@ -13,7 +13,7 @@ public:
 	std::map<const char *,ObjectMatches> nameMap;
 	std::map<int,Object *> idMap;
 	bool ContainsId  (Object * toCheck)  { return Contains(toCheck->getID());   }
-	bool ContainsName(Object * toCheck)  { return Contains(toCheck->getName()); }
+	bool ContainsName(Object * toCheck)  { return Contains(toCheck->Name()); }
 	bool Contains(int toCheck)       { return idMap.find(toCheck) != idMap.end();   }
 	bool Contains(const char * name) { return nameMap.find(name)  != nameMap.end(); }
 	ObjectManagerPrivates() : GlobalId(0) {}
@@ -41,9 +41,9 @@ void ObjectManager::Register(Object * toAdd)
 	privates->idMap[toAdd->getID()] = toAdd;
 
 	if(!privates->ContainsName(toAdd)) { // not in map
-		privates->nameMap.emplace(toAdd->getName(),ObjectManagerPrivates::ObjectMatches());
+		privates->nameMap.emplace(toAdd->Name(),ObjectManagerPrivates::ObjectMatches());
 	}
-	privates->nameMap[toAdd->getName()].push_back(toAdd);
+	privates->nameMap[toAdd->Name()].push_back(toAdd);
 }
 
 void ObjectManager::UnRegister(Object& toKill) {
@@ -57,7 +57,7 @@ void ObjectManager::UnRegister(Object * toKill)
 	if(!privates->ContainsName(toKill))// not in map
 		return;
 
-	auto& data = privates->nameMap[toKill->getName()];
+	auto& data = privates->nameMap[toKill->Name()];
 	for (unsigned int i = 0; i < data.size(); i++) { // loop through matches to remove
 		if(data[i] == toKill) {
 			data.erase(data.begin() + i);
@@ -65,7 +65,7 @@ void ObjectManager::UnRegister(Object * toKill)
 		}
 	}
 	if(data.size() <= 0) {
-		privates->nameMap.erase(toKill->getName());
+		privates->nameMap.erase(toKill->Name());
 	}
 }
 
