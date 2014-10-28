@@ -5,6 +5,7 @@
 #include <QtCore/QTimer>
 #include <ExportHeader.h>
 #include <Engine/Entity/Entity.h>
+#include <CorbinGui/EditorGame.h>
 
 
 class ENGINE_SHARED BasicQGLGui : public QGLWidget {
@@ -12,7 +13,7 @@ private:
 	Q_OBJECT;
 	QTimer timer;
 public:
-	GameObjectManager meGame;
+	EditorGame meGame;
 	void init();
 
 	void initializeGL();
