@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <ExportHeader.h>
+#include <functional>
 
 template<typename T> class ENGINE_SHARED ConstVector {
 private:
@@ -28,6 +29,11 @@ public:
 	inline int find(T * toMatch) {
 		for (uint i = 0; i < size(); i++)
 			if(&(*this)[i] == toMatch) return i;
+		return -1;
+	}
+	inline int find(std::function<bool(const T&)> checker) {
+		for (uint i = 0; i < size(); i++)
+			if(checker((*this)[i])) return i;
 		return -1;
 	}
 
