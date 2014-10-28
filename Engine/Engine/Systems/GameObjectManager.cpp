@@ -91,6 +91,8 @@ bool GameObjectManager::initGl()
 
 void GameObjectManager::passStandardUniforms(RenderableComponent * renderable)
 {
+	camManager.ActiveCam()->width = width;
+	camManager.ActiveCam()->height = height;
 	ShaderProgram * prog = renderable->shader;
 	prog->useProgram();
 	auto model2World = renderable->Parent()->getWorldTransform();
