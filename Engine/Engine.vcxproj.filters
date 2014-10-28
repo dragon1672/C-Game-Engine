@@ -152,6 +152,8 @@
     <ClCompile Include="CorbinGui\ToolWindowManager\ToolWindowManager_mock.cpp" />
     <ClCompile Include="CorbinGui\ToolWindowManager\ToolWindowManagerArea_mock.cpp" />
     <ClCompile Include="CorbinGui\ToolWindowManager\ToolWindowManagerWrapper_mock.cpp" />
+    <ClCompile Include="CorbinGui\EditorGame.cpp" />
+    <ClCompile Include="CorbinGui\Dependents\EditorComponents\EditorRenderableComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Tools\MyMath\Matrix2D.inl" />
