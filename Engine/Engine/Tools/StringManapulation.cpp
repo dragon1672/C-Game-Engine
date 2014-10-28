@@ -94,3 +94,83 @@ std::string StringManapulation::trimWhiteSpaceStart(std::string src)
 	char list[] = {' ','\n','\t'};
 	return trimStart(src,list,sizeof(list)/sizeof(*list));
 }
+
+std::string StringManapulation::repeat(int total, std::string strA)
+{
+	std::string str;
+	for (int a=0; a<total; a++) {
+		str += strA;
+	}
+	return str;
+}
+
+std::string StringManapulation::reverse(std::string str)
+{
+	std::string newstr = "";
+	for (int a=str.length()-1; a>=0; a--) {
+		newstr+=str[a];
+	}
+	return newstr;
+}
+
+std::string StringManapulation::center(std::string text, int length, char filler)
+{
+	std::string str;
+	for (unsigned int i=0; i<(length-text.length()-((length/2)-(text.length()/2))); i++) {str += filler;}
+	str += text;
+	for (unsigned int i=0; i<(length/2)-(text.length()/2); i++) {str += filler;}
+	return str;
+}
+
+std::string StringManapulation::center(std::string back, std::string toCenter)
+{
+	if (back.length() < toCenter.length()) {
+		return "invalid data given";
+	}
+	std::string str;
+	for (unsigned int i=0; i<(back.length()-toCenter.length()-((back.length()/2)-(toCenter.length()/2))); i++) {
+		str += back[i];
+	}
+	str += toCenter;
+	for (unsigned int i=0; i<(back.length()/2)-(toCenter.length()/2); i++) {
+		str += back[str.length()];
+	}
+	return str;
+}
+
+std::string StringManapulation::replace(char what,char with,std::string source)
+{
+	for (unsigned int i=0;i<source.length();i++) {
+		if(source[i]==what) {
+			source[i]=with;
+		}
+	}
+	return source;
+}
+
+namespace {
+	bool match(std::string& master, std::string& toMatchWith, int indexIntoA) {
+		if(master.length()-indexIntoA < toMatchWith.length()) {
+			return false;
+		}
+		for (uint i = 0; i < toMatchWith.length(); i++) {
+			if(master[indexIntoA + i] != toMatchWith[i])
+				return false;
+		}
+		return true;
+	}
+}
+
+std::string StringManapulation::replace(std::string what,std::string with,std::string source)
+{
+	std::string ret;
+	for (uint i = 0; i < source.length(); i++) {
+		if(match(source,what,i)) {
+			ret += with;
+			i += what.length()-1;
+		} else {
+			ret += source[i];
+		}
+	}
+	return ret;
+}
