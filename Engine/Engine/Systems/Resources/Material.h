@@ -7,15 +7,20 @@
 #include <vector>
 
 #define MATERIAL_TEXTURE_GET_SET_WRAP(name,properCase) \
-	TextureInfo * properCase##() const { return name##; }\
-	void properCase##(TextureInfo * val) { name = val; has##properCase = name != nullptr; } \
-	glm::vec2& properCase##Scale()  { return name##Scale; } \
-	glm::vec2& properCase##Offset() { return name##Offset; }
+	inline TextureInfo * properCase##() const { return name##; }\
+	inline void properCase##(TextureInfo * val) {            \
+		name = val;                                          \
+		has##properCase = name != nullptr;                   \
+		uniforms[##uniformIndex##properCase##].Pointer(val); \
+	}                                                        \
+	inline glm::vec2& properCase##Scale()  { return name##Scale; } \
+	inline glm::vec2& properCase##Offset() { return name##Offset; }
 
 #define MATERIAL_INIT_TEXTURE(name,properCase)\
-	TextureInfo * name; bool has##properCase; glm::vec2 name##Scale, name##Offset;
+	TextureInfo * name; bool has##properCase; glm::vec2 name##Scale, name##Offset; int uniformIndex##properCase;
 #define MATERIAL_CONSTR_TEXTURE(name,properCase)\
 	name = nullptr; \
+	uniformIndex##properCase = -1; \
 	has##properCase = false; \
 	name##Offset.x = name##Offset.y = 0; \
 	name##Scale.x  = name##Scale.y  = 1; \
@@ -24,6 +29,7 @@
 #define MATERIAL_STRINGY(a,b) MATERIAL_STRING(a##b)
 
 #define MATERIAL_ADD_UNIFORM(arrayName,indexName,name,properCase)\
+	uniformIndex##properCase = indexName; \
 	arrayName##[##indexName##++] = ShaderUniformPram( MATERIAL_STRING(name)            , ParameterType::PT_TEXTURE2D, name             );\
 	arrayName##[##indexName##++] = ShaderUniformPram( MATERIAL_STRINGY(has,properCase) , ParameterType::PT_BOOLEAN,   &has##properCase );\
 	arrayName##[##indexName##++] = ShaderUniformPram( MATERIAL_STRINGY(name,Scale)     , ParameterType::PT_VEC2,      &name##Scale[0]  );\
