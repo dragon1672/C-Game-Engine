@@ -11,6 +11,7 @@
 
 #include <Engine/Tools/Printer.h>
 #include <CorbinGui/BasicQGLGui.h>
+#include <CorbinGui/Dependents/ComponentEditor.h>
 #include <CorbinGui/Dependents/GameObjectViewer.h>
 #include <CorbinGui/ToolWindowManager/ToolWindowManager.h>
 #include <CorbinGui/ToolWindowManager/ToolWindowManagerArea.h>
@@ -44,9 +45,14 @@ public:
 
 
 		connect(gameObjectList,&QTreeWidget::currentItemChanged,[this](QTreeWidgetItem *current, QTreeWidgetItem *previous){
-			//selection changed, time to update current object
-			std::cout << "changed" << std::endl;
-			//this->game->currentEntity.
+			Entity * ECurrent  = GameObjectViewer::convertTree2Entity(current);
+			Entity * EPrevious = GameObjectViewer::convertTree2Entity(previous);
+			game->currentEntity.SetCurrent(ECurrent);
+
+			std::string name1 = ECurrent  != nullptr ? std::string(ECurrent->Name())  : "NULL";
+			std::string name2 = EPrevious != nullptr ? std::string(EPrevious->Name()) : "NULL";
+			printer.LogMessage("from "+name2+" to "+name1);
+
 			this->update();
 		});
 
