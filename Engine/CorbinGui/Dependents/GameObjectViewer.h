@@ -8,17 +8,16 @@
 
 class GameObjectTree;
 class ENGINE_SHARED GameObjectViewer : public QTreeWidget {
+
 	GameObjectManager * game;
-	Entity * currentlySelected;
 	GameObjectTree* getItem(Entity * dude);
 public:
-	Entity * CurrentlySelected() const { return currentlySelected; }
 	GameObjectViewer(GameObjectManager * game);
 	void init();
 	void update();
 	void keyPressEvent(QKeyEvent *ev);
 
 	void keyReleaseEvent(QKeyEvent *ev);
-
+	static Entity * convertTree2Entity(QTreeWidgetItem * treeItem);
 
 };

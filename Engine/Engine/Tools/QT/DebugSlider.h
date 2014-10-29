@@ -20,7 +20,7 @@ private slots:
 	void sliderValueChanged();
 
 signals:
-	virtual void valueChanged(float newValue);
+	void valueChanged(float newValue);
 
 public:
 	DebugSlider(

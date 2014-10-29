@@ -55,8 +55,9 @@ GameObjectViewer::GameObjectViewer(GameObjectManager * game) : game(game)
 {
 	setColumnCount(1);
 	game->entityListChange.push_back([this](Entity*){this->update();});
-	connect(this,&QTreeWidget::currentItemChanged,[this](QTreeWidgetItem *current, QTreeWidgetItem *previous){
-		this->currentlySelected = current != nullptr ? ((GameObjectTree*)current)->GameObj : nullptr;
-		printer.LogMessage(currentlySelected->Name());
-	});
+}
+
+Entity * GameObjectViewer::convertTree2Entity(QTreeWidgetItem * treeItem)
+{
+	return treeItem != nullptr ? ((GameObjectTree*)treeItem)->GameObj : nullptr;
 }
