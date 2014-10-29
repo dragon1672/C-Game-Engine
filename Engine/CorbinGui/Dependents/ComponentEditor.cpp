@@ -7,6 +7,7 @@
 #include <QtGui/QValidator>
 #include <array>
 #include <Engine/Tools/CollectionEditing.h>
+#include <QtWidgets/QGroupBox>
 
 #pragma region Component Editors
 class SingleComponentEditor : public QWidget {
@@ -29,10 +30,6 @@ public:
 };
 #pragma  endregion
 
-#pragma region Transform component editor
-
-#include <glm/glm.hpp>
-
 namespace {
 	int clamp(int src, int min, int max) {
 		if(src < min) return min;
@@ -40,6 +37,10 @@ namespace {
 		return src;
 	}
 }
+
+#pragma region Transform component editor
+
+#include <glm/glm.hpp>
 
 template<uint N>
 class QTVecEditor : public SingleComponentEditor {
@@ -78,15 +79,13 @@ public:
 
 class TranslationEdtor : public SingleComponentEditor {
 	MatrixInfo * matrix;
-	QLabel * title;
 	SingleComponentEditor * vecEditors[3];
 public:
 	TranslationEdtor(MatrixInfo * matrix) {
+		setWindowTitle("Transform Info");
 		this->matrix = matrix;
 		QVBoxLayout * layout = new QVBoxLayout();
 		this->setLayout(layout);
-		title = new QLabel("Transform Info");
-		layout->addWidget(title);
 		vecEditors[0] = new QTVecEditor<3>(&(matrix->pos[0]  ),"Pos:"  );	layout->addWidget(vecEditors[0]);
 		vecEditors[1] = new QTVecEditor<3>(&(matrix->rot[0]  ),"Rot:"  );	layout->addWidget(vecEditors[1]);
 		vecEditors[2] = new QTVecEditor<3>(&(matrix->scale[0]),"Scale:");	layout->addWidget(vecEditors[2]);
@@ -108,16 +107,47 @@ public:
 
 #pragma endregion
 
+#pragma region Script ComponentEditor
+
+#include <Engine/Entity/Components/ScriptComponent.h>
+
+class ScriptEdtor : public SingleComponentEditor {
+	ScriptComponent * script;
+public:
+	ScriptEdtor(ScriptComponent * script) {
+		setWindowTitle("Script Component");
+		this->script = script;
+		QVBoxLayout * layout = new QVBoxLayout();
+		this->setLayout(layout);
+	}
+	void updateFromModel() {
+
+	}
+};
+
+template<>
+class EditorCreator<ScriptEdtor> : public EditorCreatorInterface {
+public:
+	SingleComponentEditor * getNewInstance(void * data) {
+		return new ScriptEdtor((ScriptComponent*)data);
+	}
+};
+
+#pragma endregion
+
 #pragma region privates
 #include <map>
 #include <Engine/Defines/Vectors.h>
+
+#define ADD_INTERFACE_TO_MAP(class_name, adaptor) map[typeid(##class_name##).name()] = new EditorCreator<##adaptor##>()
 
 class ComponentEditorPrivates {
 public:
 	std::map<std::string,EditorCreatorInterface*> map;
 	ComponentEditorPrivates() {
 		//init map here
-		map[typeid(MatrixInfo).name()] = new EditorCreator<TranslationEdtor>();
+		ADD_INTERFACE_TO_MAP(MatrixInfo,TranslationEdtor);
+		ADD_INTERFACE_TO_MAP(ScriptComponent,ScriptEdtor);
 	}
 	template<typename T> bool hasEditorFor(Component*c) {
 		return map.find(typeid(T).name()) != map.end();
@@ -161,9 +191,7 @@ public:
 
 #pragma endregion
 
-void ComponentEditor::changeEntity(Entity * toUpdateTo, std::function<bool(Component*)> validComponentCheck)
-{
-	
+void ComponentEditor::changeEntity(Entity * toUpdateTo, std::function<bool(Component*)> validComponentCheck) {
 	std::vector<Component*> allcomps;
 	if(toUpdateTo != nullptr) {
 		allcomps.push_back(toUpdateTo->getTrans());
@@ -184,7 +212,11 @@ void ComponentEditor::changeEntity(Entity * toUpdateTo, std::function<bool(Compo
 		delete item;
 	}
 	for (uint i = 0; i < list.size(); i++) {
-		layout()->addWidget(list[i]);
+		QGroupBox * boxy = new QGroupBox(list[i]->windowTitle());
+		QHBoxLayout * boxLayout = new QHBoxLayout();
+		boxy->setLayout(boxLayout);
+		boxLayout->addWidget(list[i]);
+		layout()->addWidget(boxy);
 	}
 }
 
