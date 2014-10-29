@@ -23,12 +23,14 @@ class ENGINE_SHARED GuiSkellyTon : public QMainWindow  {
 	GameObjectViewer *gameObjectList;
 	EditorGame * game;
 	ToolWindowManager * toolManager;
+	ComponentEditor * componentEditor;
 public:
 	EditorGame * Game() const { return game; }
 	GuiSkellyTon()
 		: scene(new BasicQGLGui())
 	{
 		toolManager = new ToolWindowManager();
+		componentEditor = new ComponentEditor();
 		game = &scene->meGame;
 		setCentralWidget(toolManager);
 		gameObjectList = new GameObjectViewer(game->Game());
@@ -53,11 +55,14 @@ public:
 			std::string name2 = EPrevious != nullptr ? std::string(EPrevious->Name()) : "NULL";
 			printer.LogMessage("from "+name2+" to "+name1);
 
+			componentEditor->changeEntity(ECurrent,game->IsGameObject());
+
 			this->update();
 		});
 
 		gameObjectList->setColumnCount(1);
 		toolManager->addToolWindow(gameObjectList,ToolWindowManager::AreaReferenceType::EmptySpace);
+		toolManager->addToolWindow(componentEditor,ToolWindowManager::AreaReferenceType::EmptySpace);
 	}
 
 	void initBar() {
@@ -97,6 +102,6 @@ public:
 		scene->startup();
 	}
 	void update() {
-		//gameObjectList->update();
+		componentEditor->update();
 	}
 };
