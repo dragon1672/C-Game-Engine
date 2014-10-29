@@ -57,6 +57,6 @@ GameObjectViewer::GameObjectViewer(GameObjectManager * game) : game(game)
 	game->entityListChange.push_back([this](Entity*){this->update();});
 	connect(this,&QTreeWidget::currentItemChanged,[this](QTreeWidgetItem *current, QTreeWidgetItem *previous){
 		this->currentlySelected = current != nullptr ? ((GameObjectTree*)current)->GameObj : nullptr;
-		printer.LogMessage("Game Object Changed");
+		printer.LogMessage(currentlySelected->Name());
 	});
 }

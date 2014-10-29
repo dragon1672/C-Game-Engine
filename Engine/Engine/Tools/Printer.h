@@ -2,6 +2,7 @@
 
 #include <Engine/Defines/SingletonsDefine.h>
 #include <ExportHeader.h>
+#include <string>
 
 #define printer Printer::getInstance()
 
@@ -16,7 +17,11 @@ public:
 
 
 	void Log(const char * msg, Color color);
+	void Log(std::string msg, Color color);
 	void LogMessage(const char * msg);
 	void LogWarning(const char * msg);
 	void LogError(  const char * msg);
+	void LogMessage(std::string msg);
+	void LogWarning(std::string msg);
+	void LogError(  std::string msg);
 };

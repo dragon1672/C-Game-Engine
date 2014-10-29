@@ -54,12 +54,34 @@ namespace {
 IMPLEMENT_SINGLETON(Printer);
 
 void Printer::LogMessage(const char * msg) { Log(msg,Color::GREEN);  }
+
+void Printer::LogMessage(std::string msg)
+{
+	LogMessage( msg.c_str() );
+}
+
 void Printer::LogWarning(const char * msg) { Log(msg,Color::YELLOW); }
+
+void Printer::LogWarning(std::string msg)
+{
+	LogWarning( msg.c_str() );
+}
+
 void Printer::LogError(const char * msg)   { Log(msg,Color::RED);    }
+
+void Printer::LogError(std::string msg)
+{
+	LogError(   msg.c_str() );
+}
 
 void Printer::Log(const char * msg, Color color)
 {
 	SetColor(color);
 	std::cout << msg << std::endl;
 	SetColor(Color::GREEN);
+}
+
+void Printer::Log(std::string msg, Color color)
+{
+	Log(msg.c_str(),color);
 }
