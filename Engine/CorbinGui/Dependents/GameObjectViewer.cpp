@@ -54,6 +54,7 @@ void GameObjectViewer::init()
 GameObjectViewer::GameObjectViewer(GameObjectManager * game) : game(game)
 {
 	setColumnCount(1);
+	setWindowTitle("Game Object List");
 	game->entityListChange.push_back([this](Entity*){this->update();});
 }
 
