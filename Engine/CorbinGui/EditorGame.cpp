@@ -7,11 +7,14 @@
 EditorGame::EditorGame()
 {
 	uniqueName = Random::rString::Letters(4)+"EditorInstance"+Random::rString::Letters(4);
-	auto tmpFunction = [this](Object* o){
+	isEditorObject = [this](Object* o){
 		return StringManapulation::startsWith(o->Name(),this->uniqueName);
 	};
-	game.SelectorFunction(tmpFunction);
-	game.ComponentSelectorFunction(tmpFunction);
+	isGameObject = [this](Object* o){
+		return !StringManapulation::startsWith(o->Name(),this->uniqueName);
+	};
+	game.SelectorFunction(isEditorObject);
+	game.ComponentSelectorFunction(isEditorObject);
 	currentEntity.editor = this;
 }
 

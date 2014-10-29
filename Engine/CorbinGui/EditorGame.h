@@ -14,8 +14,12 @@ private:
 	std::string uniqueName; // all editor components must have this as the name
 	GameObjectManager game;
 	Entity * currentlySelectedEntity;
+	std::function<bool(Object*)> isEditorObject;
+	std::function<bool(Object*)> isGameObject;
 public:
-	GameObjectManager * Game() { return &game; }
+	inline std::function<bool(Object*)> IsEditorObject() const { return isEditorObject; }
+	inline std::function<bool(Object*)> IsGameObject() const { return isGameObject; }
+	inline GameObjectManager * Game() { return &game; }
 	int width,height;
 	EditorGame();
 
