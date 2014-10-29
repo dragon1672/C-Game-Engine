@@ -157,6 +157,7 @@
     <ClCompile Include="CorbinGui\Dependents\EditorComponents\EditorRenderableComponent.cpp" />
     <ClCompile Include="CorbinGui\Dependents\GameObjectViewer.cpp" />
     <ClCompile Include="CorbinGui\Dependents\ComponentEditor.cpp" />
+    <ClCompile Include="CorbinGui\GuiSkellyTon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Tools\MyMath\Matrix2D.inl" />
