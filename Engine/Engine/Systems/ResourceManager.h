@@ -65,7 +65,8 @@ public:
 	TYPE * get##TYPE##(int id); \
 	TYPE * getFirst##TYPE##(const char * name); \
 	TYPE * getFirst##TYPE##(std::string name); \
-	std::vector<TYPE*> getAll##TYPE##(std::string name)
+	std::vector<TYPE*> getAll##TYPE##(std::string name); \
+	std::vector<TYPE*> getAll##TYPE##()
 
 	RESOURCE_GET_METHODS(Mesh);
 	RESOURCE_GET_METHODS(ShaderProgram);

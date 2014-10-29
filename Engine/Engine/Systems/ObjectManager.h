@@ -19,5 +19,6 @@ public:
 	Object * getFirst(int id);
 	Object * getFirst(const char * name);
 	std::vector<Object *> getAll(const char * name);
+	std::vector<Object *> getAll();
 	int getUniqueId();
 };

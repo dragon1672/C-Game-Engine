@@ -79,6 +79,14 @@ Object * ObjectManager::getFirst(const char * name)
 	return privates->Contains(name) ? privates->nameMap[name][0] : nullptr;
 }
 
+std::vector<Object *> ObjectManager::getAll()
+{
+	std::vector<Object *> ret;
+	for(auto i : privates->idMap) {
+		ret.push_back(i.second);
+	}
+	return ret;
+}
 std::vector<Object *> ObjectManager::getAll(const char * name)
 {
 	return privates->Contains(name) ? privates->nameMap[name] : std::vector<Object*>();
