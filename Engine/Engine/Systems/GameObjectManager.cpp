@@ -62,7 +62,7 @@ void GameObjectManager::paint() {
 		if(entities[i].active) {
 			auto renderables = entities[i].getComponents<RenderableComponent>();
 			for (RenderableComponent * renderable : renderables) {
-				if(renderable != nullptr && renderable->visable) {
+				if(renderable != nullptr && renderable->visable && renderable->isValid()) {
 					passStandardUniforms(renderable);
 					renderable->drawWarmup();
 					renderable->geo->paint();
