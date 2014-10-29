@@ -59,41 +59,48 @@ void GuiSkellyTon::initBar()
 {
 	QMenu * fileMenu = menuBar()->addMenu("File");
 	//setting up file actions
-	QAction* action;
+	QAction* action; // master action, used to preserve context
 	fileMenu->addAction(action = new QAction("New Project", this));		action->setShortcut(QKeySequence::New);
-	connect(action, &QAction::triggered, [this](){
+	connect(action, &QAction::triggered, [this](){ // TODO
 		printer.LogMessage("New Clicked");
 	});
 
 	fileMenu->addAction(action = new QAction("Load Project", this));	action->setShortcut(QKeySequence::Open);
-	connect(action, &QAction::triggered, [this](){
+	connect(action, &QAction::triggered, [this](){ // TODO
 		printer.LogMessage("Open Clicked");
 	});
 
 	fileMenu->addAction(action = new QAction("Save Project", this));	action->setShortcuts(QKeySequence::Save);
-	connect(action, &QAction::triggered, [this](){
+	connect(action, &QAction::triggered, [this](){ // TODO
 		printer.LogMessage("Save Clicked");
 	});
 
-	fileMenu->addAction(action = new QAction("Exit Program", this));	connect(action, &QAction::triggered, [this](){
-		printer.LogMessage("Exit Clicked"); this->close();
+	fileMenu->addAction(action = new QAction("Exit Program", this));
+	connect(action, &QAction::triggered, [this](){
+		printer.LogMessage("Exiting Editor");
+		this->close();
 	});
 
 	fileMenu = menuBar()->addMenu("Resources");
-	fileMenu->addAction(action = new QAction("Load Obj", this));        connect(action, &QAction::triggered, [this](){
+	fileMenu->addAction(action = new QAction("Load Obj", this));
+	connect(action, &QAction::triggered, [this](){ // TODO
 		printer.LogMessage("Load Obj Clicked");
 	});
-	fileMenu->addAction(action = new QAction("Load Texture", this));    connect(action, &QAction::triggered, [this](){
+	fileMenu->addAction(action = new QAction("Load Texture", this));
+	connect(action, &QAction::triggered, [this](){ // TODO
 		printer.LogMessage("Load Texture Clicked");
 	});
-	fileMenu->addAction(action = new QAction("Load Shader", this));     connect(action, &QAction::triggered, [this](){
+	fileMenu->addAction(action = new QAction("Load Shader", this));
+	connect(action, &QAction::triggered, [this](){ // TODO
 		printer.LogMessage("Load Shader Clicked");
 	});
-	fileMenu->addAction(action = new QAction("Load Script", this));     connect(action, &QAction::triggered, [this](){
+	fileMenu->addAction(action = new QAction("Load Script", this));
+	connect(action, &QAction::triggered, [this](){ // TODO
 		printer.LogMessage("Load Script Clicked");
 	});
 	fileMenu = menuBar()->addMenu("GameObject");
-	fileMenu->addAction(action = new QAction("New Game Object", this));	connect(action, &QAction::triggered, [this](){
+	fileMenu->addAction(action = new QAction("New Game Object", this));
+	connect(action, &QAction::triggered, [this](){
 		game->AddEntity("New Game Object");
 	});
 
