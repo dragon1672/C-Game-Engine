@@ -99,12 +99,12 @@ glm::mat4 Entity::getWorldTransform()
 	return ret * localTrans.getCompleteTransform();
 }
 
-const char * Entity::Name() const
+std::string Entity::Name() const
 {
-	return Object::Name(); // stupid Lua
+	return name; // stupid Lua
 }
 
-Entity::Entity(const char * name/*="New Game Object"*/, GameObjectManager * manager, Entity * p /*= nullptr*/)  : manager(manager), parent(nullptr), active(true) { this->name = name; Parent(p); }
+Entity::Entity(std::string name/*="New Game Object"*/, GameObjectManager * manager, Entity * p /*= nullptr*/)  : manager(manager), parent(nullptr), active(true) { this->name = name; Parent(p); }
 
 
 MatrixInfo * Entity::getTrans() { return &localTrans; }

@@ -17,7 +17,7 @@ class ENGINE_SHARED Mesh : public Resource {
 public:
 	int drawStyle;
 	Mesh();
-	Mesh(const char * name);
+	Mesh(std::string name);
 	std::vector<Vert> verts;
 	std::vector<uint> indices;
 	inline glm::vec3 Min() const { return min; }

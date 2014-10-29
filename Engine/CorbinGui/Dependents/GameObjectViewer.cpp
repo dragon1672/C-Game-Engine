@@ -5,7 +5,7 @@
 class GameObjectTree : public QTreeWidgetItem {
 public:
 	Entity * GameObj;
-	GameObjectTree(Entity * obj) : QTreeWidgetItem((QTreeWidget*)0, QStringList(QString(obj->Name()))), GameObj(obj) {}
+	GameObjectTree(Entity * obj) : QTreeWidgetItem((QTreeWidget*)0, QStringList(QString(obj->Name().c_str()))), GameObj(obj) {}
 };
 
 GameObjectTree* GameObjectViewer::getItem(Entity * dude)

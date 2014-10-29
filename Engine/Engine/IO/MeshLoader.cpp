@@ -4,9 +4,9 @@
 #define GET_DATA(type, offset) *reinterpret_cast<type *>(bytes+offset);	offset += sizeof(type);
 
 namespace FileIO {
-	std::function<Mesh(fileByte*, const char * name)> loaders[] = {
+	std::function<Mesh(fileByte*, std::string name)> loaders[] = {
 		//v1
-		[](fileByte * bytes, const char * name) -> Mesh {
+		[](fileByte * bytes, std::string name) -> Mesh {
 			Mesh ret(name);
 			//uint offset = 0;
 			///*int vertexOffset = */GET_DATA(int,offset);
@@ -42,16 +42,16 @@ namespace FileIO {
 
 
 
-	Mesh loadFromBinary(fileByte * bytes, const char * name) {
+	Mesh loadFromBinary(fileByte * bytes, std::string name) {
 		int offset = 0;
 		int firstNum = GET_DATA(int,offset);
 		int index = firstNum / 16;
 		return loaders[index](bytes,name);
 	}
-	Mesh loadMeshFromFile(std::string filePath, const char * name) {
+	Mesh loadMeshFromFile(std::string filePath, std::string name) {
 		return loadMeshFromFile(filePath.c_str(),name);
 	}
-	Mesh loadMeshFromFile(const char * filePath, const char * name) {
+	Mesh loadMeshFromFile(const char * filePath, std::string name) {
 		FileData file = loadFile(filePath);
 		Mesh ret = loadFromBinary(file.data,name);
 		file.cleanup();

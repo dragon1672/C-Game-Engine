@@ -6,13 +6,13 @@
 
 IMPLEMENT_SINGLETON(ResourceManager);
 
-Mesh * ResourceManager::addMesh(const char * name)
+Mesh * ResourceManager::addMesh(std::string name)
 {
 	geos.push_back(Mesh(name));
 	MeshObjs.Register(geos.last());
 	return &geos.last();
 }
-Mesh * ResourceManager::addMesh(const char * name, Neumont::ShapeData NUCrap)
+Mesh * ResourceManager::addMesh(std::string name, Neumont::ShapeData NUCrap)
 {
 	geos.push_back(Mesh(name));
 	Mesh& ret = geos.last();
@@ -26,29 +26,29 @@ Mesh * ResourceManager::addMesh(const char * name, Neumont::ShapeData NUCrap)
 	MeshObjs.Register(geos.last());
 	return &geos.last();
 }
-Mesh * ResourceManager::addMesh(const char * name, std::string filePath)
+Mesh * ResourceManager::addMesh(std::string name, std::string filePath)
 {
 	return addMesh(filePath.c_str());
 }
-Mesh * ResourceManager::addMesh(const char * name, const char * filePath)
+Mesh * ResourceManager::addMesh(std::string name, const char * filePath)
 {
 	geos.push_back(FileIO::loadMeshFromFile(filePath,name));
 	MeshObjs.Register(geos.last());
 	return &geos.last();
 }
-ShaderProgram * ResourceManager::addShader_file(const char * name, const char * vertFilePath, const char * fragFilePath)
+ShaderProgram * ResourceManager::addShader_file(std::string name, const char * vertFilePath, const char * fragFilePath)
 {
 	return addShader_file(name,std::string(vertFilePath),std::string(fragFilePath));
 }
-ShaderProgram * ResourceManager::addShader_file(const char * name, std::string vertFilePath, std::string fragFilePath)
+ShaderProgram * ResourceManager::addShader_file(std::string name, std::string vertFilePath, std::string fragFilePath)
 {
 	return addShader_src(name, FileIO::readFile(workingDir + vertFilePath),FileIO::readFile(workingDir + fragFilePath));
 }
-ShaderProgram * ResourceManager::addShader_src (const char * name, std::string vert, std::string frag)
+ShaderProgram * ResourceManager::addShader_src (std::string name, std::string vert, std::string frag)
 {
 	return addShader_src(name, vert.c_str(),frag.c_str());
 }
-ShaderProgram * ResourceManager::addShader_src (const char * name, const char * vert, const char * frag)
+ShaderProgram * ResourceManager::addShader_src (std::string name, const char * vert, const char * frag)
 {
 	shaders.push_back(ShaderProgram(name));
 	ShaderProgramObjs.Register(shaders.last());
@@ -78,25 +78,25 @@ void ResourceManager::foreachOnAll(std::function<void(Resource&)> func)
 	for (uint i = 0; i < textures.size(); i++) func(textures[i]);
 }
 
-TextureInfo * ResourceManager::add2DTexture(const char * name, QImage& image, GLenum type /*= GL_RGBA*/)
+TextureInfo * ResourceManager::add2DTexture(std::string name, QImage& image, GLenum type /*= GL_RGBA*/)
 {
 	return add2DTexture(name,image,type,type);
 }
-TextureInfo * ResourceManager::add2DTexture(const char * name, QImage& image, GLenum type, GLenum type2)
+TextureInfo * ResourceManager::add2DTexture(std::string name, QImage& image, GLenum type, GLenum type2)
 {
 	return add2DTexture(name,image.bits(),image.byteCount(),image.width(),image.height(),type,type);
 }
-TextureInfo * ResourceManager::add2DTexture(const char * name, const char * filePath, bool flipHorz /*= false*/, bool flipVert /*= false*/)
+TextureInfo * ResourceManager::add2DTexture(std::string name, const char * filePath, bool flipHorz /*= false*/, bool flipVert /*= false*/)
 {
 	return add2DTexture(name,std::string(filePath),flipHorz,flipVert);
 }
-TextureInfo * ResourceManager::add2DTexture(const char * name, std::string& filePath, bool flipHorz /*= false*/, bool flipVert /*= false*/)
+TextureInfo * ResourceManager::add2DTexture(std::string name, std::string& filePath, bool flipHorz /*= false*/, bool flipVert /*= false*/)
 {
 	QImage data = FileIO::loadImage(workingDir + filePath);
 	if(flipVert || flipHorz) data = data.mirrored(flipHorz,flipVert);
 	return add2DTexture(name,data);
 }
-TextureInfo * ResourceManager::add2DTexture(const char * name, ubyte * data, uint sizeofData, uint width, uint height, GLenum type, GLenum type2)
+TextureInfo * ResourceManager::add2DTexture(std::string name, ubyte * data, uint sizeofData, uint width, uint height, GLenum type, GLenum type2)
 {
 	textures.push_back(TextureInfo(name));
 	TextureInfoObjs.Register(textures.last());
@@ -111,19 +111,19 @@ TextureInfo * ResourceManager::add2DTexture(const char * name, ubyte * data, uin
 }
 
 
-Script * ResourceManager::addScript_file(const char * name, const char * filePath)
+Script * ResourceManager::addScript_file(std::string name, const char * filePath)
 {
 	return addScript_file(name, std::string(filePath));
 }
-Script * ResourceManager::addScript_file(const char * name, std::string filePath)
+Script * ResourceManager::addScript_file(std::string name, std::string filePath)
 {
 	return addScript_src(name, FileIO::readFile(workingDir + filePath));
 }
-Script * ResourceManager::addScript_src (const char * name, const char * file)
+Script * ResourceManager::addScript_src (std::string name, const char * file)
 {
 	return addScript_src(name, std::string(file));
 }
-Script * ResourceManager::addScript_src (const char * name, std::string file)
+Script * ResourceManager::addScript_src (std::string name, std::string file)
 {
 	scripts.push_back(Script(name));
 	ScriptObjs.Register(scripts.last());

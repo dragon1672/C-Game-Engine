@@ -7,7 +7,7 @@
 class ENGINE_SHARED	Script : public Resource {
 public:
 	Script() {}
-	Script(const char * name) { this->name = name; }
+	Script(std::string name) { this->name = name; }
 	std::string src;
 	virtual void PassDownToHardWare() {}
 };

@@ -204,7 +204,7 @@ void ShaderProgram::update()
 	passSavedUniforms_force();
 }
 
-ShaderProgram::ShaderProgram(const char * name)
+ShaderProgram::ShaderProgram(std::string name)
 {
 	this->name = name;
 }

@@ -21,7 +21,7 @@ public:
 	uint slotID;
 
 	TextureInfo();
-	TextureInfo(const char * name);
+	TextureInfo(std::string name);
 
 	void PassDownToHardWare();
 };

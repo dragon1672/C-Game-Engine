@@ -1,16 +1,17 @@
 #pragma once
 
 #include <ExportHeader.h>
+#include <string>
 
 class ENGINE_SHARED Object {
 private:
 	static int GlobalID;
 	int id;
 protected:
-	const char * name; // default nullptr
+	std::string name;
 public:
 	Object();
 	int getID() const; //will be unique across all objects
-	const char * Name() const;//can have dups
-	void Name(const char * name);
+	std::string Name() const;//can have dups
+	void Name(const std::string name);
 };

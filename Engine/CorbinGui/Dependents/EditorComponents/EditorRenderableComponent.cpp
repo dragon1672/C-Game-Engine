@@ -24,7 +24,7 @@ EditorRenderableComponent::EditorRenderableComponent() :
 
 bool EditorRenderableComponent::isValid()
 {
-	return name != nullptr && gameInstance != nullptr && editorInstance != nullptr && gameInstance->isValid() && editorInstance->isValid();
+	return name != "" && gameInstance != nullptr && editorInstance != nullptr && gameInstance->isValid() && editorInstance->isValid();
 }
 
 void EditorRenderableComponent::sync()

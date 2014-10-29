@@ -185,7 +185,7 @@ void Mesh::PassDownToHardWare()
 	geo.addStreamedParameters<Vert>(Vert::getAtribs(),Vert::getNumOfAtribs());
 }
 
-Mesh::Mesh(const char * name)
+Mesh::Mesh(std::string name)
 {
 	this->name = name;
 	drawStyle = GL_TRIANGLES;

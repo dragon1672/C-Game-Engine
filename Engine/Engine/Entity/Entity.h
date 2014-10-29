@@ -49,8 +49,8 @@ public:
 	std::unordered_set<Entity *> getAllChildren();
 
 
-	Entity(const char * name="New Game Object", GameObjectManager * manager = nullptr, Entity * p = nullptr);
-	const char * Name() const;
+	Entity(std::string name="New Game Object", GameObjectManager * manager = nullptr, Entity * p = nullptr);
+	std::string Name() const;
 	virtual ~Entity(){}
 
 	std::vector<Component *> components;

@@ -5,17 +5,17 @@
 
 int Object::GlobalID = 0;
 
-Object::Object() : id(GlobalID++), name(nullptr)
+Object::Object() : id(GlobalID++), name("")
 {
 
 }
 
-const char * Object::Name() const
+std::string Object::Name() const
 {
 	return name;
 }
 
-void Object::Name(const char * name)
+void Object::Name(const std::string name)
 {
 	this->name = name;
 }
