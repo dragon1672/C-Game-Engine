@@ -2,17 +2,17 @@
 
 #include <QtWidgets/QTreeWidget>
 #include <QtWidgets/QWidget>
-#include <Engine/Systems/GameObjectManager.h>
+#include <CorbinGui/EditorGame.h>
 #include <QtGui/QKeyEvent>
 #include <ExportHeader.h>
 
 class GameObjectTree;
 class ENGINE_SHARED GameObjectViewer : public QTreeWidget {
 
-	GameObjectManager * game;
+	EditorGame * game;
 	GameObjectTree* getItem(Entity * dude);
 public:
-	GameObjectViewer(GameObjectManager * game);
+	GameObjectViewer(EditorGame * game);
 	void init();
 	void update();
 	void keyPressEvent(QKeyEvent *ev);

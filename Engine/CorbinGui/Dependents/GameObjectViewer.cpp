@@ -39,7 +39,7 @@ void GameObjectViewer::update()
 	while(this->topLevelItemCount() > 0) delete takeTopLevelItem(0);
 
 	QList<QTreeWidgetItem *> items;
-	auto topLevelGameObjects = game->getTopLevelEntities();
+	auto topLevelGameObjects = game->Game()->getTopLevelEntities();
 	for (uint i = 0; i < topLevelGameObjects.size(); ++i) {
 		items.append(getItem(topLevelGameObjects[i]));
 	}
@@ -51,11 +51,12 @@ void GameObjectViewer::init()
 	update();
 }
 
-GameObjectViewer::GameObjectViewer(GameObjectManager * game) : game(game)
+GameObjectViewer::GameObjectViewer(EditorGame * game) : game(game)
 {
 	setColumnCount(1);
 	setWindowTitle("Game Object List");
-	game->entityListChange.push_back([this](Entity*){this->update();});
+	
+	game->Game()->entityListChange.push_back([this](Entity*){this->update();});
 }
 
 Entity * GameObjectViewer::convertTree2Entity(QTreeWidgetItem * treeItem)
