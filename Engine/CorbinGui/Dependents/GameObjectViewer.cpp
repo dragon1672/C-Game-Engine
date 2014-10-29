@@ -25,8 +25,12 @@ GameObjectTree* GameObjectViewer::getItem(Entity * dude)
 
 void GameObjectViewer::keyPressEvent(QKeyEvent *ev)
 {
-	if(ev->key() == Qt::Key_Delete)
+	if(ev->key() == Qt::Key_Delete) {
 		game->RemoveCurrentEntity();
+		auto tmp = this->currentItem();
+		this->setCurrentItem(nullptr);
+		emit this->currentItemChanged(tmp,nullptr);
+	}
 }
 
 void GameObjectViewer::keyReleaseEvent(QKeyEvent *ev)
@@ -44,6 +48,9 @@ void GameObjectViewer::update()
 		items.append(getItem(topLevelGameObjects[i]));
 	}
 	insertTopLevelItems(0, items);
+	auto tmp = this->currentItem();
+	this->setCurrentItem(nullptr);
+	emit this->currentItemChanged(tmp,nullptr);
 }
 
 void GameObjectViewer::init()
