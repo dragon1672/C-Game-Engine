@@ -33,6 +33,14 @@ public:
 
 #include <glm/glm.hpp>
 
+namespace {
+	int clamp(int src, int min, int max) {
+		if(src < min) return min;
+		if(src > max) return max;
+		return src;
+	}
+}
+
 template<uint N>
 class QTVecEditor : public SingleComponentEditor {
 	float * vec;
@@ -44,11 +52,12 @@ class QTVecEditor : public SingleComponentEditor {
 		if(title != "") {
 			layout->addWidget(new QLabel(title));
 		}
-		std::string names = "xyz";
+		std::string names = "xyzw?";
 		for(uint i=0;i<size;i++) {
 			editors[i] = new QLineEdit();	editors[i]->setValidator( new QDoubleValidator() );
-
-			layout->addWidget(new QLabel(names[i]+":"));	layout->addWidget(editors[i]);
+			char letter = names[clamp(i,0,names.length()-1)];
+			QString name = QString(letter);
+			layout->addWidget(new QLabel(name+": "));	layout->addWidget(editors[i]);
 			connect(editors[i],&QLineEdit::textEdited,[&,this,i](const QString &newGuy){ this->vec[i] = (float)(newGuy.toDouble()); });
 		}
 	}
