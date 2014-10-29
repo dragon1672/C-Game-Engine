@@ -120,9 +120,10 @@ void GameObjectManager::RemoveEntity(Entity * toRemove)
 {
 	int index = entities.find(toRemove);
 	if(index >= 0) {
-		entities.remove(index);
-		for (auto i : toRemove->Children())
+		for (auto i : toRemove->Children()) {
 			RemoveEntity(i);
+		}
+		entities[index].active = false;
 		for (uint i = 0; i < entityRemoveEvent.size(); i++) entityRemoveEvent[i](toRemove);
 	}
 }
