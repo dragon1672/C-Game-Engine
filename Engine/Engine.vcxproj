@@ -200,6 +200,7 @@
     <ClCompile Include="CorbinGui\BasicQGLGui.cpp" />
     <ClCompile Include="CorbinGui\BasicQGLGui_mock.cpp" />
     <ClCompile Include="CorbinGui\Dependents\EditorComponents\EditorRenderableComponent.cpp" />
+    <ClCompile Include="CorbinGui\Dependents\GameObjectViewer.cpp" />
     <ClCompile Include="CorbinGui\EditorGame.cpp" />
     <ClCompile Include="CorbinGui\ToolWindowManager\ToolWindowManager.cpp" />
     <ClCompile Include="CorbinGui\ToolWindowManager\ToolWindowManagerArea.cpp" />

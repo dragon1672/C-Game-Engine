@@ -29,8 +29,9 @@ public:
 	{
 		toolManager = new ToolWindowManager();
 		game = &scene->meGame;
-
+		setCentralWidget(toolManager);
 		gameObjectList = new GameObjectViewer(game->Game());
+
 		scene->setMinimumSize(500,500);
 		connect(&myTimer,&QTimer::timeout,[this](){ this->update(); });
 
@@ -38,15 +39,14 @@ public:
 
 		toolManager->addToolWindow(scene,ToolWindowManager::AreaReferenceType::EmptySpace);
 
-		setCentralWidget(toolManager);
-
 		
-
+		initBar();
 
 
 		connect(gameObjectList,&QTreeWidget::currentItemChanged,[this](QTreeWidgetItem *current, QTreeWidgetItem *previous){
 			//selection changed, time to update current object
 			std::cout << "changed" << std::endl;
+			//this->game->currentEntity.
 			this->update();
 		});
 
@@ -78,10 +78,10 @@ public:
 		fileMenu->addAction(action = new QAction("Load Shader", this));		connect(action, &QAction::triggered, [this](){ printer.LogMessage("Load Shader Clicked"); });
 		fileMenu->addAction(action = new QAction("Load Script", this));		connect(action, &QAction::triggered, [this](){ printer.LogMessage("Load Script Clicked"); });
 		fileMenu = menuBar()->addMenu("GameObject");
-		fileMenu->addAction(action = new QAction("New Game Object", this));	connect(action, &QAction::triggered, [this](){ printer.LogMessage("New Game Object Clicked"); });
+		fileMenu->addAction(action = new QAction("New Game Object", this));	connect(action, &QAction::triggered, [this](){ game->AddEntity("New Game Object"); });
 		fileMenu = fileMenu->addMenu("Add Component");
 		fileMenu->addAction(action = new QAction("Renderable Component", this));	connect(action, &QAction::triggered, [this](){ printer.LogMessage("Add Renderable Clicked"); });
-		fileMenu->addAction(action = new QAction("Collider Component", this));		connect(action, &QAction::triggered, [this](){ printer.LogMessage("Add Collider Clicked"); });
+		//fileMenu->addAction(action = new QAction("Collider Component", this));		connect(action, &QAction::triggered, [this](){ printer.LogMessage("Add Collider Clicked"); });
 		fileMenu->addAction(action = new QAction("Script Component", this));		connect(action, &QAction::triggered, [this](){ printer.LogMessage("Add Script Clicked"); });
 	}
 
