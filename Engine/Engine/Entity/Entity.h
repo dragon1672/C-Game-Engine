@@ -44,6 +44,7 @@ public:
 	std::vector<std::function<void(Entity*oldParent,Entity*newParent)>> parentChangedEvent;
 	Entity * Parent();
 	void Parent(Entity * newGuy);
+	bool active;
 
 	std::unordered_set<Entity *> getAllChildren();
 
@@ -55,7 +56,6 @@ public:
 	std::vector<Component *> components;
 	glm::mat4 getWorldTransform();
 	MatrixInfo localTrans;
-
 	MatrixInfo * getTrans();
 	RenderableComponent * getRenderable();
 	ScriptComponent * getScript();
