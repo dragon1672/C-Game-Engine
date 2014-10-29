@@ -95,3 +95,8 @@ std::vector<Component*> EditorGame::scoper::getAllGameComponents()
 {
 	return Collections::Where<Component*>(currentlySelectedEntity->getAllComponents(),[this](Component*c){ return !this->editor->game.ComponentSelectorFunction()(c); });
 }
+
+void EditorGame::scoper::SetCurrent(Entity * toSet)
+{
+	currentlySelectedEntity = toSet;
+}

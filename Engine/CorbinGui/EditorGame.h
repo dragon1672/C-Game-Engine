@@ -43,6 +43,7 @@ public:
 		std::vector<ScriptComponent     *> getAllScripts();
 		std::vector<RenderableComponent *> getAllRenderables();
 		std::vector<CameraComponent     *> getAllCameras();
+		void SetCurrent(Entity * toSet);
 
 		void Parent(const char * name);
 
