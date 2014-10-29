@@ -1,9 +1,11 @@
 #include "ComponentEditor.h"
+#include <Engine/TypeDefs.h>
 
 #include <QtWidgets/QLabel>
 #include <Engine/Tools/QT/LinkedSlider.h>
 #include <QtWidgets/QLineEdit>
 #include <QtGui/QValidator>
+#include <array>
 
 #pragma region Component Editors
 
@@ -15,10 +17,11 @@ public:
 
 #include <glm/glm.hpp>
 
-template<int size>
+template<uint N>
 class QTVecEditor : public SingleComponentEditor {
 	float * vec;
-	QLineEdit * editors[size];
+	static const uint size = N;
+	QLineEdit * editors[size]; // supports up to vec4
 	void init(QString title="") {
 		QHBoxLayout * layout = new QHBoxLayout();
 		this->setLayout(layout);
@@ -26,20 +29,24 @@ class QTVecEditor : public SingleComponentEditor {
 			layout->addWidget(new QLabel(title));
 		}
 		std::string names = "xyz";
-		for(int i=0;i<size;i++) {
+		for(uint i=0;i<size;i++) {
 			editors[i] = new QLineEdit();	editors[i]->setValidator( new QDoubleValidator() );
 
 			layout->addWidget(new QLabel(names[i]+":"));	layout->addWidget(editors[i]);
-			connect(editors[i],QLineEdit::textEdited,[this](const QString &newGuy){ vec[i] = (float)newGuy.toDouble(); });
+			connect(editors[i],&QLineEdit::textEdited,[&,this,i](const QString &newGuy){ this->vec[i] = (float)(newGuy.toDouble()); });
 		}
 	}
 	void updateFromModel() {
-		for(int i=0;i<size;i++) {
+		for(uint i=0;i<size;i++) {
 			editors[i]->setText(QString::number(vec[i]));
 		}
 	}
 public:
-	QTVecEditor(float * data, QString title="") : data(data) {init(title);}
+	QTVecEditor(float * data,QString title = "") {
+		static_assert(size > 0,"Vector must be larger than 0");
+		vec = data;
+		init(title);
+	}
 };
 
 #include <Engine/Tools/MatrixInfo.h>
@@ -77,15 +84,16 @@ public:
 };
 
 template<class T>
-class EditorCreator : EditorCreatorInterface {
+class EditorCreator : public EditorCreatorInterface {
 public:
 	SingleComponentEditor * getNewInstance(void * data) {
 		static_assert(false,"No editor exists");
+		return nullptr;
 	}
 };
 
 template<>
-class EditorCreator<TranslationEdtor> : EditorCreatorInterface {
+class EditorCreator<TranslationEdtor> : public EditorCreatorInterface {
 public:
 	SingleComponentEditor * getNewInstance(void * data) {
 		return new TranslationEdtor((MatrixInfo*)data);
@@ -93,13 +101,13 @@ public:
 };
 
 namespace {
-	std::map<std::string,EditorCreatorInterface> initMap() {
-		std::map<std::string,EditorCreatorInterface> map;     
-		map[typename(MatrixInfo).name()] = EditorCreator<TranslationEdtor>
+	std::map<std::string,EditorCreatorInterface*> initMap() {
+		std::map<std::string,EditorCreatorInterface*> map;     
+		map[typeid(MatrixInfo).name()] = new EditorCreator<TranslationEdtor>();
 
 		return map;
 	}
-	std::map<std::string,EditorCreatorInterface> map = initMap();
+	std::map<std::string,EditorCreatorInterface*> map = initMap();
 }
 
 #pragma endregion
@@ -109,9 +117,10 @@ void ComponentEditor::changeEntity(Entity * toUpdateTo, std::function<bool(Compo
 {
 	std::vector<SingleComponentEditor *> list;
 	auto allcomps = toUpdateTo->getAllComponents();
-	for (int i = 0; i < length; i++) {
+	list.push_back(map[typeid(MatrixInfo).name()]->getNewInstance(toUpdateTo->getTrans()));
+	for (uint i = 0; i < allcomps.size(); i++) {
 		if(validComponentCheck(allcomps[i])) {
-			list.push_back(map[typeid(*allcomps[i]).name()].getNewInstance(allcomps[i]));
+			list.push_back(map[typeid(*allcomps[i]).name()]->getNewInstance(allcomps[i]));
 		}
 	}
 

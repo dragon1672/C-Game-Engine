@@ -15,5 +15,5 @@ public:
 	}
 
 
-	void changeEntity(Entity * toUpdateTo);
+	void changeEntity(Entity * toUpdateTo, std::function<bool(Component*)> validComponentCheck);
 };
