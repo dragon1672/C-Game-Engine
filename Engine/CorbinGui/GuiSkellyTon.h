@@ -33,7 +33,7 @@ public:
 		componentEditor = new ComponentEditor();
 		game = &scene->meGame;
 		setCentralWidget(toolManager);
-		gameObjectList = new GameObjectViewer(game->Game());
+		gameObjectList = new GameObjectViewer(game);
 
 		scene->setMinimumSize(500,500);
 		connect(&myTimer,&QTimer::timeout,[this](){ this->update(); });

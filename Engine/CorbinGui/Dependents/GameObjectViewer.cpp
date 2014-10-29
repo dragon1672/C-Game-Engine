@@ -26,7 +26,7 @@ GameObjectTree* GameObjectViewer::getItem(Entity * dude)
 void GameObjectViewer::keyPressEvent(QKeyEvent *ev)
 {
 	if(ev->key() == Qt::Key_Delete)
-		printer.LogMessage(ev->text().toStdString().c_str());
+		game->RemoveCurrentEntity();
 }
 
 void GameObjectViewer::keyReleaseEvent(QKeyEvent *ev)
