@@ -18,6 +18,46 @@ EditorGame::EditorGame()
 	currentEntity.editor = this;
 }
 
+void EditorGame::RemoveCurrentEntity()
+{
+	if(currentEntity.currentlySelectedEntity != nullptr) {
+		game.RemoveEntity(currentEntity.currentlySelectedEntity);
+	}
+	currentEntity.currentlySelectedEntity = nullptr;
+}
+
+void EditorGame::AddEntity(const char * name)
+{
+	currentEntity.currentlySelectedEntity = game.AddEntity(name);
+}
+
+void EditorGame::initGl()
+{
+	game.initGl();
+}
+
+void EditorGame::init()
+{
+	game.init();
+}
+
+void EditorGame::start()
+{
+	game.start();
+}
+
+void EditorGame::update()
+{
+	game.update();
+	game.width = width;
+	game.height = height;
+}
+
+void EditorGame::paint()
+{
+	game.paint();
+}
+
 template<>
 RenderableComponent * EditorGame::scoper::addComponent()
 {

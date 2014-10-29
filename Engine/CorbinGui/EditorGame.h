@@ -54,24 +54,11 @@ public:
 	} currentEntity;
 
 
-	void init() {
-		game.init();
-	}
-	void initGl() {
-		game.initGl();
-	}
-	void start() {
-		game.start();
-	}
-	void update() {
-		game.update();
-		game.width = width;
-		game.height = height;
-	}
-	void paint() {
-		game.paint();
-	}
-	void AddEntity(const char * name) {
-		currentEntity.currentlySelectedEntity = game.AddEntity(name);
-	}
+	void init();
+	void initGl();
+	void start();
+	void update();
+	void paint();
+	void AddEntity(const char * name);
+	void RemoveCurrentEntity();
 };
