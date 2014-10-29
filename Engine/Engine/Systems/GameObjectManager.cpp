@@ -17,14 +17,14 @@ bool GameObjectManager::init() {
 	MasterLua::getInstance().init();
 	resourceManager.init();
 	for (uint i = 0; i < entities.size(); i++) {
-		entities[i].init();
+		if(entities[i].active) entities[i].init();
 	}
 	inputManager.init();
 	return true;
 }
 bool GameObjectManager::start() {
 	for (uint i = 0; i < entities.size(); i++) {
-		if(!entities[i].ComponentsAreReady())
+		if(entities[i].active && !entities[i].ComponentsAreReady())
 			throw std::invalid_argument("Some component is not init");
 	}
 	Timer::getInstance().start();
@@ -39,13 +39,13 @@ void GameObjectManager::update() {
 	Timer::getInstance().interval();
 	resourceManager.update();
 	if(selectorFunction) {
-		for (uint i = 0; i < entities.size(); i++) { if(selectorFunction(&entities[i])) entities[i].earlyUpdate(); }
-		for (uint i = 0; i < entities.size(); i++) { if(selectorFunction(&entities[i])) entities[i].update();      }
-		for (uint i = 0; i < entities.size(); i++) { if(selectorFunction(&entities[i])) entities[i].lateUpdate();  }
+		for (uint i = 0; i < entities.size(); i++) { if(entities[i].active && selectorFunction(&entities[i])) entities[i].earlyUpdate(); }
+		for (uint i = 0; i < entities.size(); i++) { if(entities[i].active && selectorFunction(&entities[i])) entities[i].update();      }
+		for (uint i = 0; i < entities.size(); i++) { if(entities[i].active && selectorFunction(&entities[i])) entities[i].lateUpdate();  }
 	} else {
-		for (uint i = 0; i < entities.size(); i++) { entities[i].earlyUpdate(); }
-		for (uint i = 0; i < entities.size(); i++) { entities[i].update();      }
-		for (uint i = 0; i < entities.size(); i++) { entities[i].lateUpdate();  }
+		for (uint i = 0; i < entities.size(); i++) { if(entities[i].active) entities[i].earlyUpdate(); }
+		for (uint i = 0; i < entities.size(); i++) { if(entities[i].active) entities[i].update();      }
+		for (uint i = 0; i < entities.size(); i++) { if(entities[i].active) entities[i].lateUpdate();  }
 	}
 }
 
@@ -59,12 +59,14 @@ void GameObjectManager::paint() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	for (uint i = 0; i < entities.size(); i++) {
-		auto renderables = entities[i].getComponents<RenderableComponent>();
-		for (RenderableComponent * renderable : renderables) {
-			if(renderable != nullptr && renderable->visable) {
-				passStandardUniforms(renderable);
-				renderable->drawWarmup();
-				renderable->geo->paint();
+		if(entities[i].active) {
+			auto renderables = entities[i].getComponents<RenderableComponent>();
+			for (RenderableComponent * renderable : renderables) {
+				if(renderable != nullptr && renderable->visable) {
+					passStandardUniforms(renderable);
+					renderable->drawWarmup();
+					renderable->geo->paint();
+				}
 			}
 		}
 	}
@@ -111,7 +113,7 @@ std::vector<Entity *> GameObjectManager::getTopLevelEntities()
 	std::vector<Entity*> tmp;
 	for (uint i = 0; i < entities.size(); i++)
 		tmp.push_back(&entities[i]);
-	return Collections::Where<Entity*>(tmp,[](Entity*& a){ return a->Parent() == nullptr; });
+	return Collections::Where<Entity*>(tmp,[](Entity*& a){ return a->active && a->Parent() == nullptr; });
 }
 
 void GameObjectManager::RemoveEntity(Entity * toRemove)
