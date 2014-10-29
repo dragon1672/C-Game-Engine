@@ -10,8 +10,9 @@ protected:
 	friend Entity;
 	Entity * parent;
 public:
-	Component() {}
-	Component(const char * name) { this->name = name;}
+	bool active;
+	Component() : active(true) {}
+	Component(const char * name) : active(true) { this->name = name;}
 	inline Entity * Parent() { return parent; }
 	virtual void init()        {} // called once
 	virtual void start()       {} // called every scene load before update starts

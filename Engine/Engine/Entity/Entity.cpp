@@ -37,53 +37,29 @@ void Entity::init()        {
 	for(uint i=0; i<components.size(); i++) components[i]->init();
 }
 void Entity::start()       {
-	if(selectorFunction) {
-		for(uint i=0; i<components.size(); i++) {
-			if(selectorFunction(components[i])) {
-				components[i]->start();
-			}
-		}
-	} else {
-		for(uint i=0; i<components.size(); i++) {
+	for(uint i=0; i<components.size(); i++) {
+		if(components[i]->active && (!selectorFunction || selectorFunction && selectorFunction(components[i]))) {
 			components[i]->start();
 		}
 	}
 }
 void Entity::earlyUpdate() {
-	if(selectorFunction) {
-		for(uint i=0; i<components.size(); i++) {
-			if(selectorFunction(components[i])) {
-				components[i]->earlyUpdate();
-			}
-		}
-	} else {
-		for(uint i=0; i<components.size(); i++) {
+	for(uint i=0; i<components.size(); i++) {
+		if(components[i]->active && (!selectorFunction || selectorFunction && selectorFunction(components[i]))) {
 			components[i]->earlyUpdate();
 		}
 	}
 }
 void Entity::update()      {
-	if(selectorFunction) {
-		for(uint i=0; i<components.size(); i++) {
-			if(selectorFunction(components[i])) {
-			components[i]->update();     
-			}
-		}
-	} else {
-		for(uint i=0; i<components.size(); i++) {
+	for(uint i=0; i<components.size(); i++) {
+		if(components[i]->active && (!selectorFunction || selectorFunction && selectorFunction(components[i]))) {
 			components[i]->update();     
 		}
 	}
 }
 void Entity::lateUpdate()  {
-	if(selectorFunction) {
-		for(uint i=0; i<components.size(); i++) {
-			if(selectorFunction(components[i])) {
-				components[i]->lateUpdate(); 
-			}
-		}
-	} else {
-		for(uint i=0; i<components.size(); i++) {
+	for(uint i=0; i<components.size(); i++) {
+		if(components[i]->active && (!selectorFunction || selectorFunction && selectorFunction(components[i]))) {
 			components[i]->lateUpdate(); 
 		}
 	}
