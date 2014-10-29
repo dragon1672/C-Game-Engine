@@ -6,14 +6,30 @@
 #include <QtWidgets/QLineEdit>
 #include <QtGui/QValidator>
 #include <array>
+#include <Engine/Tools/CollectionEditing.h>
 
 #pragma region Component Editors
-
-
 class SingleComponentEditor : public QWidget {
 public:
 	virtual void updateFromModel() = 0;
 };
+
+class EditorCreatorInterface {
+public:
+	virtual SingleComponentEditor * getNewInstance(void * data) = 0;
+};
+
+template<class T>
+class EditorCreator : public EditorCreatorInterface {
+public:
+	SingleComponentEditor * getNewInstance(void * data) {
+		static_assert(false,"No editor exists");
+		return nullptr;
+	}
+};
+#pragma  endregion
+
+#pragma region Transform component editor
 
 #include <glm/glm.hpp>
 
@@ -58,7 +74,7 @@ class TranslationEdtor : public SingleComponentEditor {
 public:
 	TranslationEdtor(MatrixInfo * matrix) {
 		this->matrix = matrix;
-		QHBoxLayout * layout = new QHBoxLayout();
+		QVBoxLayout * layout = new QVBoxLayout();
 		this->setLayout(layout);
 		title = new QLabel("Transform Info");
 		layout->addWidget(title);
@@ -73,25 +89,6 @@ public:
 	}
 };
 
-#pragma endregion
-
-#pragma region map
-#include <map>
-
-class EditorCreatorInterface {
-public:
-	virtual SingleComponentEditor * getNewInstance(void * data) = 0;
-};
-
-template<class T>
-class EditorCreator : public EditorCreatorInterface {
-public:
-	SingleComponentEditor * getNewInstance(void * data) {
-		static_assert(false,"No editor exists");
-		return nullptr;
-	}
-};
-
 template<>
 class EditorCreator<TranslationEdtor> : public EditorCreatorInterface {
 public:
@@ -100,28 +97,96 @@ public:
 	}
 };
 
-namespace {
-	std::map<std::string,EditorCreatorInterface*> initMap() {
-		std::map<std::string,EditorCreatorInterface*> map;     
-		map[typeid(MatrixInfo).name()] = new EditorCreator<TranslationEdtor>();
-
-		return map;
-	}
-	std::map<std::string,EditorCreatorInterface*> map = initMap();
-}
-
 #pragma endregion
 
+#pragma region privates
+#include <map>
+#include <Engine/Defines/Vectors.h>
 
-void ComponentEditor::changeEntity(Entity * toUpdateTo, std::function<bool(Component*)> validComponentCheck)
-{
-	std::vector<SingleComponentEditor *> list;
-	auto allcomps = toUpdateTo->getAllComponents();
-	list.push_back(map[typeid(MatrixInfo).name()]->getNewInstance(toUpdateTo->getTrans()));
-	for (uint i = 0; i < allcomps.size(); i++) {
-		if(validComponentCheck(allcomps[i])) {
-			list.push_back(map[typeid(*allcomps[i]).name()]->getNewInstance(allcomps[i]));
+class ComponentEditorPrivates {
+public:
+	std::map<std::string,EditorCreatorInterface*> map;
+	ComponentEditorPrivates() {
+		//init map here
+		map[typeid(MatrixInfo).name()] = new EditorCreator<TranslationEdtor>();
+	}
+	template<typename T> bool hasEditorFor(Component*c) {
+		return map.find(typeid(T).name()) != map.end();
+	}
+	bool hasEditorFor(Component*c) {
+		return map.find(typeid(*c).name()) != map.end();
+	}
+	template<typename T>SingleComponentEditor * getEditor(Component * c) {
+		return map[typeid(T).name()]->getNewInstance(c);
+	}
+	SingleComponentEditor * getEditor(Component * c) {
+		return map[typeid(*c).name()]->getNewInstance(c);
+	}
+	~ComponentEditorPrivates() {
+		for(auto i : map) {
+			delete i.second;
 		}
 	}
 
+	std::vector<SingleComponentEditor *> TrackedEditors;
+	void clearList() {
+		CLEAR_VECTOR(TrackedEditors);
+	}
+	void initList(std::vector<Component *>& list) {
+		clearList();
+		for (uint i = 0; i < list.size(); i++) {
+			if(hasEditorFor(list[i])) {
+				TrackedEditors.push_back(getEditor(list[i]));
+			}
+		}
+	}
+
+	void update() {
+		for (uint i = 0; i < TrackedEditors.size(); i++) {
+			TrackedEditors[i]->updateFromModel();
+		}
+	}
+
+
+};
+
+#pragma endregion
+
+void ComponentEditor::changeEntity(Entity * toUpdateTo, std::function<bool(Component*)> validComponentCheck)
+{
+	
+	std::vector<Component*> allcomps;
+	if(toUpdateTo != nullptr) {
+		allcomps.push_back(toUpdateTo->getTrans());
+		auto tmp = toUpdateTo->getAllComponents();
+		for (uint i = 0; i < tmp.size(); i++) {
+			allcomps.push_back(tmp[i]);
+		}
+
+		allcomps = Collections::Where<Component*>(allcomps,validComponentCheck);
+
+	}
+	privates->initList(allcomps);
+	std::vector<SingleComponentEditor *>& list = privates->TrackedEditors;
+		
+	QLayoutItem* item;
+	while ( ( item = layout()->takeAt( 0 ) ) != NULL ) {
+		delete item->widget();
+		delete item;
+	}
+	for (uint i = 0; i < list.size(); i++) {
+		layout()->addWidget(list[i]);
+	}
+}
+
+ComponentEditor::ComponentEditor()
+{
+	setLayout(new QVBoxLayout());
+	setWindowTitle("Component Editor");
+	privates = new ComponentEditorPrivates();
+}
+
+void ComponentEditor::update()
+{
+	privates->update();
 }
