@@ -54,7 +54,7 @@ std::string Random::rString::makeString(int len, char * options, int numOptions)
 	std::string ret(len,'?');
 	for (uint i = 0; i < ret.length(); i++)
 	{
-		ret[i] = options[Random::Int(0,numOptions)];
+		ret[i] = options[Random::Int(0,numOptions-1)];
 	}
 	return ret;
 }
