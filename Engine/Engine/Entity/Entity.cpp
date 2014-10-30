@@ -195,3 +195,8 @@ void Entity::restoreValues(bool useSelector)
 		if(components[i]->active && (!selectorFunction || !useSelector || selectorFunction && selectorFunction(components[i]))) components[i]->restoreValues();
 	}
 }
+
+std::vector<Component *> Entity::getAllComponents()
+{
+	return components;
+}

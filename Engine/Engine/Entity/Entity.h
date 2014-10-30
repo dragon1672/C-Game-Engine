@@ -79,9 +79,7 @@ public:
 			tmp = Collections::Where<int>(tmp,[this](int&index){ return selectorFunction(components[index]); });
 		return Collections::Select<int,T*>(tmp,[this](int index) {return (T*)components[index];} );
 	}
-	std::vector<Component *> getAllComponents() {
-		return components;
-	}
+	std::vector<Component *> getAllComponents();
 
 	template<> RenderableComponent* addComponent();
 	template<> CameraComponent* addComponent();
@@ -98,7 +96,7 @@ public:
 	LUA_GET_FUN_PTR(MatrixInfo,getTrans);
 	LUA_GET_FUN_PTR(ScriptComponent,getScript);
 
-	inline operator LuaUserdata<Entity>() const {
+	inline operator LuaUserdata<Entity>() {
 		MAKE_LUA_INSTANCE_RET(Entity,ret);
 
 		BIND_LUA_VER(Entity,ret,parent);

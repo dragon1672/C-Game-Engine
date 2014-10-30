@@ -39,7 +39,6 @@ GuiSkellyTon::GuiSkellyTon() : scene(new BasicQGLGui())
 		this->update();
 	});
 
-	gameObjectList->setColumnCount(1);
 	toolManager->addToolWindow(gameObjectList,ToolWindowManager::AreaReferenceType::EmptySpace);
 	toolManager->addToolWindow(componentEditor,ToolWindowManager::AreaReferenceType::EmptySpace);
 	myTimer.start();

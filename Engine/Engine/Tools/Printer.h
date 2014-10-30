@@ -5,6 +5,7 @@
 #include <string>
 #include <windows.h>
 #include <Engine/TypeDefs.h>
+#include <iostream>
 
 #define printer Printer::getInstance()
 #define printErr(level) printer.err(##level##),
