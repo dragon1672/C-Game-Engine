@@ -6,6 +6,7 @@
 
 glm::mat4x4& CameraComponent::getWorld2View()
 {
+	parent->getTrans()->scale = glm::vec3();
 	return parent->getTrans()->getCompleteTransform();
 }
 
