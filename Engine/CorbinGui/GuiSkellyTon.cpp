@@ -29,7 +29,7 @@ GuiSkellyTon::GuiSkellyTon() : scene(new BasicQGLGui())
 
 		std::string name1 = ECurrent  != nullptr ? std::string(ECurrent->Name())  : "NULL";
 		std::string name2 = EPrevious != nullptr ? std::string(EPrevious->Name()) : "NULL";
-		printer.LogMessage("from "+name2+" to "+name1);
+		printMsg(0) "from",name2,"to",name1;
 
 		componentEditor->changeEntity(ECurrent,game->IsGameObject());
 
