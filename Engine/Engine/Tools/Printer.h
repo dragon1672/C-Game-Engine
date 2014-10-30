@@ -33,7 +33,7 @@ public:
 	bool spaces;
 	bool lineReturns;
 	int ignoreBottomRange;
-	Printer() : spaces(true), lineReturns(true), ignoreBottomRange(0) { }
+	Printer() : spaces(true), lineReturns(true), ignoreBottomRange(1) { }
 
 	struct ENGINE_SHARED SingleLinePrintConsole {
 		void* consoleHandle;
