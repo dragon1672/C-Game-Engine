@@ -76,7 +76,7 @@ Entity * GameObjectManager::AddEntity(const char * name)
 {
 	entities.add(Entity(name));
 	Entity * ret = &entities.last();
-	ret->parentChangedEvent.push_back([this,ret](Entity* a,Entity *b){ for(uint i=0;i<entityListChange.size();i++) entityListChange[i](ret); });
+	ret->StageChanged.push_back([this,ret](Entity* e){ for(uint i=0;i<entityListChange.size();i++) entityListChange[i](ret); });
 	for (uint i = 0; i < entityAddEvent.size(); i++) entityAddEvent[i](ret);
 	if(componentSelectorFunction) ret->SelectorFunction(componentSelectorFunction);
 	return ret;
