@@ -200,3 +200,8 @@ std::vector<Component *> Entity::getAllComponents()
 {
 	return components;
 }
+
+Entity::~Entity()
+{
+	LUA_OBJECT_END(Entity);
+}

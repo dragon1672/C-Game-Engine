@@ -53,7 +53,7 @@ public:
 	Entity(std::string name="New Game Object", GameObjectManager * manager = nullptr, Entity * p = nullptr);
 	std::string Name() const;
 	void Name(const std::string newName);
-	virtual ~Entity(){ LUA_OBJECT_END(Entity); }
+	virtual ~Entity();
 
 	std::vector<Component *> components;
 	glm::mat4 getWorldTransform();
