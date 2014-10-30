@@ -41,7 +41,7 @@ public:
 	std::function<bool(Component*)> SelectorFunction() const;
 	void SelectorFunction(std::function<bool(Component*)> val);
 	std::unordered_set<Entity *> Children();
-	std::vector<std::function<void(Entity*oldParent,Entity*newParent)>> parentChangedEvent;
+	std::vector<std::function<void(Entity*me)>> StageChanged;
 	Entity * Parent();
 	void Parent(Entity * newGuy);
 	bool active;
@@ -51,6 +51,7 @@ public:
 
 	Entity(std::string name="New Game Object", GameObjectManager * manager = nullptr, Entity * p = nullptr);
 	std::string Name() const;
+	void Name(const std::string newName);
 	virtual ~Entity(){}
 
 	std::vector<Component *> components;
@@ -103,7 +104,6 @@ public:
 		BIND_LUA_VER(Entity,ret,parent);
 		LUA_BIND_FUN(Entity,ret,getTrans);
 		LUA_BIND_FUN(Entity,ret,getScript);
-		ret.Bind("name",&Entity::Name);
 
 		return ret;
 	}

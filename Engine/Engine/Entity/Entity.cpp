@@ -104,6 +104,12 @@ std::string Entity::Name() const
 	return name; // stupid Lua
 }
 
+void Entity::Name(const std::string newName)
+{
+	this->name = newName;
+	if(newName != name) for (uint i = 0; i < StageChanged.size(); i++) StageChanged[i](this);
+}
+
 Entity::Entity(std::string name/*="New Game Object"*/, GameObjectManager * manager, Entity * p /*= nullptr*/)  : manager(manager), parent(nullptr), active(true) { this->name = name; Parent(p); }
 
 
@@ -120,14 +126,14 @@ Entity * Entity::Parent()
 
 void Entity::Parent(Entity * newGuy)
 {
-	Entity * old = parent;
+	//Entity * old = parent;
 	if(Collections::contains(getAllChildren(),newGuy)) {
 		throw std::invalid_argument("Recursive children detected");
 	}
 	if(parent != nullptr) parent->children.erase(this);
 	if(newGuy != nullptr) newGuy->children.emplace(this);
 	parent = newGuy;
-	for (uint i = 0; i < parentChangedEvent.size(); i++) parentChangedEvent[i](old,parent);
+	for (uint i = 0; i < StageChanged.size(); i++) StageChanged[i](this);
 }
 
 std::unordered_set<Entity *> Entity::getAllChildren()
