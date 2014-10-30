@@ -46,6 +46,7 @@ public:
 	bool shutdown();
 	void update();
 	void paint();
+	bool Valid();
 private:
 	void passStandardUniforms(RenderableComponent * renderable);
 };

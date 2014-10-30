@@ -23,10 +23,6 @@ bool GameObjectManager::init() {
 	return true;
 }
 bool GameObjectManager::start() {
-	for (uint i = 0; i < entities.size(); i++) {
-		if(entities[i].active && !entities[i].ComponentsAreReady())
-			throw std::invalid_argument("Some component is not init");
-	}
 	Timer::getInstance().start();
 	for (uint i = 0; i < entities.size(); i++) { entities[i].start(); }
 	return true;
@@ -149,4 +145,13 @@ void GameObjectManager::SelectorFunction(std::function<bool(Entity*)> val)
 std::function<bool(Entity*)> GameObjectManager::SelectorFunction() const
 {
 	return selectorFunction;
+}
+
+bool GameObjectManager::Valid()
+{
+	for (uint i = 0; i < entities.size(); i++) {
+		if(entities[i].active && !entities[i].ComponentsAreReady())
+			return false;
+	}
+	return true;
 }
