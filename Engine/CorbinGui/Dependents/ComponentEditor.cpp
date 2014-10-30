@@ -110,15 +110,35 @@ public:
 #pragma region Script ComponentEditor
 
 #include <Engine/Entity/Components/ScriptComponent.h>
+#include <QtWidgets/QComboBox>
 
 class ScriptEdtor : public SingleComponentEditor {
 	ScriptComponent * script;
+	QComboBox *comboBox;
 public:
 	ScriptEdtor(ScriptComponent * script) {
 		setWindowTitle("Script Component");
 		this->script = script;
 		QVBoxLayout * layout = new QVBoxLayout();
 		this->setLayout(layout);
+
+		comboBox = new QComboBox;
+		int index= -1;
+		auto tmp = resourceManager.getAllScript();
+		for (uint i = 0; i < tmp.size(); i++) {
+			QString name(tmp[i]->Name().c_str());
+			int id = tmp[i]->getID();
+			comboBox->addItem(name,id);
+			if(script->script == tmp[i]) index = i;
+		}
+		comboBox->setCurrentIndex(index);
+		void (QComboBox:: *indexChangedSignal)(int) = &QComboBox::currentIndexChanged;
+		connect(comboBox,indexChangedSignal,[this](int i) {
+			this->script->script = resourceManager.getScript(this->comboBox->currentData().toInt());
+		});
+
+
+		layout->addWidget(comboBox);
 	}
 	void updateFromModel() {
 
