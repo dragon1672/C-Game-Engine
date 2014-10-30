@@ -4,6 +4,7 @@
 #include <Engine/Entity/Component.h>
 #include <glm/glm.hpp>
 #include <Engine/Tools/PropertyWrapper.h>
+#include <Engine/Tools/Ray.h>
 
 class ENGINE_SHARED CameraComponent : public Component {
 	bool perspectiveNeedsUpdate;
@@ -21,6 +22,8 @@ public:
 	glm::mat4& getPerspective();
 
 	virtual bool isValid();
+
+	Ray getRayFromMouse(glm::vec2 mousePos);
 
 	virtual ShaderUniformPram * getUniforms();
 

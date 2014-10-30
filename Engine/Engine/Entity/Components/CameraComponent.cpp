@@ -67,3 +67,19 @@ std::string CameraComponent::getShaderName()
 {
 	return "Camera";
 }
+
+Ray CameraComponent::getRayFromMouse(glm::vec2 mousePos)
+{
+	float x = (2.0f*mousePos.x)/width - 1.0f;
+	float y = 1.0f - (2.0f* mousePos.y)/height;
+	float z = -1.0f;
+
+	glm::mat4x4 undoCam = glm::inverse(getWorld2View());
+	glm::vec4 temp = glm::inverse(perspective * undoCam) * glm::vec4(x,y,z,0.0);
+
+	Ray ret;
+
+	ret.direction = glm::normalize(glm::vec3(undoCam * glm::vec4(temp.x,temp.y,z,0.0)));
+	ret.origin = Parent()->getTrans()->pos;
+	return ret;
+}
