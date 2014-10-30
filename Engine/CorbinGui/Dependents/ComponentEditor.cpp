@@ -107,10 +107,43 @@ public:
 
 #pragma endregion
 
+#pragma region ComboBox Resource Loaders
+#include <QtWidgets/QComboBox>
+
+#include <Engine/Systems/Resources/Mesh.h>
+#include <Engine/Systems/Resources/Script.h>
+#include <Engine/Systems/Resources/ShaderProgram.h>
+#include <Engine/Systems/Resources/TextureInfo.h>
+
+template<typename T> QComboBox * loadComboBox(T* first) { static_assert(false,"No Resource Found"); }
+
+#define MAKE_COMBO_BOX_MAKER(class_name) \
+	template<> QComboBox * loadComboBox<##class_name##>(##class_name##*first) {	 \
+		QComboBox * comboBox = new QComboBox;					 \
+		int index= -1;											 \
+		auto tmp = resourceManager.getAll##class_name##();		 \
+		for (uint i = 0; i < tmp.size(); i++) {					 \
+			QString name(tmp[i]->Name().c_str());				 \
+			int id = tmp[i]->getID();							 \
+			comboBox->addItem(name,id);							 \
+			if(first == tmp[i]) index = i;						 \
+		}														 \
+		comboBox->setCurrentIndex(index);						 \
+		return comboBox;										 \
+	}
+
+MAKE_COMBO_BOX_MAKER(Script);
+MAKE_COMBO_BOX_MAKER(Mesh);
+MAKE_COMBO_BOX_MAKER(ShaderProgram);
+MAKE_COMBO_BOX_MAKER(TextureInfo);
+
+#pragma endregion
+
+
 #pragma region Script ComponentEditor
 
 #include <Engine/Entity/Components/ScriptComponent.h>
-#include <QtWidgets/QComboBox>
+
 
 class ScriptEdtor : public SingleComponentEditor {
 	ScriptComponent * script;
@@ -122,16 +155,9 @@ public:
 		QVBoxLayout * layout = new QVBoxLayout();
 		this->setLayout(layout);
 
-		comboBox = new QComboBox;
-		int index= -1;
-		auto tmp = resourceManager.getAllScript();
-		for (uint i = 0; i < tmp.size(); i++) {
-			QString name(tmp[i]->Name().c_str());
-			int id = tmp[i]->getID();
-			comboBox->addItem(name,id);
-			if(script->script == tmp[i]) index = i;
-		}
-		comboBox->setCurrentIndex(index);
+		comboBox = loadComboBox<Script>(script->script);
+
+
 		void (QComboBox:: *indexChangedSignal)(int) = &QComboBox::currentIndexChanged;
 		connect(comboBox,indexChangedSignal,[this](int i) {
 			this->script->script = resourceManager.getScript(this->comboBox->currentData().toInt());
@@ -157,7 +183,43 @@ public:
 
 #pragma region Renderable ComponentEditor
 
-#include <Engine/Entity/Components/ScriptComponent.h>
+#include <Engine/Entity/Components/RenderableComponent.h>
+
+#define MATERIAL_STRING(x) #x
+#define MATERIAL_GLEW(a,b) MATERIAL_STRING(a##b)
+
+#define ADD_MATERIAL_GUI_TEXTURE(name)\
+	widg = new QWidget();										   \
+	tLay = new QHBoxLayout();									   \
+	widg->setLayout(tLay);										   \
+	tLay->addWidget(new QLabel(QString(MATERIAL_GLEW(name," Texture: "))));			   \
+	tLay->addWidget(loadComboBox<TextureInfo>(mat->##name##()));	   \
+	layout->addWidget(widg);									   \
+
+
+class MaterialEdtor : public SingleComponentEditor {
+	Material * mat;
+	SingleComponentEditor * color;
+public:
+	MaterialEdtor(Material * mat) {
+		setWindowTitle("Material Editor");
+		this->mat = mat;
+		QVBoxLayout * layout = new QVBoxLayout();
+		this->setLayout(layout);
+		layout->addWidget(color = new QTVecEditor<4>(&(mat->color[0])));
+
+		QWidget * widg;
+		QHBoxLayout * tLay;
+		ADD_MATERIAL_GUI_TEXTURE(Diffuse);
+		ADD_MATERIAL_GUI_TEXTURE(NormalMap);
+		ADD_MATERIAL_GUI_TEXTURE(AmbOcc);
+		ADD_MATERIAL_GUI_TEXTURE(AlphaMask);
+
+	}
+	void updateFromModel() {
+		color->updateFromModel();
+	}
+};
 
 class RenderableEdtor : public SingleComponentEditor {
 	RenderableComponent * script;
@@ -167,6 +229,7 @@ public:
 		this->script = script;
 		QVBoxLayout * layout = new QVBoxLayout();
 		this->setLayout(layout);
+		layout->addWidget(new MaterialEdtor(&(script->material)));
 	}
 	void updateFromModel() {
 
