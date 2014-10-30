@@ -85,3 +85,36 @@ void Printer::Log(std::string msg, Color color)
 {
 	Log(msg.c_str(),color);
 }
+
+Printer::SingleLinePrintConsole Printer::warn()
+{
+	return SingleLinePrintConsole(Printer::Color::YELLOW,spaces,lineReturns);
+}
+
+Printer::SingleLinePrintConsole Printer::msg()
+{
+	return SingleLinePrintConsole(-1,spaces,lineReturns);
+}
+
+Printer::SingleLinePrintConsole Printer::err()
+{
+	return SingleLinePrintConsole(Printer::Color::RED,spaces,lineReturns);
+}
+
+Printer::SingleLinePrintConsole::SingleLinePrintConsole(int color, bool spaces, bool lineReturn)
+	:
+	spaces(spaces), lineReturn(lineReturn),insertSpace(false)
+{
+	insertSpace = false;
+	consoleHandle=GetStdHandle(STD_OUTPUT_HANDLE);
+	if(GetConsoleScreenBufferInfo(consoleHandle, &csbi)) {
+		m_currentConsoleAttr = csbi.wAttributes;
+	}
+	SetConsoleTextAttribute ( consoleHandle, (ushort)color);
+}
+
+Printer::SingleLinePrintConsole::~SingleLinePrintConsole()
+{
+	if(lineReturn) { std::cout << std::endl; }
+	SetConsoleTextAttribute ( consoleHandle, m_currentConsoleAttr);
+}

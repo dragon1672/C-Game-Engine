@@ -3,8 +3,13 @@
 #include <Engine/Defines/SingletonsDefine.h>
 #include <ExportHeader.h>
 #include <string>
+#include <windows.h>
+#include <Engine/TypeDefs.h>
 
 #define printer Printer::getInstance()
+#define printErr printer.err(),
+#define printMsg printer.msg(),
+#define printWarning printer.warn(),
 
 class ENGINE_SHARED Printer {
 	DEFINE_SINGLETON(Printer);
@@ -24,4 +29,32 @@ public:
 	void LogMessage(std::string msg);
 	void LogWarning(std::string msg);
 	void LogError(  std::string msg);
+
+	bool spaces;
+	bool lineReturns;
+	Printer()
+		:
+	spaces(true), lineReturns(true) { }
+
+	struct ENGINE_SHARED SingleLinePrintConsole {
+		void* consoleHandle;
+		ushort m_currentConsoleAttr;
+		CONSOLE_SCREEN_BUFFER_INFO   csbi;
+		bool spaces,insertSpace,lineReturn;
+		SingleLinePrintConsole(int color, bool spaces, bool lineReturn);
+		~SingleLinePrintConsole();
+
+		template <typename T>
+		SingleLinePrintConsole &operator , (const T &t) {
+			if(spaces && insertSpace) { std::cout << ' '; }
+			std::cout << t;
+			insertSpace = true;
+			return *this;
+		}
+	};
+	SingleLinePrintConsole err();
+	SingleLinePrintConsole msg();
+	SingleLinePrintConsole warn();
+
+
 };
