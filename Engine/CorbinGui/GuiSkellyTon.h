@@ -8,7 +8,6 @@
 #include <QtWidgets/QMenuBar>
 #include <ExportHeader.h>
 #include <QtWidgets/QTreeWidget>
-#include <CorbinGui/GamePlayWindow.h>
 
 #include <Engine/Tools/Printer.h>
 #include <CorbinGui/BasicQGLGui.h>
@@ -25,7 +24,6 @@ class ENGINE_SHARED GuiSkellyTon : public QMainWindow  {
 	EditorGame * game;
 	ToolWindowManager * toolManager;
 	ComponentEditor * componentEditor;
-	GamePlayWindow * gamePlayWindow;
 	QMenu * addComponentBar;
 	QAction* StartGameAction;
 	QAction* StopGameAction;

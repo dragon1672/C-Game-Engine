@@ -103,7 +103,6 @@
     <ClInclude Include="CorbinGui\Dependents\GameObjectViewer.h" />
     <ClInclude Include="CorbinGui\Dependents\ComponentEditor.h" />
     <ClInclude Include="CorbinGui\EditorGame.h" />
-    <ClInclude Include="CorbinGui\GamePlayWindow.h" />
     <ClInclude Include="CorbinGui\GuiSkellyTon.h" />
     <ClInclude Include="CorbinGui\ToolWindowManager\ToolWindowManager.h" />
     <ClInclude Include="CorbinGui\ToolWindowManager\ToolWindowManagerArea.h" />
@@ -205,7 +204,6 @@
     <ClCompile Include="CorbinGui\Dependents\EditorComponents\EditorRenderableComponent.cpp" />
     <ClCompile Include="CorbinGui\Dependents\GameObjectViewer.cpp" />
     <ClCompile Include="CorbinGui\EditorGame.cpp" />
-    <ClCompile Include="CorbinGui\GamePlayWindow.cpp" />
     <ClCompile Include="CorbinGui\GuiSkellyTon.cpp" />
     <ClCompile Include="CorbinGui\ToolWindowManager\ToolWindowManager.cpp" />
     <ClCompile Include="CorbinGui\ToolWindowManager\ToolWindowManagerArea.cpp" />

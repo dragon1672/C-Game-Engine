@@ -6,7 +6,6 @@
 GuiSkellyTon::GuiSkellyTon() : scene(new BasicQGLGui())
 {
 	game = &scene->meGame;
-	gamePlayWindow = new GamePlayWindow(game->Game());
 	toolManager = new ToolWindowManager();
 	componentEditor = new ComponentEditor();
 	setCentralWidget(toolManager);
@@ -18,7 +17,6 @@ GuiSkellyTon::GuiSkellyTon() : scene(new BasicQGLGui())
 	scene->setWindowTitle("Editor");
 
 	toolManager->addToolWindow(scene,ToolWindowManager::AreaReferenceType::EmptySpace);
-	toolManager->addToolWindow(gamePlayWindow,ToolWindowManager::AreaReferenceType::EmptySpace);
 
 
 	initBar();
@@ -145,8 +143,6 @@ void GuiSkellyTon::startGame()
 
 		StartGameAction->setEnabled(false);
 		StopGameAction->setEnabled(true);
-		//start game loop
-		gamePlayWindow->start();
 	} else {
 		printErr(100) "Not all components have been initialized";
 	}
@@ -155,7 +151,6 @@ void GuiSkellyTon::startGame()
 void GuiSkellyTon::stopGame()
 {
 	//stop game loop
-	gamePlayWindow->stop();
 	//enable all editor components
 	//add selector function
 	game->Game()->SelectorFunction(game->IsEditorObject());

@@ -102,7 +102,6 @@
     <ClInclude Include="CorbinGui\ToolWindowManager\ToolWindowManagerArea.h" />
     <ClInclude Include="CorbinGui\ToolWindowManager\ToolWindowManagerWrapper.h" />
     <ClInclude Include="CorbinGui\Dependents\ComponentEditor.h" />
-    <ClInclude Include="CorbinGui\GamePlayWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -159,7 +158,6 @@
     <ClCompile Include="CorbinGui\Dependents\GameObjectViewer.cpp" />
     <ClCompile Include="CorbinGui\Dependents\ComponentEditor.cpp" />
     <ClCompile Include="CorbinGui\GuiSkellyTon.cpp" />
-    <ClCompile Include="CorbinGui\GamePlayWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Tools\MyMath\Matrix2D.inl" />
