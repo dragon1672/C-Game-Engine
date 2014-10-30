@@ -7,9 +7,9 @@
 #include <Engine/TypeDefs.h>
 
 #define printer Printer::getInstance()
-#define printErr printer.err(),
-#define printMsg printer.msg(),
-#define printWarning printer.warn(),
+#define printErr(level) printer.err(##level##),
+#define printMsg(level) printer.msg(##level##),
+#define printWarning(level) printer.warn(##level##),
 
 class ENGINE_SHARED Printer {
 	DEFINE_SINGLETON(Printer);
@@ -32,29 +32,29 @@ public:
 
 	bool spaces;
 	bool lineReturns;
-	Printer()
-		:
-	spaces(true), lineReturns(true) { }
+	int ignoreBottomRange;
+	Printer() : spaces(true), lineReturns(true), ignoreBottomRange(0) { }
 
 	struct ENGINE_SHARED SingleLinePrintConsole {
 		void* consoleHandle;
 		ushort m_currentConsoleAttr;
 		CONSOLE_SCREEN_BUFFER_INFO   csbi;
-		bool spaces,insertSpace,lineReturn;
-		SingleLinePrintConsole(int color, bool spaces, bool lineReturn);
+		bool spaces,insertSpace,lineReturn,disabled;
+		SingleLinePrintConsole(int color, bool spaces, bool lineReturn, bool disabled=false);
 		~SingleLinePrintConsole();
 
 		template <typename T>
 		SingleLinePrintConsole &operator , (const T &t) {
+			if(disabled) return *this;
 			if(spaces && insertSpace) { std::cout << ' '; }
 			std::cout << t;
 			insertSpace = true;
 			return *this;
 		}
 	};
-	SingleLinePrintConsole err();
-	SingleLinePrintConsole msg();
-	SingleLinePrintConsole warn();
+	SingleLinePrintConsole err(int level);
+	SingleLinePrintConsole msg(int level);
+	SingleLinePrintConsole warn(int level);
 
 
 };

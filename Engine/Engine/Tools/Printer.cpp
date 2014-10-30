@@ -86,25 +86,26 @@ void Printer::Log(std::string msg, Color color)
 	Log(msg.c_str(),color);
 }
 
-Printer::SingleLinePrintConsole Printer::warn()
+Printer::SingleLinePrintConsole Printer::warn(int level)
 {
-	return SingleLinePrintConsole(Printer::Color::YELLOW,spaces,lineReturns);
+	return SingleLinePrintConsole(Printer::Color::YELLOW,spaces,lineReturns,level < ignoreBottomRange);
 }
 
-Printer::SingleLinePrintConsole Printer::msg()
+Printer::SingleLinePrintConsole Printer::msg(int level)
 {
-	return SingleLinePrintConsole(-1,spaces,lineReturns);
+	return SingleLinePrintConsole(-1,spaces,lineReturns,level < ignoreBottomRange);
 }
 
-Printer::SingleLinePrintConsole Printer::err()
+Printer::SingleLinePrintConsole Printer::err(int level)
 {
-	return SingleLinePrintConsole(Printer::Color::RED,spaces,lineReturns);
+	return SingleLinePrintConsole(Printer::Color::RED,spaces,lineReturns,level < ignoreBottomRange);
 }
 
-Printer::SingleLinePrintConsole::SingleLinePrintConsole(int color, bool spaces, bool lineReturn)
+Printer::SingleLinePrintConsole::SingleLinePrintConsole(int color, bool spaces, bool lineReturn,bool disabled /* = false */)
 	:
-	spaces(spaces), lineReturn(lineReturn),insertSpace(false)
+	spaces(spaces), lineReturn(lineReturn),insertSpace(false),disabled(disabled)
 {
+	if(disabled) return;
 	insertSpace = false;
 	consoleHandle=GetStdHandle(STD_OUTPUT_HANDLE);
 	if(GetConsoleScreenBufferInfo(consoleHandle, &csbi)) {
@@ -115,6 +116,7 @@ Printer::SingleLinePrintConsole::SingleLinePrintConsole(int color, bool spaces, 
 
 Printer::SingleLinePrintConsole::~SingleLinePrintConsole()
 {
+	if(disabled) return;
 	if(lineReturn) { std::cout << std::endl; }
 	SetConsoleTextAttribute ( consoleHandle, m_currentConsoleAttr);
 }
