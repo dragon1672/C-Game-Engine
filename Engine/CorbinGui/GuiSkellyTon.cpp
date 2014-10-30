@@ -5,18 +5,20 @@
 
 GuiSkellyTon::GuiSkellyTon() : scene(new BasicQGLGui())
 {
+	game = &scene->meGame;
+	gamePlayWindow = new GamePlayWindow(game->Game());
 	toolManager = new ToolWindowManager();
 	componentEditor = new ComponentEditor();
-	game = &scene->meGame;
 	setCentralWidget(toolManager);
 	gameObjectList = new GameObjectViewer(game);
 
 	scene->setMinimumSize(500,500);
 	connect(&myTimer,&QTimer::timeout,[this](){ this->update(); });
 
-	scene->setWindowTitle("Game");
+	scene->setWindowTitle("Editor");
 
 	toolManager->addToolWindow(scene,ToolWindowManager::AreaReferenceType::EmptySpace);
+	toolManager->addToolWindow(gamePlayWindow,ToolWindowManager::AreaReferenceType::EmptySpace);
 
 
 	initBar();
@@ -106,11 +108,15 @@ void GuiSkellyTon::initBar()
 
 
 	addComponentBar = fileMenu->addMenu("Add Component");
-	addComponentBar->addAction(action = new QAction("Renderable Component", this));	connect(action, &QAction::triggered, [this](){
+	addComponentBar->addAction(action = new QAction("Renderable Component", this));
+	connect(action, &QAction::triggered, [this](){
 		this->game->currentEntity.addComponent<RenderableComponent>();
+		componentEditor->changeEntity(this->game->currentEntity.GetCurrent(),game->IsGameObject());
 	});
 	//addComponentBar->addAction(action = new QAction("Collider Component", this));		connect(action, &QAction::triggered, [this](){ printer.LogMessage("Add Collider Clicked"); });
-	addComponentBar->addAction(action = new QAction("Script Component", this));		connect(action, &QAction::triggered, [this](){
+	addComponentBar->addAction(action = new QAction("Script Component", this));
+	connect(action, &QAction::triggered, [this](){
 		this->game->currentEntity.addComponent<ScriptComponent>();
+		componentEditor->changeEntity(this->game->currentEntity.GetCurrent(),game->IsGameObject());
 	});
 }
