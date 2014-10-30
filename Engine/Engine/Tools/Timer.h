@@ -17,10 +17,12 @@ private:
 	float LargeInt2Secs( LARGE_INTEGER & L);
 
 	float _deltaTime;
+	LUA_OBJECT(Timer);
 
 	DEFINE_SINGLETON(Timer);
 public:
 	Timer();
+	~Timer();
 	void  start();
 	float stop();
 	void  pause();
@@ -30,7 +32,7 @@ public:
 	float getCurrentTime();
 	float getElapsedTime();
 
-	inline operator LuaUserdata<Timer>() const {
+	inline operator LuaUserdata<Timer>() {
 		MAKE_LUA_INSTANCE_RET(Timer,ret);
 		ret.Bind("deltaTime",&Timer::deltaTime);
 		ret.Bind("runningTime",&Timer::getElapsedTime);

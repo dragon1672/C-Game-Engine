@@ -7,10 +7,12 @@
 namespace wrap {
 
 	class vec2 : public glm::vec2 {
+		LUA_OBJECT(vec2);
 	public:
-		vec2() { }
-		vec2(glm::vec2& that) { set(that); }
-		vec2(float x, float y) { set(x,y); }
+		vec2() { LUA_OBJECT_START(vec2); }
+		vec2(glm::vec2& that) { set(that); LUA_OBJECT_START(vec2); }
+		vec2(float x, float y) { set(x,y); LUA_OBJECT_START(vec2); }
+		~vec2() { LUA_OBJECT_END(vec2); }
 		inline operator glm::vec2&() { return *reinterpret_cast<glm::vec2*>(this); }
 		inline operator glm::vec2()  { return *reinterpret_cast<glm::vec2*>(this); }
 		vec2& operator=(const glm::vec2& that) { set(that); return *this; }
@@ -42,10 +44,12 @@ namespace wrap {
 	};
 
 	class vec3 : public glm::vec3 {
+		LUA_OBJECT(vec3);
 	public:
-		vec3() { }
-		vec3(glm::vec3& that) { set(that); }
-		vec3(float x, float y, float z) { set(x,y,z); }
+		vec3() { LUA_OBJECT_START(vec3); }
+		vec3(glm::vec3& that) { set(that); LUA_OBJECT_START(vec3); }
+		vec3(float x, float y, float z) { set(x,y,z); LUA_OBJECT_START(vec3); }
+		~vec3() {LUA_OBJECT_END(vec3); }
 		inline operator glm::vec3&() { return *reinterpret_cast<glm::vec3*>(this); }
 		inline operator glm::vec3()  { return *reinterpret_cast<glm::vec3*>(this); }
 		vec3& operator=(const glm::vec3& that) { set(that); return *this; }
@@ -81,10 +85,12 @@ namespace wrap {
 	};
 
 	class vec4 : public glm::vec4 {
+		LUA_OBJECT(vec4);
 	public:
-		vec4() { }
-		vec4(glm::vec4& that) { set(that); }
-		vec4(float x, float y, float z, float w) { set(x,y,z,w); }
+		vec4() { LUA_OBJECT_START(vec4); }
+		vec4(glm::vec4& that) { set(that); LUA_OBJECT_START(vec4); }
+		vec4(float x, float y, float z, float w) { set(x,y,z,w); LUA_OBJECT_START(vec4); }
+		~vec4() { LUA_OBJECT_END(vec4); }
 		inline operator glm::vec4&() { return *reinterpret_cast<glm::vec4*>(this); }
 		inline operator glm::vec4()  { return *reinterpret_cast<glm::vec4*>(this); }
 		vec4& operator=(const glm::vec4& that) { set(that); return *this; }

@@ -81,18 +81,21 @@ void ScriptComponent::lateUpdate() {
 ScriptComponent::~ScriptComponent()
 {
 	delete privates;
+	LUA_OBJECT_END(ScriptComponent);
 }
 
-ScriptComponent::ScriptComponent() :script(nullptr) { }
+ScriptComponent::ScriptComponent() :script(nullptr) {
+	LUA_OBJECT_START(ScriptComponent);
+}
 
 ScriptComponent::ScriptComponent(int scriptId) :script(resourceManager.getScript(scriptId))
 {
-
+	LUA_OBJECT_START(ScriptComponent);
 }
 
 ScriptComponent::ScriptComponent(Script * script) :script(script)
 {
-
+	LUA_OBJECT_START(ScriptComponent);
 }
 
 LuaTable ScriptComponent::getContext()

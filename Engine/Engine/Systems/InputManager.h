@@ -26,9 +26,11 @@ enum MouseCodes {
 };
 
 class ENGINE_SHARED	 InputManager {
+	LUA_OBJECT(InputManager);
 public:
 	struct ENGINE_SHARED Mouse {
 	private:
+		LUA_OBJECT(Mouse);
 
 		wrap::vec2 mouseDelta;
 		wrap::vec2 lastMouse;
@@ -38,6 +40,7 @@ public:
 		bool getMouseButtondown_LUA(int btn) { return getMouseButtondown((MouseCodes)btn); }
 		bool getMouseButtonup_LUA(int btn)   { return getMouseButtonup((MouseCodes)btn); }
 	public:
+		MAKE_DEFAULT_LUA_CONST_AND_DEST(Mouse);
 		bool getMouseButtondown(MouseCodes btn);
 		bool getMouseButtonup(MouseCodes btn);
 		wrap::vec2& mousePos();
@@ -60,6 +63,7 @@ private:
 	inline bool getKeyUp_Lua(uchar key) { return getKeyUp((KeyCode)key); }
 	DEFINE_SINGLETON(InputManager);
 public:
+	MAKE_DEFAULT_LUA_CONST_AND_DEST(InputManager);
 	Mouse mouse;
 
 	bool getKeyDown(KeyCode key);

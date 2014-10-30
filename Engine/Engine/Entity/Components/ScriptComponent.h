@@ -9,6 +9,7 @@
 class ScriptComponentPrivates;
 
 class ENGINE_SHARED ScriptComponent : public Component {
+	LUA_OBJECT(ScriptComponent);
 	static const char * LuaTemplate;
 	ScriptComponentPrivates * privates;
 	

@@ -20,6 +20,7 @@
 
 class ENGINE_SHARED MatrixInfo : public Component {
 private:
+	LUA_OBJECT(MatrixInfo);
 	glm::mat4 transform;
 	glm::mat4 rotationMat;
 	glm::mat4 translationMat;
@@ -43,12 +44,16 @@ public:
 	GET_LUA_VER(wrap::vec3,rot  );
 
 	MatrixInfo() : scale(1,1,1) {
+		LUA_OBJECT_START(MatrixInfo);
 		uniforms.push_back(ShaderUniformPram("MatrixInfo_TransformMat",  ParameterType::PT_MAT4,  &translationMat[0][0]   ));
 		uniforms.push_back(ShaderUniformPram("MatrixInfo_RotationMat",   ParameterType::PT_MAT4,  &rotationMat[0][0]      ));
 		uniforms.push_back(ShaderUniformPram("MatrixInfo_ScaleMat",      ParameterType::PT_MAT4,  &scaleMat[0][0]         ));
 		uniforms.push_back(ShaderUniformPram("MatrixInfo_Pos",           ParameterType::PT_VEC3,  &pos[0]   ));
 		uniforms.push_back(ShaderUniformPram("MatrixInfo_Scale",         ParameterType::PT_VEC3,  &scale[0] ));
 		uniforms.push_back(ShaderUniformPram("MatrixInfo_Rotation",      ParameterType::PT_VEC3,  &rot[0]   ));
+	}
+	~MatrixInfo() {
+		LUA_OBJECT_END(MatrixInfo);
 	}
 
 	virtual void saveValues();

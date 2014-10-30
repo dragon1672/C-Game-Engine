@@ -7,6 +7,7 @@ float Timer::LargeInt2Secs( LARGE_INTEGER & L) {
 	return ((float)L.QuadPart / (float)frequency.QuadPart);
 }
 Timer::Timer() {
+	LUA_OBJECT_START(Timer);
 	_start.QuadPart = 0;
 	_stop.QuadPart  = 0;
 	total.QuadPart = 0;
@@ -52,4 +53,9 @@ float Timer::getElapsedTime() {
 
 float Timer::deltaTime() {
 	return _deltaTime;
+}
+
+Timer::~Timer()
+{
+	LUA_OBJECT_END(Timer);
 }

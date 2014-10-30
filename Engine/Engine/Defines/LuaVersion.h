@@ -28,11 +28,27 @@
 
 
 
+#define LUA_OBJECT(class_name)									\
+struct LUA_HOLDER {											\
+	LuaUserdata<class_name> val;							\
+	LUA_HOLDER(LuaUserdata<class_name> init) : val(init) { }	\
+};															\
+	LUA_HOLDER * LUA_HOLDER_INSTANCE
+
+#define LUA_OBJECT_START(class_name) \
+	LUA_HOLDER_INSTANCE = nullptr
+
+#define LUA_OBJECT_END(class_name) \
+	if(LUA_HOLDER_INSTANCE!=nullptr) delete LUA_HOLDER_INSTANCE
+
+#define MAKE_DEFAULT_LUA_CONST_AND_DEST(class_name) class_name##() { LUA_OBJECT_START(class_name); } ~##class_name##() { LUA_OBJECT_END(class_name); }
 
 //This creates a LuaUserData for your class
 //it overrides the default destructor that calls delete since we are pointing to "this"
 #define MAKE_LUA_INSTANCE_RET(class_name,Userdata_var_name)\
-	LuaUserdata<class_name> Userdata_var_name = LUA_INSTANCE.CreateUserdata<class_name>((##class_name##*)this,[](class_name*){}) // have to kill the destructor otherwise it calls delete on instance
+	if(LUA_HOLDER_INSTANCE == nullptr) { LUA_HOLDER_INSTANCE = new LUA_HOLDER(LUA_INSTANCE.CreateUserdata<class_name>((##class_name##*)this,[](class_name*){})); } \
+	LuaUserdata<class_name>& Userdata_var_name = LUA_HOLDER_INSTANCE->val;
+
 
 
 

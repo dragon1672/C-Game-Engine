@@ -30,6 +30,7 @@ private:
 	template<typename T> std::vector<int> getAllIndexs() const {
 		return getAllFromClassName(typeid(T).name());
 	}
+	LUA_OBJECT(Entity);
 
 
 	Entity * parent;
@@ -52,7 +53,7 @@ public:
 	Entity(std::string name="New Game Object", GameObjectManager * manager = nullptr, Entity * p = nullptr);
 	std::string Name() const;
 	void Name(const std::string newName);
-	virtual ~Entity(){}
+	virtual ~Entity(){ LUA_OBJECT_END(Entity); }
 
 	std::vector<Component *> components;
 	glm::mat4 getWorldTransform();
