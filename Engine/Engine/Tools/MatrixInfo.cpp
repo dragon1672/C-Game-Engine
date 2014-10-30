@@ -71,3 +71,17 @@ bool MatrixInfo::isValid()
 	//I WAS BORN READY!!!!
 	return true;
 }
+
+void MatrixInfo::saveValues()
+{
+	pos_saved   = pos;
+	rot_saved   = rot;
+	scale_saved = scale;
+}
+
+void MatrixInfo::restoreValues()
+{
+	pos	  = pos_saved;
+	rot	  = rot_saved;
+	scale = scale_saved;
+}

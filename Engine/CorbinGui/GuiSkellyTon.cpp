@@ -143,6 +143,8 @@ void GuiSkellyTon::startGame()
 		game->Game()->SelectorFunction(game->IsGameObject());
 		game->Game()->ComponentSelectorFunction(game->IsGameObject());
 		
+		game->Game()->saveValues();
+
 		game->start();
 
 		ResouceBar->setEnabled(false);
@@ -160,6 +162,8 @@ void GuiSkellyTon::stopGame()
 	//stop game loop
 	//enable all editor components
 	//add selector function
+	game->Game()->restoreValues();
+
 	game->Game()->SelectorFunction(game->IsEditorObject());
 	game->Game()->ComponentSelectorFunction(game->IsEditorObject());
 	game->start();

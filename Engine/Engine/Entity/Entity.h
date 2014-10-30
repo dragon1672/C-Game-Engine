@@ -107,5 +107,7 @@ public:
 
 		return ret;
 	}
+	void saveValues(bool useSelector = true);
+	void restoreValues(bool useSelector = true);
 };
 

@@ -40,6 +40,10 @@ public:
 	int height;
 
 	GameObjectManager();
+
+	void saveValues(bool useSelector = true);
+	void restoreValues(bool useSelector = true);
+
 	bool init(); // called before openGL, setup cars
 	bool initGl(); // pass data down to HW
 	bool start(); // called when scene is loaded (use for setting variable starting values)

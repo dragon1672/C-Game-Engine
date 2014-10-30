@@ -25,6 +25,10 @@ private:
 	glm::mat4 translationMat;
 	glm::mat4 scaleMat;
 
+	wrap::vec3 pos_saved;
+	wrap::vec3 rot_saved;
+	wrap::vec3 scale_saved;
+
 	wrap::vec3 pos_old;
 	wrap::vec3 rot_old;
 	wrap::vec3 scale_old;
@@ -46,6 +50,9 @@ public:
 		uniforms.push_back(ShaderUniformPram("MatrixInfo_Scale",         ParameterType::PT_VEC3,  &scale[0] ));
 		uniforms.push_back(ShaderUniformPram("MatrixInfo_Rotation",      ParameterType::PT_VEC3,  &rot[0]   ));
 	}
+
+	virtual void saveValues();
+	virtual void restoreValues();
 
 	void lookAt(glm::vec3 posToLookAt);
 

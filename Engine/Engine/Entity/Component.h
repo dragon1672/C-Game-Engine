@@ -19,5 +19,7 @@ public:
 	virtual void earlyUpdate() {}
 	virtual void update()      {}
 	virtual void lateUpdate()  {}
+	virtual void saveValues()  {}
+	virtual void restoreValues()  {}
 	virtual bool isValid() = 0;
 };
