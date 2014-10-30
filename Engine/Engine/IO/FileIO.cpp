@@ -28,8 +28,8 @@ namespace FileIO {
 		input.seekg(0, std::ios::beg);
 
 		//copy da file
-		fileByte * bytes = new fileByte[ret.size];
-		input.read(bytes, ret.size);
+		ret.data = new fileByte[ret.size];
+		input.read(ret.data, ret.size);
 		input.close();
 
 		return ret;
