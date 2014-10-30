@@ -48,6 +48,10 @@ public:
 		std::vector<RenderableComponent *> getAllRenderables();
 		std::vector<CameraComponent     *> getAllCameras();
 		void SetCurrent(Entity * toSet);
+		Entity * GetCurrent() const { return currentlySelectedEntity; }
+		void EditName(std::string newName) {
+			currentlySelectedEntity->Name(newName);
+		}
 
 		void Parent(const char * name);
 
