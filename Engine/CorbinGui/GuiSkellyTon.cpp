@@ -1,5 +1,6 @@
 #include "GuiSkellyTon.h"
 #include <Engine/Tools/Printer.h>
+#include <QtWidgets/QFileDialog>
 
 
 
@@ -85,18 +86,49 @@ void GuiSkellyTon::initBar()
 	fileMenu = ResouceBar = menuBar()->addMenu("Resources");
 	fileMenu->addAction(action = new QAction("Load Obj", this));
 	connect(action, &QAction::triggered, [this](){ // TODO
+		QString workingDir = resourceManager.WorkingDir().c_str();
+		QString targetObj = QFileDialog::getOpenFileName(this, "Open OBJ", workingDir, "Model Files (*.obj)");
+		if(targetObj == "")
+			return;
+
+		QString command("CSharpOBJConverter.exe ");
+		const char* nativeFileName = "level.bin";
+		command += "\""+targetObj + "\"" + " " + "\"" + nativeFileName+ "\"";
+		int result = system(command.toUtf8().constData());
+		if(result!=0) {
+			printErr(100) "File failed to load";
+		} else {
+			auto tmp = resourceManager.addMesh("From File",nativeFileName);
+			tmp->PassDownToHardWare();
+		}
 		printer.LogMessage("Load Obj Clicked");
 	});
 	fileMenu->addAction(action = new QAction("Load Texture", this));
 	connect(action, &QAction::triggered, [this](){ // TODO
+		QString workingDir = resourceManager.WorkingDir().c_str();
+		QString targetObj = QFileDialog::getOpenFileName(this, "Open Texture", workingDir, "Supported Images (*.png)"); if(targetObj == "") return;
+
+		auto tmp = resourceManager.add2DTexture("From File",targetObj.toStdString());
+		tmp->PassDownToHardWare();
 		printer.LogMessage("Load Texture Clicked");
 	});
 	fileMenu->addAction(action = new QAction("Load Shader", this));
 	connect(action, &QAction::triggered, [this](){ // TODO
+		QString workingDir = resourceManager.WorkingDir().c_str();
+		QString FragPath = QFileDialog::getOpenFileName(this, "Open FragShader",  workingDir, "Shader (*.glsl)");	if(FragPath == "") return;
+		QString VertPath = QFileDialog::getOpenFileName(this, "Open VertexShader", workingDir, "Shader (*.glsl)");	if(VertPath == "") return;
+
+		auto tmp = resourceManager.addShader_file("From File",VertPath.toStdString(),FragPath.toStdString());
+		tmp->PassDownToHardWare();
 		printer.LogMessage("Load Shader Clicked");
 	});
 	fileMenu->addAction(action = new QAction("Load Script", this));
 	connect(action, &QAction::triggered, [this](){ // TODO
+		QString workingDir = resourceManager.WorkingDir().c_str();
+		QString targetObj = QFileDialog::getOpenFileName(this, "Open Script", workingDir, "Supported Images (*.CorbinLua)"); if(targetObj == "") return;
+
+		auto tmp = resourceManager.addScript_file("From File",targetObj.toStdString());
+		tmp->PassDownToHardWare();
 		printer.LogMessage("Load Script Clicked");
 	});
 	fileMenu = GameObjectMenu = menuBar()->addMenu("GameObject");
