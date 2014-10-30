@@ -1,5 +1,5 @@
 #include "GuiSkellyTon.h"
-
+#include <Engine/Tools/Printer.h>
 
 
 
@@ -107,6 +107,20 @@ void GuiSkellyTon::initBar()
 	});
 
 
+	//start/stop
+	menuBar()->addAction(action = new QAction("Start Game", this));
+	connect(action, &QAction::triggered, [this](){ // TODO
+		this->startGame();
+	});
+	StartGameAction = action;
+	menuBar()->addAction(action = new QAction("Stop Game", this));
+	connect(action, &QAction::triggered, [this](){ // TODO
+		this->stopGame();
+	});
+	StopGameAction = action;
+	StopGameAction->setEnabled(false);
+
+
 	addComponentBar = fileMenu->addMenu("Add Component");
 	addComponentBar->addAction(action = new QAction("Renderable Component", this));
 	connect(action, &QAction::triggered, [this](){
@@ -119,4 +133,34 @@ void GuiSkellyTon::initBar()
 		this->game->currentEntity.addComponent<ScriptComponent>();
 		componentEditor->changeEntity(this->game->currentEntity.GetCurrent(),game->IsGameObject());
 	});
+}
+
+void GuiSkellyTon::startGame()
+{
+	if(game->Game()->Valid()) {
+		//disable all editor components
+		//remove selector function
+		game->Game()->SelectorFunction(game->IsGameObject());
+		game->Game()->ComponentSelectorFunction(game->IsGameObject());
+
+		StartGameAction->setEnabled(false);
+		StopGameAction->setEnabled(true);
+		//start game loop
+		gamePlayWindow->start();
+	} else {
+		printErr(100) "Not all components have been initialized";
+	}
+}
+
+void GuiSkellyTon::stopGame()
+{
+	//stop game loop
+	gamePlayWindow->stop();
+	//enable all editor components
+	//add selector function
+	game->Game()->SelectorFunction(game->IsEditorObject());
+	game->Game()->ComponentSelectorFunction(game->IsEditorObject());
+	game->start();
+	StartGameAction->setEnabled(true);
+	StopGameAction->setEnabled(false);
 }

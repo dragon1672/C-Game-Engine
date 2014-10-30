@@ -27,22 +27,16 @@ class ENGINE_SHARED GuiSkellyTon : public QMainWindow  {
 	ComponentEditor * componentEditor;
 	GamePlayWindow * gamePlayWindow;
 	QMenu * addComponentBar;
+	QAction* StartGameAction;
+	QAction* StopGameAction;
 public:
 	EditorGame * Game() const { return game; }
 	GuiSkellyTon();
 
 	void initBar();
 
-	void startGame() {
-		//disable all editor components
-		//remove selector function
-		//start game loop
-	}
-	void stopGame() {
-		//stop game loop
-		//enable all editor components
-		//add selector function
-	}
+	void startGame();
+	void stopGame();
 
 	void init();
 	void update();
