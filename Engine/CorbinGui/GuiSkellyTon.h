@@ -27,6 +27,8 @@ class ENGINE_SHARED GuiSkellyTon : public QMainWindow  {
 	QMenu * addComponentBar;
 	QAction* StartGameAction;
 	QAction* StopGameAction;
+	QMenu * ResouceBar;
+	QMenu * GameObjectMenu;
 public:
 	EditorGame * Game() const { return game; }
 	GuiSkellyTon();

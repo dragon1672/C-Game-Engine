@@ -41,6 +41,7 @@ GuiSkellyTon::GuiSkellyTon() : scene(new BasicQGLGui())
 	gameObjectList->setColumnCount(1);
 	toolManager->addToolWindow(gameObjectList,ToolWindowManager::AreaReferenceType::EmptySpace);
 	toolManager->addToolWindow(componentEditor,ToolWindowManager::AreaReferenceType::EmptySpace);
+	myTimer.start();
 }
 
 void GuiSkellyTon::init()
@@ -81,7 +82,7 @@ void GuiSkellyTon::initBar()
 		this->close();
 	});
 
-	fileMenu = menuBar()->addMenu("Resources");
+	fileMenu = ResouceBar = menuBar()->addMenu("Resources");
 	fileMenu->addAction(action = new QAction("Load Obj", this));
 	connect(action, &QAction::triggered, [this](){ // TODO
 		printer.LogMessage("Load Obj Clicked");
@@ -98,7 +99,7 @@ void GuiSkellyTon::initBar()
 	connect(action, &QAction::triggered, [this](){ // TODO
 		printer.LogMessage("Load Script Clicked");
 	});
-	fileMenu = menuBar()->addMenu("GameObject");
+	fileMenu = GameObjectMenu = menuBar()->addMenu("GameObject");
 	fileMenu->addAction(action = new QAction("New Game Object", this));
 	connect(action, &QAction::triggered, [this](){
 		game->AddEntity("New Game Object");
@@ -138,8 +139,14 @@ void GuiSkellyTon::startGame()
 	if(game->Game()->Valid()) {
 		//disable all editor components
 		//remove selector function
+		game->Game()->init();
 		game->Game()->SelectorFunction(game->IsGameObject());
 		game->Game()->ComponentSelectorFunction(game->IsGameObject());
+		
+		game->start();
+
+		ResouceBar->setEnabled(false);
+		GameObjectMenu->setEnabled(false);
 
 		StartGameAction->setEnabled(false);
 		StopGameAction->setEnabled(true);
@@ -156,6 +163,10 @@ void GuiSkellyTon::stopGame()
 	game->Game()->SelectorFunction(game->IsEditorObject());
 	game->Game()->ComponentSelectorFunction(game->IsEditorObject());
 	game->start();
+
+	ResouceBar->setEnabled(true);
+	GameObjectMenu->setEnabled(true);
+
 	StartGameAction->setEnabled(true);
 	StopGameAction->setEnabled(false);
 }
