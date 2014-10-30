@@ -135,6 +135,34 @@ public:
 
 #pragma endregion
 
+#pragma region Renderable ComponentEditor
+
+#include <Engine/Entity/Components/ScriptComponent.h>
+
+class RenderableEdtor : public SingleComponentEditor {
+	RenderableComponent * script;
+public:
+	RenderableEdtor(RenderableComponent * script) {
+		setWindowTitle("Renderable Component");
+		this->script = script;
+		QVBoxLayout * layout = new QVBoxLayout();
+		this->setLayout(layout);
+	}
+	void updateFromModel() {
+
+	}
+};
+
+template<>
+class EditorCreator<RenderableEdtor> : public EditorCreatorInterface {
+public:
+	SingleComponentEditor * getNewInstance(void * data) {
+		return new RenderableEdtor((RenderableComponent*)data);
+	}
+};
+
+#pragma endregion
+
 #pragma region privates
 #include <map>
 #include <Engine/Defines/Vectors.h>
@@ -148,6 +176,7 @@ public:
 		//init map here
 		ADD_INTERFACE_TO_MAP(MatrixInfo,TranslationEdtor);
 		ADD_INTERFACE_TO_MAP(ScriptComponent,ScriptEdtor);
+		ADD_INTERFACE_TO_MAP(RenderableComponent,RenderableEdtor);
 	}
 	template<typename T> bool hasEditorFor(Component*c) {
 		return map.find(typeid(T).name()) != map.end();
