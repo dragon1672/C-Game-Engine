@@ -18,7 +18,12 @@ namespace Collections {
 	template <typename T> int	 find(std::vector<T>& array, T toFind) {
 		for (uint i = 0; i < array.size(); i++)
 			if(array[i] == toFind) return i;
-		return -1
+		return -1;
+	}
+	template <typename T> T	 First(std::vector<T>& array, std::function<bool(T&)> selector, T defaultVal = nullptr) {
+		for (uint i = 0; i < array.size(); i++)
+			if(selector(array[i])) return array[i];
+		return defaultVal;
 	}
 	template <typename T> bool	 contains(std::vector<T>& array, T toFind) {
 		return find(array,toFind) >= 0;
@@ -64,6 +69,11 @@ namespace Collections {
 			if(array[i] == toFind) return i;
 		return -1
 	}
+	template <typename T> T	 First(ConstVector<T>& array, std::function<bool(T&)> selector, T defaultVal = nullptr) {
+		for (uint i = 0; i < array.size(); i++)
+			if(selector(array[i])) return array[i];
+		return defaultVal;
+	}
 	template <typename T> bool	 contains(ConstVector<T>& array, T toFind) {
 		return find(array,toFind) >= 0;
 	}
@@ -108,6 +118,11 @@ namespace Collections {
 		for (int i = 0; i < array.size(); i++)
 			if(array[i] == toFind) return i;
 		return -1
+	}
+	template <typename T> T	 First(T * array, int size, std::function<bool(T&)> selector, T defaultVal = nullptr) {
+		for (uint i = 0; i < size; i++)
+			if(selector(array[i])) return array[i];
+		return defaultVal;
 	}
 	template <typename T> bool	 contains(T * array, int size, T toFind) {
 		return find(array,toFind) >= 0;

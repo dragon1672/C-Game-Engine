@@ -118,3 +118,8 @@ bool ScriptComponent::isValid()
 {
 	return script != nullptr;
 }
+
+std::string ScriptComponent::getScriptName()
+{
+	return script != nullptr ? script->Name() : "";
+}

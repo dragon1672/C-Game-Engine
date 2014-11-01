@@ -19,6 +19,7 @@ public:
 	ScriptComponent(Script * script);
 	ScriptComponent(int scriptId);
 	~ScriptComponent();
+	std::string getScriptName();
 	virtual void init();
 	virtual void start();
 	virtual void earlyUpdate();
