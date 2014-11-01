@@ -60,7 +60,8 @@ public:
 	MatrixInfo localTrans;
 	MatrixInfo * getTrans();
 	RenderableComponent * getRenderable();
-	ScriptComponent * getScript();
+	ScriptComponent * getScript(std::string name="");
+	LuaTable getScriptLua(std::string name="");
 
 	template<typename T> T* addComponent() { return (T*)addComponent(new T()); }
 	template<typename T> void removeComponent() {
@@ -95,14 +96,13 @@ public:
 
 	GET_LUA_VER_PTR(Entity,parent);
 	LUA_GET_FUN_PTR(MatrixInfo,getTrans);
-	LUA_GET_FUN_PTR(ScriptComponent,getScript);
 
 	inline operator LuaUserdata<Entity>() {
 		MAKE_LUA_INSTANCE_RET(Entity,ret);
 
 		BIND_LUA_VER(Entity,ret,parent);
 		LUA_BIND_FUN(Entity,ret,getTrans);
-		LUA_BIND_FUN(Entity,ret,getScript);
+		ret.Bind("GetScript",&Entity::getScriptLua);
 
 		return ret;
 	}

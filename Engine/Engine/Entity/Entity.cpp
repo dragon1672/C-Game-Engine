@@ -117,7 +117,10 @@ MatrixInfo * Entity::getTrans() { return &localTrans; }
 
 RenderableComponent * Entity::getRenderable() { return getComponent<RenderableComponent>(); }
 
-ScriptComponent * Entity::getScript() { return getComponent<ScriptComponent>(); }
+ScriptComponent * Entity::getScript(std::string name) {
+	auto allScripts = getComponents<ScriptComponent>();
+	return Collections::First<ScriptComponent*>(allScripts,[&name](ScriptComponent * toCheck) { return toCheck->getScriptName() == name || name == ""; });
+}
 
 Entity * Entity::Parent()
 {
@@ -204,4 +207,11 @@ std::vector<Component *> Entity::getAllComponents()
 Entity::~Entity()
 {
 	LUA_OBJECT_END(Entity);
+}
+
+LuaTable Entity::getScriptLua(std::string name)
+{
+	auto ret = getScript(name);
+	if(ret != nullptr) return ret->getContext();
+	return LUA_INSTANCE.CreateTable();
 }
