@@ -38,12 +38,16 @@ const char * ScriptComponent::LuaTemplate = ""
 class ScriptComponentPrivates {
 public:
 	LuaTable context;
+	std::string uniqueName;
 	void runMethod(std::string methodName) {
-		LUA_INSTANCE.GetGlobalEnvironment().Set("CorbinEnginTmp",context);
-		runLua("CorbinEnginTmp:"+methodName+"()");
+		//LUA_INSTANCE.GetGlobalEnvironment().Set("CorbinEnginTmp",context);
+		runLua(uniqueName+":"+methodName+"()");
 	}
 	ScriptComponentPrivates(LuaTable context) :
-		context(context) { }
+		context(context) {
+			uniqueName = Random::rString::Letters(5)+"CorbinEnginTmpVar"+Random::rString::Letters(5);
+			LUA_INSTANCE.GetGlobalEnvironment().Set(uniqueName,context);
+	}
 };
 
 void ScriptComponent::init() {

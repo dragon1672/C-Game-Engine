@@ -6,8 +6,11 @@
 
 glm::mat4x4& CameraComponent::getWorld2View()
 {
-	parent->getTrans()->scale = glm::vec3();
-	return parent->getTrans()->getCompleteTransform();
+	auto tmp = parent->getTrans()->scale;
+	parent->getTrans()->scale = glm::vec3() = glm::vec3();
+	world2View = parent->getTrans()->getCompleteTransform();
+	parent->getTrans()->scale = tmp;
+	return world2View;
 }
 
 glm::mat4& CameraComponent::getPerspective()
@@ -31,10 +34,12 @@ CameraComponent::CameraComponent(const char * name /*= nullptr*/)
 	nearPlane = .1f;
 	farPlane  = 100;
 	
-	uniforms[0] = ShaderUniformPram("nearPlane",nearPlane);
-	uniforms[1] = ShaderUniformPram("nearPlane",farPlane );
-	uniforms[2] = ShaderUniformPram("nearPlane",width    );
-	uniforms[3] = ShaderUniformPram("nearPlane",height   );
+	uniforms[0] = ShaderUniformPram("nearPlane",   nearPlane   );
+	uniforms[1] = ShaderUniformPram("farPlane" ,   farPlane    );
+	uniforms[2] = ShaderUniformPram("width",       width       );
+	uniforms[3] = ShaderUniformPram("height",      height      );
+	uniforms[4] = ShaderUniformPram("perspective", perspective );
+	uniforms[5] = ShaderUniformPram("world2View",  world2View  );
 }
 
 bool CameraComponent::isActive()

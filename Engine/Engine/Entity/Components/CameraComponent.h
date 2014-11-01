@@ -9,7 +9,8 @@
 class ENGINE_SHARED CameraComponent : public Component {
 	bool perspectiveNeedsUpdate;
 	glm::mat4 perspective;
-	ShaderUniformPram uniforms[4];
+	glm::mat4 world2View;
+	ShaderUniformPram uniforms[6];
 public:
 	CameraComponent(const char * name = nullptr);
 	bool isActive();
