@@ -1,6 +1,7 @@
 #include "MasterLua.h"
 #include <string>
 #include <iostream>
+#include <Engine/Tools/Printer.h>
 
 //singletons
 #include <Engine/Tools/Timer.h>
@@ -8,7 +9,7 @@
 #include <Engine/Tools/Random/StringRandom.h>
 #include <Engine/Systems/InputManager.h>
 
-
+const std::string MasterLua::ComponentBaseClass = "ScriptComponent";
 IMPLEMENT_SINGLETON(MasterLua);
 
 MasterLua::MasterLua()
@@ -21,6 +22,14 @@ MasterLua::MasterLua()
 	lua.RunScript("function class(a,b)local c={}if not b and type(a)=='function'then b=a;a=nil elseif type(a)=='table'then for d,e in pairs(a)do c[d]=e end;c._base=a end;"
 		"c.__index=c;local f={}f.__call=function(g,...)local h={}setmetatable(h,c)if b then b(h,...)else if a and a.init then a.init(h,...)end end;return h end;c.init=b;"
 		"c.is_a=function(i,j)local k=getmetatable(i)while k do if k==j then return true end;k=k._base end;return false end;setmetatable(c,f)return c end");
+	lua.RunScript(ComponentBaseClass+" = class();"
+		//setting up defaults for functions
+		"function "+ComponentBaseClass+":init()        return true end \n"
+		"function "+ComponentBaseClass+":start()       return true end \n"
+		"function "+ComponentBaseClass+":earlyUpdate() return true end \n"
+		"function "+ComponentBaseClass+":update()      return true end \n"
+		"function "+ComponentBaseClass+":lateUpdate()  return true end \n"
+		"");
 
 	//random
 	auto rand = lua.CreateTable();

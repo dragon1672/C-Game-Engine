@@ -158,6 +158,7 @@
     <ClCompile Include="CorbinGui\Dependents\GameObjectViewer.cpp" />
     <ClCompile Include="CorbinGui\Dependents\ComponentEditor.cpp" />
     <ClCompile Include="CorbinGui\GuiSkellyTon.cpp" />
+    <ClCompile Include="Engine\Systems\Resources\Script.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Tools\MyMath\Matrix2D.inl" />

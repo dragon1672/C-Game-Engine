@@ -215,3 +215,10 @@ LuaTable Entity::getScriptLua(std::string name)
 	if(ret != nullptr) return ret->getContext();
 	return LUA_INSTANCE.CreateTable();
 }
+
+std::vector<std::string> Entity::getErrors()
+{
+	std::vector<std::string> ret;
+	for (uint i = 0; i < components.size(); i++) { Collections::AddToFirstVector(ret,components[i]->getErrors()); }
+	return ret;
+}

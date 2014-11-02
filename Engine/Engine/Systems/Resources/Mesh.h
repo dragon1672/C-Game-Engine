@@ -44,4 +44,8 @@ public:
 	virtual void PassDownToHardWare();
 	void paint();
 
+	virtual bool isValid();
+
+	virtual std::vector<std::string> getErrors();
+
 };

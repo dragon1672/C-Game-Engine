@@ -19,8 +19,8 @@
 
 class ENGINE_SHARED GameObjectManager {
 private:
-public:ConstVector<Entity> entities;
-
+public: ConstVector<Entity> entities;
+private:
 	std::function<bool(Entity*)> selectorFunction;
 	std::function<bool(Component*)> componentSelectorFunction;
 public:
@@ -51,6 +51,7 @@ public:
 	void update();
 	void paint();
 	bool Valid();
+	std::vector<std::string> getErrors();
 private:
 	void passStandardUniforms(RenderableComponent * renderable);
 };

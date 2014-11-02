@@ -58,6 +58,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)..\GameSolution\Core\include;$(ProjectDir)../../MiddleWare/NeumontTools/include;$(ProjectDir)../../MiddleWare/Qt/include;$(ProjectDir)../../MiddleWare/glm;$(ProjectDir)../../MiddleWare/glew/include;$(ProjectDir)../../MiddleWare/luacppinterface/LuaCppInterface;$(ProjectDir)../../MiddleWare/luacppinterface/Lua/src</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <DisableSpecificWarnings>4251;4127;4201;4100;4239</DisableSpecificWarnings>
+      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -223,6 +224,7 @@
     <ClCompile Include="Engine\Systems\InputManager.cpp" />
     <ClCompile Include="Engine\Systems\Object.cpp" />
     <ClCompile Include="Engine\Systems\Resources\Material.cpp" />
+    <ClCompile Include="Engine\Systems\Resources\Script.cpp" />
     <ClCompile Include="Engine\Systems\Resources\Shaders\ShaderPreProcessor.cpp" />
     <ClCompile Include="Engine\Systems\Resources\Mesh.cpp" />
     <ClCompile Include="Engine\Systems\Resources\Dependencies\Vert.cpp" />

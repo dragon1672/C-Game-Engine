@@ -9,8 +9,6 @@
 class ScriptComponentPrivates;
 
 class ENGINE_SHARED ScriptComponent : public Component {
-	LUA_OBJECT(ScriptComponent);
-	static const char * LuaTemplate;
 	ScriptComponentPrivates * privates;
 	
 public:
@@ -20,13 +18,11 @@ public:
 	ScriptComponent(int scriptId);
 	~ScriptComponent();
 	std::string getScriptName();
-	virtual void init();
 	virtual void start();
 	virtual void earlyUpdate();
 	virtual void update();
 	virtual void lateUpdate();
 	LuaTable getContext();
-	operator LuaUserdata<ScriptComponent>();
 
 	virtual bool isValid();
 

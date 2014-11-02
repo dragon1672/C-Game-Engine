@@ -76,6 +76,7 @@ void ResourceManager::foreachOnAll(std::function<void(Resource&)> func)
 	for (uint i = 0; i < shaders.size();  i++) func(shaders[i]);
 	for (uint i = 0; i < geos.size();     i++) func(geos[i]);
 	for (uint i = 0; i < textures.size(); i++) func(textures[i]);
+	for (uint i = 0; i < scripts.size();  i++) func(scripts[i]);
 }
 
 TextureInfo * ResourceManager::add2DTexture(std::string name, QImage& image, GLenum type /*= GL_RGBA*/)
@@ -111,23 +112,24 @@ TextureInfo * ResourceManager::add2DTexture(std::string name, ubyte * data, uint
 }
 
 
-Script * ResourceManager::addScript_file(std::string name, const char * filePath)
+Script * ResourceManager::addScript_file(const char * filePath)
 {
-	return addScript_file(name, std::string(filePath));
+	return addScript_file(std::string(filePath));
 }
-Script * ResourceManager::addScript_file(std::string name, std::string filePath)
+Script * ResourceManager::addScript_file(std::string filePath)
 {
-	return addScript_src(name, FileIO::readFile(workingDir + filePath));
+	return addScript_src(FileIO::readFile(workingDir + filePath));
 }
-Script * ResourceManager::addScript_src (std::string name, const char * file)
+Script * ResourceManager::addScript_src (const char * file)
 {
-	return addScript_src(name, std::string(file));
+	return addScript_src(std::string(file));
 }
-Script * ResourceManager::addScript_src (std::string name, std::string file)
+Script * ResourceManager::addScript_src (std::string file)
 {
-	scripts.push_back(Script(name));
-	ScriptObjs.Register(scripts.last());
+	scripts.push_back(Script());
 	scripts.last().src = file;
+	scripts.last().updateName();
+	ScriptObjs.Register(scripts.last());
 	return &scripts.last();
 }
 

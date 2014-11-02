@@ -125,7 +125,7 @@ void GuiSkellyTon::initBar()
 		QString workingDir = resourceManager.WorkingDir().c_str();
 		QString targetObj = QFileDialog::getOpenFileName(this, "Open Script", workingDir, "Supported Images (*.CorbinLua)"); if(targetObj == "") return;
 
-		auto tmp = resourceManager.addScript_file("From File",targetObj.toStdString());
+		auto tmp = resourceManager.addScript_file(targetObj.toStdString());
 		tmp->PassDownToHardWare();
 		printer.LogMessage("Load Script Clicked");
 	});
@@ -170,12 +170,13 @@ void GuiSkellyTon::startGame()
 		//disable all editor components
 		//remove selector function
 		game->Game()->init();
+
+		game->start();
+
 		game->Game()->SelectorFunction(game->IsGameObject());
 		game->Game()->ComponentSelectorFunction(game->IsGameObject());
 		
 		game->Game()->saveValues();
-
-		game->start();
 
 		ResouceBar->setEnabled(false);
 		GameObjectMenu->setEnabled(false);

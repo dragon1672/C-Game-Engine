@@ -169,3 +169,10 @@ void GameObjectManager::restoreValues(bool useSelector /*= true*/)
 		if(entities[i].active) entities[i].restoreValues(useSelector);
 	}
 }
+
+std::vector<std::string> GameObjectManager::getErrors()
+{
+	std::vector<std::string> ret;
+	for (uint i = 0; i < entities.size(); i++) { Collections::AddToFirstVector(ret,entities[i].getErrors()); }
+	return ret;
+}

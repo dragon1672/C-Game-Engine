@@ -51,10 +51,10 @@ public:
 	TextureInfo * add2DTexture(std::string name, std::string& filePath, bool flipHorz = false, bool flipVert = false);
 	TextureInfo * add2DTexture(std::string name, ubyte * data, uint sizeofData, uint width, uint height, GLenum type, GLenum type2);
 
-	Script * addScript_file(std::string name, const char * filePath);
-	Script * addScript_file(std::string name, std::string filePath);
-	Script * addScript_src (std::string name, std::string file);
-	Script * addScript_src (std::string name, const char * file);
+	Script * addScript_file(const char * filePath);
+	Script * addScript_file(std::string filePath);
+	Script * addScript_src (std::string file);
+	Script * addScript_src (const char * file);
 
 	template<typename T> T* getDefault() { return nullptr; }
 	template<> Mesh * getDefault();
