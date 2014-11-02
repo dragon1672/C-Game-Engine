@@ -123,3 +123,10 @@ std::string ScriptComponent::getScriptName()
 {
 	return script != nullptr ? script->Name() : "";
 }
+
+std::vector<std::string> ScriptComponent::getErrors()
+{
+	std::vector<std::string> ret;
+	if(script == nullptr) ret.push_back("no script");
+	return ret;
+}

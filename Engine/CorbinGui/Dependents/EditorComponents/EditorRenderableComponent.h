@@ -21,4 +21,6 @@ public:
 
 	virtual void start();
 
+	std::vector<std::string> getErrors();
+
 };

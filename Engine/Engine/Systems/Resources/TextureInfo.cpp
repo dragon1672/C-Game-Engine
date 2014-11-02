@@ -20,4 +20,18 @@ void TextureInfo::PassDownToHardWare()
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 }
 
+bool TextureInfo::isValid()
+{
+	return data != nullptr && width > 0 && height > 0;
+}
+
+std::vector<std::string> TextureInfo::getErrors()
+{
+	std::vector<std::string> ret;
+	if(data==nullptr) ret.push_back("no data for image");
+	if(width  <= 0) ret.push_back("invalid image width");
+	if(height <= 0) ret.push_back("invalid image height");
+	return ret;
+}
+
 int TextureInfo::NumTextures = 0;

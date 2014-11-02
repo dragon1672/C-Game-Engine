@@ -48,3 +48,12 @@ void EditorRenderableComponent::start()
 {
 	sync();
 }
+
+std::vector<std::string> EditorRenderableComponent::getErrors()
+{
+	std::vector<std::string> ret;
+	if(name == "") ret.push_back("name not assigned to renderable binding component");
+	if(gameInstance == nullptr)    ret.push_back("game instance not set");
+	if(editorInstance == nullptr)  ret.push_back("editor instance not set");
+	return ret;
+}

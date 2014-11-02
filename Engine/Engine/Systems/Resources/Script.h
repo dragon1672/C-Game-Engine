@@ -10,4 +10,6 @@ public:
 	Script(std::string name) { this->name = name; }
 	std::string src;
 	virtual void PassDownToHardWare() {}
+	bool isValid();
+	virtual std::vector<std::string> getErrors();
 };

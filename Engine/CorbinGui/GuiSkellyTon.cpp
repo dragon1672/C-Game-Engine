@@ -48,7 +48,6 @@ void GuiSkellyTon::init()
 {
 	scene->init();
 	scene->startGameLoop();
-	scene->startup();
 }
 
 void GuiSkellyTon::update()
@@ -184,7 +183,11 @@ void GuiSkellyTon::startGame()
 		StartGameAction->setEnabled(false);
 		StopGameAction->setEnabled(true);
 	} else {
-		printErr(100) "Not all components have been initialized";
+		auto tmp = game->Game()->getErrors();
+		for (uint i = 0; i < tmp.size(); i++)
+		{
+			printErr(100) tmp[0];
+		}
 	}
 }
 

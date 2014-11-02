@@ -148,6 +148,16 @@ Mesh * ResourceManager::getDefault()
 	return addMesh("Meshy");
 }
 
+bool ResourceManager::isValid()
+{
+	return true;
+}
+
+std::vector<std::string> ResourceManager::getErrors()
+{
+	return std::vector<std::string>();
+}
+
 
 #define RESOURCE_GET_METHODS_IMP(class_name, TYPE) \
 	TYPE * class_name##::get##TYPE##(int id) { return (##TYPE##*)TYPE##Objs.getFirst(id); } \

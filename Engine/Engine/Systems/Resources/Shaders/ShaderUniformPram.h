@@ -1,7 +1,6 @@
 #pragma once
 
 #include <Engine\Systems\Resources\Shaders\ParameterType.h>
-#include <string>
 #include "ExportHeader.h"
 #include <Engine\TypeDefs.h>
 #include <glm/glm.hpp>

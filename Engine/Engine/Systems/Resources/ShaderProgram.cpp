@@ -213,3 +213,16 @@ ShaderProgram::ShaderProgram()
 {
 
 }
+
+bool ShaderProgram::isValid()
+{
+	for (uint i = 0; i < files.size(); i++) {
+		if(files[i].code == "") return false;
+	}
+	return true;
+}
+
+std::vector<std::string> ShaderProgram::getErrors()
+{
+	return std::vector<std::string>();
+}

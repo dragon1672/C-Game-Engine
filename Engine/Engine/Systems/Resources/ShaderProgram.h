@@ -86,6 +86,11 @@ public:
 	void passUniform(ShaderObject& pram);
 	void passUniform(const char* name, ParameterType parameterType, const void * value);
 	void passUniform(uint location, ParameterType parameterType, const void * value);
+
+	virtual bool isValid();
+
+	virtual std::vector<std::string> getErrors();
+
 };
 
 #endif

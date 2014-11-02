@@ -38,7 +38,7 @@ void Entity::init()        {
 }
 void Entity::start()       {
 	for(uint i=0; i<components.size(); i++) {
-		if(components[i]->active && (!selectorFunction || selectorFunction && selectorFunction(components[i]))) {
+		if(components[i]->active) {
 			components[i]->start();
 		}
 	}

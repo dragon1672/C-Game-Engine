@@ -56,3 +56,11 @@ RenderableComponent::RenderableComponent(Mesh * geo /*= nullptr*/, ShaderProgram
 	}
 	addUniformParameter(material);
 }
+
+std::vector<std::string> RenderableComponent::getErrors()
+{
+	std::vector<std::string> ret;
+	if(shader == nullptr) ret.push_back("No Shader");
+	if(geo    == nullptr) ret.push_back("No Geo");
+	return ret;
+}

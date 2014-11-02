@@ -88,3 +88,8 @@ Ray CameraComponent::getRayFromMouse(glm::vec2 mousePos)
 	ret.origin = Parent()->getTrans()->pos;
 	return ret;
 }
+
+std::vector<std::string> CameraComponent::getErrors()
+{
+	return std::vector<std::string>();
+}

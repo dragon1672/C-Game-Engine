@@ -32,4 +32,6 @@ public:
 
 	virtual std::string getShaderName();
 
+	std::vector<std::string> getErrors();
+
 };

@@ -233,3 +233,16 @@ void Mesh::translate(glm::vec3 pos)
 	trans.pos = pos;
 	generalTransform(trans);
 }
+
+bool Mesh::isValid()
+{
+	return verts.size() > 0 && indices.size() > 0;
+}
+
+std::vector<std::string> Mesh::getErrors()
+{
+	std::vector<std::string> ret;
+	if(verts.size()   == 0) ret.push_back("No Verts in Mesh");
+	if(indices.size() == 0) ret.push_back("No Indicees in Mesh");
+	return ret;
+}

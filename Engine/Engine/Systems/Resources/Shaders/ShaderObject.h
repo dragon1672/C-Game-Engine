@@ -2,6 +2,7 @@
 
 #include <ExportHeader.h>
 #include <Engine/Systems/Resources/Shaders/ShaderUniformPram.h>
+#include <string>
 
 class ENGINE_SHARED ShaderObject {
 public:

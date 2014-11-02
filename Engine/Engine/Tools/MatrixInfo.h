@@ -89,4 +89,6 @@ public:
 
 	virtual bool isValid();
 
+	virtual std::vector<std::string> getErrors();
+
 };

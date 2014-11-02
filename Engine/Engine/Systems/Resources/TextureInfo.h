@@ -24,4 +24,9 @@ public:
 	TextureInfo(std::string name);
 
 	void PassDownToHardWare();
+
+	virtual bool isValid();
+
+	virtual std::vector<std::string> getErrors();
+
 };

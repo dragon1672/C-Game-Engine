@@ -78,4 +78,9 @@ public:
 	void PassDownToHardWare();
 
 	void update();
+
+	virtual bool isValid();
+
+	virtual std::vector<std::string> getErrors();
+
 };

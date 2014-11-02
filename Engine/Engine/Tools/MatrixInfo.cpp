@@ -85,3 +85,8 @@ void MatrixInfo::restoreValues()
 	rot	  = rot_saved;
 	scale = scale_saved;
 }
+
+std::vector<std::string> MatrixInfo::getErrors()
+{
+	return std::vector<std::string>();
+}

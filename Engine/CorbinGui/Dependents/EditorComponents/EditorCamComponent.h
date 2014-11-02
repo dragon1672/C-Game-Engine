@@ -22,6 +22,11 @@ public:
 		throw std::logic_error("The method or operation is not implemented.");
 	}
 
+	std::vector<std::string> getErrors()
+	{
+		throw std::logic_error("The method or operation is not implemented.");
+	}
+
 	virtual void init()
 	{
 		renderableForCam->addUniformParameter("cam_farPlane", cam->farPlane );

@@ -93,6 +93,7 @@ public:
 	void lateUpdate();
 
 	bool ComponentsAreReady();
+	std::vector<std::string> getErrors();
 
 	GET_LUA_VER_PTR(Entity,parent);
 	LUA_GET_FUN_PTR(MatrixInfo,getTrans);
