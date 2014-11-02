@@ -59,3 +59,12 @@ void MasterLua::init()
 	global.Set("Timer",(LuaUserdata<Timer>)Timer::getInstance());
 	global.Set("Input",(LuaUserdata<InputManager>)InputManager::getInstance());
 }
+
+void MasterLua::runLua(std::string toRun)
+{
+	std::string errs = LUA_INSTANCE.RunScript(toRun);
+	if(errs != Lua::NO_ERRORS) {
+		printer.LogError("LUA COMPILE ERR");
+		printer.LogError(errs.c_str());
+	}
+}
