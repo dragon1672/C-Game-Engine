@@ -20,7 +20,16 @@ namespace Collections {
 			if(array[i] == toFind) return i;
 		return -1;
 	}
-	template <typename T> T	 First(std::vector<T>& array, std::function<bool(T&)> selector, T defaultVal = nullptr) {
+	template <typename T> void   AddToFirstVector(std::vector<T>& right, std::vector<T>& left) {
+		for (uint i = 0; i < left.size();  i++) right.push_back(left[i]);
+	}
+	template <typename T> T	     Combine(std::vector<T>& right, std::vector<T>& left) {
+		std::vector<T>& ret;
+		AddToFirstVector(ret,right);
+		AddToFirstVector(ret,left);
+		return ret;
+	}
+	template <typename T> T	     First(std::vector<T>& array, std::function<bool(T&)> selector, T defaultVal = nullptr) {
 		for (uint i = 0; i < array.size(); i++)
 			if(selector(array[i])) return array[i];
 		return defaultVal;
@@ -69,7 +78,7 @@ namespace Collections {
 			if(array[i] == toFind) return i;
 		return -1
 	}
-	template <typename T> T	 First(ConstVector<T>& array, std::function<bool(T&)> selector, T defaultVal = nullptr) {
+	template <typename T> T	     First(ConstVector<T>& array, std::function<bool(T&)> selector, T defaultVal = nullptr) {
 		for (uint i = 0; i < array.size(); i++)
 			if(selector(array[i])) return array[i];
 		return defaultVal;
@@ -119,7 +128,7 @@ namespace Collections {
 			if(array[i] == toFind) return i;
 		return -1
 	}
-	template <typename T> T	 First(T * array, int size, std::function<bool(T&)> selector, T defaultVal = nullptr) {
+	template <typename T> T	     First(T * array, int size, std::function<bool(T&)> selector, T defaultVal = nullptr) {
 		for (uint i = 0; i < size; i++)
 			if(selector(array[i])) return array[i];
 		return defaultVal;
