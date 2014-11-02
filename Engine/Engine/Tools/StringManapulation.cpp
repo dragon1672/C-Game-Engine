@@ -1,6 +1,7 @@
 #include "StringManapulation.h"
 #include <sstream>
 #include <Engine/TypeDefs.h>
+#include <Engine/Tools/CollectionEditing.h>
 
 
 
@@ -55,6 +56,13 @@ std::string StringManapulation::trimStart(std::string src, char * list, int coun
 	return ret;
 }
 
+ENGINE_SHARED std::string StringManapulation::trimStart(std::string src, std::unordered_set<char> list)
+{
+	uint offset = 0;
+	for (; offset < src.length() && Collections::contains(list,src[offset]); offset++);
+	return src.substr(offset);
+}
+
 std::string StringManapulation::trimEnd(std::string src,char toTrim)
 {
 	int offset = src.length()-1;
@@ -70,6 +78,13 @@ std::string StringManapulation::trimEnd(std::string src, char * list, int count)
 	return ret;
 }
 
+ENGINE_SHARED std::string StringManapulation::trimEnd(std::string src, std::unordered_set<char> list)
+{
+	int offset = src.length()-1;
+	for (; offset >= 0 && Collections::contains(list,src[offset]); offset--);
+	return src.substr(0,offset+1);
+}
+
 std::string StringManapulation::trim(std::string src,char toTrim)
 {
 	return trimEnd(trimStart(src,toTrim),toTrim);
@@ -83,16 +98,27 @@ std::string StringManapulation::trim(std::string src, char * list, int count)
 	return ret;
 }
 
+ENGINE_SHARED std::string StringManapulation::trim(std::string src, std::unordered_set<char> list)
+{
+	return trimEnd(trimStart(src,list),list);
+}
+
 std::string StringManapulation::trimWhiteSpace(std::string src)
 {
-	char list[] = {' ','\n','\t'};
-	return trim(src,list,sizeof(list)/sizeof(*list));
+	std::unordered_set<char> list;
+	list.emplace(' ');
+	list.emplace('\n');
+	list.emplace('\t');
+	return trim(src,list);
 }
 
 std::string StringManapulation::trimWhiteSpaceStart(std::string src)
 {
-	char list[] = {' ','\n','\t'};
-	return trimStart(src,list,sizeof(list)/sizeof(*list));
+	std::unordered_set<char> list;
+	list.emplace(' ');
+	list.emplace('\n');
+	list.emplace('\t');
+	return trimStart(src,list);
 }
 
 std::string StringManapulation::repeat(int total, std::string strA)
