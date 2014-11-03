@@ -2,10 +2,11 @@
 
 #include <Engine/Defines/LuaVersion.h>
 #include <Engine/Defines/SingletonsDefine.h>
+#include <ExportHeader.h>
 
 #define LUA_INSTANCE MasterLua::getInstance().lua
 
-class MasterLua {
+class ENGINE_SHARED MasterLua {
 	DEFINE_SINGLETON(MasterLua);
 public:
 	static const std::string ComponentBaseClass; /* = "ScriptComponent"; */

@@ -39,7 +39,7 @@ struct LUA_HOLDER {											\
 	LUA_HOLDER_INSTANCE = nullptr
 
 #define LUA_OBJECT_END(class_name) \
-	if(LUA_HOLDER_INSTANCE!=nullptr) delete LUA_HOLDER_INSTANCE
+	if(LUA_HOLDER_INSTANCE!=nullptr) { delete LUA_HOLDER_INSTANCE; }
 
 #define MAKE_DEFAULT_LUA_CONST_AND_DEST(class_name) class_name##() { LUA_OBJECT_START(class_name); } ~##class_name##() { LUA_OBJECT_END(class_name); }
 

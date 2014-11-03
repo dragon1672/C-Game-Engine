@@ -9,6 +9,7 @@
 #include <Engine/Tools/CollectionEditing.h>
 #include <QtWidgets/QGroupBox>
 #include <Engine/DebugTools/DebugMemHeader.h>
+#include <Engine/Defines/SafeNewAndDelete.h>
 
 #pragma region Component Editors
 class SingleComponentEditor : public QWidget {
