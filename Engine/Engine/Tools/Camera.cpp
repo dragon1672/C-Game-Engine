@@ -1,5 +1,6 @@
 #include <Engine\Tools\Camera.h>
 #include <glm\gtx\transform.hpp>
+#include <Engine/DebugTools/DebugMemHeader.h>
 
 using glm::vec3;
 using glm::mat4x4;

@@ -35,6 +35,7 @@
 #include <QtGui/QPainter>
 #include <QtWidgets/QDesktopWidget>
 #include <QtGui/QScreen>
+#include <Engine/DebugTools/DebugMemHeader.h>
 
 template<class T>
 T findClosestParent(QWidget* widget) {
@@ -57,6 +58,7 @@ ToolWindowManager::ToolWindowManager(QWidget *parent) :
   m_dragIndicator = new QLabel(0, Qt::ToolTip );
   m_dragIndicator->setAttribute(Qt::WA_ShowWithoutActivating);
   QVBoxLayout* mainLayout = new QVBoxLayout(this);
+  setLayout(mainLayout);
   mainLayout->setContentsMargins(0, 0, 0, 0);
   ToolWindowManagerWrapper* wrapper = new ToolWindowManagerWrapper(this);
   wrapper->setWindowFlags(wrapper->windowFlags() & ~Qt::Tool);
@@ -77,6 +79,9 @@ ToolWindowManager::~ToolWindowManager() {
   while(!m_wrappers.isEmpty()) {
     delete m_wrappers.first();
   }
+  delete m_rectRubberBand;
+  delete m_lineRubberBand;
+  delete m_dragIndicator;
 }
 
 void ToolWindowManager::addToolWindow(QWidget *toolWindow, const AreaReference &area) {

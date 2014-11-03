@@ -4,8 +4,9 @@
 
 
 
-GuiSkellyTon::GuiSkellyTon() : scene(new BasicQGLGui())
+GuiSkellyTon::GuiSkellyTon()
 {
+	scene = new BasicQGLGui();
 	game = &scene->meGame;
 	toolManager = new ToolWindowManager();
 	componentEditor = new ComponentEditor();
@@ -39,7 +40,7 @@ GuiSkellyTon::GuiSkellyTon() : scene(new BasicQGLGui())
 		this->update();
 	});
 
-	toolManager->addToolWindow(gameObjectList,ToolWindowManager::AreaReferenceType::EmptySpace);
+	toolManager->addToolWindow(gameObjectList, ToolWindowManager::AreaReferenceType::EmptySpace);
 	toolManager->addToolWindow(componentEditor,ToolWindowManager::AreaReferenceType::EmptySpace);
 	myTimer.start();
 }

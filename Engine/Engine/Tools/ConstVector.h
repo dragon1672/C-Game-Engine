@@ -15,7 +15,7 @@ private:
 	}
 public:
 
-	ConstVector() { init(47); }
+	ConstVector() { init(17); }
 	ConstVector(unsigned int startSize)    { init(startSize); }
 	inline void add(const std::vector<T>& toAdd)        { add(&toAdd[0],toAdd.size()); }
 	inline void add(const ConstVector<T>& toAdd)        { for (int i = 0; i < toAdd.size(); i++) add(toAdd[i]); }
@@ -74,11 +74,14 @@ public:
 		unsigned int b = idx % startSize;
 		return arrays[a][b];
 	};
-	~ConstVector() {
+	void clear() {
 		while(arrays.size() > 0) {
 			int end = arrays.size() - 1;
 			delete [] arrays[end];
 			arrays.erase(arrays.begin() + end);
 		}
+	}
+	~ConstVector() {
+		clear();
 	}
 };

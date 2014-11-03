@@ -30,6 +30,7 @@
 #include <QtCore/QMimeData>
 #include <QtCore//QDebug>
 #include <QtWidgets/QApplication>
+#include <Engine/DebugTools/DebugMemHeader.h>
 
 ToolWindowManagerWrapper::ToolWindowManagerWrapper(ToolWindowManager *manager) :
   QWidget(manager)

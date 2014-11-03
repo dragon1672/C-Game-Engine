@@ -8,6 +8,7 @@
 #include <Engine/Tools/CollectionEditing.h>
 #include <string>
 #include <Engine/Tools/Printer.h>
+#include <Engine/Defines/Vectors.h>
 
 GameObjectManager::GameObjectManager() {
 	entityAddEvent.push_back([this](Entity* e){ for(uint i=0;i<entityListChange.size();i++) entityListChange[i](e); });
@@ -32,6 +33,9 @@ bool GameObjectManager::shutdown() {
 	MasterLua::delInstance();
 	resourceManager.shutdown();
 	resourceManager.delInstance();
+	printer.delInstance();
+	camManager.delInstance();
+	entities.clear();
 	return true;
 }
 void GameObjectManager::update() {

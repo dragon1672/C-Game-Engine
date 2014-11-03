@@ -27,18 +27,19 @@
 #include <QtWidgets/QApplication>
 #include <QtGui/QMouseEvent>
 #include <QtCore/QDebug>
+#include <Engine/DebugTools/DebugMemHeader.h>
 
 ToolWindowManagerArea::ToolWindowManagerArea(ToolWindowManager *manager, QWidget *parent) :
-  QTabWidget(parent)
-, m_manager(manager)
+	QTabWidget(parent)
+	, m_manager(manager)
 {
-  m_dragCanStart = false;
-  m_tabDragCanStart = false;
-  setMovable(true);
-  setTabsClosable(true);
-  setDocumentMode(true);
-  tabBar()->installEventFilter(this);
-  m_manager->m_areas << this;
+	m_dragCanStart = false;
+	m_tabDragCanStart = false;
+	setMovable(true);
+	setTabsClosable(true);
+	setDocumentMode(true);
+	tabBar()->installEventFilter(this);
+	m_manager->m_areas << this;
 }
 
 ToolWindowManagerArea::~ToolWindowManagerArea() {

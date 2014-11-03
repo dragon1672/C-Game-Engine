@@ -2,6 +2,7 @@
 #include <windows.h>
 #include <iostream>
 #include <Engine/TypeDefs.h>
+#include <Engine/DebugTools/DebugMemHeader.h>
 
 namespace {
 	void removeCursor() {

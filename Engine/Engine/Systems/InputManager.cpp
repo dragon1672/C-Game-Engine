@@ -1,6 +1,7 @@
 #include "InputManager.h"
 #include <windows.h>
 #include <QtGui/QCursor>
+#include <Engine/DebugTools/DebugMemHeader.h>
 
 IMPLEMENT_SINGLETON(InputManager);
 

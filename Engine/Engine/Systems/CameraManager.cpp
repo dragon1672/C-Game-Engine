@@ -1,4 +1,5 @@
 #include "CameraManager.h"
+#include <Engine/DebugTools/DebugMemHeader.h>
 
 IMPLEMENT_SINGLETON(CameraManager);
 
