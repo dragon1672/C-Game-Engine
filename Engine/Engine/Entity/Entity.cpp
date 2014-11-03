@@ -5,6 +5,7 @@
 #include <Engine/Tools/CollectionEditing.h>
 #include <Engine/Entity/Components/RenderableComponent.h>
 #include <Engine/Systems/CameraManager.h>
+#include <Engine/Defines/Vectors.h>
 
 void Entity::removeComponent(int toKill) {
 	if(toKill >= 0 && toKill < (int)components.size()) {

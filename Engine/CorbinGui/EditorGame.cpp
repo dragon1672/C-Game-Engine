@@ -58,6 +58,11 @@ void EditorGame::paint()
 	game.paint();
 }
 
+EditorGame::~EditorGame()
+{
+	game.shutdown();
+}
+
 template<>
 RenderableComponent * EditorGame::scoper::addComponent()
 {

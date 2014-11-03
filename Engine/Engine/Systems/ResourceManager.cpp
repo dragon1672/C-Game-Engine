@@ -3,6 +3,8 @@
 #include <Engine/IO/QImageIO.h>
 #include <Engine/Tools/CollectionEditing.h>
 #include <Engine/Systems/Resources/Shaders/DefaultShaders.h>
+#include <Engine/DebugTools/DebugMemHeader.h>
+
 
 IMPLEMENT_SINGLETON(ResourceManager);
 

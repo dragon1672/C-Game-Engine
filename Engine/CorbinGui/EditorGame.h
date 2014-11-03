@@ -22,6 +22,7 @@ public:
 	inline GameObjectManager * Game() { return &game; }
 	int width,height;
 	EditorGame();
+	~EditorGame();
 
 	struct ENGINE_SHARED scoper {
 	private:
