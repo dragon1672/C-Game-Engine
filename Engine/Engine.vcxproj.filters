@@ -9,7 +9,6 @@
     <ClInclude Include="Engine\Tools\SingleKeyManager.h" />
     <ClInclude Include="Engine\Tools\Timer.h" />
     <ClInclude Include="Engine\FastDelegate.h" />
-    <ClInclude Include="Engine\Renderer\Renderer.h" />
     <ClInclude Include="Engine\Tools\QT\LinkedSlider.h" />
     <ClInclude Include="Engine\Tools\QT\DebugSlider.h" />
     <ClInclude Include="Engine\Tools\QT\ButtonInfo.h" />
@@ -111,7 +110,6 @@
     <ClCompile Include="Engine\Tools\Camera.cpp" />
     <ClCompile Include="Engine\Tools\Random\MyRandom.cpp" />
     <ClCompile Include="Engine\Tools\Timer.cpp" />
-    <ClCompile Include="Engine\Renderer\Renderer.cpp" />
     <ClCompile Include="Engine\Tools\QT\DebugSlider.cpp" />
     <ClCompile Include="Engine\DebugTools\DebugMenuManager.cpp" />
     <ClCompile Include="Engine\Tools\BinaryToShapeLoader.cpp" />

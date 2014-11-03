@@ -193,7 +193,6 @@
     <ClInclude Include="Engine\Tools\Random\MyRandom.h" />
     <ClInclude Include="Engine\Tools\NUShapeEditor.h" />
     <ClInclude Include="Engine\Systems\Resources\Shaders\ParameterType.h" />
-    <ClInclude Include="Engine\Renderer\Renderer.h" />
     <ClInclude Include="Engine\Systems\Resources\Shaders\ShaderUniformPram.h" />
     <ClInclude Include="Engine\Tools\SingleKeyManager.h" />
     <ClInclude Include="Engine\Tools\Timer.h" />
@@ -249,7 +248,6 @@
     <ClCompile Include="Engine\Tools\Random\Glm.cpp" />
     <ClCompile Include="Engine\Tools\Random\MyRandom.cpp" />
     <ClCompile Include="Engine\Tools\NUShapeEditor.cpp" />
-    <ClCompile Include="Engine\Renderer\Renderer.cpp" />
     <ClCompile Include="Engine\Systems\Resources\Shaders\ShaderUniformPram.cpp" />
     <ClCompile Include="Engine\Tools\Random\StringRandom.cpp" />
     <ClCompile Include="Engine\Tools\StringManapulation.cpp" />
