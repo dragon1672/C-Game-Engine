@@ -2,7 +2,6 @@
 
 #include <Engine/Entity/Component.h>
 #include <Engine/Entity/Components/RenderableComponent.h>
-#include <Engine/Renderer/Renderer.h>
 #include <Engine/Tools/Timer.h>
 #include <Engine/Systems/Resources/TextureInfo.h>
 #include <Engine/Defines/SingletonsDefine.h>

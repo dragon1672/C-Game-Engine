@@ -284,7 +284,7 @@ public:
 
 	std::vector<SingleComponentEditor *> TrackedEditors;
 	void clearList() {
-		CLEAR_VECTOR(TrackedEditors);
+		DELETE_VECTOR(TrackedEditors);
 	}
 	void initList(std::vector<Component *>& list) {
 		clearList();

@@ -207,7 +207,7 @@ std::vector<Component *> Entity::getAllComponents()
 
 Entity::~Entity()
 {
-	CLEAR_VECTOR(components);
+	DELETE_VECTOR(components);
 	LUA_OBJECT_END(Entity);
 }
 
