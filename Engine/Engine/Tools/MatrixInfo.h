@@ -26,13 +26,13 @@ private:
 	glm::mat4 translationMat;
 	glm::mat4 scaleMat;
 
-	wrap::vec3 pos_saved;
-	wrap::vec3 rot_saved;
-	wrap::vec3 scale_saved;
+	glm::vec3 pos_saved;
+	glm::vec3 rot_saved;
+	glm::vec3 scale_saved;
 
-	wrap::vec3 pos_old;
-	wrap::vec3 rot_old;
-	wrap::vec3 scale_old;
+	glm::vec3 pos_old;
+	glm::vec3 rot_old;
+	glm::vec3 scale_old;
 	std::vector<ShaderUniformPram> uniforms;
 public:
 	wrap::vec3 pos;

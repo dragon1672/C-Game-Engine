@@ -33,8 +33,9 @@ bool GameObjectManager::shutdown() {
 	MasterLua::delInstance();
 	resourceManager.shutdown();
 	resourceManager.delInstance();
-	printer.delInstance();
 	camManager.delInstance();
+	Timer::delInstance();
+	printer.delInstance();
 	entities.clear();
 	return true;
 }

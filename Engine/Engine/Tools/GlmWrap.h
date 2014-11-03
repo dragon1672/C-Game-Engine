@@ -47,12 +47,14 @@ namespace wrap {
 		LUA_OBJECT(vec3);
 	public:
 		vec3() { LUA_OBJECT_START(vec3); }
-		vec3(glm::vec3& that) { set(that); LUA_OBJECT_START(vec3); }
+		vec3(const glm::vec3& that) { set(that); LUA_OBJECT_START(vec3); }
 		vec3(float x, float y, float z) { set(x,y,z); LUA_OBJECT_START(vec3); }
-		~vec3() {LUA_OBJECT_END(vec3); }
+		vec3(const vec3& that) { set(that); this->LUA_HOLDER_INSTANCE = that.LUA_HOLDER_INSTANCE; }
+		~vec3() { LUA_OBJECT_END(vec3); }
 		inline operator glm::vec3&() { return *reinterpret_cast<glm::vec3*>(this); }
 		inline operator glm::vec3()  { return *reinterpret_cast<glm::vec3*>(this); }
-		vec3& operator=(const glm::vec3& that) { set(that); return *this; }
+		vec3& operator=(const glm::vec3& that) { set(that);  return *this; }
+		vec3& operator=(const vec3& that) { set(that); this->LUA_HOLDER_INSTANCE = that.LUA_HOLDER_INSTANCE; return *this; }
 		LUA_VECTOR_MAKE_GETTER_SETTER(X,x);
 		LUA_VECTOR_MAKE_GETTER_SETTER(Y,y);
 		LUA_VECTOR_MAKE_GETTER_SETTER(Z,z);
