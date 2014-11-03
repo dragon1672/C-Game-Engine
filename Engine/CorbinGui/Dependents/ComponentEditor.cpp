@@ -10,6 +10,7 @@
 #include <QtWidgets/QGroupBox>
 #include <Engine/DebugTools/DebugMemHeader.h>
 #include <Engine/Defines/SafeNewAndDelete.h>
+#include <Engine/Tools/Printer.h>
 
 #pragma region Component Editors
 class SingleComponentEditor : public QWidget {
@@ -49,6 +50,7 @@ class QTVecEditor : public SingleComponentEditor {
 	float * vec;
 	static const uint size = N;
 	QLineEdit * editors[size]; // supports up to vec4
+	QDoubleValidator validator;
 	void init(QString title="") {
 		QHBoxLayout * layout = new QHBoxLayout();
 		this->setLayout(layout);
@@ -57,7 +59,7 @@ class QTVecEditor : public SingleComponentEditor {
 		}
 		std::string names = "xyzw?";
 		for(uint i=0;i<size;i++) {
-			editors[i] = new QLineEdit();	editors[i]->setValidator( new QDoubleValidator() );
+			editors[i] = new QLineEdit();	editors[i]->setValidator(&validator);
 			char letter = names[clamp(i,0,names.length()-1)];
 			QString name = QString(letter);
 			layout->addWidget(new QLabel(name+": "));	layout->addWidget(editors[i]);
@@ -193,12 +195,20 @@ public:
 #define MATERIAL_GLEW(a,b) MATERIAL_STRING(a##b)
 
 #define ADD_MATERIAL_GUI_TEXTURE(name)\
-	widg = new QWidget();										   \
-	tLay = new QHBoxLayout();									   \
-	widg->setLayout(tLay);										   \
-	tLay->addWidget(new QLabel(QString(MATERIAL_GLEW(name," Texture: "))));			   \
-	tLay->addWidget(loadComboBox<TextureInfo>(mat->##name##()));	   \
-	layout->addWidget(widg);									   \
+	widg = new QWidget();																							   \
+	tLay = new QHBoxLayout();																						   \
+	widg->setLayout(tLay);																							   \
+	tLay->addWidget(new QLabel(QString(MATERIAL_GLEW(name," Texture: "))));											   \
+	{																												   \
+		auto box = loadComboBox<TextureInfo>(mat->##name##());														   \
+		tLay->addWidget(box);																						   \
+		void (QComboBox:: *indexChangedSignal)(int) = &QComboBox::currentIndexChanged;								   \
+		connect(box, indexChangedSignal, [=]{																		   \
+			this->mat->##name##(box->currentData().toInt());														   \
+		});																											   \
+	}																												   \
+	layout->addWidget(widg);																						   \
+
 
 
 class MaterialEdtor : public SingleComponentEditor {
@@ -214,6 +224,7 @@ public:
 
 		QWidget * widg;
 		QHBoxLayout * tLay;
+
 		ADD_MATERIAL_GUI_TEXTURE(Diffuse);
 		ADD_MATERIAL_GUI_TEXTURE(NormalMap);
 		ADD_MATERIAL_GUI_TEXTURE(AmbOcc);
