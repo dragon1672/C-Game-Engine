@@ -343,3 +343,8 @@ void ComponentEditor::update()
 {
 	privates->update();
 }
+
+ComponentEditor::~ComponentEditor()
+{
+	delete privates;
+}

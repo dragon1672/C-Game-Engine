@@ -9,7 +9,7 @@
 #define IMPLEMENT_SINGLETON(class_name) \
 	class_name * class_name##::_instance = nullptr; \
 	class_name##& class_name##::getInstance() { return *(_instance == nullptr ? _instance = new class_name() : _instance); } \
-	void class_name##::delInstance() { if(_instance == nullptr) delete _instance; _instance = nullptr; }
+	void class_name##::delInstance() { if(_instance != nullptr) delete _instance; _instance = nullptr; }
 
 #define DEFINE_SINGLETON_CAST(class_name,type_cast) \
 	private: static class_name * _instance; \

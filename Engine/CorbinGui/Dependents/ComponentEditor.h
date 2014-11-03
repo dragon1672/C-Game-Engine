@@ -13,6 +13,7 @@ class ENGINE_SHARED ComponentEditor : public QWidget {
 	ComponentEditorPrivates * privates;
 public:
 	ComponentEditor();
+	~ComponentEditor();
 
 	void update();
 

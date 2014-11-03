@@ -28,6 +28,10 @@ bool GameObjectManager::start() {
 	return true;
 }
 bool GameObjectManager::shutdown() {
+	inputManager.delInstance();
+	MasterLua::delInstance();
+	resourceManager.shutdown();
+	resourceManager.delInstance();
 	return true;
 }
 void GameObjectManager::update() {
