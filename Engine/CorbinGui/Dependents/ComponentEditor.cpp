@@ -65,7 +65,9 @@ class QTVecEditor : public SingleComponentEditor {
 	}
 	void updateFromModel() {
 		for(uint i=0;i<size;i++) {
-			editors[i]->setText(QString::number(vec[i]));
+			if(editors[i]->text().toDouble() != vec[i]) {
+				editors[i]->setText(QString::number(vec[i]));
+			}
 		}
 	}
 public:
