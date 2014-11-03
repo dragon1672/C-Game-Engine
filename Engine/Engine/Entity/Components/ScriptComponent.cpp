@@ -4,6 +4,7 @@
 #include <Engine/Entity/Entity.h>
 #include <Engine/Tools/Printer.h>
 #include <Engine/Tools/Random/StringRandom.h>
+#include <Engine/Defines/SafeNewAndDelete.h>
 
 
 class ScriptComponentPrivates {
@@ -20,9 +21,7 @@ void ScriptComponent::start() {
 	std::string instancename = script->getInstanceName();
 	auto context = LUA_INSTANCE.GetGlobalEnvironment().Get<LuaTable>(instancename);
 	context.Set("parent",((LuaUserdata<Entity>)*parent));
-	if(this->privates!=nullptr) delete this->privates;
-	this->privates = new ScriptComponentPrivates(context,instancename);
-
+	SAFE_NEW(privates,ScriptComponentPrivates,context,instancename);
 	privates->runMethod("start");
 }
 void ScriptComponent::earlyUpdate() {
@@ -38,7 +37,7 @@ void ScriptComponent::lateUpdate() {
 
 ScriptComponent::~ScriptComponent()
 {
-	if(privates!=nullptr) delete privates;
+	SAFE_DELETE(privates);
 }
 
 ScriptComponent::ScriptComponent() :script(nullptr), privates(nullptr) { }

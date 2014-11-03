@@ -3,9 +3,9 @@
 #include <Engine/Tools/StringManapulation.h>
 #include <Engine/Tools/Random/StringRandom.h>
 #include <Engine/TypeDefs.h>
+#include <Engine/Defines/SafeNewAndDelete.h>
 
-#define SAFE_NEW(name,type,...) if(name != nullptr) delete name; name = new type( __VA_ARGS__ )
-#define SAFE_DELETE(name) if(name != nullptr) delete name;
+
 namespace {
 	std::string extractName(std::string src) {
 		std::string startString = "--class ";
@@ -48,10 +48,6 @@ void Script::PassDownToHardWare()
 	SAFE_NEW(privates,ScriptPrivates,context);
 }
 
-Script::Script(std::string name) : privates(nullptr)
-{
-	this->name = name;
-}
 
 Script::Script() : privates(nullptr)
 {
@@ -117,4 +113,15 @@ std::vector<std::string> Script::getErrors()
 void Script::updateName()
 {
 	name = extractName(src);
+}
+
+void Script::Src(std::string val)
+{
+	src = val;
+	updateName();
+}
+
+std::string Script::Src() const
+{
+	return src;
 }

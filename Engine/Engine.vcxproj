@@ -117,6 +117,7 @@
     <ClInclude Include="Engine\DebugTools\Profiling\AutoProfiler.h" />
     <ClInclude Include="Engine\DebugTools\Profiling\ProfileCategory.h" />
     <ClInclude Include="Engine\Defines\LuaVersion.h" />
+    <ClInclude Include="Engine\Defines\SafeNewAndDelete.h" />
     <ClInclude Include="Engine\Defines\SingletonsDefine.h" />
     <ClInclude Include="Engine\Defines\VecGetSet.h" />
     <ClInclude Include="Engine\Entity\Components\CameraComponent.h" />

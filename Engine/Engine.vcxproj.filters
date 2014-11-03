@@ -102,6 +102,7 @@
     <ClInclude Include="CorbinGui\ToolWindowManager\ToolWindowManagerArea.h" />
     <ClInclude Include="CorbinGui\ToolWindowManager\ToolWindowManagerWrapper.h" />
     <ClInclude Include="CorbinGui\Dependents\ComponentEditor.h" />
+    <ClInclude Include="Engine\Defines\SafeNewAndDelete.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />

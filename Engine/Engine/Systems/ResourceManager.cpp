@@ -127,7 +127,7 @@ Script * ResourceManager::addScript_src (const char * file)
 Script * ResourceManager::addScript_src (std::string file)
 {
 	scripts.push_back(Script());
-	scripts.last().src = file;
+	scripts.last().Src(file);
 	scripts.last().updateName();
 	ScriptObjs.Register(scripts.last());
 	return &scripts.last();
@@ -158,6 +158,11 @@ bool ResourceManager::isValid()
 std::vector<std::string> ResourceManager::getErrors()
 {
 	return std::vector<std::string>();
+}
+
+void ResourceManager::shutdown()
+{
+	foreachOnAll([](Resource&r){r.shutdown();});
 }
 
 

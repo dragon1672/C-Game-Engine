@@ -10,11 +10,12 @@ class ScriptPrivates;
 class ENGINE_SHARED	Script : public Resource {
 	ScriptPrivates * privates;
 	std::string getUniqueName();
+	std::string src;
 public:
 	Script();
-	Script(std::string name);
 	~Script();
-	std::string src;
+	std::string Src() const;
+	void Src(std::string val);
 	LuaTable getClass();
 	virtual void PassDownToHardWare();
 

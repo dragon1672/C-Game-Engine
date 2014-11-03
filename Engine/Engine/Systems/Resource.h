@@ -10,5 +10,6 @@ public:
 	virtual void init() {};
 	virtual void update() {}
 	virtual bool isValid() = 0;
+	virtual void shutdown() {}
 	virtual std::vector<std::string> getErrors() = 0;
 };

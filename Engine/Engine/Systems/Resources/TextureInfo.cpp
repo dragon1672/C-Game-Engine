@@ -1,6 +1,7 @@
 #include <gl/glew.h>
 #include "TextureInfo.h"
 #include <QtGui/QImage>
+#include <Engine/Defines/SafeNewAndDelete.h>
 
 
 
@@ -32,6 +33,11 @@ std::vector<std::string> TextureInfo::getErrors()
 	if(width  <= 0) ret.push_back("invalid image width");
 	if(height <= 0) ret.push_back("invalid image height");
 	return ret;
+}
+
+void TextureInfo::shutdown()
+{
+	SAFE_DELETE(data);
 }
 
 int TextureInfo::NumTextures = 0;

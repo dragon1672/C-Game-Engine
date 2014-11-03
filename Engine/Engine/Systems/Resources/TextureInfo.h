@@ -29,4 +29,6 @@ public:
 
 	virtual std::vector<std::string> getErrors();
 
+	virtual void shutdown();
+
 };
