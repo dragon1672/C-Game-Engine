@@ -9,10 +9,9 @@
 #include <ExportHeader.h>
 
 class ENGINE_SHARED RenderableComponent : public Component {
-private:
+public:
 	std::vector<ShaderUniformPram> uniformParameters;
 	std::vector<ShaderObject*> objUniforms;
-public:
 	union {
 		Mesh * geo;
 		Mesh * mesh;

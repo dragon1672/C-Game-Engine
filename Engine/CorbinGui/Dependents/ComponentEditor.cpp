@@ -11,6 +11,7 @@
 #include <Engine/DebugTools/DebugMemHeader.h>
 #include <Engine/Defines/SafeNewAndDelete.h>
 #include <Engine/Tools/Printer.h>
+#include <QtWidgets/QScrollArea>
 
 #pragma region Component Editors
 class SingleComponentEditor : public QWidget {
@@ -51,13 +52,12 @@ class QTVecEditor : public SingleComponentEditor {
 	static const uint size = N;
 	QLineEdit * editors[size]; // supports up to vec4
 	QDoubleValidator validator;
-	void init(QString title="") {
+	void init(QString title, std::string names) {
 		QHBoxLayout * layout = new QHBoxLayout();
 		this->setLayout(layout);
 		if(title != "") {
 			layout->addWidget(new QLabel(title));
 		}
-		std::string names = "xyzw?";
 		for(uint i=0;i<size;i++) {
 			editors[i] = new QLineEdit();	editors[i]->setValidator(&validator);
 			char letter = names[clamp(i,0,names.length()-1)];
@@ -74,10 +74,10 @@ class QTVecEditor : public SingleComponentEditor {
 		}
 	}
 public:
-	QTVecEditor(float * data,QString title = "") {
+	QTVecEditor(float * data,QString title = "", std::string names = "xyzw?") {
 		static_assert(size > 0,"Vector must be larger than 0");
 		vec = data;
-		init(title);
+		init(title,names);
 	}
 };
 
@@ -88,6 +88,7 @@ class TranslationEdtor : public SingleComponentEditor {
 	SingleComponentEditor * vecEditors[3];
 public:
 	TranslationEdtor(MatrixInfo * matrix) {
+		setMinimumSize(300,150);
 		setWindowTitle("Transform Info");
 		this->matrix = matrix;
 		QVBoxLayout * layout = new QVBoxLayout();
@@ -140,8 +141,8 @@ template<typename T> QComboBox * loadComboBox(T* first) { static_assert(false,"N
 
 MAKE_COMBO_BOX_MAKER(Script);
 MAKE_COMBO_BOX_MAKER(Mesh);
-MAKE_COMBO_BOX_MAKER(ShaderProgram);
 MAKE_COMBO_BOX_MAKER(TextureInfo);
+MAKE_COMBO_BOX_MAKER(ShaderProgram);
 
 #pragma endregion
 
@@ -156,6 +157,7 @@ class ScriptEdtor : public SingleComponentEditor {
 	QComboBox *comboBox;
 public:
 	ScriptEdtor(ScriptComponent * script) {
+		setMinimumSize(300,100);
 		setWindowTitle("Script Component");
 		this->script = script;
 		QVBoxLayout * layout = new QVBoxLayout();
@@ -220,7 +222,7 @@ public:
 		this->mat = mat;
 		QVBoxLayout * layout = new QVBoxLayout();
 		this->setLayout(layout);
-		layout->addWidget(color = new QTVecEditor<4>(&(mat->color[0])));
+		layout->addWidget(color = new QTVecEditor<4>(&(mat->color[0]),"","rgba?"));
 
 		QWidget * widg;
 		QHBoxLayout * tLay;
@@ -236,14 +238,43 @@ public:
 	}
 };
 
-class RenderableEdtor : public SingleComponentEditor {
+class RenderableEditor : public SingleComponentEditor {
 	RenderableComponent * script;
 public:
-	RenderableEdtor(RenderableComponent * script) {
+	RenderableEditor(RenderableComponent * script) {
+		setMinimumSize(300,350);
 		setWindowTitle("Renderable Component");
 		this->script = script;
 		QVBoxLayout * layout = new QVBoxLayout();
 		this->setLayout(layout);
+
+		QWidget * widg = new QWidget();																
+		QHBoxLayout * tLay = new QHBoxLayout();														
+		widg->setLayout(tLay);															
+		tLay->addWidget(new QLabel(QString("Geo: ")));			
+		{																					
+			auto box = loadComboBox<Mesh>(script->geo);
+			tLay->addWidget(box);
+			void (QComboBox:: *indexChangedSignal)(int) = &QComboBox::currentIndexChanged;
+			connect(box, indexChangedSignal, [=] {
+				script->geo = resourceManager.getMesh(box->currentData().toInt());
+			});
+		}
+		layout->addWidget(widg);
+		widg = new QWidget();																
+		tLay = new QHBoxLayout();														
+		widg->setLayout(tLay);															
+		tLay->addWidget(new QLabel(QString("Shader: ")));			
+		{																					
+			auto box = loadComboBox<ShaderProgram>(script->shader);
+			tLay->addWidget(box);
+			void (QComboBox:: *indexChangedSignal)(int) = &QComboBox::currentIndexChanged;
+			connect(box, indexChangedSignal, [=] {
+				script->shader = resourceManager.getShaderProgram(box->currentData().toInt());
+			});
+		}
+		layout->addWidget(widg);
+
 		layout->addWidget(new MaterialEdtor(&(script->material)));
 	}
 	void updateFromModel() {
@@ -252,10 +283,10 @@ public:
 };
 
 template<>
-class EditorCreator<RenderableEdtor> : public EditorCreatorInterface {
+class EditorCreator<RenderableEditor> : public EditorCreatorInterface {
 public:
 	SingleComponentEditor * getNewInstance(void * data) {
-		return new RenderableEdtor((RenderableComponent*)data);
+		return new RenderableEditor((RenderableComponent*)data);
 	}
 };
 
@@ -274,7 +305,7 @@ public:
 		//init map here
 		ADD_INTERFACE_TO_MAP(MatrixInfo,TranslationEdtor);
 		ADD_INTERFACE_TO_MAP(ScriptComponent,ScriptEdtor);
-		ADD_INTERFACE_TO_MAP(RenderableComponent,RenderableEdtor);
+		ADD_INTERFACE_TO_MAP(RenderableComponent,RenderableEditor);
 	}
 	template<typename T> bool hasEditorFor(Component*c) {
 		return map.find(typeid(T).name()) != map.end();
@@ -318,6 +349,18 @@ public:
 
 #pragma endregion
 
+class ComponentWrapper : public QWidget {
+public:
+	ComponentWrapper(QWidget * component, QString title) {
+		setLayout(new QVBoxLayout());
+		QGroupBox * boxy = new QGroupBox(title);
+		QVBoxLayout * boxLayout = new QVBoxLayout();
+		boxy->setLayout(boxLayout);
+		boxLayout->addWidget(component);
+		layout()->addWidget(boxy);
+	}
+};
+
 void ComponentEditor::changeEntity(Entity * toUpdateTo, std::function<bool(Component*)> validComponentCheck) {
 	std::vector<Component*> allcomps;
 	if(toUpdateTo != nullptr) {
@@ -338,13 +381,20 @@ void ComponentEditor::changeEntity(Entity * toUpdateTo, std::function<bool(Compo
 		delete item->widget();
 		delete item;
 	}
+
+	auto vbox = new QVBoxLayout();
+	QWidget* widget = new QWidget;
+	QScrollArea * scrollarea = new QScrollArea();
+	widget->setLayout(vbox);
+	scrollarea->setWidget(widget);
+
+	scrollarea->setWidgetResizable(true);
+
 	for (uint i = 0; i < list.size(); i++) {
-		QGroupBox * boxy = new QGroupBox(list[i]->windowTitle());
-		QHBoxLayout * boxLayout = new QHBoxLayout();
-		boxy->setLayout(boxLayout);
-		boxLayout->addWidget(list[i]);
-		layout()->addWidget(boxy);
+		auto tmp = new ComponentWrapper(list[i],list[i]->windowTitle());
+		vbox->addWidget(tmp);
 	}
+	layout()->addWidget(scrollarea);
 }
 
 ComponentEditor::ComponentEditor()

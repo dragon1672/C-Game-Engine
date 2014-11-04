@@ -32,6 +32,8 @@ void EditorRenderableComponent::sync()
 	editorInstance->material = gameInstance->material;
 	editorInstance->geo = gameInstance->geo;
 	editorInstance->visable = gameInstance->visable;
+	editorInstance->objUniforms = gameInstance->objUniforms;
+	editorInstance->uniformParameters = gameInstance->uniformParameters;
 }
 
 void EditorRenderableComponent::earlyUpdate()
