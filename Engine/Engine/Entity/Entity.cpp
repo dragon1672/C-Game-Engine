@@ -111,7 +111,7 @@ void Entity::Name(const std::string newName)
 	if(newName != name) for (uint i = 0; i < StageChanged.size(); i++) StageChanged[i](this);
 }
 
-Entity::Entity(std::string name/*="New Game Object"*/, GameObjectManager * manager, Entity * p /*= nullptr*/)  : manager(manager), parent(nullptr), active(true) { this->name = name; Parent(p); LUA_OBJECT_START(Entity); }
+Entity::Entity(std::string name/*="New Game Object"*/, Entity * p /*= nullptr*/)  : parent(nullptr), active(true) { this->name = name; Parent(p); LUA_OBJECT_START(Entity); }
 
 
 MatrixInfo * Entity::getTrans() { return &localTrans; }

@@ -10,6 +10,8 @@
 #include <Engine/Tools/Printer.h>
 #include <Engine/Defines/Vectors.h>
 
+IMPLEMENT_SINGLETON(GameObjectManager);
+
 GameObjectManager::GameObjectManager() {
 	entityAddEvent.push_back([this](Entity* e){ for(uint i=0;i<entityListChange.size();i++) entityListChange[i](e); });
 	entityRemoveEvent.push_back([this](Entity* e){ for(uint i=0;i<entityListChange.size();i++) entityListChange[i](e); });
@@ -77,13 +79,14 @@ void GameObjectManager::paint() {
 	}
 }
 
-Entity * GameObjectManager::AddEntity(const char * name)
+Entity * GameObjectManager::AddEntity(std::string name)
 {
 	entities.add(Entity(name));
 	Entity * ret = &entities.last();
 	ret->StageChanged.push_back([this,ret](Entity* e){ for(uint i=0;i<entityListChange.size();i++) entityListChange[i](ret); });
 	for (uint i = 0; i < entityAddEvent.size(); i++) entityAddEvent[i](ret);
 	if(componentSelectorFunction) ret->SelectorFunction(componentSelectorFunction);
+	EntityManager.Register(ret);
 	return ret;
 }
 
@@ -131,6 +134,7 @@ void GameObjectManager::RemoveEntity(Entity * toRemove)
 		entities[index].active = false;
 		for (uint i = 0; i < entityRemoveEvent.size(); i++) entityRemoveEvent[i](toRemove);
 	}
+	EntityManager.UnRegister(toRemove);
 }
 
 void GameObjectManager::ComponentSelectorFunction(std::function<bool(Component*)> val)
@@ -184,4 +188,9 @@ std::vector<std::string> GameObjectManager::getErrors()
 	std::vector<std::string> ret;
 	for (uint i = 0; i < entities.size(); i++) { Collections::AddToFirstVector(ret,entities[i].getErrors()); }
 	return ret;
+}
+
+GameObjectManager::~GameObjectManager()
+{
+	shutdown();
 }

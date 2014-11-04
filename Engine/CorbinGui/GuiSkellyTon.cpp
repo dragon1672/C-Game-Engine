@@ -1,6 +1,7 @@
 #include "GuiSkellyTon.h"
 #include <Engine/Tools/Printer.h>
 #include <QtWidgets/QFileDialog>
+#include <Engine/Systems/GameObjectManager.h>
 
 
 
@@ -167,17 +168,17 @@ void GuiSkellyTon::initBar()
 
 void GuiSkellyTon::startGame()
 {
-	if(game->Game()->Valid()) {
+	if(gameManager.Valid()) {
 		//disable all editor components
 		//remove selector function
-		game->Game()->init();
+		gameManager.init();
 
 		game->start();
 
-		game->Game()->SelectorFunction(game->IsGameObject());
-		game->Game()->ComponentSelectorFunction(game->IsGameObject());
+		gameManager.SelectorFunction(game->IsGameObject());
+		gameManager.ComponentSelectorFunction(game->IsGameObject());
 		
-		game->Game()->saveValues();
+		gameManager.saveValues();
 
 		ResouceBar->setEnabled(false);
 		GameObjectMenu->setEnabled(false);
@@ -185,7 +186,7 @@ void GuiSkellyTon::startGame()
 		StartGameAction->setEnabled(false);
 		StopGameAction->setEnabled(true);
 	} else {
-		auto tmp = game->Game()->getErrors();
+		auto tmp = gameManager.getErrors();
 		for (uint i = 0; i < tmp.size(); i++)
 		{
 			printErr(100) tmp[0];
@@ -198,10 +199,10 @@ void GuiSkellyTon::stopGame()
 	//stop game loop
 	//enable all editor components
 	//add selector function
-	game->Game()->restoreValues();
+	gameManager.restoreValues();
 
-	game->Game()->SelectorFunction(game->IsEditorObject());
-	game->Game()->ComponentSelectorFunction(game->IsEditorObject());
+	gameManager.SelectorFunction(game->IsEditorObject());
+	gameManager.ComponentSelectorFunction(game->IsEditorObject());
 	game->start();
 
 	ResouceBar->setEnabled(true);

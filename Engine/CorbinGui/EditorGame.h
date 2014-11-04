@@ -12,14 +12,12 @@
 class ENGINE_SHARED EditorGame {
 private:
 	std::string uniqueName; // all editor components must have this as the name
-	GameObjectManager game;
 	Entity * currentlySelectedEntity;
 	std::function<bool(Object*)> isEditorObject;
 	std::function<bool(Object*)> isGameObject;
 public:
 	inline std::function<bool(Object*)>& IsEditorObject() { return isEditorObject; }
 	inline std::function<bool(Object*)>& IsGameObject() { return isGameObject; }
-	inline GameObjectManager * Game() { return &game; }
 	int width,height;
 	EditorGame();
 	~EditorGame();

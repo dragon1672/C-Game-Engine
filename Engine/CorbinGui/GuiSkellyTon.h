@@ -22,6 +22,7 @@ class ENGINE_SHARED GuiSkellyTon : public QMainWindow  {
 	QVBoxLayout * layout;
 	GameObjectViewer *gameObjectList;
 	EditorGame * game;
+	
 	ToolWindowManager * toolManager;
 	ComponentEditor * componentEditor;
 	QMenu * addComponentBar;

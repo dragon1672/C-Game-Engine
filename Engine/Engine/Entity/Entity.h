@@ -34,7 +34,6 @@ private:
 
 
 	Entity * parent;
-	GameObjectManager * manager;
 	Component* addComponent(Component * toAdd);
 	std::unordered_set<Entity *> children;
 	std::function<bool(Component*)> selectorFunction;
@@ -50,7 +49,7 @@ public:
 	std::unordered_set<Entity *> getAllChildren();
 
 
-	Entity(std::string name="New Game Object", GameObjectManager * manager = nullptr, Entity * p = nullptr);
+	Entity(std::string name="New Game Object", Entity * p = nullptr);
 	std::string Name() const;
 	void Name(const std::string newName);
 	virtual ~Entity();

@@ -13,54 +13,54 @@ EditorGame::EditorGame()
 	isGameObject = [this](Object* o){
 		return !StringManapulation::startsWith(o->Name(),this->uniqueName);
 	};
-	game.SelectorFunction(isEditorObject);
-	game.ComponentSelectorFunction(isEditorObject);
+	gameManager.SelectorFunction(isEditorObject);
+	gameManager.ComponentSelectorFunction(isEditorObject);
 	currentEntity.editor = this;
 }
 
 void EditorGame::RemoveCurrentEntity()
 {
 	if(currentEntity.currentlySelectedEntity != nullptr) {
-		game.RemoveEntity(currentEntity.currentlySelectedEntity);
+		gameManager.RemoveEntity(currentEntity.currentlySelectedEntity);
 	}
 	currentEntity.currentlySelectedEntity = nullptr;
 }
 
 void EditorGame::AddEntity(const char * name)
 {
-	currentEntity.currentlySelectedEntity = game.AddEntity(name);
+	currentEntity.currentlySelectedEntity = gameManager.AddEntity(name);
 }
 
 void EditorGame::initGl()
 {
-	game.initGl();
+	gameManager.initGl();
 }
 
 void EditorGame::init()
 {
-	game.init();
+	gameManager.init();
 }
 
 void EditorGame::start()
 {
-	game.start();
+	gameManager.start();
 }
 
 void EditorGame::update()
 {
-	game.update();
-	game.width = width;
-	game.height = height;
+	gameManager.update();
+	gameManager.width = width;
+	gameManager.height = height;
 }
 
 void EditorGame::paint()
 {
-	game.paint();
+	gameManager.paint();
 }
 
 EditorGame::~EditorGame()
 {
-	game.shutdown();
+	gameManager.delInstance();
 }
 
 template<>
@@ -129,8 +129,7 @@ std::vector<CameraComponent *> EditorGame::scoper::getAllCameras()
 
 void EditorGame::scoper::Parent(const char * name)
 {
-	int index = editor->game.entities.find([name](const Entity& e){ return e.Name() == name; });
-	Entity * parent = (index < 0 ? nullptr : &(editor->game.entities[index]));
+	Entity * parent = gameManager.getEntity(name);
 	currentlySelectedEntity->Parent(parent);
 }
 
@@ -141,7 +140,7 @@ std::vector<Component*> EditorGame::scoper::getAllComponents()
 
 std::vector<Component*> EditorGame::scoper::getAllGameComponents()
 {
-	return Collections::Where<Component*>(currentlySelectedEntity->getAllComponents(),[this](Component*c){ return !this->editor->game.ComponentSelectorFunction()(c); });
+	return Collections::Where<Component*>(currentlySelectedEntity->getAllComponents(),[this](Component*c){ return !(gameManager.ComponentSelectorFunction()(c)); });
 }
 
 void EditorGame::scoper::SetCurrent(Entity * toSet)

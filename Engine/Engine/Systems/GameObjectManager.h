@@ -16,10 +16,12 @@
 
 #include <Engine/Systems/CameraManager.h>
 
+#define gameManager GameObjectManager::getInstance()
+
 class ENGINE_SHARED GameObjectManager {
-private:
-public: ConstVector<Entity> entities;
-private:
+	DEFINE_SINGLETON(GameObjectManager);
+public:ConstVector<Entity> entities;
+private:ObjectManager EntityManager;
 	std::function<bool(Entity*)> selectorFunction;
 	std::function<bool(Component*)> componentSelectorFunction;
 public:
@@ -33,12 +35,27 @@ public:
 	std::vector<std::function<void(Entity*)>> entityListChange;
 	std::vector<Entity *> getTopLevelEntities();
 	//add
-	Entity * AddEntity(const char * name = "GameObject");
+	Entity * AddEntity(std::string name = "GameObject");
 	void RemoveEntity(Entity * toRemove);
+
+	Entity * getEntity(std::string name) {
+		return (Entity*)EntityManager.getFirst(name.c_str());
+	}
+	Entity * getEntity(int id) {
+		return (Entity*)EntityManager.getFirst(id);
+	}
+	//will copy components
+	Entity * CloneEntity(int toCloneId) {
+		Entity * e = getEntity(toCloneId);
+		auto n = AddEntity(e->Name());
+		//clone all components ... somehow :/
+		return n;
+	}
 	int width;
 	int height;
 
 	GameObjectManager();
+	~GameObjectManager();
 
 	void saveValues(bool useSelector = true);
 	void restoreValues(bool useSelector = true);
