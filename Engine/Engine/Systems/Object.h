@@ -11,6 +11,7 @@ protected:
 	std::string name;
 public:
 	Object();
+	virtual ~Object() {}
 	int getID() const; //will be unique across all objects
 	std::string Name() const;//can have dups
 	void Name(const std::string name);

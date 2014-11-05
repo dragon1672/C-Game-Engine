@@ -169,44 +169,63 @@ void GuiSkellyTon::initBar()
 
 void GuiSkellyTon::ToggleGameStartStop()
 {
-	if(gameManager.Valid()) {
-		//disable all editor components
-		//remove selector function
-		gameManager.init();
+	if(myState == EditorStates::Editor) { // start!
+		if(gameManager.Valid()) {
+			myState = EditorStates::PlayingGame;
+			//disable all editor components
+			//remove selector function
+			gameManager.init();
 
+			game->start();
+
+			gameManager.ComponentSelectorFunction(game->IsGameObject());
+		
+			gameManager.saveValues();
+
+			ResouceBar->setEnabled(false);
+			GameObjectMenu->setEnabled(false);
+
+			StartStopGameAction->setEnabled(true);
+			StartStopGameAction->setText("Stop Game");
+			PlayResumeGameAction->setEnabled(true);
+			PlayResumeGameAction->setText("Pause");
+		} else {
+			auto tmp = gameManager.getErrors();
+			for (uint i = 0; i < tmp.size(); i++)
+			{
+				printErr(100) tmp[0];
+			}
+		}
+	} else if (myState == EditorStates::PlayingGame || EditorStates::PlayingPaused) { // stop the phone!
+		myState = EditorStates::Editor;
+		gameManager.restoreValues();
+
+		gameManager.ComponentSelectorFunction(game->IsEditorObject());
 		game->start();
 
-		gameManager.ComponentSelectorFunction(game->IsGameObject());
-		
-		gameManager.saveValues();
+		ResouceBar->setEnabled(true);
+		GameObjectMenu->setEnabled(true);
 
-		ResouceBar->setEnabled(false);
-		GameObjectMenu->setEnabled(false);
-
-		StartStopGameAction->setEnabled(false);
-		PlayResumeGameAction->setEnabled(true);
-	} else {
-		auto tmp = gameManager.getErrors();
-		for (uint i = 0; i < tmp.size(); i++)
-		{
-			printErr(100) tmp[0];
-		}
+		StartStopGameAction->setEnabled(true);
+		StartStopGameAction->setText("Start Game");
+		PlayResumeGameAction->setEnabled(false);
+		PlayResumeGameAction->setText("Pause");
 	}
 }
 
 void GuiSkellyTon::ToggleGamePauseResume()
 {
-	//stop game loop
-	//enable all editor components
-	//add selector function
-	gameManager.restoreValues();
-
-	gameManager.ComponentSelectorFunction(game->IsEditorObject());
-	game->start();
-
-	ResouceBar->setEnabled(true);
-	GameObjectMenu->setEnabled(true);
-
-	StartStopGameAction->setEnabled(true);
-	PlayResumeGameAction->setEnabled(false);
+	if(myState == EditorStates::PlayingGame) { // hold the phone
+		myState = EditorStates::PlayingPaused;
+		gameManager.ComponentSelectorFunction([this](Object*o){
+			if(std::string(typeid(RenderableComponent).name()).compare(typeid(*o).name()) == 0)
+				return game->IsGameObject()(o);
+			return false;
+		});
+		PlayResumeGameAction->setText("Resume");
+	} else if(myState == EditorStates::PlayingPaused) { // time to resume
+		myState = EditorStates::PlayingGame;
+		gameManager.ComponentSelectorFunction(game->IsGameObject());
+		PlayResumeGameAction->setText("Resume");
+	}
 }

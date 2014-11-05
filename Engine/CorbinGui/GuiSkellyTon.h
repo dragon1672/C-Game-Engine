@@ -40,8 +40,8 @@ public:
 
 	void initBar();
 
-	void startGame();
-	void stopGame();
+	void ToggleGameStartStop();
+	void ToggleGamePauseResume();
 
 	void init();
 	void update();
