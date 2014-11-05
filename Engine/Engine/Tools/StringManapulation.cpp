@@ -203,13 +203,9 @@ std::string StringManapulation::replace(std::string what,std::string with,std::s
 
 bool StringManapulation::startsWith(const char * source,std::string toCheck)
 {
-	if(source == nullptr || strlen(source) < toCheck.length()) return false;
-	for (uint i = 0; i < toCheck.length(); i++) {
-		if(source[i] != toCheck[i]) return false;
-	}
-	return true;
+	return startsWith(std::string(source),toCheck);
 }
 bool StringManapulation::startsWith(std::string source, std::string toCheck)
 {
-	return startsWith(source.c_str(),toCheck);
+	return match(source,toCheck,0);
 }

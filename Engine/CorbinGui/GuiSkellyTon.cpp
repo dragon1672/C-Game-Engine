@@ -175,7 +175,6 @@ void GuiSkellyTon::startGame()
 
 		game->start();
 
-		gameManager.SelectorFunction(game->IsGameObject());
 		gameManager.ComponentSelectorFunction(game->IsGameObject());
 		
 		gameManager.saveValues();
@@ -201,7 +200,6 @@ void GuiSkellyTon::stopGame()
 	//add selector function
 	gameManager.restoreValues();
 
-	gameManager.SelectorFunction(game->IsEditorObject());
 	gameManager.ComponentSelectorFunction(game->IsEditorObject());
 	game->start();
 

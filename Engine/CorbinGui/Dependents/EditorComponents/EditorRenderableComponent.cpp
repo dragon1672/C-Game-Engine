@@ -3,13 +3,13 @@
 
 
 
-void EditorRenderableComponent::setName(const char * name)
+void EditorRenderableComponent::setName(std::string name)
 {
-	this->name = name;
+	Name(name);
 	if(editorInstance != nullptr) editorInstance->Name(name);
 }
 
-EditorRenderableComponent::EditorRenderableComponent(const char * myName, RenderableComponent * game, RenderableComponent * editor)
+EditorRenderableComponent::EditorRenderableComponent(std::string myName, RenderableComponent * game, RenderableComponent * editor)
 {
 	this->name = myName;
 	this->gameInstance = game;
@@ -29,7 +29,7 @@ bool EditorRenderableComponent::isValid()
 
 void EditorRenderableComponent::sync()
 {
-	editorInstance->material = gameInstance->material;
+	//editorInstance->material = gameInstance->material; // not required since uniforms are synced
 	editorInstance->geo = gameInstance->geo;
 	editorInstance->visable = gameInstance->visable;
 	editorInstance->objUniforms = gameInstance->objUniforms;

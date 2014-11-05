@@ -45,15 +45,9 @@ void GameObjectManager::update() {
 	inputManager.update();
 	Timer::getInstance().interval();
 	resourceManager.update();
-	if(selectorFunction) {
-		for (uint i = 0; i < entities.size(); i++) { if(entities[i].active && selectorFunction(&entities[i])) entities[i].earlyUpdate(); }
-		for (uint i = 0; i < entities.size(); i++) { if(entities[i].active && selectorFunction(&entities[i])) entities[i].update();      }
-		for (uint i = 0; i < entities.size(); i++) { if(entities[i].active && selectorFunction(&entities[i])) entities[i].lateUpdate();  }
-	} else {
-		for (uint i = 0; i < entities.size(); i++) { if(entities[i].active) entities[i].earlyUpdate(); }
-		for (uint i = 0; i < entities.size(); i++) { if(entities[i].active) entities[i].update();      }
-		for (uint i = 0; i < entities.size(); i++) { if(entities[i].active) entities[i].lateUpdate();  }
-	}
+	for (uint i = 0; i < entities.size(); i++) { if(entities[i].active && (!selectorFunction || selectorFunction && selectorFunction(&entities[i]))) entities[i].earlyUpdate(); }
+	for (uint i = 0; i < entities.size(); i++) { if(entities[i].active && (!selectorFunction || selectorFunction && selectorFunction(&entities[i]))) entities[i].update();      }
+	for (uint i = 0; i < entities.size(); i++) { if(entities[i].active && (!selectorFunction || selectorFunction && selectorFunction(&entities[i]))) entities[i].lateUpdate();  }
 }
 
 void GameObjectManager::paint() {

@@ -58,7 +58,8 @@
       <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)..\GameSolution\Core\include;$(ProjectDir)../../MiddleWare/NeumontTools/include;$(ProjectDir)../../MiddleWare/Qt/include;$(ProjectDir)../../MiddleWare/glm;$(ProjectDir)../../MiddleWare/glew/include;$(ProjectDir)../../MiddleWare/luacppinterface/LuaCppInterface;$(ProjectDir)../../MiddleWare/luacppinterface/Lua/src</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <DisableSpecificWarnings>4251;4127;4201;4100;4239</DisableSpecificWarnings>
-      <AdditionalOptions>/MP %(AdditionalOptions)</AdditionalOptions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

@@ -7,8 +7,8 @@ public:
 	RenderableComponent * gameInstance;
 	RenderableComponent * editorInstance;
 	EditorRenderableComponent();
-	EditorRenderableComponent(const char * myName, RenderableComponent * game, RenderableComponent * editor);
-	void setName(const char * name);
+	EditorRenderableComponent(std::string name, RenderableComponent * game, RenderableComponent * editor);
+	void setName(std::string name);
 
 
 	virtual bool isValid();

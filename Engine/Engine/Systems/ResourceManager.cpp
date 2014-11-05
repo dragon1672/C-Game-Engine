@@ -137,12 +137,13 @@ Script * ResourceManager::addScript_src (std::string file)
 
 ResourceManager::ResourceManager()
 {
-	defaultShader = addShader_src("basic Shader",DefaultShaders::VertexShader::DefaultVertShader(),DefaultShaders::FragShader::FragModelColor());
+	defaultShader = nullptr;
 }
 
 template<>
 ShaderProgram * ResourceManager::getDefault()
 {
+	if(defaultShader == nullptr) { defaultShader = addShader_src("basic Shader",DefaultShaders::VertexShader::DefaultVertShader(),DefaultShaders::FragShader::FragModelColor()); }
 	return defaultShader;
 }
 

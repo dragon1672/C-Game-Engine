@@ -13,7 +13,6 @@ EditorGame::EditorGame()
 	isGameObject = [this](Object* o){
 		return !StringManapulation::startsWith(o->Name(),this->uniqueName);
 	};
-	gameManager.SelectorFunction(isEditorObject);
 	gameManager.ComponentSelectorFunction(isEditorObject);
 	currentEntity.editor = this;
 }
@@ -71,7 +70,7 @@ RenderableComponent * EditorGame::scoper::addComponent()
 	auto binder = currentlySelectedEntity->addComponent<EditorRenderableComponent>();
 	binder->gameInstance = ret;
 	binder->editorInstance = editorV;
-	binder->setName(editor->uniqueName.c_str());
+	binder->setName(editor->uniqueName);
 	editorV->shader = resourceManager.getDefault<ShaderProgram>();
 	binder->sync();
 	return ret;
