@@ -7,6 +7,7 @@
 
 GuiSkellyTon::GuiSkellyTon()
 {
+	myState = EditorStates::Editor;
 	scene = new BasicQGLGui();
 	game = &scene->meGame;
 	toolManager = new ToolWindowManager();
@@ -141,15 +142,15 @@ void GuiSkellyTon::initBar()
 	//start/stop
 	menuBar()->addAction(action = new QAction("Start Game", this));
 	connect(action, &QAction::triggered, [this](){ // TODO
-		this->startGame();
+		this->ToggleGameStartStop();
 	});
-	StartGameAction = action;
-	menuBar()->addAction(action = new QAction("Stop Game", this));
+	StartStopGameAction = action;
+	menuBar()->addAction(action = new QAction("Pause Game", this));
 	connect(action, &QAction::triggered, [this](){ // TODO
-		this->stopGame();
+		this->ToggleGamePauseResume();
 	});
-	StopGameAction = action;
-	StopGameAction->setEnabled(false);
+	PlayResumeGameAction = action;
+	PlayResumeGameAction->setEnabled(false);
 
 
 	addComponentBar = fileMenu->addMenu("Add Component");
@@ -166,7 +167,7 @@ void GuiSkellyTon::initBar()
 	});
 }
 
-void GuiSkellyTon::startGame()
+void GuiSkellyTon::ToggleGameStartStop()
 {
 	if(gameManager.Valid()) {
 		//disable all editor components
@@ -182,8 +183,8 @@ void GuiSkellyTon::startGame()
 		ResouceBar->setEnabled(false);
 		GameObjectMenu->setEnabled(false);
 
-		StartGameAction->setEnabled(false);
-		StopGameAction->setEnabled(true);
+		StartStopGameAction->setEnabled(false);
+		PlayResumeGameAction->setEnabled(true);
 	} else {
 		auto tmp = gameManager.getErrors();
 		for (uint i = 0; i < tmp.size(); i++)
@@ -193,7 +194,7 @@ void GuiSkellyTon::startGame()
 	}
 }
 
-void GuiSkellyTon::stopGame()
+void GuiSkellyTon::ToggleGamePauseResume()
 {
 	//stop game loop
 	//enable all editor components
@@ -206,6 +207,6 @@ void GuiSkellyTon::stopGame()
 	ResouceBar->setEnabled(true);
 	GameObjectMenu->setEnabled(true);
 
-	StartGameAction->setEnabled(true);
-	StopGameAction->setEnabled(false);
+	StartStopGameAction->setEnabled(true);
+	PlayResumeGameAction->setEnabled(false);
 }

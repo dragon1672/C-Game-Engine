@@ -26,10 +26,14 @@ class ENGINE_SHARED GuiSkellyTon : public QMainWindow  {
 	ToolWindowManager * toolManager;
 	ComponentEditor * componentEditor;
 	QMenu * addComponentBar;
-	QAction* StartGameAction;
-	QAction* StopGameAction;
+	QAction* StartStopGameAction;
+	QAction* PlayResumeGameAction;
 	QMenu * ResouceBar;
 	QMenu * GameObjectMenu;
+
+	enum EditorStates{
+		Editor,PlayingGame,PlayingPaused//saving?
+	} myState;
 public:
 	EditorGame * Game() const { return game; }
 	GuiSkellyTon();
