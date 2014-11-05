@@ -145,7 +145,7 @@ void GuiSkellyTon::initBar()
 		this->ToggleGameStartStop();
 	});
 	StartStopGameAction = action;
-	menuBar()->addAction(action = new QAction("Pause Game", this));
+	menuBar()->addAction(action = new QAction("", this));
 	connect(action, &QAction::triggered, [this](){ // TODO
 		this->ToggleGamePauseResume();
 	});
@@ -209,7 +209,7 @@ void GuiSkellyTon::ToggleGameStartStop()
 		StartStopGameAction->setEnabled(true);
 		StartStopGameAction->setText("Start Game");
 		PlayResumeGameAction->setEnabled(false);
-		PlayResumeGameAction->setText("Pause");
+		PlayResumeGameAction->setText("");
 	}
 }
 

@@ -168,13 +168,34 @@ void ResourceManager::shutdown()
 {
 	foreachOnAll([](Resource&r){r.shutdown();});
 }
-
+#include <Engine/Systems/Resources/Mesh.h>
 void ResourceManager::loadNeumontStuff()
 {
-	addMesh("NU_Cube",Neumont::ShapeGenerator::makeCube());
-	//addMesh("NU_Cube",Neumont::ShapeGenerator::());
+	Mesh * tmp;
+	tmp = addMesh("NU_Cube",Neumont::ShapeGenerator::makeCube());
+	tmp = addMesh("NU_Sphere",Neumont::ShapeGenerator::makeSphere(30));
+	tmp->initUVData();
+	tmp = addMesh("NU_Arrow",Neumont::ShapeGenerator::makeArrow());
+	tmp = addMesh("NU_SmallPlane",Neumont::ShapeGenerator::makePlane(2));
+	tmp = addMesh("NU_Plane",Neumont::ShapeGenerator::makePlane(10));
+	tmp = addMesh("NU_Plane",Neumont::ShapeGenerator::makeTorus(20));
+	tmp = addMesh("NU_Plane",Neumont::ShapeGenerator::makeTeapot(30,glm::mat4()));
 }
 
+Mesh * ResourceManager::duplicate(Mesh * toDup)
+{
+	auto ret = addMesh(toDup->Name()+"_dup");
+	*ret = *toDup; // copy!
+	return ret;
+}
+
+ShaderProgram * ResourceManager::duplicate(ShaderProgram * toDup)
+{
+	shaders.add(*toDup);
+	shaders.last().Name(toDup->Name()+"_dup");
+	ShaderProgramObjs.Register(shaders.last());
+	return &shaders.last();
+}
 
 #define RESOURCE_GET_METHODS_IMP(class_name, TYPE) \
 	TYPE * class_name##::get##TYPE##(int id) { return (##TYPE##*)TYPE##Objs.getFirst(id); } \

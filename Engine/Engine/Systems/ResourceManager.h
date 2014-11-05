@@ -58,6 +58,15 @@ public:
 	Script * addScript_src (std::string file);
 	Script * addScript_src (const char * file);
 
+	Mesh *          duplicate(Mesh * toDup);
+	ShaderProgram * duplicate(ShaderProgram * toDup);
+	//TextureInfo *   duplicate(TextureInfo * toDup);
+	//Script *        duplicate(Script * toDup);
+	
+	
+	
+	
+
 	template<typename T> T* getDefault() { return nullptr; }
 	template<> Mesh * getDefault();
 	template<> ShaderProgram * getDefault();
