@@ -13,6 +13,7 @@
 #include <Engine/Tools/PropertyWrapper.h>
 #include <Engine/Entity/Entity.h>
 #include <Engine/Systems/ObjectManager.h>
+#include <Engine/Tools/MasterLua.h>
 
 #include <Engine/Systems/CameraManager.h>
 
@@ -20,10 +21,19 @@
 
 class ENGINE_SHARED GameObjectManager {
 	DEFINE_SINGLETON(GameObjectManager);
+	LUA_OBJECT(GameObjectManager);
 public:ConstVector<Entity> entities;
 private:ObjectManager EntityManager;
 	std::function<bool(Entity*)> selectorFunction;
 	std::function<bool(Component*)> componentSelectorFunction;
+
+	LuaUserdata<Entity> getEntityFromName(std::string name) {
+		return (LuaUserdata<Entity>)*getEntity(name);
+	}
+	LuaUserdata<Entity> getEntityFromId(int id) {
+		return (LuaUserdata<Entity>)*getEntity(id);
+	}
+
 public:
 	std::function<bool(Entity*)> SelectorFunction() const;
 	void SelectorFunction(std::function<bool(Entity*)> val);
@@ -68,6 +78,15 @@ public:
 	void paint();
 	bool Valid();
 	std::vector<std::string> getErrors();
+
+	inline operator LuaUserdata<GameObjectManager>() {
+		MAKE_LUA_INSTANCE_RET(GameObjectManager,ret);
+
+		ret.Bind("getEntityFromName",&GameObjectManager::getEntityFromName);
+		ret.Bind("getEntityFromId",&GameObjectManager::getEntityFromId);
+
+		return ret;
+	}
 private:
 	void passStandardUniforms(RenderableComponent * renderable);
 };

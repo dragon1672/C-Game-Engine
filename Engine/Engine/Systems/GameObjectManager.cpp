@@ -13,6 +13,7 @@
 IMPLEMENT_SINGLETON(GameObjectManager);
 
 GameObjectManager::GameObjectManager() {
+	LUA_OBJECT_START(GameObjectManager);
 	entityAddEvent.push_back([this](Entity* e){ for(uint i=0;i<entityListChange.size();i++) entityListChange[i](e); });
 	entityRemoveEvent.push_back([this](Entity* e){ for(uint i=0;i<entityListChange.size();i++) entityListChange[i](e); });
 }
@@ -186,5 +187,6 @@ std::vector<std::string> GameObjectManager::getErrors()
 
 GameObjectManager::~GameObjectManager()
 {
+	LUA_OBJECT_END(GameObjectManager);
 	shutdown();
 }
