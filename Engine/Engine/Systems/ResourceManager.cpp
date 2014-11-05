@@ -4,6 +4,7 @@
 #include <Engine/Tools/CollectionEditing.h>
 #include <Engine/Systems/Resources/Shaders/DefaultShaders.h>
 #include <Engine/DebugTools/DebugMemHeader.h>
+#include <ShapeGenerator.h>
 
 
 IMPLEMENT_SINGLETON(ResourceManager);
@@ -166,6 +167,12 @@ std::vector<std::string> ResourceManager::getErrors()
 void ResourceManager::shutdown()
 {
 	foreachOnAll([](Resource&r){r.shutdown();});
+}
+
+void ResourceManager::loadNeumontStuff()
+{
+	addMesh("NU_Cube",Neumont::ShapeGenerator::makeCube());
+	//addMesh("NU_Cube",Neumont::ShapeGenerator::());
 }
 
 

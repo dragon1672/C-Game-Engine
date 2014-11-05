@@ -35,6 +35,8 @@ public:
 	std::string WorkingDir() const { return workingDir; }
 	void WorkingDir(std::string val) { workingDir = val; }
 
+	void loadNeumontStuff();
+
 	Mesh * addMesh(std::string name);
 	Mesh * addMesh(std::string name, Neumont::ShapeData NUCrap);
 	Mesh * addMesh(std::string name, std::string filePath);
