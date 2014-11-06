@@ -129,11 +129,12 @@ template<typename T> QComboBox * loadComboBox(T* first) { static_assert(false,"N
 		QComboBox * comboBox = new QComboBox;					 \
 		int index= -1;											 \
 		auto tmp = resourceManager.getAll##class_name##();		 \
+		comboBox->addItem("Null"-1);							 \
 		for (uint i = 0; i < tmp.size(); i++) {					 \
 			QString name(tmp[i]->Name().c_str());				 \
 			int id = tmp[i]->getID();							 \
 			comboBox->addItem(name,id);							 \
-			if(first == tmp[i]) index = i;						 \
+			if(first == tmp[i]) index = i+1;					 \
 		}														 \
 		comboBox->setCurrentIndex(index);						 \
 		return comboBox;										 \
