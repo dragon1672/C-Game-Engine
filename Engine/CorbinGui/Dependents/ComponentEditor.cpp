@@ -163,12 +163,12 @@ public:
 		QVBoxLayout * layout = new QVBoxLayout();
 		this->setLayout(layout);
 
-		comboBox = loadComboBox<Script>(script->script);
+		comboBox = loadComboBox<Script>(script->myScript());
 
 
 		void (QComboBox:: *indexChangedSignal)(int) = &QComboBox::currentIndexChanged;
 		connect(comboBox,indexChangedSignal,[this](int i) {
-			this->script->script = resourceManager.getScript(this->comboBox->currentData().toInt());
+			this->script->myScript(resourceManager.getScript(this->comboBox->currentData().toInt()));
 		});
 
 

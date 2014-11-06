@@ -10,9 +10,10 @@ class ScriptComponentPrivates;
 
 class ENGINE_SHARED ScriptComponent : public Component {
 	ScriptComponentPrivates * privates;
-	
-public:
 	Script * script;
+public:
+	Script * myScript() const { return script; }
+	void myScript(Script * val) { script = val; }
 	ScriptComponent();
 	ScriptComponent(Script * script);
 	ScriptComponent(int scriptId);
