@@ -178,8 +178,12 @@ void ResourceManager::loadNeumontStuff()
 	tmp = addMesh("NU_Arrow",Neumont::ShapeGenerator::makeArrow());
 	tmp = addMesh("NU_SmallPlane",Neumont::ShapeGenerator::makePlane(2));
 	tmp = addMesh("NU_Plane",Neumont::ShapeGenerator::makePlane(10));
-	tmp = addMesh("NU_Plane",Neumont::ShapeGenerator::makeTorus(20));
-	tmp = addMesh("NU_Plane",Neumont::ShapeGenerator::makeTeapot(30,glm::mat4()));
+	tmp = addMesh("NU_Torus",Neumont::ShapeGenerator::makeTorus(20));
+	tmp->initUVData();
+	tmp->setRandomColor(1);
+	tmp = addMesh("NU_TeaPot",Neumont::ShapeGenerator::makeTeapot(30,glm::mat4()));
+	tmp->setRandomColor(4);
+	tmp->rotate(-90,0,0);
 }
 
 Mesh * ResourceManager::duplicate(Mesh * toDup)
