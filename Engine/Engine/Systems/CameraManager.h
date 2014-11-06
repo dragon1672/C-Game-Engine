@@ -15,7 +15,7 @@ class ENGINE_SHARED CameraManager {
 	DEFINE_SINGLETON(CameraManager);
 public:
 	CameraManager();
-	CameraComponent * ActiveCam() const;
+	CameraComponent * ActiveCam();
 	void ActiveCam(CameraComponent * val);
 	CameraComponent * getNewCam(const char * name);
 	CameraComponent * getCam(int index);

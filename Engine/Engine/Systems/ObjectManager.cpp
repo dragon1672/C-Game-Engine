@@ -69,17 +69,17 @@ void ObjectManager::UnRegister(Object * toKill)
 	}
 }
 
-Object * ObjectManager::getFirst(int id)
+Object * ObjectManager::getFirst(int id) const
 {
 	return privates->Contains(id) ? privates->idMap[id] : nullptr;
 }
 
-Object * ObjectManager::getFirst(const char * name)
+Object * ObjectManager::getFirst(const char * name) const
 {
 	return privates->Contains(name) ? privates->nameMap[name][0] : nullptr;
 }
 
-std::vector<Object *> ObjectManager::getAll()
+std::vector<Object *> ObjectManager::getAll() const
 {
 	std::vector<Object *> ret;
 	for(auto i : privates->idMap) {
@@ -87,7 +87,7 @@ std::vector<Object *> ObjectManager::getAll()
 	}
 	return ret;
 }
-std::vector<Object *> ObjectManager::getAll(const char * name)
+std::vector<Object *> ObjectManager::getAll(const char * name) const
 {
 	return privates->Contains(name) ? privates->nameMap[name] : std::vector<Object*>();
 }

@@ -19,7 +19,8 @@ enum KeyCode {
 	U = 85,		V = 86,		W = 87,		X = 88,	
 	Y = 89,		Z = 90,		ZERO = 48,	One = 49,
 	TWO = 50,	THREE = 51, FOUR = 52,	FIVE = 53,
-	SIX = 54,	SEVEN = 55,	EIGHT = 56,	NINE = 57
+	SIX = 54,	SEVEN = 55,	EIGHT = 56,	NINE = 57,
+	SHIFT = 16
 };
 enum MouseCodes {
 	LEFT_MOUSE = 2, RIGHT_MOUSE = 1, MIDDLE_MOUSE = 4

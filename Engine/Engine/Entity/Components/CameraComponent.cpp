@@ -23,7 +23,7 @@ glm::mat4& CameraComponent::getPerspective()
 	return perspective;
 }
 
-CameraComponent::CameraComponent(const char * name /*= nullptr*/)
+CameraComponent::CameraComponent(std::string name /*= nullptr*/)
 {
 	this->name = name;
 	perspectiveNeedsUpdate = true;

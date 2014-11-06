@@ -12,7 +12,7 @@ class ENGINE_SHARED CameraComponent : public Component {
 	glm::mat4 world2View;
 	ShaderUniformPram uniforms[6];
 public:
-	CameraComponent(const char * name = nullptr);
+	CameraComponent(std::string name = "");
 	bool isActive();
 	void setActive();
 	PropertyGetSet<int> width;
