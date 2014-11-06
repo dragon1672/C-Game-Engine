@@ -1,6 +1,7 @@
 #include "EditorGame.h"
 #include <Engine/Tools/StringManapulation.h>
 #include <Engine/Tools/Random/StringRandom.h>
+#include <CorbinGui/Dependents/EditorComponents/EditorCam.h>
 
 
 
@@ -15,6 +16,9 @@ EditorGame::EditorGame()
 	};
 	gameManager.ComponentSelectorFunction(isEditorObject);
 	currentEntity.editor = this;
+	EditorEntity = gameManager.AddEntity(uniqueName);
+	auto tmp = EditorEntity->addComponent<EditorCam>();
+	tmp->Name(uniqueName);
 }
 
 void EditorGame::RemoveCurrentEntity()
@@ -25,7 +29,7 @@ void EditorGame::RemoveCurrentEntity()
 	currentEntity.currentlySelectedEntity = nullptr;
 }
 
-void EditorGame::AddEntity(const char * name)
+void EditorGame::AddEntity(std::string name)
 {
 	currentEntity.currentlySelectedEntity = gameManager.AddEntity(name);
 }

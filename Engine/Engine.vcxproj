@@ -100,6 +100,7 @@
     <ClInclude Include="CorbinGui\BasicQGLGui.h" />
     <ClInclude Include="CorbinGui\Dependents\Command.h" />
     <ClInclude Include="CorbinGui\Dependents\Commands\EditFloat.h" />
+    <ClInclude Include="CorbinGui\Dependents\EditorComponents\EditorCam.h" />
     <ClInclude Include="CorbinGui\Dependents\EditorComponents\EditorCamComponent.h" />
     <ClInclude Include="CorbinGui\Dependents\EditorComponents\EditorRenderableComponent.h" />
     <ClInclude Include="CorbinGui\Dependents\GameObjectViewer.h" />
@@ -203,6 +204,7 @@
     <ClCompile Include="CorbinGui\BasicQGLGui.cpp" />
     <ClCompile Include="CorbinGui\BasicQGLGui_mock.cpp" />
     <ClCompile Include="CorbinGui\Dependents\ComponentEditor.cpp" />
+    <ClCompile Include="CorbinGui\Dependents\EditorComponents\EditorCam.cpp" />
     <ClCompile Include="CorbinGui\Dependents\EditorComponents\EditorRenderableComponent.cpp" />
     <ClCompile Include="CorbinGui\Dependents\GameObjectViewer.cpp" />
     <ClCompile Include="CorbinGui\EditorGame.cpp" />

@@ -45,7 +45,8 @@ void GameObjectViewer::update()
 	QList<QTreeWidgetItem *> items;
 	auto topLevelGameObjects = gameManager.getTopLevelEntities();
 	for (uint i = 0; i < topLevelGameObjects.size(); ++i) {
-		items.append(getItem(topLevelGameObjects[i]));
+		if(!game->IsEditorObject()(topLevelGameObjects[i]))
+			items.append(getItem(topLevelGameObjects[i]));
 	}
 	insertTopLevelItems(0, items);
 	auto tmp = this->currentItem();

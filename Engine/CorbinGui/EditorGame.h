@@ -13,6 +13,7 @@ class ENGINE_SHARED EditorGame {
 private:
 	std::string uniqueName; // all editor components must have this as the name
 	Entity * currentlySelectedEntity;
+	Entity * EditorEntity;
 	std::function<bool(Object*)> isEditorObject;
 	std::function<bool(Object*)> isGameObject;
 public:
@@ -62,6 +63,6 @@ public:
 	void start();
 	void update();
 	void paint();
-	void AddEntity(const char * name);
+	void AddEntity(std::string name);
 	void RemoveCurrentEntity();
 };
