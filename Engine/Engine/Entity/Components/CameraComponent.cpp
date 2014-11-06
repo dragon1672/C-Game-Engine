@@ -6,9 +6,10 @@
 
 glm::mat4x4& CameraComponent::getWorld2View()
 {
-	glm::vec3 viewDir = glm::mat3(parent->getTrans()->getRotMat()) * glm::vec3(0.0001,0.00001,1.00001);
-	world2View = glm::lookAt(parent->getTrans()->pos,parent->getTrans()->pos+viewDir,glm::vec3(0,1,0));
-	//world2View = parent->getTrans()->getCompleteTransform();
+	glm::vec3 tmp = parent->getTrans()->scale;
+	parent->getTrans()->scale = glm::vec3();
+	world2View = parent->getTrans()->getCompleteTransform();
+	parent->getTrans()->scale = tmp;
 	return world2View;
 }
 

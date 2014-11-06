@@ -12,9 +12,9 @@ void EditorCam::update()
 	glm::vec3 viewDir = glm::mat3(parent->getTrans()->getRotMat()) * glm::vec3(0,0,1);
 	glm::vec3 strafeDir= glm::normalize(glm::cross(viewDir, glm::vec3(0,1,0)));
 	
-	if(inputManager.mouse.getMouseButtondown(MouseCodes::RIGHT_MOUSE)) {
-		parent->getTrans()->addRotation(-inputManager.mouse.delta().x,glm::vec3(0,1,0));
-		parent->getTrans()->addRotation(-inputManager.mouse.delta().y, strafeDir);
+	if(inputManager.mouse.getMouseButtondown(MouseCodes::MIDDLE_MOUSE)) {
+		parent->getTrans()->rot.x +=  inputManager.mouse.delta().y;
+		parent->getTrans()->rot.y +=  inputManager.mouse.delta().x;
 	}
 	auto cross = glm::cross(viewDir,glm::vec3(0,1,0));
 	if(inputManager.getKeyDown(KeyCode::W)) Parent()->getTrans()->pos +=  speed * viewDir * Timer::getInstance().deltaTime();

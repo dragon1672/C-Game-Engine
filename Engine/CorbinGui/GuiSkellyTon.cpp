@@ -172,6 +172,7 @@ void GuiSkellyTon::ToggleGameStartStop()
 	if(myState == EditorStates::Editor) { // start!
 		if(gameManager.Valid()) {
 			myState = EditorStates::PlayingGame;
+			camManager.ActiveCam(nullptr);
 			//disable all editor components
 			//remove selector function
 			gameManager.init();

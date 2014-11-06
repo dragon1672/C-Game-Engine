@@ -1,4 +1,5 @@
 #include "MatrixInfo.h"
+#include <glm\gtc\quaternion.hpp>
 #include <Engine\Entity\Entity.h>
 
 namespace {
@@ -17,9 +18,10 @@ void MatrixInfo::lateUpdate() {
 glm::mat4& MatrixInfo::getTransform()     { return getCompleteTransform();     } // save this on in the Shader
 
 glm::mat4&  MatrixInfo::getRotMat() {
-	//if(rot != rot_old)
-	{
-		rotationMat = glm::toMat4(rot);
+	if(!Equal(rot, rot_old)) {
+		rotationMat = glm::rotate(rot.x,glm::vec3(1,0,0))
+		* glm::rotate(rot.y,glm::vec3(0,1,0))
+		* glm::rotate(rot.z,glm::vec3(0,0,1));
 	}
 	rot_old = rot;
 	return rotationMat;
@@ -31,7 +33,7 @@ glm::mat4&  MatrixInfo::getScaleMat() {
 }
 glm::mat4&  MatrixInfo::getTranslationMat() {
 	if(!Equal(pos, pos_old)) translationMat = glm::translate(pos);
-	pos_old == glm::vec3(pos.x,pos.y,pos.z);
+	pos_old == pos;
 	return translationMat;
 }
 glm::mat4&  MatrixInfo::getCompleteTransform() {
@@ -57,9 +59,11 @@ std::string MatrixInfo::getShaderName()
 
 void MatrixInfo::lookAt(glm::vec3 posToLookAt)
 {
-	auto lookatMat = glm::lookAt(pos,-posToLookAt,glm::vec3(0,1,0));
+	auto lookatMat = glm::lookAt(pos,posToLookAt,glm::vec3(0,1,0));
 	pos = glm::vec3(lookatMat * glm::vec4(0,0,0,1));
-	rot = glm::toQuat( glm::mat3(lookatMat) );
+	auto quat = glm::toQuat( glm::mat3(lookatMat) );
+	rot = glm::eulerAngles(quat);
+
 }
 
 bool MatrixInfo::isValid()
@@ -85,48 +89,4 @@ void MatrixInfo::restoreValues()
 std::vector<std::string> MatrixInfo::getErrors()
 {
 	return std::vector<std::string>();
-}
-
-MatrixInfo::MatrixInfo() : scale(1,1,1)
-{
-	LUA_OBJECT_START(MatrixInfo);
-	uniforms.push_back(ShaderUniformPram("MatrixInfo_TransformMat",  ParameterType::PT_MAT4,  &translationMat[0][0]   ));
-	uniforms.push_back(ShaderUniformPram("MatrixInfo_RotationMat",   ParameterType::PT_MAT4,  &rotationMat[0][0]      ));
-	uniforms.push_back(ShaderUniformPram("MatrixInfo_ScaleMat",      ParameterType::PT_MAT4,  &scaleMat[0][0]         ));
-	uniforms.push_back(ShaderUniformPram("MatrixInfo_Pos",           ParameterType::PT_VEC3,  &pos[0]   ));
-	uniforms.push_back(ShaderUniformPram("MatrixInfo_Scale",         ParameterType::PT_VEC3,  &scale[0] ));
-	uniforms.push_back(ShaderUniformPram("MatrixInfo_Rotation",      ParameterType::PT_VEC3,  &rot[0]   ));
-}
-
-MatrixInfo::~MatrixInfo()
-{
-	LUA_OBJECT_END(MatrixInfo);
-}
-
-void MatrixInfo::setRotation(float angle, glm::vec3 axis)
-{
-	rot =  glm::normalize(glm::angleAxis(angle, axis));
-}
-
-#include <cmath>
-void MatrixInfo::addRotation(float angle, glm::vec3 axis)
-{
-	if(angle == 0) return;
-	if ( axis == glm::vec3(0.0f, 1.0f, 0.0f) ) {
-
-		rot =  glm::angleAxis(angle, axis) * rot;
-	} else {
-		rot = rot * glm::angleAxis(angle, axis);
-	}
-}
-
-
-void MatrixInfo::setRotation(float angle, float xAxis, float yAxis, float zAxis)
-{
-	setRotation(angle,glm::vec3(xAxis,yAxis,zAxis));
-}
-
-void MatrixInfo::addRotation(float angle, float xAxis, float yAxis, float zAxis)
-{
-	addRotation(angle,glm::vec3(xAxis,yAxis,zAxis));
 }

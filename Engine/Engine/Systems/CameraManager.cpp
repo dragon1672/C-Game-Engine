@@ -12,8 +12,7 @@ CameraManager::CameraManager() : activeCam(nullptr)
 
 CameraComponent * CameraManager::ActiveCam()
 {
-	if(activeCam == nullptr) return activeCam;
-	if(!activeCam->active) {//set new active can
+	if(activeCam == nullptr || !activeCam->active) {//set new active can
 		std::vector<Object*> tmp = allCams.getAll();
 		if(tmp.size() == 0) activeCam = nullptr;
 		else activeCam = (CameraComponent*)tmp[0];
