@@ -7,9 +7,17 @@
 #include <Engine/Systems/CameraManager.h>
 #include <Engine/Defines/Vectors.h>
 
+//events
+#include <Engine/Systems/Events/EventManager.h>
+#include <Engine/Systems/Events/Events/ComponentAddedEvent.h>
+#include <Engine/Systems/Events/Events/ComponentRemovedEvent.h>
+#include <Engine/Systems/Events/Events/EntityParentChangedEvent.h>
+
 void Entity::removeComponent(int toKill) {
 	if(toKill >= 0 && toKill < (int)components.size()) {
 		Component * c = components[toKill];
+		ComponentRemovedEvent data(this,c);
+		emitEvent(ComponentRemovedEvent,data);
 		delete(c);
 		components.erase(components.begin() + toKill);
 	}
@@ -17,6 +25,8 @@ void Entity::removeComponent(int toKill) {
 Component* Entity::addComponent(Component * toAdd) {
 	toAdd->parent = this;
 	components.push_back(toAdd);
+	ComponentAddedEvent data(this,toAdd);
+	emitEvent(ComponentAddedEvent,data);
 	return toAdd;
 }
 
@@ -130,13 +140,15 @@ Entity * Entity::Parent()
 
 void Entity::Parent(Entity * newGuy)
 {
-	//Entity * old = parent;
+	Entity * old = parent;
 	if(Collections::contains(getAllChildren(),newGuy)) {
 		throw std::invalid_argument("Recursive children detected");
 	}
 	if(parent != nullptr) parent->children.erase(this);
 	if(newGuy != nullptr) newGuy->children.emplace(this);
 	parent = newGuy;
+	EntityParentChangedEvent data(this,old,newGuy);
+	emitEvent(EntityParentChangedEvent,data);
 	for (uint i = 0; i < StageChanged.size(); i++) StageChanged[i](this);
 }
 

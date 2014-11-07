@@ -7,7 +7,6 @@
 #include <Engine/Systems/ObjectManager.h>
 #include <unordered_set>
 
-
 #include <Engine/Tools/MatrixInfo.h>
 #include <Engine/Entity/Components/ScriptComponent.h>
 
@@ -18,6 +17,7 @@ class CameraComponent;
 
 class ENGINE_SHARED Entity : public Object {
 private:
+	void removeComponent_NOW(int toKill);
 	void removeComponent(int toKill);
 	template<typename T> int getIndex() const {
 		return getIndexFromClassName(typeid(T).name());
@@ -77,7 +77,7 @@ public:
 	template<class T> std::vector<T*> getComponents() {
 		std::vector<int> tmp = getAllIndexs<T>();
 		if(selectorFunction)
-			tmp = Collections::Where<int>(tmp,[this](int&index){ return selectorFunction(components[index]); });
+			tmp = Collections::Where<int>(tmp,[this](int&index){ return components[index]->active && selectorFunction(components[index]); });
 		return Collections::Select<int,T*>(tmp,[this](int index) {return (T*)components[index];} );
 	}
 	std::vector<Component *> getAllComponents();

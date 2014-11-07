@@ -3,12 +3,11 @@
 #include <Engine/Entity/Components/RenderableComponent.h>
 
 class EditorRenderableComponent : public Component {
-public:
 	RenderableComponent * gameInstance;
 	RenderableComponent * editorInstance;
-	EditorRenderableComponent();
-	EditorRenderableComponent(std::string name, RenderableComponent * game, RenderableComponent * editor);
-	void setName(std::string name);
+public:
+	EditorRenderableComponent(std::string name="", RenderableComponent * game = nullptr, RenderableComponent * editor = nullptr);
+	void init(std::string name, RenderableComponent * gameInstance, RenderableComponent * editorInstance);
 
 
 	virtual bool isValid();
