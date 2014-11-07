@@ -54,6 +54,9 @@ public:
 	void fire(EventHandle * event, EventData * data, Object * sender, float inNumSeconds = 0);
 	void fire(EventHandle&  event, EventData * data, Object * sender, float inNumSeconds = 0);
 	void fire(std::string   event, EventData * data, Object * sender, float inNumSeconds = 0);
+	void fire(EventHandle * event, EventData&  data, Object * sender, float inNumSeconds = 0);
+	void fire(EventHandle&  event, EventData&  data, Object * sender, float inNumSeconds = 0);
+	void fire(std::string   event, EventData&  data, Object * sender, float inNumSeconds = 0);
 	EventHandle Subscribe(std::string event,std::function<void(EventData*,Object*)> function);
 	void RemoveEvent(EventHandle*handle);
 };

@@ -98,6 +98,21 @@ void EventManager::fire(std::string event, EventData * data, Object * sender, fl
 	}
 }
 
+void EventManager::fire(std::string event, EventData& data, Object * sender, float inNumSeconds /*= 0*/)
+{
+	fire(event,&data,sender,inNumSeconds);
+}
+
+void EventManager::fire(EventHandle& event, EventData& data, Object * sender, float inNumSeconds /*= 0*/)
+{
+	fire(event,&data,sender,inNumSeconds);
+}
+
+void EventManager::fire(EventHandle * event, EventData& data, Object * sender, float inNumSeconds /*= 0*/)
+{
+	fire(event,&data,sender,inNumSeconds);
+}
+
 EventManager::EventHandle EventManager::Subscribe(std::string event,std::function<void(EventData*,Object*)> function)
 {
 	if(functions.find(event) == functions.end()) {
