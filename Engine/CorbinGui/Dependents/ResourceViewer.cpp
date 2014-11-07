@@ -22,7 +22,7 @@ ResourceViewer::ResourceViewer()
 	QListWidget * myList = new QListWidget();
 	layout()->addWidget(myList);
 	updateList();
-	eventManager.Subscribe<ResourceLoadedEvent>([this](EventData*d,Object*s){
+	eventManager.Subscribe("ResourceLoadedEvent",[this](EventData*d,Object*s){
 		this->updateList();
 	});
 }

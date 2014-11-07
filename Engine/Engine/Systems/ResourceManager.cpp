@@ -6,6 +6,9 @@
 #include <Engine/DebugTools/DebugMemHeader.h>
 #include <ShapeGenerator.h>
 
+#include <Engine/Systems/Events/EventManager.h>
+#include <Engine/Systems/Events/Events/ResourceLoadedEvent.h>
+
 
 IMPLEMENT_SINGLETON(ResourceManager);
 
@@ -27,6 +30,8 @@ Mesh * ResourceManager::addMesh(std::string name, Neumont::ShapeData NUCrap)
 		ret.indices.push_back(NUCrap.indices[i]);
 	}
 	MeshObjs.Register(geos.back());
+	ResourceLoadedEvent data(&geos.back());
+	emitEvent(ResourceLoadedEvent,data);
 	return &geos.back();
 }
 Mesh * ResourceManager::addMesh(std::string name, std::string filePath)
