@@ -24,7 +24,7 @@
 	for (int i = vec.size()-1; i >= 0; i--) { \
 		if(vec[i]##condition##) {			  \
 		auto tmp = vec[i];					  \
-		vec[i] = fireQ.back();				  \
+		vec[i] = vec.back();				  \
 		vec.back() = tmp;					  \
 		vec.pop_back();						  \
 		}									  \
