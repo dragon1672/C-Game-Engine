@@ -2,6 +2,8 @@
 #include <Engine/Tools/Printer.h>
 #include <QtWidgets/QFileDialog>
 #include <Engine/Systems/GameObjectManager.h>
+#include <CorbinGui/Dependents/ResourceViewer.h>
+
 
 
 
@@ -44,6 +46,7 @@ GuiSkellyTon::GuiSkellyTon()
 
 	toolManager->addToolWindow(gameObjectList, ToolWindowManager::AreaReferenceType::EmptySpace);
 	toolManager->addToolWindow(componentEditor,ToolWindowManager::AreaReferenceType::EmptySpace);
+	toolManager->addToolWindow(new ResourceViewer(), ToolWindowManager::AreaReferenceType::EmptySpace);
 	myTimer.start();
 }
 

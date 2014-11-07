@@ -17,6 +17,8 @@ public:
 	void update();
 	void keyPressEvent(QKeyEvent *ev);
 
+	void renameCurrentObject();
+
 	void keyReleaseEvent(QKeyEvent *ev);
 	static Entity * convertTree2Entity(QTreeWidgetItem * treeItem);
 

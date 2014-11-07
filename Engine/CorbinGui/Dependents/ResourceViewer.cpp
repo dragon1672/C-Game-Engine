@@ -12,14 +12,15 @@
 class ResourceListItem : public QListWidgetItem {
 public:
 	Resource * myResource;
-	ResourceListItem(Resource * myResource) : myResource(myResource) {}
+	ResourceListItem(Resource * myResource) : myResource(myResource), QListWidgetItem(myResource->Name().c_str()) {}
 };
 
 
 ResourceViewer::ResourceViewer()
 {
+	setWindowTitle("Resource Viewer");
 	setLayout(new QHBoxLayout());
-	QListWidget * myList = new QListWidget();
+	myList = new QListWidget();
 	layout()->addWidget(myList);
 	updateList();
 	eventManager.Subscribe("ResourceLoadedEvent",[this](EventData*d,Object*s){
@@ -30,6 +31,7 @@ ResourceViewer::ResourceViewer()
 void ResourceViewer::updateList()
 {
 	layout()->removeWidget(myList);
+	delete myList;
 	myList = new QListWidget();
 	layout()->addWidget(myList);
 	auto resourceMaker = [](Resource*r){ return new ResourceListItem(r); };

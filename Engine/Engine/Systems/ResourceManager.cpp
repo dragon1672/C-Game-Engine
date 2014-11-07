@@ -16,6 +16,8 @@ Mesh * ResourceManager::addMesh(std::string name)
 {
 	geos.push_back(Mesh(name));
 	MeshObjs.Register(geos.back());
+	ResourceLoadedEvent eventData(&geos.back());
+	emitEvent(ResourceLoadedEvent,eventData);
 	return &geos.back();
 }
 Mesh * ResourceManager::addMesh(std::string name, Neumont::ShapeData NUCrap)
@@ -30,8 +32,8 @@ Mesh * ResourceManager::addMesh(std::string name, Neumont::ShapeData NUCrap)
 		ret.indices.push_back(NUCrap.indices[i]);
 	}
 	MeshObjs.Register(geos.back());
-	ResourceLoadedEvent data(&geos.back());
-	emitEvent(ResourceLoadedEvent,data);
+	ResourceLoadedEvent eventData(&geos.back());
+	emitEvent(ResourceLoadedEvent,eventData);
 	return &geos.back();
 }
 Mesh * ResourceManager::addMesh(std::string name, std::string filePath)
@@ -42,6 +44,8 @@ Mesh * ResourceManager::addMesh(std::string name, const char * filePath)
 {
 	geos.push_back(FileIO::loadMeshFromFile(filePath,name));
 	MeshObjs.Register(geos.back());
+	ResourceLoadedEvent eventData(&geos.back());
+	emitEvent(ResourceLoadedEvent,eventData);
 	return &geos.back();
 }
 ShaderProgram * ResourceManager::addShader_file(std::string name, const char * vertFilePath, const char * fragFilePath)
@@ -61,6 +65,8 @@ ShaderProgram * ResourceManager::addShader_src (std::string name, const char * v
 	shaders.push_back(ShaderProgram(name));
 	ShaderProgramObjs.Register(shaders.back());
 	shaders.back().buildBasicProgram(vert,frag);
+	ResourceLoadedEvent eventData(&shaders.back());
+	emitEvent(ResourceLoadedEvent,eventData);
 	return &shaders.back();
 }
 
@@ -108,7 +114,6 @@ TextureInfo * ResourceManager::add2DTexture(std::string name, std::string& fileP
 TextureInfo * ResourceManager::add2DTexture(std::string name, ubyte * data, uint sizeofData, uint width, uint height, GLenum type, GLenum type2)
 {
 	textures.push_back(TextureInfo(name));
-	TextureInfoObjs.Register(textures.back());
 	textures.back().data = new ubyte[sizeofData];
 	FileIO::myMemCopy(data,textures.back().data,sizeofData);
 
@@ -116,6 +121,9 @@ TextureInfo * ResourceManager::add2DTexture(std::string name, ubyte * data, uint
 	textures.back().height = height;
 	textures.back().type   = type;
 	textures.back().type2  = type2;
+	TextureInfoObjs.Register(textures.back());
+	ResourceLoadedEvent eventData(&textures.back());
+	emitEvent(ResourceLoadedEvent,eventData);
 	return &textures.back();
 }
 
@@ -138,6 +146,8 @@ Script * ResourceManager::addScript_src (std::string file)
 	scripts.back().Src(file);
 	scripts.back().updateName();
 	ScriptObjs.Register(scripts.back());
+	ResourceLoadedEvent eventData(&scripts.back());
+	emitEvent(ResourceLoadedEvent,eventData);
 	return &scripts.back();
 }
 
@@ -203,6 +213,8 @@ ShaderProgram * ResourceManager::duplicate(ShaderProgram * toDup)
 	shaders.add(*toDup);
 	shaders.back().Name(toDup->Name()+"_dup");
 	ShaderProgramObjs.Register(shaders.back());
+	ResourceLoadedEvent eventData(&shaders.back());
+	emitEvent(ResourceLoadedEvent,eventData);
 	return &shaders.back();
 }
 

@@ -35,8 +35,7 @@ void GameObjectViewer::keyPressEvent(QKeyEvent *ev)
 		emit this->currentItemChanged(tmp,nullptr);
 	}
 	if(ev->key() == Qt::Key_F2) {
-		QString newName = QInputDialog::getText(this,"Rename Entity","New Name:",QLineEdit::Normal,((GameObjectTree*)this->currentItem())->GameObj->Name().c_str());
-		((GameObjectTree*)this->currentItem())->GameObj->Name(newName.toStdString());
+		this->renameCurrentObject();
 	}
 }
 
@@ -93,4 +92,11 @@ GameObjectViewer::GameObjectViewer(EditorGame * game) : game(game)
 Entity * GameObjectViewer::convertTree2Entity(QTreeWidgetItem * treeItem)
 {
 	return treeItem != nullptr ? ((GameObjectTree*)treeItem)->GameObj : nullptr;
+}
+
+void GameObjectViewer::renameCurrentObject()
+{
+	bool pressedOk;
+	QString newName = QInputDialog::getText(this,"Rename Entity","New Name:",QLineEdit::Normal,((GameObjectTree*)this->currentItem())->GameObj->Name().c_str(),&pressedOk);
+	if(pressedOk) ((GameObjectTree*)this->currentItem())->GameObj->Name(newName.toStdString());
 }
