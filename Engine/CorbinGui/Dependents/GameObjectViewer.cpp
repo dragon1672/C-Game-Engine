@@ -35,8 +35,7 @@ void GameObjectViewer::keyPressEvent(QKeyEvent *ev)
 		emit this->currentItemChanged(tmp,nullptr);
 	}
 	if(ev->key() == Qt::Key_F2) {
-		QString newName = QInputDialog::getText(this,"title","label");
-		this->currentItem()->setText(0,newName);
+		QString newName = QInputDialog::getText(this,"Rename Entity","New Name:",QLineEdit::Normal,((GameObjectTree*)this->currentItem())->GameObj->Name().c_str());
 		((GameObjectTree*)this->currentItem())->GameObj->Name(newName.toStdString());
 	}
 }
@@ -81,7 +80,11 @@ GameObjectViewer::GameObjectViewer(EditorGame * game) : game(game)
 	eventManager.Subscribe("ObjectChangedNameEvent",[this](EventData*d,Object*sender){
 		ObjectChangedNameEvent* data = (ObjectChangedNameEvent*)d;
 		if(std::string(typeid(*(data->dude)).name()) == std::string(typeid(Entity).name()))
-			this->update();
+			if(data->dude == ((GameObjectTree*)currentItem())->GameObj) {
+				currentItem()->setText(0,data->newName.c_str());
+			} else {
+				this->update();
+			}
 	});
 	eventManager.Subscribe("EntityAddedEvent",[this](EventData*d,Object*sender){this->update();});
 	eventManager.Subscribe("EntityRemovedEvent",[this](EventData*d,Object*sender){this->update();});
