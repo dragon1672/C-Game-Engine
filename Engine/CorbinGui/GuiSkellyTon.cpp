@@ -22,8 +22,6 @@ GuiSkellyTon::GuiSkellyTon()
 
 	scene->setWindowTitle("Editor");
 
-	toolManager->addToolWindow(scene,ToolWindowManager::AreaReferenceType::EmptySpace);
-
 
 	initBar();
 
@@ -44,9 +42,19 @@ GuiSkellyTon::GuiSkellyTon()
 		this->update();
 	});
 
-	toolManager->addToolWindow(gameObjectList, ToolWindowManager::AreaReferenceType::EmptySpace);
-	toolManager->addToolWindow(componentEditor,ToolWindowManager::AreaReferenceType::EmptySpace);
-	toolManager->addToolWindow(new ResourceViewer(), ToolWindowManager::AreaReferenceType::EmptySpace);
+
+
+
+
+
+
+	toolManager->addToolWindow(scene,ToolWindowManager::AreaReferenceType::EmptySpace);
+	toolManager->addToolWindow(new ResourceViewer(), ToolWindowManager::AreaReference(ToolWindowManager::BottomOf,  toolManager->areaOf(scene)));
+	toolManager->addToolWindow(gameObjectList, ToolWindowManager::AreaReference(ToolWindowManager::LeftOf,  toolManager->areaOf(scene)));
+	toolManager->addToolWindow(componentEditor,ToolWindowManager::AreaReference(ToolWindowManager::RightOf, toolManager->areaOf(scene)));
+
+
+
 	myTimer.start();
 }
 
@@ -102,7 +110,7 @@ void GuiSkellyTon::initBar()
 		if(result!=0) {
 			printErr(100) "File failed to load";
 		} else {
-			auto tmp = resourceManager.addMesh("From File",nativeFileName);
+			auto tmp = resourceManager.addMesh("From File",nativeFileName,false);
 			tmp->PassDownToHardWare();
 		}
 		printer.LogMessage("Load Obj Clicked");
@@ -112,7 +120,7 @@ void GuiSkellyTon::initBar()
 		QString workingDir = resourceManager.WorkingDir().c_str();
 		QString targetObj = QFileDialog::getOpenFileName(this, "Open Texture", workingDir, "Supported Images (*.png)"); if(targetObj == "") return;
 
-		auto tmp = resourceManager.add2DTexture("From File",targetObj.toStdString());
+		auto tmp = resourceManager.add2DTexture("From File",targetObj.toStdString(),false);
 		tmp->PassDownToHardWare();
 		printer.LogMessage("Load Texture Clicked");
 	});
@@ -122,7 +130,7 @@ void GuiSkellyTon::initBar()
 		QString FragPath = QFileDialog::getOpenFileName(this, "Open FragShader",  workingDir, "Shader (*.glsl)");	if(FragPath == "") return;
 		QString VertPath = QFileDialog::getOpenFileName(this, "Open VertexShader", workingDir, "Shader (*.glsl)");	if(VertPath == "") return;
 
-		auto tmp = resourceManager.addShader_file("From File",VertPath.toStdString(),FragPath.toStdString());
+		auto tmp = resourceManager.addShader_file("From File",VertPath.toStdString(),FragPath.toStdString(),false);
 		tmp->PassDownToHardWare();
 		printer.LogMessage("Load Shader Clicked");
 	});
@@ -131,7 +139,7 @@ void GuiSkellyTon::initBar()
 		QString workingDir = resourceManager.WorkingDir().c_str();
 		QString targetObj = QFileDialog::getOpenFileName(this, "Open Script", workingDir, "Supported Images (*.CorbinLua)"); if(targetObj == "") return;
 
-		auto tmp = resourceManager.addScript_file(targetObj.toStdString());
+		auto tmp = resourceManager.addScript_file(targetObj.toStdString(),false);
 		tmp->PassDownToHardWare();
 		printer.LogMessage("Load Script Clicked");
 	});
