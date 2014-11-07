@@ -22,7 +22,7 @@ class ENGINE_SHARED EventManager {
 		std::function<void(EventData*,Object*)> fun;
 		EventManager * manager;
 	public:
-		EventHandle(std::string eventName, std::function<void(EventData*,Object*)> fun,EventManager * manager);
+		EventHandle(std::string eventName="", std::function<void(EventData*,Object*)> fun=std::function<void(EventData*,Object*)>(),EventManager * manager = nullptr);
 		void UnRegister();
 		void Fire(EventData*data,Object * sender,float inNumSeconds = 0);
 		friend EventManager;

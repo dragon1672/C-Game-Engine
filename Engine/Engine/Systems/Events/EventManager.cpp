@@ -116,7 +116,7 @@ void EventManager::fire(EventHandle * event, EventData& data, Object * sender, f
 EventManager::EventHandle EventManager::Subscribe(std::string event,std::function<void(EventData*,Object*)> function)
 {
 	if(functions.find(event) == functions.end()) {
-		functions[event] = ListOfFunctions();
+		functions.emplace(event,ListOfFunctions());
 	}
 	auto ret = EventHandle(event,function,this);
 	functions[event].funs.push_back(ret);

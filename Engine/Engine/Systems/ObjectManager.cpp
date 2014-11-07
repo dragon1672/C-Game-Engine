@@ -38,7 +38,7 @@ void ObjectManager::Register(Object * toAdd)
 		printer.LogError("Object with same ID already exists in object manager");
 		assert(false);
 	}
-	privates->idMap[toAdd->getID()] = toAdd;
+	privates->idMap.emplace(toAdd->getID(),toAdd);
 
 	if(!privates->ContainsName(toAdd)) { // not in map
 		privates->nameMap.emplace(toAdd->Name(),ObjectManagerPrivates::ObjectMatches());

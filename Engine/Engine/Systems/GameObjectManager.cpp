@@ -10,6 +10,7 @@
 #include <Engine/Tools/Printer.h>
 #include <Engine/Defines/Vectors.h>
 #include <Engine/Tools/Printer.h>
+#include <Engine/Systems/Events/EventManager.h>
 
 IMPLEMENT_SINGLETON(GameObjectManager);
 
@@ -41,6 +42,7 @@ bool GameObjectManager::shutdown() {
 	Timer::delInstance();
 	printer.delInstance();
 	entities.clear();
+	eventManager.delInstance();
 	return true;
 }
 void GameObjectManager::update() {
