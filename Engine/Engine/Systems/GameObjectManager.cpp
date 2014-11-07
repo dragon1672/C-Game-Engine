@@ -9,6 +9,7 @@
 #include <string>
 #include <Engine/Tools/Printer.h>
 #include <Engine/Defines/Vectors.h>
+#include <Engine/Tools/Printer.h>
 
 IMPLEMENT_SINGLETON(GameObjectManager);
 
@@ -96,6 +97,10 @@ bool GameObjectManager::initGl()
 
 void GameObjectManager::passStandardUniforms(RenderableComponent * renderable)
 {
+	if(camManager.ActiveCam() == nullptr) {
+		printErr(100) "No cam in scene";
+		return;
+	}
 	camManager.ActiveCam()->width = width;
 	camManager.ActiveCam()->height = height;
 	ShaderProgram * prog = renderable->shader;

@@ -47,3 +47,9 @@ std::vector<CameraComponent *> CameraManager::getAllCamMatches(const char * name
 {
 	return Collections::RICVec<CameraComponent*>(allCams.getAll(name));
 }
+
+void CameraManager::removeCam(CameraComponent * c)
+{
+	allCams.UnRegister(c);
+	if(activeCam == c) activeCam = nullptr;
+}

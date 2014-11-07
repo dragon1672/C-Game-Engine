@@ -20,5 +20,6 @@ public:
 	CameraComponent * getNewCam(const char * name);
 	CameraComponent * getCam(int index);
 	CameraComponent * getCam(const char * name);
+	void removeCam(CameraComponent * c);
 	std::vector<CameraComponent *> getAllCamMatches(const char * name);
 };

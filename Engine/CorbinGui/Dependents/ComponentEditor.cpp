@@ -12,6 +12,10 @@
 #include <Engine/Defines/SafeNewAndDelete.h>
 #include <Engine/Tools/Printer.h>
 #include <QtWidgets/QScrollArea>
+#include <QtWidgets/QCheckBox>
+#include <Engine/Tools/QT/ButtonInfo.h>
+#include <Engine/Entity/Components/CameraComponent.h>
+#include <Engine/Systems/CameraManager.h>
 
 #pragma region Component Editors
 class SingleComponentEditor : public QWidget {
@@ -32,6 +36,52 @@ public:
 		return nullptr;
 	}
 };
+
+
+class AdminEditor : public QWidget {
+	Component * c;
+	QCheckBox * enabled;
+	QLineEdit * name;
+	
+public:
+	AdminEditor(Component * c, bool haveEnable, bool haveName, bool haveRemove) :
+		c(c),
+		enabled(nullptr),
+		name(nullptr)
+	{
+		setLayout(new QHBoxLayout());
+		if(haveEnable) {
+			enabled = new QCheckBox("Enable: ");
+			layout()->addWidget(enabled);
+			connect(enabled,&QCheckBox::stateChanged,[=](){ 
+				c->active = enabled->isCheckable();
+			});
+		}
+		if(haveName) {
+			auto title = new QLabel("Name: ");
+			layout()->addWidget(title);
+			name = new QLineEdit();
+			layout()->addWidget(name);
+			connect(name,&QLineEdit::editingFinished,[=](){ 
+				c->Name(name->text().toStdString());
+			});
+		}
+		if(haveRemove) {
+			ButtonInfo removeBtn;
+			removeBtn.init("Remove",[=](){
+				camManager.removeCam((CameraComponent*)c);
+				c->Parent()->removeComponent(c);
+			});
+			layout()->addWidget(removeBtn.button);
+		}
+
+	}
+	void update() {
+		if(enabled != nullptr && enabled->isCheckable() != c->active) enabled->setCheckable(c->active);
+		if(name != nullptr && name->text().toStdString() != c->Name()) name->setText(c->Name().c_str());
+	}
+};
+
 #pragma  endregion
 
 namespace {
@@ -50,7 +100,7 @@ template<uint N>
 class QTVecEditor : public SingleComponentEditor {
 	float * vec;
 	static const uint size = N;
-	QLineEdit * editors[size]; // supports up to vec4
+	QLineEdit * editors[size];
 	QDoubleValidator validator;
 	void init(QString title, std::string names) {
 		QHBoxLayout * layout = new QHBoxLayout();
@@ -156,13 +206,18 @@ MAKE_COMBO_BOX_MAKER(ShaderProgram);
 class ScriptEdtor : public SingleComponentEditor {
 	ScriptComponent * script;
 	QComboBox *comboBox;
+	AdminEditor * admin;
 public:
 	ScriptEdtor(ScriptComponent * script) {
 		setMinimumSize(300,100);
 		setWindowTitle("Script Component");
+
 		this->script = script;
 		QVBoxLayout * layout = new QVBoxLayout();
 		this->setLayout(layout);
+
+		admin = new AdminEditor(script,true,false,true);
+		layout->addWidget(admin);
 
 		comboBox = loadComboBox<Script>(script->myScript());
 
@@ -176,7 +231,7 @@ public:
 		layout->addWidget(comboBox);
 	}
 	void updateFromModel() {
-
+		admin->update();
 	}
 };
 
@@ -241,13 +296,17 @@ public:
 
 class RenderableEditor : public SingleComponentEditor {
 	RenderableComponent * script;
+	AdminEditor * admin;
 public:
 	RenderableEditor(RenderableComponent * script) {
-		setMinimumSize(300,350);
+		setMinimumSize(300,400);
 		setWindowTitle("Renderable Component");
 		this->script = script;
 		QVBoxLayout * layout = new QVBoxLayout();
 		this->setLayout(layout);
+
+		admin = new AdminEditor(script,true,false,true);
+		layout->addWidget(admin);
 
 		QWidget * widg = new QWidget();																
 		QHBoxLayout * tLay = new QHBoxLayout();														
@@ -279,7 +338,7 @@ public:
 		layout->addWidget(new MaterialEdtor(&(script->material)));
 	}
 	void updateFromModel() {
-
+		admin->update();
 	}
 };
 
@@ -292,6 +351,46 @@ public:
 };
 
 #pragma endregion
+
+
+
+class CamEditor : public SingleComponentEditor {
+	CameraComponent * script;
+	AdminEditor * admin;
+	QLineEdit * nearPlane;
+	QLineEdit * farPlane; //textEdited
+	QDoubleValidator validator;
+public:
+	CamEditor(CameraComponent * script) {
+		setMinimumSize(300,200);
+		setWindowTitle("Renderable Component");
+		this->script = script;
+		QVBoxLayout * layout = new QVBoxLayout();
+		this->setLayout(layout);
+
+		admin = new AdminEditor(script,true,false,true);
+		layout->addWidget(admin);
+
+		nearPlane = new QLineEdit();	nearPlane->setValidator(&validator);
+		layout->addWidget(new QLabel("Near Plane: "));	layout->addWidget(nearPlane);
+		connect(nearPlane,&QLineEdit::textEdited,[=](const QString &newGuy){ script->nearPlane = (float)(newGuy.toDouble()); });
+
+		farPlane = new QLineEdit();	farPlane->setValidator(&validator);
+		layout->addWidget(new QLabel("Far Plane: "));	layout->addWidget(farPlane);
+		connect(farPlane,&QLineEdit::textEdited,[=](const QString &newGuy){ script->farPlane = (float)(newGuy.toDouble()); });
+	}
+	void updateFromModel() {
+		admin->update();
+	}
+};
+
+template<>
+class EditorCreator<CamEditor> : public EditorCreatorInterface {
+public:
+	SingleComponentEditor * getNewInstance(void * data) {
+		return new CamEditor((CameraComponent*)data);
+	}
+};
 
 #pragma region privates
 #include <map>
@@ -307,6 +406,7 @@ public:
 		ADD_INTERFACE_TO_MAP(MatrixInfo,TranslationEdtor);
 		ADD_INTERFACE_TO_MAP(ScriptComponent,ScriptEdtor);
 		ADD_INTERFACE_TO_MAP(RenderableComponent,RenderableEditor);
+		ADD_INTERFACE_TO_MAP(CameraComponent,CamEditor);
 	}
 	template<typename T> bool hasEditorFor(Component*c) {
 		return map.find(typeid(T).name()) != map.end();
