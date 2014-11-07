@@ -39,22 +39,22 @@ public:
 
 	Mesh * addMesh(std::string name);
 	Mesh * addMesh(std::string name, Neumont::ShapeData NUCrap);
-	Mesh * addMesh(std::string name, std::string filePath);
-	Mesh * addMesh(std::string name, const char * filePath);
+	Mesh * addMesh(std::string name, std::string  filePath, bool useRelPath = true);
+	Mesh * addMesh(std::string name, const char * filePath, bool useRelPath = true);
 
-	ShaderProgram * addShader_file(std::string name, const char * vertFilePath, const char * fragFilePath);
-	ShaderProgram * addShader_file(std::string name, std::string vertFilePath, std::string fragFilePath);
+	ShaderProgram * addShader_file(std::string name, const char * vertFilePath, const char * fragFilePath, bool useRelPath = true);
+	ShaderProgram * addShader_file(std::string name, std::string  vertFilePath, std::string  fragFilePath, bool useRelPath = true);
 	ShaderProgram * addShader_src (std::string name, std::string vert, std::string frag);
 	ShaderProgram * addShader_src (std::string name, const char * vert, const char * frag);
 
 	TextureInfo * add2DTexture(std::string name, QImage& image, GLenum type = GL_RGBA);
 	TextureInfo * add2DTexture(std::string name, QImage& image, GLenum type, GLenum type2);
-	TextureInfo * add2DTexture(std::string name, const char * filePath, bool flipHorz = false, bool flipVert = false);
-	TextureInfo * add2DTexture(std::string name, std::string& filePath, bool flipHorz = false, bool flipVert = false);
+	TextureInfo * add2DTexture(std::string name, const char * filePath, bool useRelPath = true, bool flipHorz = false, bool flipVert = false);
+	TextureInfo * add2DTexture(std::string name, std::string& filePath, bool useRelPath = true, bool flipHorz = false, bool flipVert = false);
 	TextureInfo * add2DTexture(std::string name, ubyte * data, uint sizeofData, uint width, uint height, GLenum type, GLenum type2);
 
-	Script * addScript_file(const char * filePath);
-	Script * addScript_file(std::string filePath);
+	Script * addScript_file(const char * filePath, bool useRelPath = true);
+	Script * addScript_file(std::string  filePath, bool useRelPath = true);
 	Script * addScript_src (std::string file);
 	Script * addScript_src (const char * file);
 

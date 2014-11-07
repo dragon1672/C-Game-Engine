@@ -36,25 +36,25 @@ Mesh * ResourceManager::addMesh(std::string name, Neumont::ShapeData NUCrap)
 	emitEvent(ResourceLoadedEvent,eventData);
 	return &geos.back();
 }
-Mesh * ResourceManager::addMesh(std::string name, std::string filePath)
+Mesh * ResourceManager::addMesh(std::string name, std::string filePath, bool useRelPath)
 {
-	return addMesh(filePath.c_str());
-}
-Mesh * ResourceManager::addMesh(std::string name, const char * filePath)
-{
-	geos.push_back(FileIO::loadMeshFromFile(filePath,name));
+	geos.push_back(FileIO::loadMeshFromFile((useRelPath?workingDir:"") + filePath,name));
 	MeshObjs.Register(geos.back());
 	ResourceLoadedEvent eventData(&geos.back());
 	emitEvent(ResourceLoadedEvent,eventData);
 	return &geos.back();
 }
-ShaderProgram * ResourceManager::addShader_file(std::string name, const char * vertFilePath, const char * fragFilePath)
+Mesh * ResourceManager::addMesh(std::string name, const char * filePath,bool useRelPath)
 {
-	return addShader_file(name,std::string(vertFilePath),std::string(fragFilePath));
+	return addMesh(name, std::string(filePath), useRelPath);
 }
-ShaderProgram * ResourceManager::addShader_file(std::string name, std::string vertFilePath, std::string fragFilePath)
+ShaderProgram * ResourceManager::addShader_file(std::string name, const char * vertFilePath, const char * fragFilePath, bool useRelPath)
 {
-	return addShader_src(name, FileIO::readFile(workingDir + vertFilePath),FileIO::readFile(workingDir + fragFilePath));
+	return addShader_file(name,std::string(vertFilePath),std::string(fragFilePath),useRelPath);
+}
+ShaderProgram * ResourceManager::addShader_file(std::string name, std::string vertFilePath, std::string fragFilePath, bool useRelPath)
+{
+	return addShader_src(name, FileIO::readFile((useRelPath?workingDir:"") + vertFilePath),FileIO::readFile((useRelPath?workingDir:"") + fragFilePath));
 }
 ShaderProgram * ResourceManager::addShader_src (std::string name, std::string vert, std::string frag)
 {
@@ -101,13 +101,13 @@ TextureInfo * ResourceManager::add2DTexture(std::string name, QImage& image, GLe
 {
 	return add2DTexture(name,image.bits(),image.byteCount(),image.width(),image.height(),type,type);
 }
-TextureInfo * ResourceManager::add2DTexture(std::string name, const char * filePath, bool flipHorz /*= false*/, bool flipVert /*= false*/)
+TextureInfo * ResourceManager::add2DTexture(std::string name, const char * filePath, bool useRelPath, bool flipHorz /*= false*/, bool flipVert /*= false*/)
 {
-	return add2DTexture(name,std::string(filePath),flipHorz,flipVert);
+	return add2DTexture(name,std::string(filePath),useRelPath,flipHorz,flipVert);
 }
-TextureInfo * ResourceManager::add2DTexture(std::string name, std::string& filePath, bool flipHorz /*= false*/, bool flipVert /*= false*/)
+TextureInfo * ResourceManager::add2DTexture(std::string name, std::string& filePath, bool useRelPath, bool flipHorz /*= false*/, bool flipVert /*= false*/)
 {
-	QImage data = FileIO::loadImage(workingDir + filePath);
+	QImage data = FileIO::loadImage((useRelPath?workingDir:"") + filePath);
 	if(flipVert || flipHorz) data = data.mirrored(flipHorz,flipVert);
 	return add2DTexture(name,data);
 }
@@ -128,13 +128,13 @@ TextureInfo * ResourceManager::add2DTexture(std::string name, ubyte * data, uint
 }
 
 
-Script * ResourceManager::addScript_file(const char * filePath)
+Script * ResourceManager::addScript_file(const char * filePath, bool useRelPath)
 {
-	return addScript_file(std::string(filePath));
+	return addScript_file(std::string((useRelPath?workingDir:"") + filePath));
 }
-Script * ResourceManager::addScript_file(std::string filePath)
+Script * ResourceManager::addScript_file(std::string filePath, bool useRelPath)
 {
-	return addScript_src(FileIO::readFile(workingDir + filePath));
+	return addScript_src(FileIO::readFile((useRelPath?workingDir:"") + filePath));
 }
 Script * ResourceManager::addScript_src (const char * file)
 {
