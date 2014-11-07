@@ -103,6 +103,8 @@
     <ClInclude Include="CorbinGui\Dependents\ComponentEditor.h" />
     <ClInclude Include="Engine\Defines\SafeNewAndDelete.h" />
     <ClInclude Include="CorbinGui\Dependents\EditorComponents\EditorCam.h" />
+    <ClInclude Include="Engine\Systems\Events\EventManager.h" />
+    <ClInclude Include="Engine\Systems\Events\Event.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -160,6 +162,7 @@
     <ClCompile Include="CorbinGui\GuiSkellyTon.cpp" />
     <ClCompile Include="Engine\Systems\Resources\Script.cpp" />
     <ClCompile Include="CorbinGui\Dependents\EditorComponents\EditorCam.cpp" />
+    <ClCompile Include="Engine\Systems\Events\EventManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Tools\MyMath\Matrix2D.inl" />
