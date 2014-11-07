@@ -24,8 +24,8 @@ glm::mat4& CameraComponent::getPerspective()
 }
 
 CameraComponent::CameraComponent(std::string name /*= nullptr*/)
+	: Component(name)
 {
-	this->name = name;
 	perspectiveNeedsUpdate = true;
 	nearPlane.setter = [this](float& val, float&newGuy) { perspectiveNeedsUpdate = perspectiveNeedsUpdate || val != newGuy; val = newGuy; };
 	farPlane.setter  = [this](float& val, float&newGuy) { perspectiveNeedsUpdate = perspectiveNeedsUpdate || val != newGuy; val = newGuy; };

@@ -16,8 +16,7 @@ class ENGINE_SHARED Mesh : public Resource {
 	glm::vec3 max;
 public:
 	int drawStyle;
-	Mesh();
-	Mesh(std::string name);
+	Mesh(std::string name="");
 	std::vector<Vert> verts;
 	std::vector<uint> indices;
 	inline glm::vec3 Min() const { return min; }

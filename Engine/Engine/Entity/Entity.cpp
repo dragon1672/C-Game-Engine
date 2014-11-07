@@ -102,16 +102,16 @@ glm::mat4 Entity::getWorldTransform()
 
 std::string Entity::Name() const
 {
-	return name; // stupid Lua
+	return Object::Name(); // stupid Lua
 }
 
 void Entity::Name(const std::string newName)
 {
-	this->name = newName;
-	if(newName != name) for (uint i = 0; i < StageChanged.size(); i++) StageChanged[i](this);
+	Object::Name(newName);
+	if(newName != Name()) for (uint i = 0; i < StageChanged.size(); i++) StageChanged[i](this);
 }
 
-Entity::Entity(std::string name/*="New Game Object"*/, Entity * p /*= nullptr*/)  : parent(nullptr), active(true) { this->name = name; Parent(p); LUA_OBJECT_START(Entity); }
+Entity::Entity(std::string name/*="New Game Object"*/, Entity * p /*= nullptr*/)  : parent(nullptr), active(true), Object(name) { Parent(p); LUA_OBJECT_START(Entity); }
 
 
 MatrixInfo * Entity::getTrans() { return &localTrans; }

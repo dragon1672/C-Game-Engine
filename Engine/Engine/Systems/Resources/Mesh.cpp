@@ -186,12 +186,7 @@ void Mesh::PassDownToHardWare()
 }
 
 Mesh::Mesh(std::string name)
-{
-	this->name = name;
-	drawStyle = GL_TRIANGLES;
-}
-
-Mesh::Mesh()
+	: Resource(name)
 {
 	drawStyle = GL_TRIANGLES;
 }

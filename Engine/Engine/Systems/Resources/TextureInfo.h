@@ -20,8 +20,7 @@ public:
 	uint bufferID;
 	uint slotID;
 
-	TextureInfo();
-	TextureInfo(std::string name);
+	TextureInfo(std::string name="");
 
 	void PassDownToHardWare();
 

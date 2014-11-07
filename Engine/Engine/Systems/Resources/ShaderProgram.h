@@ -44,8 +44,7 @@ private:
 
 	bool compileShader(CodeBlock&);
 public:
-	ShaderProgram();
-	ShaderProgram(std::string name);
+	ShaderProgram(std::string name="");
 
 
 	void buildBasicProgram(std::string  vertexShaderFile, std::string  fragmentShaderFile);

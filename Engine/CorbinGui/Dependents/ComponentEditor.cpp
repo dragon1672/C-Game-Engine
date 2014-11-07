@@ -5,7 +5,6 @@
 #include <Engine/Tools/QT/LinkedSlider.h>
 #include <QtWidgets/QLineEdit>
 #include <QtGui/QValidator>
-#include <array>
 #include <Engine/Tools/CollectionEditing.h>
 #include <QtWidgets/QGroupBox>
 #include <Engine/DebugTools/DebugMemHeader.h>

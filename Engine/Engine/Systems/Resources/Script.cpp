@@ -32,17 +32,17 @@ public:
 void Script::PassDownToHardWare()
 {
 	//get ma name
-	this->name = extractName(src);
-	if(name == "") throw std::bad_function_call("Invalid Script, unable to discover name");
+	Name(extractName(src));
+	if(Name() == "") throw std::bad_function_call("Invalid Script, unable to discover name");
 
 	//set up base
-	MasterLua::runLua(name+" = class("+MasterLua::ComponentBaseClass+");");
+	MasterLua::runLua(Name()+" = class("+MasterLua::ComponentBaseClass+");");
 
 	//run user stuff to override functions
 	MasterLua::runLua(src);
 
 	//snag dat
-	auto context = LUA_INSTANCE.GetGlobalEnvironment().Get<LuaTable>(name);
+	auto context = LUA_INSTANCE.GetGlobalEnvironment().Get<LuaTable>(Name());
 
 	//save dat
 	SAFE_NEW(privates,ScriptPrivates,context);
@@ -112,7 +112,7 @@ std::vector<std::string> Script::getErrors()
 
 void Script::updateName()
 {
-	name = extractName(src);
+	Name(extractName(src));
 }
 
 void Script::Src(std::string val)

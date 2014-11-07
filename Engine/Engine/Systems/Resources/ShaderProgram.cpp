@@ -205,14 +205,7 @@ void ShaderProgram::update()
 }
 
 ShaderProgram::ShaderProgram(std::string name)
-{
-	this->name = name;
-}
-
-ShaderProgram::ShaderProgram()
-{
-
-}
+	: Resource(name) { }
 
 bool ShaderProgram::isValid()
 {

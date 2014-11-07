@@ -13,8 +13,7 @@ protected:
 	Entity * parent;
 public:
 	bool active;
-	Component() : active(true) {}
-	Component(const char * name) : active(true) { this->name = name;}
+	Component(std::string name = "") : Object(name), active(true) {}
 	virtual ~Component(){}
 	inline Entity * Parent() { return parent; }
 	virtual void init()        {} // called once

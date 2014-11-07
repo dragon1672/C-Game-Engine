@@ -6,6 +6,7 @@
 
 class ENGINE_SHARED Resource : public Object {
 public:
+	Resource(std::string name = "") : Object(name) {}
 	virtual void PassDownToHardWare() = 0;
 	virtual void init() {};
 	virtual void update() {}

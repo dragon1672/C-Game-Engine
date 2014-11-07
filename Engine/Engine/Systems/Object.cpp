@@ -1,11 +1,12 @@
 #include "Object.h"
-
+#include <Engine/Systems/Events/EventManager.h>
+#include <Engine/Systems/Events/Events/ObjectChangedNameEvent.h>
 
 
 
 int Object::GlobalID = 0;
 
-Object::Object() : id(GlobalID++), name("")
+Object::Object(std::string name) : id(GlobalID++), name(name)
 {
 
 }
