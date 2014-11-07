@@ -6,6 +6,10 @@
 #include <Engine/Tools/Printer.h>
 #include <cassert>
 
+#include <Engine/Systems/Events/EventManager.h>
+#include <Engine/Systems/Events/Events/ObjectChangedNameEvent.h>
+
+
 class ObjectManagerPrivates {
 public:
 	uint GlobalId;
@@ -22,6 +26,12 @@ public:
 ObjectManager::ObjectManager()
 {
 	privates = new ObjectManagerPrivates();
+	eventManager.Subscribe("ObjectChangedNameEvent",[this](EventData*,Object*o){
+		if(privates->ContainsName(o)) { // TODO: optimize
+			UnRegister(o);
+			Register(o);
+		}
+	});
 }
 
 ObjectManager::~ObjectManager()

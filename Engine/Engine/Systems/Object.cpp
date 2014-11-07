@@ -18,11 +18,12 @@ std::string Object::Name() const
 
 void Object::Name(const std::string name)
 {
-	if(name != this->name) {
-		ObjectChangedNameEvent data(this,this->name,name);
+	std::string old = this->name;
+	this->name = name;
+	if(old != this->name) {
+		ObjectChangedNameEvent data(this,old,name);
 		emitEvent(ObjectChangedNameEvent,data);
 	}
-	this->name = name;
 }
 
 int Object::getID() const

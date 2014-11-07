@@ -24,6 +24,8 @@ GameObjectTree* GameObjectViewer::getItem(Entity * dude)
 	return ret;
 }
 
+#include <QtWidgets/QInputDialog>
+
 void GameObjectViewer::keyPressEvent(QKeyEvent *ev)
 {
 	if(ev->key() == Qt::Key_Delete) {
@@ -31,6 +33,11 @@ void GameObjectViewer::keyPressEvent(QKeyEvent *ev)
 		auto tmp = this->currentItem();
 		this->setCurrentItem(nullptr);
 		emit this->currentItemChanged(tmp,nullptr);
+	}
+	if(ev->key() == Qt::Key_F2) {
+		QString newName = QInputDialog::getText(this,"title","label");
+		this->currentItem()->setText(0,newName);
+		((GameObjectTree*)this->currentItem())->GameObj->Name(newName.toStdString());
 	}
 }
 
