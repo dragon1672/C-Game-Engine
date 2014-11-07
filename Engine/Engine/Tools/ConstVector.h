@@ -47,7 +47,7 @@ public:
 	}
 	inline T& get(int index)   { return (*this)[index]; }
 	inline T& ConstVector<T>::first() { return (*this)[0]; }
-	inline T& ConstVector<T>::last() { return (*this)[size()-1]; }
+	inline T& ConstVector<T>::back() { return (*this)[size()-1]; }
 	inline void swap(int indexA, int indexB) {
 		T& tmp = (*this)[indexA];
 		(*this)[indexA] = (*this)[indexB];

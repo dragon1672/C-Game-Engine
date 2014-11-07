@@ -78,7 +78,7 @@ void GameObjectManager::paint() {
 Entity * GameObjectManager::AddEntity(std::string name)
 {
 	entities.add(Entity(name));
-	Entity * ret = &entities.last();
+	Entity * ret = &entities.back();
 	ret->StageChanged.push_back([this,ret](Entity* e){ for(uint i=0;i<entityListChange.size();i++) entityListChange[i](ret); });
 	for (uint i = 0; i < entityAddEvent.size(); i++) entityAddEvent[i](ret);
 	if(componentSelectorFunction) ret->SelectorFunction(componentSelectorFunction);
