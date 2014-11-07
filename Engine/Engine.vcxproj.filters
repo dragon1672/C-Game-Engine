@@ -109,6 +109,8 @@
     <ClInclude Include="Engine\Systems\Events\Events\EntityParentChangedEvent.h" />
     <ClInclude Include="Engine\Systems\Events\Events\ObjectChangedNameEvent.h" />
     <ClInclude Include="Engine\Systems\Events\EventData.h" />
+    <ClInclude Include="Engine\Systems\Events\Events\EntityAddedEvent.h" />
+    <ClInclude Include="Engine\Systems\Events\Events\EntityRemovedEvent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />

@@ -194,6 +194,8 @@
     <ClInclude Include="Engine\Tools\Random\StringRandom.h" />
     <ClInclude Include="Engine\Tools\Ray.h" />
     <ClInclude Include="Engine\Tools\StringManapulation.h" />
+    <ClInclude Include="Engine\Systems\Events\Events\EntityAddedEvent.h" />
+    <ClInclude Include="Engine\Systems\Events\Events\EntityRemovedEvent.h" />
     <ClInclude Include="ExportHeader.h" />
     <ClInclude Include="Engine\FastDelegate.h" />
     <ClInclude Include="Engine\Systems\Resources\Dependencies\GeometryInfo.h" />
