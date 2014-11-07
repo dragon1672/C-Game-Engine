@@ -30,9 +30,9 @@ ResourceViewer::ResourceViewer()
 
 void ResourceViewer::updateList()
 {
-	layout()->removeWidget(myList);
-	delete myList;
-	myList = new QListWidget();
+	myList->clear();
+	//connect(myList,QListWidget::)
+
 	layout()->addWidget(myList);
 	auto resourceMaker = [](Resource*r){ return new ResourceListItem(r); };
 	auto list = Collections::Select<Mesh*,ResourceListItem*>(resourceManager.getAllMesh(),resourceMaker);
