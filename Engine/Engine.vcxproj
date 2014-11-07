@@ -147,8 +147,12 @@
     <ClInclude Include="Engine\Physics\RidgidBody\RidgidBody.h" />
     <ClInclude Include="Engine\Physics\RidgidBody\RigidSpringForce.h" />
     <ClInclude Include="Engine\Systems\CameraManager.h" />
-    <ClInclude Include="Engine\Systems\Events\Event.h" />
+    <ClInclude Include="Engine\Systems\Events\EventData.h" />
     <ClInclude Include="Engine\Systems\Events\EventManager.h" />
+    <ClInclude Include="Engine\Systems\Events\Events\ComponentAddedEvent.h" />
+    <ClInclude Include="Engine\Systems\Events\Events\ComponentRemovedEvent.h" />
+    <ClInclude Include="Engine\Systems\Events\Events\EntityParentChangedEvent.h" />
+    <ClInclude Include="Engine\Systems\Events\Events\ObjectChangedNameEvent.h" />
     <ClInclude Include="Engine\Systems\InputManager.h" />
     <ClInclude Include="Engine\Systems\Resources\Material.h" />
     <ClInclude Include="Engine\Systems\Resources\Shaders\DefaultShaders.h" />

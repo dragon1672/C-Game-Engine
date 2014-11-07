@@ -4,7 +4,7 @@
 
 IMPLEMENT_SINGLETON(EventManager);
 
-EventManager::EventHandle::EventHandle(std::string eventName, std::function<void(Event*,Object*)> fun,EventManager * manager) : 
+EventManager::EventHandle::EventHandle(std::string eventName, std::function<void(EventData*,Object*)> fun,EventManager * manager) : 
 	eventName(eventName), fun(fun), manager(manager), ID(MasterID++)
 {
 
@@ -15,7 +15,7 @@ void EventManager::EventHandle::UnRegister()
 	manager->RemoveEvent(this);
 }
 
-void EventManager::EventHandle::Fire(Event*data,Object * sender,float inNumSeconds /*= 0*/)
+void EventManager::EventHandle::Fire(EventData*data,Object * sender,float inNumSeconds /*= 0*/)
 {
 	manager->fire(this,data,sender,inNumSeconds);
 }
@@ -27,7 +27,7 @@ void EventManager::EventInstance::fire()
 	handle.fun(evt,sender);
 }
 
-EventManager::EventInstance::EventInstance(EventHandle handle, Event*evt,Object*sender,float timeLeft) :
+EventManager::EventInstance::EventInstance(EventHandle handle, EventData*evt,Object*sender,float timeLeft) :
 	handle(handle),
 	evt(evt),
 	sender(sender),
@@ -51,7 +51,7 @@ std::string EventManager::EventInstance::EventName() const
 	return handle.eventName;
 }
 
-Event * EventManager::EventInstance::Evt() const
+EventData * EventManager::EventInstance::Evt() const
 {
 	return evt;
 }
@@ -73,17 +73,17 @@ void EventManager::update(float dt)
 	VECTOR_REMOVE_CONDITION(fireQ,.timeLeft <= 0);
 }
 
-void EventManager::fire(EventHandle * event,Event * data, Object * sender, float inNumSeconds /*= 0*/)
+void EventManager::fire(EventHandle * event,EventData * data, Object * sender, float inNumSeconds /*= 0*/)
 {
 	fire(*event,data,sender,inNumSeconds);
 }
 
-void EventManager::fire(EventHandle& event,Event * data, Object * sender, float inNumSeconds /*= 0*/)
+void EventManager::fire(EventHandle& event,EventData * data, Object * sender, float inNumSeconds /*= 0*/)
 {
 	fire(event.eventName,data,sender,inNumSeconds);
 }
 
-void EventManager::fire(std::string event, Event * data, Object * sender, float inNumSeconds /*= 0*/)
+void EventManager::fire(std::string event, EventData * data, Object * sender, float inNumSeconds /*= 0*/)
 {
 	if(functions.find(event)==functions.end()) return; // no one cares
 	auto& list = functions[event].funs;
@@ -98,7 +98,7 @@ void EventManager::fire(std::string event, Event * data, Object * sender, float 
 	}
 }
 
-EventManager::EventHandle EventManager::Subscribe(std::string event,std::function<void(Event*,Object*)> function)
+EventManager::EventHandle EventManager::Subscribe(std::string event,std::function<void(EventData*,Object*)> function)
 {
 	if(functions.find(event) == functions.end()) {
 		functions[event] = ListOfFunctions();

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Engine/Systems/Events/Event.h>
+#include <Engine/Systems/Events/EventData.h>
 #include <Engine/Defines/SingletonsDefine.h>
 #include <Engine/Systems/Object.h>
 #include <functional>
@@ -8,9 +8,10 @@
 #include <vector>
 #include <map>
 
-#define eventManager GlobalEvent::getInstance()
-#define emitEvent(event,data) eventManager.fire(event,data,this)
-#define emitTimedEvent(event,data,time) eventManager.fire(event,data,this,time)
+#define eventManager EventManager::getInstance()
+#define emitEvent(event,data) eventManager.fire(#event,data,this)
+#define emitTimedEvent(event,data,time) eventManager.fire(#event,data,this,time)
+#define subscribeToEvent(event,function) eventManager.Subscribe(#event,function)
 
 class ENGINE_SHARED EventManager {
 	class EventInstance;
@@ -18,28 +19,28 @@ class ENGINE_SHARED EventManager {
 		static int MasterID;
 		int ID;
 		std::string eventName;
-		std::function<void(Event*,Object*)> fun;
+		std::function<void(EventData*,Object*)> fun;
 		EventManager * manager;
 	public:
-		EventHandle(std::string eventName, std::function<void(Event*,Object*)> fun,EventManager * manager);
+		EventHandle(std::string eventName, std::function<void(EventData*,Object*)> fun,EventManager * manager);
 		void UnRegister();
-		void Fire(Event*data,Object * sender,float inNumSeconds = 0);
+		void Fire(EventData*data,Object * sender,float inNumSeconds = 0);
 		friend EventManager;
 		friend EventInstance;
 	};
 	class EventInstance {
 		EventHandle handle;
-		Event*evt;
+		EventData*evt;
 		Object*sender;
 		EventManager * manager;
 		float timeLeft;
 		void fire();
 	public:
-		EventInstance(EventHandle handle, Event*evt,Object*sender,float timeLeft);
+		EventInstance(EventHandle handle, EventData*evt,Object*sender,float timeLeft);
 		float TimeLeft()        const;
 		EventManager * Manager() const;
 		std::string EventName() const;
-		Event  * Evt()    const;
+		EventData  * Evt()    const;
 		Object * Sender() const;
 		friend EventManager;
 	};
@@ -50,9 +51,9 @@ class ENGINE_SHARED EventManager {
 public:
 	void update(float dt);
 
-	void fire(EventHandle * event,Event * data, Object * sender, float inNumSeconds = 0);
-	void fire(EventHandle& event,Event * data, Object * sender, float inNumSeconds = 0);
-	void fire(std::string event, Event * data, Object * sender, float inNumSeconds = 0);
-	EventHandle Subscribe(std::string event,std::function<void(Event*,Object*)> function);
+	void fire(EventHandle * event, EventData * data, Object * sender, float inNumSeconds = 0);
+	void fire(EventHandle&  event, EventData * data, Object * sender, float inNumSeconds = 0);
+	void fire(std::string   event, EventData * data, Object * sender, float inNumSeconds = 0);
+	EventHandle Subscribe(std::string event,std::function<void(EventData*,Object*)> function);
 	void RemoveEvent(EventHandle*handle);
 };

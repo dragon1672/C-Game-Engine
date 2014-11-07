@@ -104,7 +104,11 @@
     <ClInclude Include="Engine\Defines\SafeNewAndDelete.h" />
     <ClInclude Include="CorbinGui\Dependents\EditorComponents\EditorCam.h" />
     <ClInclude Include="Engine\Systems\Events\EventManager.h" />
-    <ClInclude Include="Engine\Systems\Events\Event.h" />
+    <ClInclude Include="Engine\Systems\Events\Events\ComponentRemovedEvent.h" />
+    <ClInclude Include="Engine\Systems\Events\Events\ComponentAddedEvent.h" />
+    <ClInclude Include="Engine\Systems\Events\Events\EntityParentChangedEvent.h" />
+    <ClInclude Include="Engine\Systems\Events\Events\ObjectChangedNameEvent.h" />
+    <ClInclude Include="Engine\Systems\Events\EventData.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
