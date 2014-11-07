@@ -87,6 +87,8 @@ Entity * GameObjectManager::AddEntity(std::string name)
 	Entity * ret = &entities.back();
 	if(componentSelectorFunction) ret->SelectorFunction(componentSelectorFunction);
 	EntityManager.Register(ret);
+	EntityAddedEvent eventData(ret);
+	emitEvent(EntityAddedEvent,eventData);
 	return ret;
 }
 

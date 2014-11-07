@@ -517,6 +517,7 @@ void ComponentEditor::changeEntity(Entity * toUpdateTo, std::function<bool(Compo
 
 ComponentEditor::ComponentEditor()
 {
+	setMinimumWidth(350);
 	setWindowTitle("Component Editor");
 	privates = new ComponentEditorPrivates();
 	setLayout(privates->layout);
