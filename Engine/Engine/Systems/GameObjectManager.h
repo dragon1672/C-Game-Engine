@@ -19,7 +19,7 @@
 
 #define gameManager GameObjectManager::getInstance()
 
-class ENGINE_SHARED GameObjectManager {
+class ENGINE_SHARED GameObjectManager : public Object {
 	DEFINE_SINGLETON(GameObjectManager);
 	LUA_OBJECT(GameObjectManager);
 public:ConstVector<Entity> entities;
@@ -40,9 +40,6 @@ public:
 	std::function<bool(Component*)> ComponentSelectorFunction() const;
 	void ComponentSelectorFunction(std::function<bool(Component*)> val);
 
-	std::vector<std::function<void(Entity*)>> entityAddEvent;
-	std::vector<std::function<void(Entity*)>> entityRemoveEvent;
-	std::vector<std::function<void(Entity*)>> entityListChange;
 	std::vector<Entity *> getTopLevelEntities();
 	//add
 	Entity * AddEntity(std::string name = "GameObject");

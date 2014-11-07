@@ -16,10 +16,10 @@
 void Entity::removeComponent(int toKill) {
 	if(toKill >= 0 && toKill < (int)components.size()) {
 		Component * c = components[toKill];
+		components.erase(components.begin() + toKill);
 		ComponentRemovedEvent data(this,c);
 		emitEvent(ComponentRemovedEvent,data);
 		delete(c);
-		components.erase(components.begin() + toKill);
 	}
 }
 Component* Entity::addComponent(Component * toAdd) {

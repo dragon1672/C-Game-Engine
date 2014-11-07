@@ -1,5 +1,6 @@
 #include "GameObjectViewer.h"
 #include <Engine/Tools/Printer.h>
+#include <Engine/Systems/Events/EventManager.h>
 
 
 class GameObjectTree : public QTreeWidgetItem {
@@ -59,12 +60,24 @@ void GameObjectViewer::init()
 	update();
 }
 
+#include <Engine/Systems/Events/Events/EntityParentChangedEvent.h>
+#include <Engine/Systems/Events/Events/ObjectChangedNameEvent.h>
+#include <Engine/Systems/Events/Events/EntityAddedEvent.h>
+#include <Engine/Systems/Events/Events/EntityRemovedEvent.h>
+
 GameObjectViewer::GameObjectViewer(EditorGame * game) : game(game)
 {
 	setColumnCount(1);
 	setWindowTitle("Game Object List");
 	
-	gameManager.entityListChange.push_back([this](Entity*){this->update();});
+	eventManager.Subscribe("EntityParentChangedEvent",[this](EventData*d,Object*sender){this->update();});
+	eventManager.Subscribe("ObjectChangedNameEvent",[this](EventData*d,Object*sender){
+		ObjectChangedNameEvent* data = (ObjectChangedNameEvent*)d;
+		if(std::string(typeid(*(data->dude)).name()) == std::string(typeid(Entity).name()))
+			this->update();
+	});
+	eventManager.Subscribe("EntityAddedEvent",[this](EventData*d,Object*sender){this->update();});
+	eventManager.Subscribe("EntityRemovedEvent",[this](EventData*d,Object*sender){this->update();});
 }
 
 Entity * GameObjectViewer::convertTree2Entity(QTreeWidgetItem * treeItem)

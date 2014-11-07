@@ -12,12 +12,15 @@
 #include <Engine/Tools/Printer.h>
 #include <Engine/Systems/Events/EventManager.h>
 
+//events
+#include <Engine/Systems/Events/EventManager.h>
+#include <Engine/Systems/Events/Events/EntityAddedEvent.h>
+#include <Engine/Systems/Events/Events/EntityRemovedEvent.h>
+
 IMPLEMENT_SINGLETON(GameObjectManager);
 
 GameObjectManager::GameObjectManager() {
 	LUA_OBJECT_START(GameObjectManager);
-	entityAddEvent.push_back([this](Entity* e){ for(uint i=0;i<entityListChange.size();i++) entityListChange[i](e); });
-	entityRemoveEvent.push_back([this](Entity* e){ for(uint i=0;i<entityListChange.size();i++) entityListChange[i](e); });
 }
 bool GameObjectManager::init() {
 	MasterLua::getInstance().init();
@@ -81,8 +84,6 @@ Entity * GameObjectManager::AddEntity(std::string name)
 {
 	entities.add(Entity(name));
 	Entity * ret = &entities.back();
-	ret->StageChanged.push_back([this,ret](Entity* e){ for(uint i=0;i<entityListChange.size();i++) entityListChange[i](ret); });
-	for (uint i = 0; i < entityAddEvent.size(); i++) entityAddEvent[i](ret);
 	if(componentSelectorFunction) ret->SelectorFunction(componentSelectorFunction);
 	EntityManager.Register(ret);
 	return ret;
@@ -134,7 +135,8 @@ void GameObjectManager::RemoveEntity(Entity * toRemove)
 			RemoveEntity(i);
 		}
 		entities[index].active = false;
-		for (uint i = 0; i < entityRemoveEvent.size(); i++) entityRemoveEvent[i](toRemove);
+		EntityRemovedEvent data(toRemove);
+		emitEvent(EntityRemovedEvent,data);
 	}
 	EntityManager.UnRegister(toRemove);
 }

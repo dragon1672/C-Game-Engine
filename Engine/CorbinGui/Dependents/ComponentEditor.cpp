@@ -362,7 +362,7 @@ class CamEditor : public SingleComponentEditor {
 public:
 	CamEditor(CameraComponent * script) {
 		setMinimumSize(300,200);
-		setWindowTitle("Renderable Component");
+		setWindowTitle("Camera Component");
 		this->script = script;
 		QVBoxLayout * layout = new QVBoxLayout();
 		this->setLayout(layout);
@@ -391,6 +391,19 @@ public:
 	}
 };
 
+class ComponentWrapper : public QWidget {
+public:
+	ComponentWrapper(QWidget * component, QString title) {
+		setLayout(new QVBoxLayout());
+		QGroupBox * boxy = new QGroupBox(title);
+		QVBoxLayout * boxLayout = new QVBoxLayout();
+		boxy->setLayout(boxLayout);
+		boxLayout->addWidget(component);
+		layout()->addWidget(boxy);
+	}
+};
+
+
 #pragma region privates
 #include <map>
 #include <Engine/Defines/Vectors.h>
@@ -399,9 +412,13 @@ public:
 
 class ComponentEditorPrivates {
 public:
+	Entity * toUpdateTo;
+	std::function<bool(Component*)> validComponentCheck;
+	QVBoxLayout * layout;
 	std::map<std::string,EditorCreatorInterface*> map;
 	ComponentEditorPrivates() {
 		//init map here
+		layout = new QVBoxLayout();
 		ADD_INTERFACE_TO_MAP(MatrixInfo,TranslationEdtor);
 		ADD_INTERFACE_TO_MAP(ScriptComponent,ScriptEdtor);
 		ADD_INTERFACE_TO_MAP(RenderableComponent,RenderableEditor);
@@ -444,64 +461,71 @@ public:
 		}
 	}
 
+	void reload()
+	{
+		std::vector<Component*> allcomps;
+		if(toUpdateTo != nullptr) {
+			allcomps.push_back(toUpdateTo->getTrans());
+			auto tmp = toUpdateTo->getAllComponents();
+			for (uint i = 0; i < tmp.size(); i++) {
+				allcomps.push_back(tmp[i]);
+			}
+
+			allcomps = Collections::Where<Component*>(allcomps,validComponentCheck);
+
+		}
+		initList(allcomps);
+		std::vector<SingleComponentEditor *>& list = TrackedEditors;
+
+		QLayoutItem* item;
+		while ( ( item = layout->takeAt( 0 ) ) != NULL ) {
+			delete item->widget();
+			delete item;
+		}
+
+		auto vbox = new QVBoxLayout();
+		QWidget* widget = new QWidget;
+		QScrollArea * scrollarea = new QScrollArea();
+		widget->setLayout(vbox);
+		scrollarea->setWidget(widget);
+
+		scrollarea->setWidgetResizable(true);
+
+		for (uint i = 0; i < list.size(); i++) {
+			auto tmp = new ComponentWrapper(list[i],list[i]->windowTitle());
+			vbox->addWidget(tmp);
+		}
+		layout->addWidget(scrollarea);
+	}
+
+
 
 };
 
 #pragma endregion
 
-class ComponentWrapper : public QWidget {
-public:
-	ComponentWrapper(QWidget * component, QString title) {
-		setLayout(new QVBoxLayout());
-		QGroupBox * boxy = new QGroupBox(title);
-		QVBoxLayout * boxLayout = new QVBoxLayout();
-		boxy->setLayout(boxLayout);
-		boxLayout->addWidget(component);
-		layout()->addWidget(boxy);
-	}
-};
 
 void ComponentEditor::changeEntity(Entity * toUpdateTo, std::function<bool(Component*)> validComponentCheck) {
-	std::vector<Component*> allcomps;
-	if(toUpdateTo != nullptr) {
-		allcomps.push_back(toUpdateTo->getTrans());
-		auto tmp = toUpdateTo->getAllComponents();
-		for (uint i = 0; i < tmp.size(); i++) {
-			allcomps.push_back(tmp[i]);
-		}
-
-		allcomps = Collections::Where<Component*>(allcomps,validComponentCheck);
-
-	}
-	privates->initList(allcomps);
-	std::vector<SingleComponentEditor *>& list = privates->TrackedEditors;
-		
-	QLayoutItem* item;
-	while ( ( item = layout()->takeAt( 0 ) ) != NULL ) {
-		delete item->widget();
-		delete item;
-	}
-
-	auto vbox = new QVBoxLayout();
-	QWidget* widget = new QWidget;
-	QScrollArea * scrollarea = new QScrollArea();
-	widget->setLayout(vbox);
-	scrollarea->setWidget(widget);
-
-	scrollarea->setWidgetResizable(true);
-
-	for (uint i = 0; i < list.size(); i++) {
-		auto tmp = new ComponentWrapper(list[i],list[i]->windowTitle());
-		vbox->addWidget(tmp);
-	}
-	layout()->addWidget(scrollarea);
+	privates->toUpdateTo = toUpdateTo;
+	privates->validComponentCheck = validComponentCheck;
+	privates->reload();
 }
+
+#include <Engine/Systems/Events/EventManager.h>
+#include <Engine/Systems/Events/Events/ComponentAddedEvent.h>
+#include <Engine/Systems/Events/Events/ComponentRemovedEvent.h>
 
 ComponentEditor::ComponentEditor()
 {
-	setLayout(new QVBoxLayout());
 	setWindowTitle("Component Editor");
 	privates = new ComponentEditorPrivates();
+	setLayout(privates->layout);
+	eventManager.Subscribe("ComponentAddedEvent",  [this](EventData*d,Object*s) {
+		this->privates->reload();
+	});
+	eventManager.Subscribe("ComponentRemovedEvent",[this](EventData*d,Object*s) {
+		this->privates->reload();
+	});
 }
 
 void ComponentEditor::update()
