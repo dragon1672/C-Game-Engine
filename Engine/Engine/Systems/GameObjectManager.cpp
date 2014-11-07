@@ -49,9 +49,10 @@ bool GameObjectManager::shutdown() {
 	return true;
 }
 void GameObjectManager::update() {
-	inputManager.update();
 	Timer::getInstance().interval();
+	inputManager.update();
 	resourceManager.update();
+	eventManager.update(Timer::getInstance().deltaTime());
 	for (uint i = 0; i < entities.size(); i++) { if(entities[i].active && (!selectorFunction || selectorFunction && selectorFunction(&entities[i]))) entities[i].earlyUpdate(); }
 	for (uint i = 0; i < entities.size(); i++) { if(entities[i].active && (!selectorFunction || selectorFunction && selectorFunction(&entities[i]))) entities[i].update();      }
 	for (uint i = 0; i < entities.size(); i++) { if(entities[i].active && (!selectorFunction || selectorFunction && selectorFunction(&entities[i]))) entities[i].lateUpdate();  }

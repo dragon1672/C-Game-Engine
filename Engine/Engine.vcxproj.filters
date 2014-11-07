@@ -88,7 +88,6 @@
     <ClInclude Include="Engine\Systems\Resources\Material.h" />
     <ClInclude Include="Engine\Systems\Resources\Shaders\DefaultShaders.h" />
     <ClInclude Include="CorbinGui\Dependents\Command.h" />
-    <ClInclude Include="CorbinGui\Dependents\Commands\EditFloat.h" />
     <ClInclude Include="CorbinGui\BasicQGLGui.h" />
     <ClInclude Include="CorbinGui\GuiSkellyTon.h" />
     <ClInclude Include="CorbinGui\Dependents\GameObjectViewer.h" />
@@ -111,6 +110,8 @@
     <ClInclude Include="Engine\Systems\Events\EventData.h" />
     <ClInclude Include="Engine\Systems\Events\Events\EntityAddedEvent.h" />
     <ClInclude Include="Engine\Systems\Events\Events\EntityRemovedEvent.h" />
+    <ClInclude Include="CorbinGui\Dependents\ResourceViewer.h" />
+    <ClInclude Include="Engine\Systems\Events\Events\ResourceLoadedEvent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -169,6 +170,7 @@
     <ClCompile Include="Engine\Systems\Resources\Script.cpp" />
     <ClCompile Include="CorbinGui\Dependents\EditorComponents\EditorCam.cpp" />
     <ClCompile Include="Engine\Systems\Events\EventManager.cpp" />
+    <ClCompile Include="CorbinGui\Dependents\ResourceViewer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Tools\MyMath\Matrix2D.inl" />

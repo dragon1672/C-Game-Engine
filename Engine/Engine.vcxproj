@@ -99,12 +99,12 @@
   <ItemGroup>
     <ClInclude Include="CorbinGui\BasicQGLGui.h" />
     <ClInclude Include="CorbinGui\Dependents\Command.h" />
-    <ClInclude Include="CorbinGui\Dependents\Commands\EditFloat.h" />
     <ClInclude Include="CorbinGui\Dependents\EditorComponents\EditorCam.h" />
     <ClInclude Include="CorbinGui\Dependents\EditorComponents\EditorCamComponent.h" />
     <ClInclude Include="CorbinGui\Dependents\EditorComponents\EditorRenderableComponent.h" />
     <ClInclude Include="CorbinGui\Dependents\GameObjectViewer.h" />
     <ClInclude Include="CorbinGui\Dependents\ComponentEditor.h" />
+    <ClInclude Include="CorbinGui\Dependents\ResourceViewer.h" />
     <ClInclude Include="CorbinGui\EditorGame.h" />
     <ClInclude Include="CorbinGui\GuiSkellyTon.h" />
     <ClInclude Include="CorbinGui\ToolWindowManager\ToolWindowManager.h" />
@@ -153,6 +153,7 @@
     <ClInclude Include="Engine\Systems\Events\Events\ComponentRemovedEvent.h" />
     <ClInclude Include="Engine\Systems\Events\Events\EntityParentChangedEvent.h" />
     <ClInclude Include="Engine\Systems\Events\Events\ObjectChangedNameEvent.h" />
+    <ClInclude Include="Engine\Systems\Events\Events\ResourceLoadedEvent.h" />
     <ClInclude Include="Engine\Systems\InputManager.h" />
     <ClInclude Include="Engine\Systems\Resources\Material.h" />
     <ClInclude Include="Engine\Systems\Resources\Shaders\DefaultShaders.h" />
@@ -215,6 +216,7 @@
     <ClCompile Include="CorbinGui\Dependents\EditorComponents\EditorCam.cpp" />
     <ClCompile Include="CorbinGui\Dependents\EditorComponents\EditorRenderableComponent.cpp" />
     <ClCompile Include="CorbinGui\Dependents\GameObjectViewer.cpp" />
+    <ClCompile Include="CorbinGui\Dependents\ResourceViewer.cpp" />
     <ClCompile Include="CorbinGui\EditorGame.cpp" />
     <ClCompile Include="CorbinGui\GuiSkellyTon.cpp" />
     <ClCompile Include="CorbinGui\ToolWindowManager\ToolWindowManager.cpp" />
