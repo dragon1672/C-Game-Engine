@@ -2,6 +2,7 @@
 
 #include <string>
 #include <Engine/TypeDefs.h>
+#include <vector>
 
 typedef char fileByte;
 
@@ -19,6 +20,11 @@ namespace FileIO {
 	FileData loadFile(const char * filePath);
 	bool validFile(std::string filePath);
 	bool validFile(const char * filePath);
+
+	std::vector<std::string> filesInDir(std::string dir);
+	std::vector<std::string> foldersInDir(std::string dir);
+	bool validDir(std::string dir);
+
 
 	template<typename T>
 	void myMemCopy(T * from, T * to, uint size) {

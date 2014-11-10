@@ -2,6 +2,7 @@
 #include <fstream>
 #include <cassert>
 #include <Engine/Tools/Printer.h>
+#include <dirent.h>
 
 namespace FileIO {
 	std::string readFile(std::string filePath) {
@@ -45,4 +46,51 @@ namespace FileIO {
 		file.close();
 		return valid;
 	}
+
+	std::vector<std::string> filesInDir(std::string dir)
+	{
+		std::vector< std::string > files;
+		DIR *dp;
+		struct dirent *dirp;
+		if((dp  = opendir(dir.c_str())) == NULL) {
+			printErr(100) "Error(", errno, ") opening ", dir;
+			return std::vector<std::string>();
+		}
+		while ((dirp = readdir(dp)) != NULL) {
+			if (validFile(dir+"/"+dirp->d_name)) {
+				files.push_back(dirp->d_name);
+			}
+		}
+		closedir(dp);
+		return files;
+	}
+	std::vector<std::string> foldersInDir(std::string dir)
+	{
+		std::vector< std::string > files;
+		DIR *dp;
+		struct dirent *dirp;
+		if((dp  = opendir(dir.c_str())) == NULL)
+		{
+			printErr(100) "Error(", errno, ") opening ", dir;
+			return std::vector<std::string>();
+		}
+		while ((dirp = readdir(dp)) != NULL) {
+			if (std::string(dirp->d_name) != "." && validDir(dir+"/"+dirp->d_name)) {
+				files.push_back(dirp->d_name);
+			}
+		}
+		closedir(dp);
+		return files;
+	}
+	bool validDir(std::string dir)
+	{
+		DIR *dp;
+		if((dp  = opendir(dir.c_str())) == NULL) {
+			closedir(dp);
+			return false;
+		}
+		closedir(dp);
+		return true;
+	}
+
 }

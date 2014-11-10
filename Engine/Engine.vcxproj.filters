@@ -112,6 +112,7 @@
     <ClInclude Include="Engine\Systems\Events\Events\EntityRemovedEvent.h" />
     <ClInclude Include="CorbinGui\Dependents\ResourceViewer.h" />
     <ClInclude Include="Engine\Systems\Events\Events\ResourceLoadedEvent.h" />
+    <ClInclude Include="dirent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
