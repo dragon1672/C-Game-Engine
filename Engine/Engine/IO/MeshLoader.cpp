@@ -1,5 +1,6 @@
 #include "MeshLoader.h"
 #include <Engine/Tools/CollectionEditing.h>
+#include <Engine/Tools/Printer.h>
 
 #define GET_DATA(type, offset) *reinterpret_cast<type *>(bytes+offset);	offset += sizeof(type);
 
@@ -44,17 +45,19 @@ namespace FileIO {
 
 	Mesh loadFromBinary(fileByte * bytes, std::string name) {
 		int offset = 0;
-		int firstNum = GET_DATA(int,offset);
-		int index = firstNum / 16;
-		return loaders[index](bytes,name);
+		int VersionNumber = GET_DATA(int,offset);
+		return loaders[VersionNumber](bytes,name);
 	}
 	Mesh loadMeshFromFile(std::string filePath, std::string name) {
 		return loadMeshFromFile(filePath.c_str(),name);
 	}
 	Mesh loadMeshFromFile(const char * filePath, std::string name) {
 		FileData file = loadFile(filePath);
-		Mesh ret = loadFromBinary(file.data,name);
-		file.cleanup();
+		Mesh ret;
+		if(file.data != nullptr) {
+			ret = loadFromBinary(file.data,name);
+			file.cleanup();
+		}
 		return ret;
 	}
 }
