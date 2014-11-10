@@ -22,32 +22,26 @@ Stream& operator<<(Stream& os, const std::string& obj)
 	unsigned int size = obj.length();
 	os.append(size);
 	for (unsigned int i = 0; i < size; i++) {
-		os.append(obj[i]);
+		os << obj[i];
 	}
 	return os;
 }
 
 Stream& operator<<(Stream& os, const glm::vec4& obj)
 {
-	for (uint i = 0; i < obj.length(); i++) {
-		os.append(obj[i]);
-	}
+	os << obj.x << obj.y << obj.z << obj.a;
 	return os;
 }
 
 Stream& operator<<(Stream& os, const glm::vec3& obj)
 {
-	for (uint i = 0; i < obj.length(); i++) {
-		os.append(obj[i]);
-	}
+	os << obj.x << obj.y << obj.z;
 	return os;
 }
 
 Stream& operator<<(Stream& os, const glm::vec2& obj)
 {
-	for (uint i = 0; i < obj.length(); i++) {
-		os.append(obj[i]);
-	}
+	os << obj.x << obj.y;
 	return os;
 }
 
@@ -66,24 +60,18 @@ Stream& operator>>(Stream& os, std::string& obj)
 
 Stream& operator>>(Stream& os, glm::vec4& obj)
 {
-	for (uint i = 0; i < obj.length(); i++) {
-		os.readAndMoveForward(obj[i]);
-	}
+	os >> obj.r >> obj.g >> obj.b >> obj.a;
 	return os;
 }
 
 Stream& operator>>(Stream& os, glm::vec3& obj)
 {
-	for (uint i = 0; i < obj.length(); i++) {
-		os.readAndMoveForward(obj[i]);
-	}
+	os >> obj.x >> obj.y >> obj.z;
 	return os;
 }
 
 Stream& operator>>(Stream& os, glm::vec2& obj)
 {
-	for (uint i = 0; i < obj.length(); i++) {
-		os.readAndMoveForward(obj[i]);
-	}
+	os >> obj.x >> obj.y;
 	return os;
 }
