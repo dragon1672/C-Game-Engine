@@ -104,13 +104,14 @@ void GuiSkellyTon::initBar()
 			return;
 
 		QString command("CSharpOBJConverter.exe ");
-		const char* nativeFileName = "level.bin";
-		command += "\""+targetObj + "\"" + " " + "\"" + nativeFileName+ "\"";
+		QString nativeFileName = "level.bin";
+		command += "-o \""+nativeFileName+ "\"" + " " + "\"" + targetObj  + "\"";
+		std::string t = command.toStdString();
 		int result = system(command.toUtf8().constData());
 		if(result!=0) {
 			printErr(100) "File failed to load";
 		} else {
-			auto tmp = resourceManager.addMesh("From File",nativeFileName,false);
+			auto tmp = resourceManager.addMesh("From File",nativeFileName.toStdString(),false);
 			tmp->PassDownToHardWare();
 		}
 		printer.LogMessage("Load Obj Clicked");
