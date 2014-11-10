@@ -84,4 +84,13 @@ public:
 	~ConstVector() {
 		clear();
 	}
+
+	void resize(unsigned int index) {
+		unsigned int a = index / startSize;
+		unsigned int b = index % startSize;
+		while(!(a < arrays.size() && b < startSize))
+			arrays.push_back(new T[startSize]);
+	}
+
+
 };
