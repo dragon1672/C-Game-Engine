@@ -1,6 +1,7 @@
 #include "FileIO.h"
 #include <fstream>
 #include <cassert>
+#include <Engine/Tools/Printer.h>
 
 namespace FileIO {
 	std::string readFile(std::string filePath) {
@@ -20,7 +21,8 @@ namespace FileIO {
 		//understand da file
 		std::ifstream input( filePath , std::ios::binary | std::ios::in);
 		if(!input.good()) {
-			//qDebug() << fileName << "failed to load, unable to convert to binary";
+			printErr(100) "Find not found at ", filePath;
+			return FileData();
 		}
 		assert(input.good()); 
 		input.seekg(0, std::ios::end);

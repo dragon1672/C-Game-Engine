@@ -9,7 +9,9 @@ namespace FileIO {
 	struct FileData {
 		uint size;
 		fileByte * data;
-		inline void cleanup() { delete [] data; }
+		bool ownsData;
+		FileData() : size(0), data(nullptr), ownsData(true) {}
+		inline void cleanup() { if(ownsData) delete [] data; }
 	};
 	std::string readFile(std::string filePath);
 	std::string readFile(const char * filePath);
