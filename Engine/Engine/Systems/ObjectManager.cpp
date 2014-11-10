@@ -26,7 +26,7 @@ public:
 ObjectManager::ObjectManager()
 {
 	privates = new ObjectManagerPrivates();
-	eventManager.Subscribe("ObjectChangedNameEvent",[this](EventData*,Object*o){
+	eventManager.Subscribe<ObjectChangedNameEvent>([this](EventData*,Object*o){
 		if(privates->ContainsName(o)) { // TODO: optimize
 			UnRegister(o);
 			Register(o);

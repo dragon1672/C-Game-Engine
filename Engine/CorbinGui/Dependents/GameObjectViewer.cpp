@@ -75,8 +75,8 @@ GameObjectViewer::GameObjectViewer(EditorGame * game) : game(game)
 	setColumnCount(1);
 	setWindowTitle("Game Object List");
 	
-	eventManager.Subscribe("EntityParentChangedEvent",[this](EventData*d,Object*sender){this->update();});
-	eventManager.Subscribe("ObjectChangedNameEvent",[this](EventData*d,Object*sender){
+	eventManager.Subscribe<EntityParentChangedEvent>([this](EventData*d,Object*sender){this->update();});
+	eventManager.Subscribe<ObjectChangedNameEvent>([this](EventData*d,Object*sender){
 		ObjectChangedNameEvent* data = (ObjectChangedNameEvent*)d;
 		if(std::string(typeid(*(data->dude)).name()) == std::string(typeid(Entity).name()))
 			if(data->dude == ((GameObjectTree*)currentItem())->GameObj) {
@@ -85,8 +85,8 @@ GameObjectViewer::GameObjectViewer(EditorGame * game) : game(game)
 				this->update();
 			}
 	});
-	eventManager.Subscribe("EntityAddedEvent",[this](EventData*d,Object*sender){this->update();});
-	eventManager.Subscribe("EntityRemovedEvent",[this](EventData*d,Object*sender){this->update();});
+	eventManager.Subscribe<EntityAddedEvent>([this](EventData*d,Object*sender){this->update();});
+	eventManager.Subscribe<EntityRemovedEvent>([this](EventData*d,Object*sender){this->update();});
 }
 
 Entity * GameObjectViewer::convertTree2Entity(QTreeWidgetItem * treeItem)

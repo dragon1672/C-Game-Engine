@@ -88,7 +88,7 @@ Entity * GameObjectManager::AddEntity(std::string name)
 	if(componentSelectorFunction) ret->SelectorFunction(componentSelectorFunction);
 	EntityManager.Register(ret);
 	EntityAddedEvent eventData(ret);
-	emitEvent(EntityAddedEvent,eventData);
+	emitEvent(eventData);
 	return ret;
 }
 
@@ -139,7 +139,7 @@ void GameObjectManager::RemoveEntity(Entity * toRemove)
 		}
 		entities[index].active = false;
 		EntityRemovedEvent data(toRemove);
-		emitEvent(EntityRemovedEvent,data);
+		emitEvent(data);
 	}
 	EntityManager.UnRegister(toRemove);
 }

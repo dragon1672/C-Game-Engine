@@ -41,7 +41,7 @@ void EditorRenderableComponent::init(std::string name, RenderableComponent * gam
 	this->gameInstance = gameInstance;
 	this->editorInstance  = editorInstance;
 	editorInstance->Name(name);
-	eventManager.Subscribe("ComponentRemovedEvent",[=](EventData*d,Object*c){
+	eventManager.Subscribe<ComponentRemovedEvent>([=](EventData*d,Object*c){
 		ComponentRemovedEvent * data = (ComponentRemovedEvent*)d;
 		if(data->beingTrashed == gameInstance) {
 			parent->removeComponent(editorInstance);

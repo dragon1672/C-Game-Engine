@@ -521,10 +521,10 @@ ComponentEditor::ComponentEditor()
 	setWindowTitle("Component Editor");
 	privates = new ComponentEditorPrivates();
 	setLayout(privates->layout);
-	eventManager.Subscribe("ComponentAddedEvent",  [this](EventData*d,Object*s) {
+	eventManager.Subscribe<ComponentAddedEvent>([this](EventData*d,Object*s) {
 		this->privates->reload();
 	});
-	eventManager.Subscribe("ComponentRemovedEvent",[this](EventData*d,Object*s) {
+	eventManager.Subscribe<ComponentRemovedEvent>([this](EventData*d,Object*s) {
 		this->privates->reload();
 	});
 }

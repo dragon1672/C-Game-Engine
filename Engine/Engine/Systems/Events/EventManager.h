@@ -9,9 +9,8 @@
 #include <map>
 
 #define eventManager EventManager::getInstance()
-#define emitEvent(event,data) eventManager.fire(#event,data,this)
-#define emitTimedEvent(event,data,time) eventManager.fire(#event,data,this,time)
-#define subscribeToEvent(event,function) eventManager.Subscribe(#event,function)
+#define emitEvent(data) eventManager.fire(data,this)
+#define emitTimedEvent(data,time) eventManager.fire(data,this,time)
 
 class ENGINE_SHARED EventManager {
 	class EventInstance;
@@ -47,16 +46,14 @@ class ENGINE_SHARED EventManager {
 	struct ListOfFunctions{ std::vector<EventHandle> funs; };
 	std::map<std::string,ListOfFunctions> functions;
 	std::vector<EventInstance> fireQ;
+	EventHandle Subscribe(std::string event,std::function<void(EventData*,Object*)> function);
 	DEFINE_SINGLETON(EventManager);
 public:
 	void update(float dt);
 
-	void fire(EventHandle * event, EventData * data, Object * sender, float inNumSeconds = 0);
-	void fire(EventHandle&  event, EventData * data, Object * sender, float inNumSeconds = 0);
-	void fire(std::string   event, EventData * data, Object * sender, float inNumSeconds = 0);
-	void fire(EventHandle * event, EventData&  data, Object * sender, float inNumSeconds = 0);
-	void fire(EventHandle&  event, EventData&  data, Object * sender, float inNumSeconds = 0);
-	void fire(std::string   event, EventData&  data, Object * sender, float inNumSeconds = 0);
-	EventHandle Subscribe(std::string event,std::function<void(EventData*,Object*)> function);
+	void fire(EventData * data, Object * sender, float inNumSeconds = 0);
+	void fire(EventData&  data, Object * sender, float inNumSeconds = 0);
+	
+	template <typename T> EventHandle Subscribe(std::function<void(EventData*,Object*)> function) { return Subscribe(typeid(T).name(),function); }
 	void RemoveEvent(EventHandle*handle);
 };

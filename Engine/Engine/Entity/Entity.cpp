@@ -18,7 +18,7 @@ void Entity::removeComponent(int toKill) {
 		Component * c = components[toKill];
 		components.erase(components.begin() + toKill);
 		ComponentRemovedEvent data(this,c);
-		emitEvent(ComponentRemovedEvent,data);
+		emitEvent(data);
 		delete(c);
 	}
 }
@@ -26,7 +26,7 @@ Component* Entity::addComponent(Component * toAdd) {
 	toAdd->parent = this;
 	components.push_back(toAdd);
 	ComponentAddedEvent data(this,toAdd);
-	emitEvent(ComponentAddedEvent,data);
+	emitEvent(data);
 	return toAdd;
 }
 
@@ -148,7 +148,7 @@ void Entity::Parent(Entity * newGuy)
 	if(newGuy != nullptr) newGuy->children.emplace(this);
 	parent = newGuy;
 	EntityParentChangedEvent data(this,old,newGuy);
-	emitEvent(EntityParentChangedEvent,data);
+	emitEvent(data);
 	for (uint i = 0; i < StageChanged.size(); i++) StageChanged[i](this);
 }
 

@@ -17,7 +17,7 @@ void EventManager::EventHandle::UnRegister()
 
 void EventManager::EventHandle::Fire(EventData*data,Object * sender,float inNumSeconds /*= 0*/)
 {
-	manager->fire(this,data,sender,inNumSeconds);
+	manager->fire(data,sender,inNumSeconds);
 }
 
 int EventManager::EventHandle::MasterID = 0;
@@ -73,18 +73,9 @@ void EventManager::update(float dt)
 	VECTOR_REMOVE_CONDITION(fireQ,.timeLeft <= 0);
 }
 
-void EventManager::fire(EventHandle * event,EventData * data, Object * sender, float inNumSeconds /*= 0*/)
+void EventManager::fire(EventData * data, Object * sender, float inNumSeconds /*= 0*/)
 {
-	fire(*event,data,sender,inNumSeconds);
-}
-
-void EventManager::fire(EventHandle& event,EventData * data, Object * sender, float inNumSeconds /*= 0*/)
-{
-	fire(event.eventName,data,sender,inNumSeconds);
-}
-
-void EventManager::fire(std::string event, EventData * data, Object * sender, float inNumSeconds /*= 0*/)
-{
+	std::string event = data->getEventName();
 	if(functions.find(event)==functions.end()) return; // no one cares
 	auto& list = functions[event].funs;
 	if(inNumSeconds > 0) {
@@ -97,20 +88,9 @@ void EventManager::fire(std::string event, EventData * data, Object * sender, fl
 		}
 	}
 }
-
-void EventManager::fire(std::string event, EventData& data, Object * sender, float inNumSeconds /*= 0*/)
+void EventManager::fire(EventData& data, Object * sender, float inNumSeconds /*= 0*/)
 {
-	fire(event,&data,sender,inNumSeconds);
-}
-
-void EventManager::fire(EventHandle& event, EventData& data, Object * sender, float inNumSeconds /*= 0*/)
-{
-	fire(event,&data,sender,inNumSeconds);
-}
-
-void EventManager::fire(EventHandle * event, EventData& data, Object * sender, float inNumSeconds /*= 0*/)
-{
-	fire(event,&data,sender,inNumSeconds);
+	fire(&data,sender,inNumSeconds);
 }
 
 EventManager::EventHandle EventManager::Subscribe(std::string event,std::function<void(EventData*,Object*)> function)
