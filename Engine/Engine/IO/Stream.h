@@ -4,6 +4,7 @@
 #include <string>
 #include <ExportHeader.h>
 #include <glm/glm.hpp>
+#include <Engine/Tools/ConstVector.h>
 
 class ENGINE_SHARED Stream {
 	std::vector<char> buffer;
@@ -50,19 +51,38 @@ ENGINE_SHARED Stream& operator>>(Stream& os,       glm::vec2& obj);
 
 template<typename T>Stream& operator<<(Stream& os, const std::vector<T>& obj) {
 	unsigned int size = obj.size();
-	os.append(size);
+	os << size;
 	for (unsigned int i = 0; i < size; i++) {
-		os.append(obj[i]);
+		os << obj[i];
 	}
 	return os;
 }
 template<typename T>Stream& operator>>(Stream& os,       std::vector<T>& obj) {
 	unsigned int size;
-	os.readAndMoveForward(size);
+	os >> size;
 	obj.clear();
 	obj.resize(size);
 	for (unsigned int i = 0; i < size; i++) {
-		os.readAndMoveForward(obj[i]);
+		os >> obj[i];
+	}
+	return os;
+}
+
+template<typename T>Stream& operator<<(Stream& os, const ConstVector<T>& obj) {
+	unsigned int size = obj.size();
+	os >> size;
+	for (unsigned int i = 0; i < size; i++) {
+		os << obj[i];
+	}
+	return os;
+}
+template<typename T>Stream& operator>>(Stream& os,       ConstVector<T>& obj) {
+	unsigned int size;
+	os >> size;
+	obj.clear();
+	obj.resize(size);
+	for (unsigned int i = 0; i < size; i++) {
+		os >> obj[i];
 	}
 	return os;
 }
