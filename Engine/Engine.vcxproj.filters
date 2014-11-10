@@ -113,6 +113,7 @@
     <ClInclude Include="CorbinGui\Dependents\ResourceViewer.h" />
     <ClInclude Include="Engine\Systems\Events\Events\ResourceLoadedEvent.h" />
     <ClInclude Include="dirent.h" />
+    <ClInclude Include="Engine\IO\Stream.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -172,6 +173,7 @@
     <ClCompile Include="CorbinGui\Dependents\EditorComponents\EditorCam.cpp" />
     <ClCompile Include="Engine\Systems\Events\EventManager.cpp" />
     <ClCompile Include="CorbinGui\Dependents\ResourceViewer.cpp" />
+    <ClCompile Include="Engine\IO\Stream.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Tools\MyMath\Matrix2D.inl" />
