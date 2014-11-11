@@ -1,14 +1,30 @@
 #include "Object.h"
 #include <Engine/Systems/Events/EventManager.h>
 #include <Engine/Systems/Events/Events/ObjectChangedNameEvent.h>
+#include <Engine/IO/Stream.h>
 
+namespace {
+	union GUIDBinder {
+		GUID guid;
+		double myDouble;
+	};
+}
 
-
-int Object::GlobalID = 0;
-
-Object::Object(std::string name) : id(GlobalID++), name(name)
+Stream& operator<<(Stream& os, const Object& obj)
 {
+	os << obj.id << obj.name;
+	return os;
+}
 
+Stream& operator>>(Stream& os, Object& obj)
+{
+	os >> obj.id >> obj.name;
+	return os;
+}
+
+Object::Object(std::string name) : name(name)
+{
+	CoCreateGuid(&id);
 }
 
 std::string Object::Name() const
@@ -26,7 +42,32 @@ void Object::Name(const std::string name)
 	}
 }
 
-int Object::getID() const
+double Object::getID() const
 {
-	return id;
+	return GUID2Double(id);
+}
+
+std::string Object::GUID2string(const GUID& guid)
+{
+	char buff[38];
+	sprintf_s(buff, "{%08lX-%04hX-%04hX-%02hhX%02hhX-%02hhX%02hhX%02hhX%02hhX%02hhX%02hhX}",
+		guid.Data1, guid.Data2, guid.Data3, 
+		guid.Data4[0], guid.Data4[1], guid.Data4[2], guid.Data4[3],
+		guid.Data4[4], guid.Data4[5], guid.Data4[6], guid.Data4[7]);
+	std::string buffAsStdStr = buff;
+	return buffAsStdStr;
+}
+
+GUID Object::double2GIUD(const double d)
+{
+	GUIDBinder bind;
+	bind.myDouble = d;
+	return bind.guid;
+}
+
+double Object::GUID2Double(const GUID& guid)
+{
+	GUIDBinder bind;
+	bind.guid = guid;
+	return bind.myDouble;
 }

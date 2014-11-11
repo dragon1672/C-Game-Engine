@@ -15,10 +15,10 @@ public:
 	uint GlobalId;
 	struct ObjectMatches : public std::vector<Object*> { public: operator std::vector<Object*>() { return *this; }};
 	std::map<std::string,ObjectMatches> nameMap;
-	std::map<int,Object *> idMap;
+	std::map<double,Object *> idMap;
 	bool ContainsId  (Object * toCheck)  { return Contains(toCheck->getID());   }
 	bool ContainsName(Object * toCheck)  { return Contains(toCheck->Name()); }
-	bool Contains(int toCheck)       { return idMap.find(toCheck) != idMap.end();   }
+	bool Contains(double toCheck)       { return idMap.find(toCheck) != idMap.end();   }
 	bool Contains(std::string name)  { return nameMap.find(name)  != nameMap.end(); }
 	ObjectManagerPrivates() : GlobalId(0) {}
 };
