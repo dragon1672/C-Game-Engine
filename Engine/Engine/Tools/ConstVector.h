@@ -90,6 +90,7 @@ public:
 		unsigned int b = index % startSize;
 		while(!(a < arrays.size() && b < startSize))
 			arrays.push_back(new T[startSize]);
+		currentIndex = index;
 	}
 
 
