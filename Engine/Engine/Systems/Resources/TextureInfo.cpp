@@ -48,7 +48,7 @@ void TextureInfo::Save(Stream& s)
 void TextureInfo::Load(Stream& s)
 {
 	s >> width >> height >> numOfBytes;
-	data = new ubyte[numOfBytes];
+	SAFE_NEW(data,ubyte[numOfBytes]);
 	s.readAndMoveForwardArray(data,numOfBytes);
 }
 

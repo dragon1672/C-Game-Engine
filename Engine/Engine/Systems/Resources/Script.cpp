@@ -45,7 +45,7 @@ void Script::PassDownToHardWare()
 	auto context = LUA_INSTANCE.GetGlobalEnvironment().Get<LuaTable>(Name());
 
 	//save dat
-	SAFE_NEW(privates,ScriptPrivates,context);
+	SAFE_NEW(privates,ScriptPrivates(context));
 }
 
 

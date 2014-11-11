@@ -21,7 +21,7 @@ void ScriptComponent::start() {
 	std::string instancename = script->getInstanceName();
 	auto context = LUA_INSTANCE.GetGlobalEnvironment().Get<LuaTable>(instancename);
 	context.Set("parent",((LuaUserdata<Entity>)*parent));
-	SAFE_NEW(privates,ScriptComponentPrivates,context,instancename);
+	SAFE_NEW(privates,ScriptComponentPrivates(context,instancename));
 	privates->runMethod("start");
 }
 void ScriptComponent::earlyUpdate() {
