@@ -3,27 +3,34 @@
 #include <string>
 #include <Engine/TypeDefs.h>
 #include <vector>
+#include <ExportHeader.h>
 
 typedef char fileByte;
 
 namespace FileIO {
-	struct FileData {
+	struct ENGINE_SHARED FileData {
 		uint size;
 		fileByte * data;
 		bool ownsData;
 		FileData() : size(0), data(nullptr), ownsData(true) {}
 		inline void cleanup() { if(ownsData) delete [] data; }
 	};
-	std::string readFile(std::string filePath);
-	std::string readFile(const char * filePath);
-	FileData loadFile(std::string filePath);
-	FileData loadFile(const char * filePath);
-	bool validFile(std::string filePath);
-	bool validFile(const char * filePath);
+	ENGINE_SHARED std::string readFile(std::string filePath);
+	ENGINE_SHARED std::string readFile(const char * filePath);
+	ENGINE_SHARED FileData loadFile(std::string filePath);
+	ENGINE_SHARED FileData loadFile(const char * filePath);
+	ENGINE_SHARED bool validFile(std::string filePath);
+	ENGINE_SHARED bool validFile(const char * filePath);
 
-	std::vector<std::string> filesInDir(std::string dir);
-	std::vector<std::string> foldersInDir(std::string dir);
-	bool validDir(std::string dir);
+	ENGINE_SHARED std::vector<std::string> filesInDir(std::string dir);
+	ENGINE_SHARED std::vector<std::string> filesInDirFullPath(std::string dir, std::string fileWildCard = "*.*");
+	ENGINE_SHARED int filesInDirFullPath(std::string dir,std::string fileWildCard,std::vector<std::string> &files);
+	ENGINE_SHARED std::string workingDirectory();
+	ENGINE_SHARED std::vector<std::string> foldersInDir(std::string dir);
+	ENGINE_SHARED bool validDir(std::string dir);
+	ENGINE_SHARED std::string extractFileName(std::string fullPath);
+	ENGINE_SHARED std::string extractExtension(std::string fullPath);
+	ENGINE_SHARED std::string extractFilePath(std::string fullPath);
 
 
 	template<typename T>
