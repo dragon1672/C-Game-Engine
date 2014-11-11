@@ -29,8 +29,8 @@ std::vector<std::string> TextureInfo::getErrors()
 {
 	std::vector<std::string> ret;
 	if(data==nullptr) ret.push_back("no data for image");
-	if(width  <= 0) ret.push_back("invalid image width");
-	if(height <= 0) ret.push_back("invalid image height");
+	if((int)width  <= 0) ret.push_back("invalid image width");
+	if((int)height <= 0) ret.push_back("invalid image height");
 	return ret;
 }
 
@@ -41,12 +41,15 @@ void TextureInfo::shutdown()
 
 void TextureInfo::Save(Stream& s)
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	s << width << height << numOfBytes;
+	s.append(data,numOfBytes);
 }
 
 void TextureInfo::Load(Stream& s)
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	s >> width >> height >> numOfBytes;
+	data = new ubyte[numOfBytes];
+	s.readAndMoveForwardArray(data,numOfBytes);
 }
 
 int TextureInfo::NumTextures = 0;

@@ -14,6 +14,7 @@ public:
 	uint width;
 	uint height;
 	ubyte * data;
+	uint numOfBytes;
 
 	GLenum type;
 	GLenum type2;
