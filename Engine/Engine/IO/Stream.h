@@ -28,6 +28,11 @@ public:
 		d = *reinterpret_cast<T*>(&buffer[currentPos]);
 		currentPos += sizeof(T);
 	}
+	template<typename T> void readAndMoveForwardArray(T * array, int arraySize) {
+		for (int i = 0; i < arraySize; i++) {
+			readAndMoveForward(array[i]);
+		}
+	}
 	template<typename T> friend Stream& operator<<(Stream& os, const T& obj) {
 		os.append(obj);
 		return os;
