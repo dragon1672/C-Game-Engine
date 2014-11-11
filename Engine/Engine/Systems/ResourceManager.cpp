@@ -220,7 +220,7 @@ ShaderProgram * ResourceManager::duplicate(ShaderProgram * toDup)
 
 #define SAVE_RESOURCE(resource_array_name)\
 {																								 \
-int size = resource_array_name##.size();														 \
+	uint size = resource_array_name##.size();													 \
 	s << size;																					 \
 	for (uint i = 0; i < resource_array_name##.size();  i++) resource_array_name##[i].Save(s);	 \
 }	1==1
@@ -232,19 +232,28 @@ void ResourceManager::Save(Stream& s)
 	SAVE_RESOURCE(textures);
 	SAVE_RESOURCE(scripts);
 }
-#define LOAD_RESOURCE(resource_array_name)\
-{																								 \
-	int size = resource_array_name##.size();														 \
-	s << size;																					 \
-	for (uint i = 0; i < resource_array_name##.size();  i++) resource_array_name##[i].Load(s);	 \
-}	1==1
+#define LOAD_RESOURCE(type,name)\
+{									   \
+	uint size;						   \
+	s >> size;						   \
+	for (uint i = 0; i < size;  i++) { \
+	type newGuy;					   \
+	newGuy.Load(s);					   \
+	name##.push_back(newGuy);		   \
+	}								   \
+} 1==1
 
 void ResourceManager::Load(Stream& s)
 {
-	LOAD_RESOURCE(shaders);
-	LOAD_RESOURCE(geos);
-	LOAD_RESOURCE(textures);
-	LOAD_RESOURCE(scripts);
+	ImportPack(s);
+}
+
+void ResourceManager::ImportPack(Stream& s)
+{
+	LOAD_RESOURCE(ShaderProgram,shaders);
+	LOAD_RESOURCE(Mesh,geos);
+	LOAD_RESOURCE(TextureInfo,textures);
+	LOAD_RESOURCE(Script,scripts);
 }
 
 #define RESOURCE_GET_METHODS_IMP(class_name, TYPE) \

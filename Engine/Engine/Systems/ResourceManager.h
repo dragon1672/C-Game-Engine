@@ -98,5 +98,6 @@ public:
 	virtual void Save(Stream& s);
 
 	virtual void Load(Stream& s);
+	void ImportPack(Stream& s);
 
 };
