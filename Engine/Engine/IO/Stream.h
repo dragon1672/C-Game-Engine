@@ -41,6 +41,8 @@ public:
 		os.readAndMoveForward(obj);
 		return os;
 	}
+	void exportToFile(const char * filePath);
+	void importFromFile(const char * filePath);
 };
 
 

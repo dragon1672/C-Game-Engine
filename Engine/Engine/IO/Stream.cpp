@@ -1,5 +1,6 @@
 #include "Stream.h"
 #include <Engine/TypeDefs.h>
+#include <fstream>
 
 
 
@@ -15,6 +16,25 @@ void Stream::append(const void * d, int size)
 	for (int i = 0; i < size; i++) {
 		buffer[currentPos++] = data[i];
 	}
+}
+
+void Stream::exportToFile(const char * filePath)
+{
+	std::ofstream out(filePath, std::ios::binary );
+	out.write(&buffer[0],buffer.size());
+}
+
+void Stream::importFromFile(const char * filePath)
+{
+	std::ifstream input( filePath , std::ios::binary | std::ios::in);
+	assert(input.good()); 
+	input.seekg(0, std::ios::end);
+	int sizeResult = (int)input.tellg();
+	input.seekg(0, std::ios::beg);
+	buffer.resize(sizeResult);
+	input.read(&buffer[0], sizeResult);
+	input.close();
+	currentPos = 0;
 }
 
 Stream& operator<<(Stream& os, const std::string& obj)
