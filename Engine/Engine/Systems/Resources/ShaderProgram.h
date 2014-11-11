@@ -90,6 +90,10 @@ public:
 
 	virtual std::vector<std::string> getErrors();
 
+	virtual void Save(Stream& s);
+
+	virtual void Load(Stream& s);
+
 };
 
 #endif

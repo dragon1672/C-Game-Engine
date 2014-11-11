@@ -125,3 +125,13 @@ std::string Script::Src() const
 {
 	return src;
 }
+
+void Script::Save(Stream& s)
+{
+	throw std::logic_error("The method or operation is not implemented.");
+}
+
+void Script::Load(Stream& s)
+{
+	throw std::logic_error("The method or operation is not implemented.");
+}

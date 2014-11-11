@@ -218,6 +218,35 @@ ShaderProgram * ResourceManager::duplicate(ShaderProgram * toDup)
 	return &shaders.back();
 }
 
+#define SAVE_RESOURCE(resource_array_name)\
+{																								 \
+int size = resource_array_name##.size();														 \
+	s << size;																					 \
+	for (uint i = 0; i < resource_array_name##.size();  i++) resource_array_name##[i].Save(s);	 \
+}	1==1
+
+void ResourceManager::Save(Stream& s)
+{
+	SAVE_RESOURCE(shaders);
+	SAVE_RESOURCE(geos);
+	SAVE_RESOURCE(textures);
+	SAVE_RESOURCE(scripts);
+}
+#define LOAD_RESOURCE(resource_array_name)\
+{																								 \
+	int size = resource_array_name##.size();														 \
+	s << size;																					 \
+	for (uint i = 0; i < resource_array_name##.size();  i++) resource_array_name##[i].Load(s);	 \
+}	1==1
+
+void ResourceManager::Load(Stream& s)
+{
+	LOAD_RESOURCE(shaders);
+	LOAD_RESOURCE(geos);
+	LOAD_RESOURCE(textures);
+	LOAD_RESOURCE(scripts);
+}
+
 #define RESOURCE_GET_METHODS_IMP(class_name, TYPE) \
 	TYPE * class_name##::get##TYPE##(int id) { return (##TYPE##*)TYPE##Objs.getFirst(id); } \
 	TYPE * class_name##::getFirst##TYPE##(std::string name)  { return getFirst##TYPE##(name.c_str()); } \

@@ -39,4 +39,14 @@ void TextureInfo::shutdown()
 	SAFE_DELETE(data);
 }
 
+void TextureInfo::Save(Stream& s)
+{
+	throw std::logic_error("The method or operation is not implemented.");
+}
+
+void TextureInfo::Load(Stream& s)
+{
+	throw std::logic_error("The method or operation is not implemented.");
+}
+
 int TextureInfo::NumTextures = 0;

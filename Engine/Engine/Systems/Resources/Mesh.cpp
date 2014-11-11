@@ -241,3 +241,13 @@ std::vector<std::string> Mesh::getErrors()
 	if(indices.size() == 0) ret.push_back("No Indicees in Mesh");
 	return ret;
 }
+
+void Mesh::Save(Stream& s)
+{
+	throw std::logic_error("The method or operation is not implemented.");
+}
+
+void Mesh::Load(Stream& s)
+{
+	throw std::logic_error("The method or operation is not implemented.");
+}

@@ -219,3 +219,13 @@ std::vector<std::string> ShaderProgram::getErrors()
 {
 	return std::vector<std::string>();
 }
+
+void ShaderProgram::Save(Stream& s)
+{
+	throw std::logic_error("The method or operation is not implemented.");
+}
+
+void ShaderProgram::Load(Stream& s)
+{
+	throw std::logic_error("The method or operation is not implemented.");
+}
