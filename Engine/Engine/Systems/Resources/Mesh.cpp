@@ -14,6 +14,7 @@ namespace {
 		a = abs(a);	b = abs(b);
 		return a > b ? a : b;
 	}
+	STREAMER_FOR_TYPE(,,Vert);
 }
 
 void Mesh::updateMinAndMax()

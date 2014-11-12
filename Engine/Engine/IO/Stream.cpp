@@ -4,20 +4,6 @@
 
 
 
-void Stream::resetToBeg()
-{
-	currentPos = 0;
-}
-
-void Stream::append(const void * d, int size)
-{
-	char * data = (char*)d;
-	buffer.resize(buffer.size()+size);
-	for (int i = 0; i < size; i++) {
-		buffer[currentPos++] = data[i];
-	}
-}
-
 void Stream::exportToFile(const char * filePath)
 {
 	std::ofstream out(filePath, std::ios::binary );
@@ -37,61 +23,64 @@ void Stream::importFromFile(const char * filePath)
 	currentPos = 0;
 }
 
+void Stream::resetToBeg()
+{
+	currentPos = 0;
+}
+
+void Stream::CurrentPos(int val)
+{
+	currentPos = val;
+}
+
+int Stream::CurrentPos() const
+{
+	return currentPos;
+}
+
+Stream::Stream() : currentPos(0)
+{
+
+}
+
 Stream& operator<<(Stream& os, const std::string& obj)
 {
 	unsigned int size = obj.length();
-	os.append(size);
+	os << size;
 	for (unsigned int i = 0; i < size; i++) {
 		os << obj[i];
 	}
 	return os;
 }
 
-Stream& operator<<(Stream& os, const glm::vec4& obj)
+Stream& operator<<(Stream& os, StreamableObject& obj)
 {
-	os << obj.x << obj.y << obj.z << obj.a;
+	obj.Save(os);
 	return os;
 }
-
-Stream& operator<<(Stream& os, const glm::vec3& obj)
-{
-	os << obj.x << obj.y << obj.z;
-	return os;
-}
-
-Stream& operator<<(Stream& os, const glm::vec2& obj)
-{
-	os << obj.x << obj.y;
-	return os;
-}
-
 
 Stream& operator>>(Stream& os, std::string& obj)
 {
 	unsigned int size;
-	os.readAndMoveForward(size);
+	os >> size;
 	obj = std::string(size,' ');
 	for (unsigned int i = 0; i < size; i++) {
-		os.readAndMoveForward(obj[i]);
+		os >> obj[i];
 	}
 	return os;
 }
 
-
-Stream& operator>>(Stream& os, glm::vec4& obj)
+Stream& operator>>(Stream& os, StreamableObject& obj)
 {
-	os >> obj.r >> obj.g >> obj.b >> obj.a;
+	obj.Load(os);
 	return os;
 }
 
-Stream& operator>>(Stream& os, glm::vec3& obj)
+void Stream::internalAppend(const void * d, int size)
 {
-	os >> obj.x >> obj.y >> obj.z;
-	return os;
-}
-
-Stream& operator>>(Stream& os, glm::vec2& obj)
-{
-	os >> obj.x >> obj.y;
-	return os;
+	char * data = (char*)d;
+	buffer.resize(buffer.size()+size);
+	for (int i = 0; i < size; i++) {
+		buffer[currentPos++] = data[i];
+	}
 }

@@ -114,6 +114,7 @@
     <ClInclude Include="Engine\Systems\Events\Events\ResourceLoadedEvent.h" />
     <ClInclude Include="dirent.h" />
     <ClInclude Include="Engine\IO\Stream.h" />
+    <ClInclude Include="Engine\IO\StreamableObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />

@@ -22,9 +22,13 @@ private:
 	std::vector<ShaderUniformPram> prams;
 	std::vector<ShaderObject*> objUniforms;
 
-	struct CodeBlock { // used to store shader code
+	struct CodeBlock : public StreamableObject { // used to store shader code
 		GLuint type;
 		std::string code;
+
+		virtual void Save(Stream&s);
+		virtual void Load(Stream&s);
+
 	};
 
 	std::vector<CodeBlock> files;

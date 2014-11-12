@@ -8,6 +8,7 @@ namespace {
 		GUID guid;
 		double myDouble;
 	};
+	STREAMER_FOR_TYPE(,,GUID);
 }
 
 Object::Object(std::string name) : name(name)

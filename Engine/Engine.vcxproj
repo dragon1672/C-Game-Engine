@@ -131,6 +131,7 @@
     <ClInclude Include="Engine\IO\MeshLoader.h" />
     <ClInclude Include="Engine\IO\QImageIO.h" />
     <ClInclude Include="Engine\IO\Stream.h" />
+    <ClInclude Include="Engine\IO\StreamableObject.h" />
     <ClInclude Include="Engine\Physics\Particles\Collision\CollisionDetection.h" />
     <ClInclude Include="Engine\Physics\Particles\Collision\CollisionEngine.h" />
     <ClInclude Include="Engine\Physics\Particles\Collision\CollisionManager.h" />

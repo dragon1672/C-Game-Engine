@@ -4,9 +4,9 @@
 #include <Engine/Systems/Object.h>
 #include <vector>
 
-class Stream;
+#include <Engine/IO/StreamableObject.h>
 
-class ENGINE_SHARED Resource : public Object {
+class ENGINE_SHARED Resource : public Object, public StreamableObject {
 public:
 	Resource(std::string name = "") : Object(name) {}
 	virtual void PassDownToHardWare() = 0;

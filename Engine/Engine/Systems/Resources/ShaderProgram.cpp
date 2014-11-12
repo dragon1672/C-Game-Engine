@@ -223,10 +223,20 @@ std::vector<std::string> ShaderProgram::getErrors()
 
 void ShaderProgram::ChildSave(Stream& s)
 {
-	s << this->files;
+	s << files;
 }
 
 void ShaderProgram::ChildLoad(Stream& s)
 {
-	s >> this->files;
+	s >> files;
+}
+
+void ShaderProgram::CodeBlock::Save(Stream&s)
+{
+	s << code << type;
+}
+
+void ShaderProgram::CodeBlock::Load(Stream&s)
+{
+	s >> code >> type;
 }

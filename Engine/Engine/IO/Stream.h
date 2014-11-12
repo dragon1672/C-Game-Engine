@@ -5,20 +5,38 @@
 #include <ExportHeader.h>
 #include <glm/glm.hpp>
 #include <Engine/Tools/ConstVector.h>
+#include <Engine/IO/StreamableObject.h>
+#include <Engine/IO/FileIO.h>
+
+
+#pragma region HelperDefines
+
+#define STREAMER_FOR_TYPE(prefix,friend,type)\
+	prefix friend Stream& operator<<(Stream& os, const type& obj) { os.append(obj);             return os; } \
+	prefix friend Stream& operator>>(Stream& os,       type& obj) { os.readAndMoveForward(obj); return os; }
+#define STREAMER_FOR_SIGNED_UNSIGNED_TYPE(prefix,friend,type)\
+	STREAMER_FOR_TYPE(prefix,friend,type); \
+	STREAMER_FOR_TYPE(prefix,friend,unsigned type);
+
+#pragma endregion
 
 class ENGINE_SHARED Stream {
 	std::vector<char> buffer;
 	int currentPos;
+	
+	void internalAppend(const void * d, int size);
 public:
-	Stream() : currentPos(0) {};
+	int CurrentPos() const;
+	void CurrentPos(int val);
 
-	int CurrentPos() const { return currentPos; }
-	void CurrentPos(int val) { currentPos = val; }
+	Stream();;
 
 	void resetToBeg();
-	void append(const void * d, int size);
+	template<typename T> void append(T*array,int count) {
+		internalAppend(array,sizeof(T)*count);
+	}
 	template<typename T> void append(T& d) {
-		append(&d,sizeof(T));
+		append(&d,1);
 	}
 	template<typename T> void readAndMoveBack(T&d) {
 		currentPos -= sizeof(T);
@@ -29,43 +47,59 @@ public:
 		currentPos += sizeof(T);
 	}
 	template<typename T> void readAndMoveForwardArray(T * array, int arraySize) {
-		for (int i = 0; i < arraySize; i++) {
-			readAndMoveForward(array[i]);
-		}
+		FileIO::myMemCopy((T*)&buffer[currentPos],array,arraySize);
+		currentPos += arraySize*sizeof(T);
 	}
-	template<typename T> friend Stream& operator<<(Stream& os, const T& obj) {
-		os.append(obj);
-		return os;
-	}
-	template<typename T> friend Stream& operator>>(Stream& os, T& obj) {
-		os.readAndMoveForward(obj);
-		return os;
-	}
+
+
+
 	void exportToFile(const char * filePath);
 	void importFromFile(const char * filePath);
 
-	friend ENGINE_SHARED Stream& operator<<(Stream& os, const Stream& obj) {
-		os.append(&obj.buffer[obj.CurrentPos()],obj.buffer.size() - obj.CurrentPos());
-		return os;
-	}
-	friend ENGINE_SHARED Stream& operator>>(Stream& os,       Stream& obj) {
-		obj << os;
-		return os;
-	}
+
+	ENGINE_SHARED friend Stream& operator<<(Stream& os, StreamableObject& obj);
+	ENGINE_SHARED friend Stream& operator>>(Stream& os, StreamableObject& obj);
+
+	STREAMER_FOR_TYPE(ENGINE_SHARED,friend,float);
+	STREAMER_FOR_TYPE(ENGINE_SHARED,friend,double);
+	STREAMER_FOR_SIGNED_UNSIGNED_TYPE(ENGINE_SHARED,friend,int);
+	STREAMER_FOR_SIGNED_UNSIGNED_TYPE(ENGINE_SHARED,friend,long);
+	STREAMER_FOR_SIGNED_UNSIGNED_TYPE(ENGINE_SHARED,friend,short);
+	STREAMER_FOR_SIGNED_UNSIGNED_TYPE(ENGINE_SHARED,friend,char);
+
+	STREAMER_FOR_TYPE(ENGINE_SHARED,friend,glm::vec2);
+	STREAMER_FOR_TYPE(ENGINE_SHARED,friend,glm::vec3);
+	STREAMER_FOR_TYPE(ENGINE_SHARED,friend,glm::vec4);
+	STREAMER_FOR_TYPE(ENGINE_SHARED,friend,glm::mat2);
+	STREAMER_FOR_TYPE(ENGINE_SHARED,friend,glm::mat3);
+	STREAMER_FOR_TYPE(ENGINE_SHARED,friend,glm::mat4);
+
+
+	ENGINE_SHARED friend Stream& operator<<(Stream& os, const std::string& obj);
+	ENGINE_SHARED friend Stream& operator>>(Stream& os, std::string& obj);
+
+
+
 };
 
-
-ENGINE_SHARED Stream& operator<<(Stream& os, const std::string& obj);
-ENGINE_SHARED Stream& operator>>(Stream& os,       std::string& obj);
-
-ENGINE_SHARED Stream& operator<<(Stream& os, const glm::vec4& obj);
-ENGINE_SHARED Stream& operator>>(Stream& os,       glm::vec4& obj);
-ENGINE_SHARED Stream& operator<<(Stream& os, const glm::vec3& obj);
-ENGINE_SHARED Stream& operator>>(Stream& os,       glm::vec3& obj);
-ENGINE_SHARED Stream& operator<<(Stream& os, const glm::vec2& obj);
-ENGINE_SHARED Stream& operator>>(Stream& os,       glm::vec2& obj);
-
-template<typename T>Stream& operator<<(Stream& os, const std::vector<T>& obj) {
+template<typename T> Stream& operator<<(Stream& os, std::vector<T>& obj) {
+		unsigned int size = obj.size();
+		os << size;
+		for (unsigned int i = 0; i < size; i++) {
+			os << obj[i];
+		}
+		return os;
+}
+template<typename T> Stream& operator>>(Stream& os, std::vector<T>& obj) {
+		unsigned int size;
+		os >> size;
+		obj.resize(size);
+		for (unsigned int i = 0; i < size; i++) {
+			os >> obj[i];
+		}
+		return os;
+}
+template<typename T> Stream& operator<<(Stream& os, ConstVector<T>& obj) {
 	unsigned int size = obj.size();
 	os << size;
 	for (unsigned int i = 0; i < size; i++) {
@@ -73,29 +107,9 @@ template<typename T>Stream& operator<<(Stream& os, const std::vector<T>& obj) {
 	}
 	return os;
 }
-template<typename T>Stream& operator>>(Stream& os,       std::vector<T>& obj) {
+template<typename T> Stream& operator>>(Stream& os, ConstVector<T>& obj) {
 	unsigned int size;
 	os >> size;
-	obj.clear();
-	obj.resize(size);
-	for (unsigned int i = 0; i < size; i++) {
-		os >> obj[i];
-	}
-	return os;
-}
-
-template<typename T>Stream& operator<<(Stream& os, const ConstVector<T>& obj) {
-	unsigned int size = obj.size();
-	os >> size;
-	for (unsigned int i = 0; i < size; i++) {
-		os << obj[i];
-	}
-	return os;
-}
-template<typename T>Stream& operator>>(Stream& os,       ConstVector<T>& obj) {
-	unsigned int size;
-	os >> size;
-	obj.clear();
 	obj.resize(size);
 	for (unsigned int i = 0; i < size; i++) {
 		os >> obj[i];

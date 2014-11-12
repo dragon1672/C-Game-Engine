@@ -6,10 +6,10 @@
 #include <string>
 #include <vector>
 
-class Stream;
+#include <Engine/IO/StreamableObject.h>
 
 class Entity;
-class ENGINE_SHARED Component : public Object, public ShaderObject { 
+class ENGINE_SHARED Component : public Object, public ShaderObject, public StreamableObject { 
 protected:
 	friend Entity;
 	Entity * parent;
@@ -27,4 +27,10 @@ public:
 	virtual void restoreValues()  {}
 	virtual bool isValid() = 0;
 	virtual std::vector<std::string> getErrors() = 0;
+	void Save(Stream& s) {
+		Object::Save(s);
+	}
+	void Load(Stream& s) {
+		Object::Load(s);
+	}
 };
