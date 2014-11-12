@@ -238,9 +238,9 @@ void ResourceManager::ChildSave(Stream& s)
 	uint size;						   \
 	s >> size;						   \
 	for (uint i = 0; i < size;  i++) { \
-	type newGuy;					   \
-	newGuy.Load(s);					   \
-	name##.push_back(newGuy);		   \
+		type newGuy;				   \
+		newGuy.Load(s);				   \
+		name##.push_back(newGuy);	   \
 	}								   \
 } 1==1
 

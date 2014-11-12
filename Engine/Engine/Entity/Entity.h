@@ -9,13 +9,14 @@
 
 #include <Engine/Tools/MatrixInfo.h>
 #include <Engine/Entity/Components/ScriptComponent.h>
+#include <Engine/IO/StreamableObject.h>
 
 class RenderableComponent;
 class GameObjectManager;
 class Component;
 class CameraComponent;
 
-class ENGINE_SHARED Entity : public Object {
+class ENGINE_SHARED Entity : public Object, public StreamableObject {
 private:
 	void removeComponent_NOW(int toKill);
 	void removeComponent(int toKill);
@@ -108,5 +109,10 @@ public:
 	}
 	void saveValues(bool useSelector = true);
 	void restoreValues(bool useSelector = true);
+
+	virtual void Save(Stream&s);
+
+	virtual void Load(Stream&s);
+
 };
 

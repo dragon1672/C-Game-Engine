@@ -6,6 +6,7 @@
 #include <Engine/Entity/Components/RenderableComponent.h>
 #include <Engine/Systems/CameraManager.h>
 #include <Engine/Defines/Vectors.h>
+#include <Engine/IO/Stream.h>
 
 //events
 #include <Engine/Systems/Events/EventManager.h>
@@ -235,4 +236,16 @@ std::vector<std::string> Entity::getErrors()
 	std::vector<std::string> ret;
 	for (uint i = 0; i < components.size(); i++) { Collections::AddToFirstVector(ret,components[i]->getErrors()); }
 	return ret;
+}
+
+void Entity::Save(Stream&s)
+{
+	Object::Save(s);
+	s << active << components;
+}
+
+void Entity::Load(Stream&s)
+{
+	Object::Load(s);
+	s >> active >> components;
 }

@@ -6,7 +6,7 @@
 
 #include <Engine/IO/StreamableObject.h>
 
-class ENGINE_SHARED Resource : public Object, public StreamableObject {
+class ENGINE_SHARED Resource : public Object {
 public:
 	Resource(std::string name = "") : Object(name) {}
 	virtual void PassDownToHardWare() = 0;
