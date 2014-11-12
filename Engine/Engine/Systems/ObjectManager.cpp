@@ -79,7 +79,7 @@ void ObjectManager::UnRegister(Object * toKill)
 	}
 }
 
-Object * ObjectManager::getFirst(int id) const
+Object * ObjectManager::getFirst(double id) const
 {
 	return privates->Contains(id) ? privates->idMap[id] : nullptr;
 }

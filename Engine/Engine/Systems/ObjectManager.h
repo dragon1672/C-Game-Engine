@@ -16,7 +16,7 @@ public:
 	void Register(Object * toAdd);
 	void UnRegister(Object& toKill);
 	void UnRegister(Object * toKill);
-	Object * getFirst(int id) const;
+	Object * getFirst(double id) const;
 	Object * getFirst(const char * name) const;
 	std::vector<Object *> getAll(const char * name) const;
 	std::vector<Object *> getAll() const;

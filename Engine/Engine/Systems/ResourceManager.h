@@ -73,7 +73,7 @@ public:
 
 
 #define RESOURCE_GET_METHODS(TYPE) \
-	TYPE * get##TYPE##(int id); \
+	TYPE * get##TYPE##(double id); \
 	TYPE * getFirst##TYPE##(const char * name); \
 	TYPE * getFirst##TYPE##(std::string name); \
 	std::vector<TYPE*> getAll##TYPE##(std::string name); \
