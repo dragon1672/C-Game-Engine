@@ -3,13 +3,11 @@
 #include <Engine\Tools\Random\MyRandom.h>
 #include <glm/gtx/transform.hpp>
 #include <Engine/Tools/MatrixInfo.h>
+#include <Engine/IO/Stream.h>
 
 namespace {
-	glm::vec3 differentMatrixMult(glm::mat4 mat, glm::vec3 vec) {
+	glm::vec3 operator*(const glm::mat4& mat, const glm::vec3& vec) {
 		return glm::vec3(mat * glm::vec4(vec,1));
-	}
-	glm::vec4 differentMatrixMult(glm::mat4 mat, glm::vec4 vec) {
-		return mat * vec;
 	}
 
 	float max_withABS(float a, float b) {
@@ -115,7 +113,7 @@ void Mesh::scaleToRange(float xBound, float yBound, float zBound) {
 	float zScale = zBound / max_withABS(max.z, min.z);	zScale = zScale < 1 ? zScale : 1;
 	glm::mat4 scale = glm::scale(xScale,yScale,zScale);
 	for (uint i = 0; i < verts.size(); i++) {
-		verts[i].pos = differentMatrixMult(scale,verts[i].pos);
+		verts[i].pos = scale * verts[i].pos;
 	}
 }
 void Mesh::setRandomColor(int everyThisNumOfPoints) {
@@ -213,7 +211,7 @@ void Mesh::generalTransform(MatrixInfo * transform)
 void Mesh::generalTransform(glm::mat4 transform)
 {
 	for (uint i = 0; i < verts.size(); i++) {
-		verts[i].pos = differentMatrixMult(transform,verts[i].pos);
+		verts[i].pos = transform * verts[i].pos;
 	}
 }
 

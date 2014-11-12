@@ -12,6 +12,7 @@
 #include <Engine\Defines\Vectors.h>
 #include <Engine\Systems\Resources\TextureInfo.h>
 #include <Engine/Systems/Resources/Shaders/ShaderPreProcessor.h>
+#include <Engine/IO/Stream.h>
 
 
 GLuint ShaderProgram::currentProgram;

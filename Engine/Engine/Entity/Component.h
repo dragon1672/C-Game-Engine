@@ -6,6 +6,8 @@
 #include <string>
 #include <vector>
 
+class Stream;
+
 class Entity;
 class ENGINE_SHARED Component : public Object, public ShaderObject { 
 protected:

@@ -50,6 +50,7 @@ public:
 	}
 	friend ENGINE_SHARED Stream& operator>>(Stream& os,       Stream& obj) {
 		obj << os;
+		return os;
 	}
 };
 

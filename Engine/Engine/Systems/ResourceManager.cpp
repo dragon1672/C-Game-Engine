@@ -9,6 +9,7 @@
 #include <Engine/Systems/Events/EventManager.h>
 #include <Engine/Systems/Events/Events/ResourceLoadedEvent.h>
 
+#include <Engine/IO/Stream.h>
 
 IMPLEMENT_SINGLETON(ResourceManager);
 

@@ -4,6 +4,7 @@
 #include <Engine/Tools/Random/StringRandom.h>
 #include <Engine/TypeDefs.h>
 #include <Engine/Defines/SafeNewAndDelete.h>
+#include <Engine/IO/Stream.h>
 
 
 namespace {
