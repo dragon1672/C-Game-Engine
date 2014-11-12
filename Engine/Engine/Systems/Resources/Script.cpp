@@ -128,10 +128,10 @@ std::string Script::Src() const
 
 void Script::ChildSave(Stream& s)
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	s << src;
 }
 
 void Script::ChildLoad(Stream& s)
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	s >> src;
 }

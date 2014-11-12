@@ -222,10 +222,10 @@ std::vector<std::string> ShaderProgram::getErrors()
 
 void ShaderProgram::ChildSave(Stream& s)
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	s << this->files;
 }
 
 void ShaderProgram::ChildLoad(Stream& s)
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	s >> this->files;
 }

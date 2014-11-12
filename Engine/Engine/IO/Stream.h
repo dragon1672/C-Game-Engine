@@ -43,6 +43,14 @@ public:
 	}
 	void exportToFile(const char * filePath);
 	void importFromFile(const char * filePath);
+
+	friend ENGINE_SHARED Stream& operator<<(Stream& os, const Stream& obj) {
+		os.append(&obj.buffer[obj.CurrentPos()],obj.buffer.size() - obj.CurrentPos());
+		return os;
+	}
+	friend ENGINE_SHARED Stream& operator>>(Stream& os,       Stream& obj) {
+		obj << os;
+	}
 };
 
 

@@ -238,16 +238,16 @@ std::vector<std::string> Mesh::getErrors()
 {
 	std::vector<std::string> ret;
 	if(verts.size()   == 0) ret.push_back("No Verts in Mesh");
-	if(indices.size() == 0) ret.push_back("No Indicees in Mesh");
+	if(indices.size() == 0) ret.push_back("No Indices in Mesh");
 	return ret;
 }
 
 void Mesh::ChildSave(Stream& s)
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	s << drawStyle << verts << indices;
 }
 
 void Mesh::ChildLoad(Stream& s)
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	s >> drawStyle >> verts >> indices;
 }
