@@ -29,8 +29,13 @@ public:
 	virtual std::vector<std::string> getErrors() = 0;
 	void Save(Stream& s) {
 		Object::Save(s);
+		ChildSave(s);
 	}
 	void Load(Stream& s) {
 		Object::Load(s);
+		ChildLoad(s);
 	}
+protected:
+	virtual void ChildSave(Stream& s) = 0;
+	virtual void ChildLoad(Stream& s) = 0;
 };

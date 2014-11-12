@@ -1,6 +1,7 @@
 #include "MatrixInfo.h"
 #include <glm\gtc\quaternion.hpp>
 #include <Engine\Entity\Entity.h>
+#include <Engine\IO\Stream.h>
 
 namespace {
 	bool Equal(glm::vec3& a, glm::vec3& b) {
@@ -89,4 +90,16 @@ void MatrixInfo::restoreValues()
 std::vector<std::string> MatrixInfo::getErrors()
 {
 	return std::vector<std::string>();
+}
+
+void MatrixInfo::ChildSave(Stream& s)
+{
+	glm::vec3 vals[] = {pos,rot,scale};
+	s << vals[0] << vals[1] << vals[2];
+}
+
+void MatrixInfo::ChildLoad(Stream& s)
+{
+	glm::vec3 * vals[] = {&pos,&rot,&scale};
+	s >> *vals[0] >> *vals[1] >> *vals[2];
 }

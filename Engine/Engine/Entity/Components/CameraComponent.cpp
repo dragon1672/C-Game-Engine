@@ -93,3 +93,13 @@ std::vector<std::string> CameraComponent::getErrors()
 {
 	return std::vector<std::string>();
 }
+
+void CameraComponent::ChildSave(Stream& s)
+{
+	throw std::logic_error("The method or operation is not implemented.");
+}
+
+void CameraComponent::ChildLoad(Stream& s)
+{
+	throw std::logic_error("The method or operation is not implemented.");
+}

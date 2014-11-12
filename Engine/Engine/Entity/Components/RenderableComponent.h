@@ -43,4 +43,8 @@ public:
 
 	virtual std::vector<std::string> getErrors();
 
+	virtual void ChildSave(Stream& s);
+
+	virtual void ChildLoad(Stream& s);
+
 };

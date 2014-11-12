@@ -64,3 +64,13 @@ std::vector<std::string> RenderableComponent::getErrors()
 	if(geo    == nullptr) ret.push_back("No Geo");
 	return ret;
 }
+
+void RenderableComponent::ChildSave(Stream& s)
+{
+	throw std::logic_error("The method or operation is not implemented.");
+}
+
+void RenderableComponent::ChildLoad(Stream& s)
+{
+	throw std::logic_error("The method or operation is not implemented.");
+}

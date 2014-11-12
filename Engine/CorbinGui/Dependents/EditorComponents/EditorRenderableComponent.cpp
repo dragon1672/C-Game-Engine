@@ -63,3 +63,13 @@ std::vector<std::string> EditorRenderableComponent::getErrors()
 	if(editorInstance == nullptr)  ret.push_back("editor instance not set");
 	return ret;
 }
+
+void EditorRenderableComponent::ChildSave(Stream& s)
+{
+	throw std::logic_error("The method or operation is not implemented.");
+}
+
+void EditorRenderableComponent::ChildLoad(Stream& s)
+{
+	throw std::logic_error("The method or operation is not implemented.");
+}

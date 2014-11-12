@@ -67,3 +67,13 @@ std::vector<std::string> ScriptComponent::getErrors()
 	if(script == nullptr) ret.push_back("no script");
 	return ret;
 }
+
+void ScriptComponent::ChildSave(Stream& s)
+{
+	throw std::logic_error("The method or operation is not implemented.");
+}
+
+void ScriptComponent::ChildLoad(Stream& s)
+{
+	throw std::logic_error("The method or operation is not implemented.");
+}
