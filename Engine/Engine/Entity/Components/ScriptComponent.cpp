@@ -5,6 +5,7 @@
 #include <Engine/Tools/Printer.h>
 #include <Engine/Tools/Random/StringRandom.h>
 #include <Engine/Defines/SafeNewAndDelete.h>
+#include <Engine/IO/Stream.h>
 
 
 class ScriptComponentPrivates {
@@ -70,10 +71,12 @@ std::vector<std::string> ScriptComponent::getErrors()
 
 void ScriptComponent::ChildSave(Stream& s)
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	s << script->getID();
 }
 
 void ScriptComponent::ChildLoad(Stream& s)
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	double id;
+	s >> id;
+	script = resourceManager.getScript(id);
 }

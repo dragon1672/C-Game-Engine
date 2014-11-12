@@ -1,7 +1,7 @@
 #include "CameraComponent.h"
 #include <Engine/Entity/Entity.h>
 #include <Engine/Systems/CameraManager.h>
-
+#include <Engine/IO/Stream.h>
 
 
 glm::mat4x4& CameraComponent::getWorld2View()
@@ -96,10 +96,11 @@ std::vector<std::string> CameraComponent::getErrors()
 
 void CameraComponent::ChildSave(Stream& s)
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	s << nearPlane.getRef() << farPlane.getRef() << width.getRef() << height.getRef();
 }
 
 void CameraComponent::ChildLoad(Stream& s)
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	perspectiveNeedsUpdate = true;
+	s >> nearPlane.getRef() >> farPlane.getRef() >> width.getRef() >> height.getRef();
 }

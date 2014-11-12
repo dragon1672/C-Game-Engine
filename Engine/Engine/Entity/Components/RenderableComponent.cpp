@@ -2,6 +2,7 @@
 #include <Engine/Entity/Entity.h>
 #include <Engine/Tools/MatrixInfo.h>
 #include <Engine/Systems/Resources/Shaders/ShaderPreProcessor.h>
+#include <Engine/IO/Stream.h>
 
 void RenderableComponent::addUniformParameter(const char * name, const bool& value)      { addUniformParameter(name,ParameterType::PT_BOOLEAN,&value);       }
 void RenderableComponent::addUniformParameter(const char * name, const int&  value)      { addUniformParameter(name,ParameterType::PT_INT,    &value);       }
@@ -67,10 +68,13 @@ std::vector<std::string> RenderableComponent::getErrors()
 
 void RenderableComponent::ChildSave(Stream& s)
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	s << geo->getID() << shader->getID() << material << visable;
 }
 
 void RenderableComponent::ChildLoad(Stream& s)
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	double geoID, shaderID;
+	s >> geoID >> shaderID >> material >> visable;
+	geo = resourceManager.getMesh(geoID);
+	shader = resourceManager.getShaderProgram(shaderID);
 }
