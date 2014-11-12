@@ -58,6 +58,11 @@ Stream& operator<<(Stream& os, StreamableObject& obj)
 	obj.Save(os);
 	return os;
 }
+Stream& operator<<(Stream& os, StreamableObject * obj)
+{
+	obj->Save(os);
+	return os;
+}
 
 Stream& operator>>(Stream& os, std::string& obj)
 {
@@ -73,6 +78,12 @@ Stream& operator>>(Stream& os, std::string& obj)
 Stream& operator>>(Stream& os, StreamableObject& obj)
 {
 	obj.Load(os);
+	return os;
+}
+
+Stream& operator>>(Stream& os, StreamableObject * obj)
+{
+	obj->Load(os);
 	return os;
 }
 

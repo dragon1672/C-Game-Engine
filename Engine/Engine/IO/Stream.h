@@ -59,6 +59,8 @@ public:
 
 	ENGINE_SHARED friend Stream& operator<<(Stream& os, StreamableObject& obj);
 	ENGINE_SHARED friend Stream& operator>>(Stream& os, StreamableObject& obj);
+	ENGINE_SHARED friend Stream& operator<<(Stream& os, StreamableObject * obj);
+	ENGINE_SHARED friend Stream& operator>>(Stream& os, StreamableObject * obj);
 
 	STREAMER_FOR_TYPE(ENGINE_SHARED,friend,float);
 	STREAMER_FOR_TYPE(ENGINE_SHARED,friend,double);
@@ -84,21 +86,21 @@ public:
 };
 
 template<typename T> Stream& operator<<(Stream& os, std::vector<T>& obj) {
-		unsigned int size = obj.size();
-		os << size;
-		for (unsigned int i = 0; i < size; i++) {
-			os << obj[i];
-		}
-		return os;
+	unsigned int size = obj.size();
+	os << size;
+	for (unsigned int i = 0; i < size; i++) {
+		os << obj[i];
+	}
+	return os;
 }
 template<typename T> Stream& operator>>(Stream& os, std::vector<T>& obj) {
-		unsigned int size;
-		os >> size;
-		obj.resize(size);
-		for (unsigned int i = 0; i < size; i++) {
-			os >> obj[i];
-		}
-		return os;
+	unsigned int size;
+	os >> size;
+	obj.resize(size);
+	for (unsigned int i = 0; i < size; i++) {
+		os >> obj[i];
+	}
+	return os;
 }
 template<typename T> Stream& operator<<(Stream& os, ConstVector<T>& obj) {
 	unsigned int size = obj.size();
