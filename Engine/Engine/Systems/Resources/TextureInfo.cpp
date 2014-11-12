@@ -39,13 +39,13 @@ void TextureInfo::shutdown()
 	SAFE_DELETE(data);
 }
 
-void TextureInfo::Save(Stream& s)
+void TextureInfo::ChildSave(Stream& s)
 {
 	s << width << height << numOfBytes;
 	s.append(data,numOfBytes);
 }
 
-void TextureInfo::Load(Stream& s)
+void TextureInfo::ChildLoad(Stream& s)
 {
 	s >> width >> height >> numOfBytes;
 	SAFE_NEW(data,ubyte[numOfBytes]);

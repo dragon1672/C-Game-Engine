@@ -28,8 +28,8 @@ public:
 
 	virtual std::vector<std::string> getErrors();
 
-	virtual void Save(Stream& s);
+	virtual void ChildSave(Stream& s);
 
-	virtual void Load(Stream& s);
+	virtual void ChildLoad(Stream& s);
 
 };

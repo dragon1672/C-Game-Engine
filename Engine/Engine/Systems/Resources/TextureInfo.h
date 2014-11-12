@@ -31,8 +31,8 @@ public:
 
 	virtual void shutdown();
 
-	virtual void Save(Stream& s);
+	virtual void ChildSave(Stream& s);
 
-	virtual void Load(Stream& s);
+	virtual void ChildLoad(Stream& s);
 
 };

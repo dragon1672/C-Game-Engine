@@ -242,12 +242,12 @@ std::vector<std::string> Mesh::getErrors()
 	return ret;
 }
 
-void Mesh::Save(Stream& s)
+void Mesh::ChildSave(Stream& s)
 {
 	throw std::logic_error("The method or operation is not implemented.");
 }
 
-void Mesh::Load(Stream& s)
+void Mesh::ChildLoad(Stream& s)
 {
 	throw std::logic_error("The method or operation is not implemented.");
 }

@@ -10,18 +10,6 @@ namespace {
 	};
 }
 
-Stream& operator<<(Stream& os, const Object& obj)
-{
-	os << obj.id << obj.name;
-	return os;
-}
-
-Stream& operator>>(Stream& os, Object& obj)
-{
-	os >> obj.id >> obj.name;
-	return os;
-}
-
 Object::Object(std::string name) : name(name)
 {
 	CoCreateGuid(&id);
@@ -70,4 +58,14 @@ double Object::GUID2Double(const GUID& guid)
 	GUIDBinder bind;
 	bind.guid = guid;
 	return bind.myDouble;
+}
+
+void Object::Save(Stream& os)
+{
+	os << id << name;
+}
+
+void Object::Load(Stream& os)
+{
+	os >> id >> name;
 }

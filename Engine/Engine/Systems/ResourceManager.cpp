@@ -225,7 +225,7 @@ ShaderProgram * ResourceManager::duplicate(ShaderProgram * toDup)
 	for (uint i = 0; i < resource_array_name##.size();  i++) resource_array_name##[i].Save(s);	 \
 }	1==1
 
-void ResourceManager::Save(Stream& s)
+void ResourceManager::ChildSave(Stream& s)
 {
 	SAVE_RESOURCE(shaders);
 	SAVE_RESOURCE(geos);
@@ -243,7 +243,7 @@ void ResourceManager::Save(Stream& s)
 	}								   \
 } 1==1
 
-void ResourceManager::Load(Stream& s)
+void ResourceManager::ChildLoad(Stream& s)
 {
 	ImportPack(s);
 }

@@ -17,8 +17,8 @@ public:
 	std::string Name() const;//can have dups
 	void Name(const std::string name);
 
-	friend ENGINE_SHARED Stream& operator<<(Stream& os, const Object& obj);
-	friend ENGINE_SHARED Stream& operator>>(Stream& os,       Object& obj);
+	void Save(Stream& os);
+	void Load(Stream& os);
 
 	static double GUID2Double(const GUID& guid);
 	static GUID double2GIUD(const double d);
