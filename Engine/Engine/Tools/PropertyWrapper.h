@@ -57,5 +57,6 @@ public:
 	inline PropertyGetSet& operator-=(PropertyGet<T>& that){ (set(get()-that)); return *this; }
 	inline PropertyGetSet& operator*=(PropertyGet<T>& that){ (set(get()*that)); return *this; }
 	inline PropertyGetSet& operator/=(PropertyGet<T>& that){ (set(get()/that)); return *this; }
+	inline T& getRef() { return val; }
 	//inline operator const T&() { return get(); }
 };

@@ -34,12 +34,12 @@ CameraComponent::CameraComponent(std::string name /*= nullptr*/)
 	nearPlane = .1f;
 	farPlane  = 100;
 	
-	uniforms[0] = ShaderUniformPram("nearPlane",   nearPlane   );
-	uniforms[1] = ShaderUniformPram("farPlane" ,   farPlane    );
-	uniforms[2] = ShaderUniformPram("width",       width       );
-	uniforms[3] = ShaderUniformPram("height",      height      );
-	uniforms[4] = ShaderUniformPram("perspective", perspective );
-	uniforms[5] = ShaderUniformPram("world2View",  world2View  );
+	uniforms[0] = ShaderUniformPram("nearPlane",   nearPlane.getRef() );
+	uniforms[1] = ShaderUniformPram("farPlane" ,   farPlane.getRef()  );
+	uniforms[2] = ShaderUniformPram("width",       width.getRef()     );
+	uniforms[3] = ShaderUniformPram("height",      height.getRef()    );
+	uniforms[4] = ShaderUniformPram("perspective", perspective        );
+	uniforms[5] = ShaderUniformPram("world2View",  world2View         );
 }
 
 bool CameraComponent::isActive()
