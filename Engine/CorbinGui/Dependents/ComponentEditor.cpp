@@ -181,13 +181,14 @@ template<typename T> QComboBox * loadComboBox(T* first) { static_assert(false,"N
 		comboBox->addItem("Null"-1);							 \
 		for (uint i = 0; i < tmp.size(); i++) {					 \
 			QString name(tmp[i]->Name().c_str());				 \
-			int id = tmp[i]->getID();							 \
+			double id = tmp[i]->getID();						 \
 			comboBox->addItem(name,id);							 \
 			if(first == tmp[i]) index = i+1;					 \
 		}														 \
 		comboBox->setCurrentIndex(index);						 \
 		return comboBox;										 \
 	}
+
 
 MAKE_COMBO_BOX_MAKER(Script);
 MAKE_COMBO_BOX_MAKER(Mesh);
@@ -261,7 +262,7 @@ public:
 		tLay->addWidget(box);																						   \
 		void (QComboBox:: *indexChangedSignal)(int) = &QComboBox::currentIndexChanged;								   \
 		connect(box, indexChangedSignal, [=]{																		   \
-			this->mat->##name##(box->currentData().toInt());														   \
+			this->mat->##name##(box->currentData().toDouble());														   \
 		});																											   \
 	}																												   \
 	layout->addWidget(widg);																						   \
@@ -283,9 +284,9 @@ public:
 		QHBoxLayout * tLay;
 
 		ADD_MATERIAL_GUI_TEXTURE(Diffuse);
-		ADD_MATERIAL_GUI_TEXTURE(NormalMap);
-		ADD_MATERIAL_GUI_TEXTURE(AmbOcc);
-		ADD_MATERIAL_GUI_TEXTURE(AlphaMask);
+		//ADD_MATERIAL_GUI_TEXTURE(NormalMap);
+		//ADD_MATERIAL_GUI_TEXTURE(AmbOcc);
+		//ADD_MATERIAL_GUI_TEXTURE(AlphaMask);
 
 	}
 	void updateFromModel() {
@@ -316,7 +317,7 @@ public:
 			tLay->addWidget(box);
 			void (QComboBox:: *indexChangedSignal)(int) = &QComboBox::currentIndexChanged;
 			connect(box, indexChangedSignal, [=] {
-				script->geo = resourceManager.getMesh(box->currentData().toInt());
+				script->geo = resourceManager.getMesh(box->currentData().toDouble());
 			});
 		}
 		layout->addWidget(widg);
@@ -329,7 +330,7 @@ public:
 			tLay->addWidget(box);
 			void (QComboBox:: *indexChangedSignal)(int) = &QComboBox::currentIndexChanged;
 			connect(box, indexChangedSignal, [=] {
-				script->shader = resourceManager.getShaderProgram(box->currentData().toInt());
+				script->shader = resourceManager.getShaderProgram(box->currentData().toDouble());
 			});
 		}
 		layout->addWidget(widg);
