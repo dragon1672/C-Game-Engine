@@ -4,6 +4,8 @@
 #include <Engine/Tools/Printer.h>
 #include <dirent.h>
 #include <QtCore/QStringList>
+#include <windows.h>
+#include <Engine/Defines/SafeNewAndDelete.h>
 
 namespace FileIO {
 	std::string readFile(std::string filePath) {
@@ -20,22 +22,7 @@ namespace FileIO {
 	}
 	FileData loadFile(const char * filePath) {
 		FileData ret;
-		//understand da file
-		std::ifstream input( filePath , std::ios::binary | std::ios::in);
-		if(!input.good()) {
-			printErr(100) "Find not found at ", filePath;
-			return FileData();
-		}
-		assert(input.good()); 
-		input.seekg(0, std::ios::end);
-		ret.size = (int)input.tellg();
-		input.seekg(0, std::ios::beg);
-
-		//copy da file
-		ret.data = new fileByte[ret.size];
-		input.read(ret.data, ret.size);
-		input.close();
-
+		ret.initFromFile(filePath);
 		return ret;
 	}
 	bool validFile(std::string filePath) {
@@ -184,5 +171,113 @@ namespace FileIO {
 		std::string ext = extractExtension(fullPath);
 		return fullPath.substr(path.size(),fullPath.size()-path.size()-ext.size()-1); // minus 1 for the dot
 	}
+
+
+	void FileData::initFileTimes(const WCHAR * filePath)
+	{
+		FILETIME creationTime,
+			lpLastAccessTime,
+			lastWriteTime;
+		auto hFile = CreateFile(filePath, GENERIC_READ, FILE_SHARE_READ, NULL,
+			OPEN_EXISTING, 0, NULL);
+		if(hFile == INVALID_HANDLE_VALUE)
+		{
+			printErr(100) "Unable to open file to extract times from",filePath, "with error", GetLastError();
+			return;
+		}
+		if(!(  GetFileTime( hFile, &creationTime,&lpLastAccessTime,&lastWriteTime )
+			&& FileTimeToSystemTime( &creationTime,     &(this->creationTime)     )
+			&& FileTimeToSystemTime( &lpLastAccessTime, &(this->lpLastAccessTime) )
+			&& FileTimeToSystemTime( &lastWriteTime,    &(this->lastWriteTime)    )
+			)) {
+				printErr(100) "Unable to extract times from",filePath, "with error", GetLastError();
+		}
+		CloseHandle(hFile);
+	}
+
+	void FileData::initFileTimes(const std::string filePath)
+	{
+		initFileTimes(std::wstring(filePath.begin(),filePath.end()));
+	}
+
+	void FileData::initFileTimes(const std::wstring filePath)
+	{
+		initFileTimes(filePath.c_str());
+	}
+
+	void FileData::initFileTimes(const char * filePath)
+	{
+		initFileTimes(std::string(filePath));
+	}
+
+	void FileData::initFromFile(const char * filePath)
+	{
+		std::ifstream input( filePath , std::ios::binary | std::ios::in);
+		if(!input.good()) {
+			printErr(100) "Find not found at ", filePath;
+		}
+		assert(input.good()); 
+		input.seekg(0, std::ios::end);
+		size = (int)input.tellg();
+		input.seekg(0, std::ios::beg);
+
+		//copy da file
+		data = new fileByte[size];
+		ownsData = true;
+
+		input.read(data, size);
+		input.close();
+
+		initFileTimes(filePath);
+	}
+
+	void FileData::cleanup()
+	{
+		if(ownsData) SAFE_DELETE(data);
+	}
+
+	FileData::FileData() : size(0), data(nullptr), ownsData(false)
+	{
+
+	}
+
+	
+
+	FILETIME LastWritten(std::wstring filePath, bool& validFile)
+	{
+		validFile = true;
+		FILETIME dummy, ret;
+		auto hFile = CreateFile(filePath.c_str(), GENERIC_READ, FILE_SHARE_READ, NULL,
+			OPEN_EXISTING, 0, NULL);
+		if(hFile == INVALID_HANDLE_VALUE)
+		{
+			validFile = false;
+			//std::cout << "Unable to open file to extract times from" << filePath.c_str() << "with error" << GetLastError() << std::endl;
+			return FILETIME();
+		}
+		if(!GetFileTime( hFile, &dummy,&dummy,&ret)) {
+			validFile = false;
+			//std::cout << "Unable to extract times from" << filePath.c_str() << "with error" << GetLastError() << std::endl;
+		}
+		CloseHandle(hFile);
+		return ret;
+	}
+	bool OutOfDate(std::string sourceFilePath, std::string generatedFilePath)
+	{
+		return OutOfDate(std::wstring(sourceFilePath.begin(),sourceFilePath.end()),std::wstring(generatedFilePath.begin(),generatedFilePath.end()));
+	}
+	bool OutOfDate(std::wstring sourceFilePath, std::wstring generatedFilePath)
+	{
+		bool validFile;
+		FILETIME src = LastWritten(sourceFilePath,validFile);
+		if(!validFile) return true;
+		FILETIME gen = LastWritten(generatedFilePath,validFile);
+		if(!validFile) return true;
+		return CompareFileTime(&src,&gen) > 0;
+	}
+
+	
+
+	
 
 }

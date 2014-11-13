@@ -4,16 +4,26 @@
 #include <Engine/TypeDefs.h>
 #include <vector>
 #include <ExportHeader.h>
+#include <windows.h>
 
 typedef char fileByte;
 
 namespace FileIO {
 	struct ENGINE_SHARED FileData {
+		SYSTEMTIME creationTime,
+			lpLastAccessTime,
+			lastWriteTime;
+		void initFileTimes(const char * filePath);
+		void initFileTimes(const std::wstring filePath);
+		void initFileTimes(const std::string filePath);
+		void initFileTimes(const wchar_t * filePath);
+
+		void initFromFile(const char * filePath);
 		uint size;
 		fileByte * data;
 		bool ownsData;
-		FileData() : size(0), data(nullptr), ownsData(true) {}
-		inline void cleanup() { if(ownsData) delete [] data; }
+		FileData();
+		void cleanup();
 	};
 	ENGINE_SHARED std::string readFile(std::string filePath);
 	ENGINE_SHARED std::string readFile(const char * filePath);
@@ -31,6 +41,10 @@ namespace FileIO {
 	ENGINE_SHARED std::string extractFileName(std::string fullPath);
 	ENGINE_SHARED std::string extractExtension(std::string fullPath);
 	ENGINE_SHARED std::string extractFilePath(std::string fullPath);
+
+	FILETIME LastWritten(std::wstring filePath, bool& validFile);
+	bool OutOfDate(std::string sourceFilePath, std::string generatedFilePath);
+	bool OutOfDate(std::wstring sourceFilePath, std::wstring generatedFilePath);
 
 
 	template<typename T>
