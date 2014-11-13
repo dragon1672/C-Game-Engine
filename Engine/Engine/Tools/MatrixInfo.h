@@ -95,4 +95,6 @@ public:
 
 	virtual void ChildLoad(Stream& s);
 
+	virtual bool CopyInto(Component* that);
+
 };

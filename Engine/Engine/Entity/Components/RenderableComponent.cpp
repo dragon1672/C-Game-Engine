@@ -78,3 +78,13 @@ void RenderableComponent::ChildLoad(Stream& s)
 	geo = resourceManager.getMesh(geoID);
 	shader = resourceManager.getShaderProgram(shaderID);
 }
+
+bool RenderableComponent::CopyInto(Component* t)
+{
+	if(typeid(*t) != typeid(*this)) return false;
+	RenderableComponent * that = (RenderableComponent*)t;
+	that->geo = this->geo;
+	that->shader = this->shader;
+	that->material = this->material;
+	return true;
+}

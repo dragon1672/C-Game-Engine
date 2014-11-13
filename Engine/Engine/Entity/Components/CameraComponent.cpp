@@ -104,3 +104,15 @@ void CameraComponent::ChildLoad(Stream& s)
 	perspectiveNeedsUpdate = true;
 	s >> nearPlane.getRef() >> farPlane.getRef() >> width.getRef() >> height.getRef();
 }
+
+bool CameraComponent::CopyInto(Component* t)
+{
+	if(typeid(*t) != typeid(*this)) return false;
+	CameraComponent * that = (CameraComponent *)t;
+	that->active             = this->active;
+	that->farPlane.getRef()  = this->farPlane;
+	that->nearPlane.getRef() = this->nearPlane;
+	that->width.getRef()     = this->width;
+	that->height.getRef()    = this->height;
+	return true;
+}

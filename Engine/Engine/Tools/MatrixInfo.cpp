@@ -103,3 +103,13 @@ void MatrixInfo::ChildLoad(Stream& s)
 	glm::vec3 * vals[] = {&pos,&rot,&scale};
 	s >> *vals[0] >> *vals[1] >> *vals[2];
 }
+
+bool MatrixInfo::CopyInto(Component* t)
+{
+	if(typeid(*t) != typeid(*this)) return false;
+	MatrixInfo*that = (MatrixInfo*)t;
+	that->pos = this->pos;
+	that->rot = this->rot;
+	that->scale = this->scale;
+	return true;
+}

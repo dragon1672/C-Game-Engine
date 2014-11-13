@@ -74,3 +74,8 @@ void EditorRenderableComponent::ChildLoad(Stream& s)
 {
 	throw std::logic_error("The method or operation is not implemented.");
 }
+
+bool EditorRenderableComponent::CopyInto(Component* that)
+{
+	throw std::logic_error("The method or operation is not implemented.");
+}

@@ -13,6 +13,8 @@ class ENGINE_SHARED Component : public Object, public ShaderObject, public Strea
 protected:
 	friend Entity;
 	Entity * parent;
+	virtual void ChildSave(Stream& s) = 0;
+	virtual void ChildLoad(Stream& s) = 0;
 public:
 	bool active;
 	Component(std::string name = "") : Object(name), active(true) {}
@@ -35,7 +37,5 @@ public:
 		Object::Load(s);
 		ChildLoad(s);
 	}
-protected:
-	virtual void ChildSave(Stream& s) = 0;
-	virtual void ChildLoad(Stream& s) = 0;
+	virtual bool CopyInto(Component* that) = 0;
 };

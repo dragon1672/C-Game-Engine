@@ -80,3 +80,12 @@ void ScriptComponent::ChildLoad(Stream& s)
 	s >> id;
 	script = resourceManager.getScript(id);
 }
+
+bool ScriptComponent::CopyInto(Component* t)
+{
+	if(typeid(*t) != typeid(*this)) return false;
+	ScriptComponent * that = (ScriptComponent*)t;
+	that->script = this->script;
+	that->start();
+	return true;
+}
