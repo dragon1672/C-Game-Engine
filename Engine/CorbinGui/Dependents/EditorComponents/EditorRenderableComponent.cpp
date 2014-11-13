@@ -23,6 +23,7 @@ void EditorRenderableComponent::sync()
 	editorInstance->visable = gameInstance->visable;
 	editorInstance->objUniforms = gameInstance->objUniforms;
 	editorInstance->uniformParameters = gameInstance->uniformParameters;
+	editorInstance->active = gameInstance->active;
 }
 
 void EditorRenderableComponent::earlyUpdate()

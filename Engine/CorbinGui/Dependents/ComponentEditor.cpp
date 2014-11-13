@@ -53,7 +53,7 @@ public:
 			enabled = new QCheckBox("Enable: ");
 			layout()->addWidget(enabled);
 			connect(enabled,&QCheckBox::stateChanged,[=](){ 
-				c->active = enabled->isCheckable();
+				c->active = enabled->isChecked();
 			});
 		}
 		if(haveName) {
@@ -76,8 +76,10 @@ public:
 
 	}
 	void update() {
-		if(enabled != nullptr && enabled->isCheckable() != c->active) enabled->setCheckable(c->active);
-		if(name != nullptr && name->text().toStdString() != c->Name()) name->setText(c->Name().c_str());
+		if(enabled != nullptr && enabled->isChecked() != c->active)
+			enabled->setChecked(c->active);
+		if(name != nullptr && name->text().toStdString() != c->Name())
+			name->setText(c->Name().c_str());
 	}
 };
 
