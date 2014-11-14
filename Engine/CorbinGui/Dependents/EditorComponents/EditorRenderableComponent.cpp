@@ -67,12 +67,12 @@ std::vector<std::string> EditorRenderableComponent::getErrors()
 
 void EditorRenderableComponent::ChildSave(Stream& s)
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	//throw std::logic_error("The method or operation is not implemented.");
 }
 
 void EditorRenderableComponent::ChildLoad(Stream& s)
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	//throw std::logic_error("The method or operation is not implemented.");
 }
 
 bool EditorRenderableComponent::CopyInto(Component* that)

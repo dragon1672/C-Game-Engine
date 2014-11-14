@@ -7,6 +7,7 @@
 #include <Engine/Systems/CameraManager.h>
 #include <Engine/Defines/Vectors.h>
 #include <Engine/IO/Stream.h>
+#include <Engine/Systems/GameObjectManager.h>
 
 //events
 #include <Engine/Systems/Events/EventManager.h>

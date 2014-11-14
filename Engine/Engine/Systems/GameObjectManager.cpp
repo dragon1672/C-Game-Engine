@@ -11,6 +11,7 @@
 #include <Engine/Defines/Vectors.h>
 #include <Engine/Tools/Printer.h>
 #include <Engine/Systems/Events/EventManager.h>
+#include <Engine/IO/Stream.h>
 
 //events
 #include <Engine/Systems/Events/EventManager.h>
@@ -206,3 +207,12 @@ GameObjectManager::~GameObjectManager()
 	LUA_OBJECT_END(GameObjectManager);
 	shutdown();
 }
+
+void GameObjectManager::Save(Stream&s)
+{
+}
+
+void GameObjectManager::Load(Stream&s)
+{
+}
+

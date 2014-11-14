@@ -14,12 +14,13 @@
 #include <Engine/Entity/Entity.h>
 #include <Engine/Systems/ObjectManager.h>
 #include <Engine/Tools/MasterLua.h>
+#include <Engine/IO/StreamableObject.h>
 
 #include <Engine/Systems/CameraManager.h>
 
 #define gameManager GameObjectManager::getInstance()
 
-class ENGINE_SHARED GameObjectManager : public Object {
+class ENGINE_SHARED GameObjectManager : public Object, public StreamableObject {
 	DEFINE_SINGLETON(GameObjectManager);
 	LUA_OBJECT(GameObjectManager);
 	ConstVector<Entity> entities;
@@ -85,6 +86,10 @@ public:
 
 		return ret;
 	}
+	virtual void Save(Stream&s);
+
+	virtual void Load(Stream&s);
 private:
 	void passStandardUniforms(RenderableComponent * renderable);
+
 };
