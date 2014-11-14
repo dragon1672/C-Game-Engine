@@ -91,9 +91,8 @@ void Stream::internalAppend(const void * d, int size)
 {
 	char * data = (char*)d;
 	(*buffer).resize((*buffer).size()+size);
-	for (int i = 0; i < size; i++) {
-		(*buffer)[currentPos++] = data[i];
-	}
+	FileIO::myMemCopy(data,&(*buffer)[currentPos],size);
+	currentPos += size;
 }
 
 void Stream::Save(Stream&s)
