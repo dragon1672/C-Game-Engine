@@ -56,6 +56,13 @@ void ObjectManager::Register(Object * toAdd)
 	privates->nameMap[toAdd->Name()].push_back(toAdd);
 }
 
+void ObjectManager::Register(std::vector<Object *> toAdd)
+{
+	for (uint i = 0; i < toAdd.size(); i++) {
+		Register(toAdd[i]);
+	}
+}
+
 void ObjectManager::UnRegister(Object& toKill) {
 	UnRegister(&toKill);
 }

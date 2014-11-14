@@ -12,6 +12,7 @@ private:
 	std::string name;
 public:
 	Object(std::string name = "");
+	Object(std::string name,double id);
 	virtual ~Object() {}
 	double getID() const; //will be unique across all objects
 	std::string Name() const;//can have dups

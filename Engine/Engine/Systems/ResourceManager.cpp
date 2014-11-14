@@ -205,7 +205,10 @@ void ResourceManager::loadNeumontStuff()
 Mesh * ResourceManager::duplicate(Mesh * toDup)
 {
 	auto ret = addMesh(toDup->Name()+"_dup");
+	Object objData(ret->Name(),ret->getID());
 	*ret = *toDup; // copy!
+	Object& obj = *ret;
+	obj = objData;
 	return ret;
 }
 

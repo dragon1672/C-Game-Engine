@@ -16,6 +16,12 @@ Object::Object(std::string name) : name(name)
 	CoCreateGuid(&id);
 }
 
+Object::Object(std::string name,double id) : name(name)
+{
+	this->id = double2GIUD(id);
+}
+
+
 std::string Object::Name() const
 {
 	return name;

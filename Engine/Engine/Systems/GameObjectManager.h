@@ -22,8 +22,8 @@
 class ENGINE_SHARED GameObjectManager : public Object {
 	DEFINE_SINGLETON(GameObjectManager);
 	LUA_OBJECT(GameObjectManager);
-public:ConstVector<Entity> entities;
-private:ObjectManager EntityManager;
+	ConstVector<Entity> entities;
+	ObjectManager EntityManager;
 	std::function<bool(Entity*)> selectorFunction;
 	std::function<bool(Component*)> componentSelectorFunction;
 

@@ -68,8 +68,9 @@ void GameObjectManager::paint() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	for (uint i = 0; i < entities.size(); i++) {
-		if(entities[i].active) {
-			auto renderables = entities[i].getComponents<RenderableComponent>();
+		Entity& currentEntity = entities[i];
+		if(currentEntity.active) {
+			auto renderables = currentEntity.getComponents<RenderableComponent>();
 			for (RenderableComponent * renderable : renderables) {
 				if(renderable != nullptr && renderable->visable && renderable->isValid()) {
 					passStandardUniforms(renderable);

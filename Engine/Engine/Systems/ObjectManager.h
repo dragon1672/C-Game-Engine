@@ -14,6 +14,7 @@ public:
 	~ObjectManager();
 	void Register(Object& toAdd);
 	void Register(Object * toAdd);
+	void Register(std::vector<Object *> toAdd);
 	void UnRegister(Object& toKill);
 	void UnRegister(Object * toKill);
 	Object * getFirst(double id) const;
