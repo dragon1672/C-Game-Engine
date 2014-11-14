@@ -13,8 +13,8 @@ namespace {
 
 Object::Object(std::string name) : name(name)
 {
-	id = double2GIUD(NULL_OBJECT);
-	while(getID() == NULL_OBJECT)
+	id = double2GIUD(NULL_OBJECT_ID());
+	while(getID() == NULL_OBJECT_ID())
 		CoCreateGuid(&id);
 }
 
@@ -78,5 +78,3 @@ void Object::ObjectLoad(Stream& os)
 {
 	os >> id >> name;
 }
-
-const double Object::NULL_OBJECT = -1;

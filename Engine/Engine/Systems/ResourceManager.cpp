@@ -236,6 +236,7 @@ ShaderProgram * ResourceManager::duplicate(ShaderProgram * toDup)
 
 void ResourceManager::ChildSave(Stream& s)
 {
+	
 	SAVE_RESOURCE(shaders);
 	SAVE_RESOURCE(geos);
 	SAVE_RESOURCE(textures);
@@ -252,7 +253,7 @@ void ResourceManager::ChildSave(Stream& s)
 		type##Objs.Register(##name##.back());			  \
 		ResourceLoadedEvent eventData(&##name##.back());  \
 		emitEvent(eventData);							  \
-		newGuy.PassDownToHardWare();                      \
+		name##.back().PassDownToHardWare();               \
 	}								   \
 } 1==1
 
