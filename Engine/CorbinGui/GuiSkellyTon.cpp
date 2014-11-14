@@ -90,17 +90,17 @@ void GuiSkellyTon::initBar()
 		myTimer.stop();
 
 		Stream backup;
-		//resourceManager.ObjectSave(backup);
 		backup << gameManager;
+		resourceManager.ObjectSave(backup);
 		backup.resetToBeg();
 		try {
 			Stream leFile;
 			leFile.importFromFile(loadFileName.c_str());
-			//resourceManager.ObjectLoad(leFile);
+			resourceManager.ObjectLoad(leFile);
 			leFile >> gameManager;
 		} catch (...) {
 			printErr(100) "error","file not loaded from:",loadFileName;
-			//resourceManager.ObjectLoad(backup);
+			resourceManager.ObjectLoad(backup);
 			backup >> gameManager;
 		}
 
@@ -115,7 +115,7 @@ void GuiSkellyTon::initBar()
 		std::string saveFileName = targetBin.toStdString();
 
 		Stream leFile;
-		//resourceManager.ObjectSave(leFile);
+		resourceManager.ObjectSave(leFile);
 		leFile << gameManager;
 
 		try {
@@ -230,7 +230,6 @@ void GuiSkellyTon::ToggleGameStartStop()
 			gameManager.ComponentSelectorFunction(game->IsGameObject());
 
 			tempStreamForGamePlay.resetToBeg();
-			resourceManager.ObjectSave(tempStreamForGamePlay);
 			tempStreamForGamePlay << gameManager;
 
 			ResouceBar->setEnabled(false);
@@ -252,7 +251,6 @@ void GuiSkellyTon::ToggleGameStartStop()
 
 		//rebuild editor entities here
 		tempStreamForGamePlay.resetToBeg();
-		resourceManager.ObjectLoad(tempStreamForGamePlay);
 		tempStreamForGamePlay >> gameManager;
 
 		gameManager.ComponentSelectorFunction(game->IsEditorObject());
