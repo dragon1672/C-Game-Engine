@@ -220,10 +220,10 @@ ShaderProgram * ResourceManager::duplicate(ShaderProgram * toDup)
 }
 
 #define SAVE_RESOURCE(resource_array_name)\
-{																								 \
-	uint size = resource_array_name##.size();													 \
-	s << size;																					 \
-	for (uint i = 0; i < resource_array_name##.size();  i++) resource_array_name##[i].Save(s);	 \
+{																									 \
+	uint size = resource_array_name##.size();														 \
+	s << size;																						 \
+	for (uint i = 0; i < resource_array_name##.size();  i++) resource_array_name##[i].ChildSave(s);	 \
 }	1==1
 
 void ResourceManager::ChildSave(Stream& s)
@@ -239,7 +239,7 @@ void ResourceManager::ChildSave(Stream& s)
 	s >> size;						   \
 	for (uint i = 0; i < size;  i++) { \
 		type newGuy;				   \
-		newGuy.Load(s);				   \
+		newGuy.ChildLoad(s);		   \
 		name##.push_back(newGuy);	   \
 	}								   \
 } 1==1

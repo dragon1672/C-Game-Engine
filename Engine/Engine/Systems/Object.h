@@ -17,8 +17,8 @@ public:
 	std::string Name() const;//can have dups
 	void Name(const std::string name);
 
-	void Save(Stream& os);
-	void Load(Stream& os);
+	void ObjectSave(Stream& os);
+	void ObjectLoad(Stream& os);
 
 	static double GUID2Double(const GUID& guid);
 	static GUID double2GIUD(const double d);

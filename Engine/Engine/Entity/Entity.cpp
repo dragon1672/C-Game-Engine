@@ -240,12 +240,12 @@ std::vector<std::string> Entity::getErrors()
 
 void Entity::Save(Stream&s)
 {
-	Object::Save(s);
-	s << active << components;
+	Object::ObjectSave(s);
+	s << parent << active << components << getTrans();
 }
 
 void Entity::Load(Stream&s)
 {
-	Object::Load(s);
-	s >> active >> components;
+	Object::ObjectLoad(s);
+	s >> parent >> active >> components >> getTrans();
 }

@@ -61,12 +61,12 @@ double Object::GUID2Double(const GUID& guid)
 	return bind.myDouble;
 }
 
-void Object::Save(Stream& os)
+void Object::ObjectSave(Stream& os)
 {
 	os << id << name;
 }
 
-void Object::Load(Stream& os)
+void Object::ObjectLoad(Stream& os)
 {
 	os >> id >> name;
 }

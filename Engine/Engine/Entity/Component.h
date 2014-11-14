@@ -30,11 +30,11 @@ public:
 	virtual bool isValid() = 0;
 	virtual std::vector<std::string> getErrors() = 0;
 	void Save(Stream& s) {
-		Object::Save(s);
+		Object::ObjectSave(s);
 		ChildSave(s);
 	}
 	void Load(Stream& s) {
-		Object::Load(s);
+		Object::ObjectLoad(s);
 		ChildLoad(s);
 	}
 	virtual bool CopyInto(Component* that) = 0;

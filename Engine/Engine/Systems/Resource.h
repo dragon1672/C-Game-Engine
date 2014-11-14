@@ -15,12 +15,12 @@ public:
 	virtual void shutdown() {}
 	virtual bool isValid() = 0;
 	virtual std::vector<std::string> getErrors() = 0;
-	inline void Save(Stream& s) {
-		Object::Save(s);
+	inline void ObjectSave(Stream& s) {
+		Object::ObjectSave(s);
 		ChildSave(s);
 	}
-	inline void Load(Stream& s) {
-		Object::Load(s);
+	inline void ObjectLoad(Stream& s) {
+		Object::ObjectLoad(s);
 		ChildLoad(s);
 	}
 protected:
