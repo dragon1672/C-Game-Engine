@@ -10,22 +10,22 @@
 
 #pragma region define helpers
 #define MATERIAL_TEXTURE_GET_SET_WRAP(name,properCase) \
-	inline TextureInfo * properCase##() const { return name##; }      \
+	inline TextureInfo * properCase##() const { return resourceManager.getTextureInfo(name); }      \
 	inline void properCase##(TextureInfo * val) {                     \
-		name = val;                                                   \
-		has##properCase = name != nullptr;                            \
-		uniforms[##uniformIndex##properCase##].Pointer(name);         \
+		name = val != nullptr ? val->getID() : Object::NULL_OBJECT_ID();                                                   \
+		has##properCase = name != Object::NULL_OBJECT_ID();                            \
+		uniforms[##uniformIndex##properCase##].Pointer(val);         \
 	}                                                                 \
 	inline void properCase##(double index) {                          \
-		name = resourceManager.getTextureInfo(##index##);             \
-		has##properCase = name != nullptr;                            \
-		uniforms[##uniformIndex##properCase##].Pointer(name);         \
+	name = index##;             \
+		has##properCase = name != Object::NULL_OBJECT_ID();                            \
+		uniforms[##uniformIndex##properCase##].Pointer( properCase##() );         \
 	}                                                                 \
 	inline glm::vec2& properCase##Scale()  { return name##Scale; }    \
 	inline glm::vec2& properCase##Offset() { return name##Offset; }
 
 #define MATERIAL_INIT_TEXTURE(name,properCase)\
-	TextureInfo * name; bool has##properCase; glm::vec2 name##Scale, name##Offset; int uniformIndex##properCase;
+	double name; bool has##properCase; glm::vec2 name##Scale, name##Offset; int uniformIndex##properCase;
 
 #pragma  endregion
 
@@ -35,6 +35,7 @@ class ENGINE_SHARED Material : public ShaderObject, public StreamableObject {
 	MATERIAL_INIT_TEXTURE(normalMap,NormalMap);
 	MATERIAL_INIT_TEXTURE(ambOcc,   AmbOcc   );
 	MATERIAL_INIT_TEXTURE(alphaMask,AlphaMask);
+
 public:
 	MATERIAL_TEXTURE_GET_SET_WRAP(diffuse,  Diffuse  );
 	MATERIAL_TEXTURE_GET_SET_WRAP(normalMap,NormalMap);

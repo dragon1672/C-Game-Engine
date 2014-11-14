@@ -4,7 +4,7 @@
 
 #pragma region define helpers
 #define MATERIAL_CONSTR_TEXTURE(name,properCase)\
-	name = nullptr; \
+	name = Object::NULL_OBJECT_ID(); \
 	uniformIndex##properCase = -1; \
 	has##properCase = false; \
 	name##Offset.x = name##Offset.y = 0; \
@@ -15,19 +15,16 @@
 
 #define MATERIAL_ADD_UNIFORM(arrayName,indexName,name,properCase)\
 	uniformIndex##properCase = indexName; \
-	arrayName##[##indexName##++] = ShaderUniformPram( MATERIAL_STRING(name)            , ParameterType::PT_TEXTURE2D, name             );\
+	arrayName##[##indexName##++] = ShaderUniformPram( MATERIAL_STRING(name)            , ParameterType::PT_TEXTURE2D, properCase##()   );\
 	arrayName##[##indexName##++] = ShaderUniformPram( MATERIAL_STRINGY(has,properCase) , ParameterType::PT_BOOLEAN,   &has##properCase );\
 	arrayName##[##indexName##++] = ShaderUniformPram( MATERIAL_STRINGY(name,Scale)     , ParameterType::PT_VEC2,      &name##Scale[0]  );\
 	arrayName##[##indexName##++] = ShaderUniformPram( MATERIAL_STRINGY(name,Offset)    , ParameterType::PT_VEC2,      &name##Offset[0] )
 
 #define SAVE_TEXTURE_TO_STREAM(stream_name,name,Propercase)\
-	double temp##Propercase##Id = name != nullptr ? name->getID() : Object::NULL_OBJECT; \
-	stream_name << temp##Propercase##Id << has##Propercase << name##Scale << name##Offset
+	stream_name << name << has##Propercase << name##Scale << name##Offset
 
 #define LOAD_TEXTURE_FROM_STREAM(stream_name,name,Propercase)\
-	double temp##Propercase##Id;                                                           \
-	stream_name >> temp##Propercase##Id >> has##Propercase >> name##Scale >> name##Offset; \
-	Propercase##(temp##Propercase##Id)
+	stream_name >> name >> has##Propercase >> name##Scale >> name##Offset; \
 
 #pragma  endregion
 
@@ -62,8 +59,7 @@ void Material::Load(Stream&s)
 	LOAD_TEXTURE_FROM_STREAM(s,alphaMask,AlphaMask);
 }
 
-Material::Material() :
-	diffuse(nullptr), normalMap(nullptr), ambOcc(nullptr), alphaMask(nullptr)
+Material::Material()
 {
 	MATERIAL_CONSTR_TEXTURE(diffuse,  Diffuse  );
 	MATERIAL_CONSTR_TEXTURE(normalMap,NormalMap);
