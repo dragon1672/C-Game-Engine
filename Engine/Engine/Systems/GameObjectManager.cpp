@@ -83,7 +83,7 @@ void GameObjectManager::paint() {
 
 Entity * GameObjectManager::AddEntity(std::string name)
 {
-	entities.add(Entity(name));
+	entities.add(Entity(name,this));
 	Entity * ret = &entities.back();
 	if(componentSelectorFunction) ret->SelectorFunction(componentSelectorFunction);
 	EntityManager.Register(ret);
@@ -130,6 +130,9 @@ std::vector<Entity *> GameObjectManager::getTopLevelEntities()
 	return Collections::Where<Entity*>(tmp,[](Entity*& a){ return a->active && a->Parent() == nullptr; });
 }
 
+void GameObjectManager::RemoveEntity(double toRemove) {
+	RemoveEntity(getEntity(toRemove));
+}
 void GameObjectManager::RemoveEntity(Entity * toRemove)
 {
 	int index = entities.find(toRemove);

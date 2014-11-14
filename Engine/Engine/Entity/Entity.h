@@ -15,6 +15,7 @@ class RenderableComponent;
 class GameObjectManager;
 class Component;
 class CameraComponent;
+class GameObjectManager;
 
 class ENGINE_SHARED Entity : public Object, public StreamableObject {
 private:
@@ -33,24 +34,27 @@ private:
 	}
 	LUA_OBJECT(Entity);
 
-
-	Entity * parent;
+	GameObjectManager * gm;
+	double parent;
 	Component* addComponent(Component * toAdd);
-	std::unordered_set<Entity *> children;
+	std::unordered_set<double> children;
 	std::function<bool(Component*)> selectorFunction;
+
+	void resetChildren();
+	friend GameObjectManager;
+
 public:
 	std::function<bool(Component*)> SelectorFunction() const;
 	void SelectorFunction(std::function<bool(Component*)> val);
-	std::unordered_set<Entity *> Children();
+	std::unordered_set<double> Children();
 	std::vector<std::function<void(Entity*me)>> StageChanged;
 	Entity * Parent();
 	void Parent(Entity * newGuy);
+	void Parent(double newGuy);
 	bool active;
 
-	std::unordered_set<Entity *> getAllChildren();
 
-
-	Entity(std::string name="New Game Object", Entity * p = nullptr);
+	Entity(std::string name="New Game Object", GameObjectManager * gm = nullptr);
 	std::string Name() const;
 	void Name(const std::string newName);
 	virtual ~Entity();
@@ -95,13 +99,13 @@ public:
 	bool ComponentsAreReady();
 	std::vector<std::string> getErrors();
 
-	GET_LUA_VER_PTR(Entity,parent);
+	LUA_GET_FUN_PTR(Entity,Parent);
 	LUA_GET_FUN_PTR(MatrixInfo,getTrans);
 
 	inline operator LuaUserdata<Entity>() {
 		MAKE_LUA_INSTANCE_RET(Entity,ret);
 
-		BIND_LUA_VER(Entity,ret,parent);
+		LUA_BIND_FUN(Entity,ret,Parent);
 		LUA_BIND_FUN(Entity,ret,getTrans);
 		ret.Bind("GetScript",&Entity::getScriptLua);
 

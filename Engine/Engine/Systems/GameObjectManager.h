@@ -44,11 +44,12 @@ public:
 	//add
 	Entity * AddEntity(std::string name = "GameObject");
 	void RemoveEntity(Entity * toRemove);
+	void RemoveEntity(double toRemove);
 
 	Entity * getEntity(std::string name) {
 		return (Entity*)EntityManager.getFirst(name.c_str());
 	}
-	Entity * getEntity(int id) {
+	Entity * getEntity(double id) {
 		return (Entity*)EntityManager.getFirst(id);
 	}
 	//will copy components

@@ -107,7 +107,7 @@ int Entity::getIndex(std::string toFind) const
 glm::mat4 Entity::getWorldTransform()
 {
 	glm::mat4 ret;
-	if(parent != nullptr) ret = parent->getWorldTransform();
+	if(Parent() != nullptr) ret = Parent()->getWorldTransform();
 	return ret * localTrans.getCompleteTransform();
 }
 
@@ -122,8 +122,6 @@ void Entity::Name(const std::string newName)
 	if(newName != Name()) for (uint i = 0; i < StageChanged.size(); i++) StageChanged[i](this);
 }
 
-Entity::Entity(std::string name/*="New Game Object"*/, Entity * p /*= nullptr*/)  : parent(nullptr), active(true), Object(name) { Parent(p); LUA_OBJECT_START(Entity); }
-
 
 MatrixInfo * Entity::getTrans() { return &localTrans; }
 
@@ -136,33 +134,30 @@ ScriptComponent * Entity::getScript(std::string name) {
 
 Entity * Entity::Parent()
 {
-	return parent;
+	return gm->getEntity(parent);
+}
+
+void Entity::Parent(double newGuy)
+{
+	Parent(gm->getEntity(newGuy));
 }
 
 void Entity::Parent(Entity * newGuy)
 {
-	Entity * old = parent;
-	if(Collections::contains(getAllChildren(),newGuy)) {
+	Entity * old = Parent();
+	if(Collections::contains(children,newGuy->getID())) {
 		throw std::invalid_argument("Recursive children detected");
 	}
-	if(parent != nullptr) parent->children.erase(this);
-	if(newGuy != nullptr) newGuy->children.emplace(this);
-	parent = newGuy;
+	if(old    != nullptr) old->children.erase(getID());
+	if(newGuy != nullptr) newGuy->children.emplace(getID());
+	parent = newGuy->getID();
 	EntityParentChangedEvent data(this,old,newGuy);
 	emitEvent(data);
 	for (uint i = 0; i < StageChanged.size(); i++) StageChanged[i](this);
 }
 
-std::unordered_set<Entity *> Entity::getAllChildren()
-{
-	std::unordered_set<Entity *> ret = children;
-	for (auto var : children)
-		for (auto toAdd : var->getAllChildren())
-			ret.emplace(toAdd);
-	return ret;
-}
 
-std::unordered_set<Entity *> Entity::Children()
+std::unordered_set<double> Entity::Children()
 {
 	return children;
 }
@@ -249,3 +244,9 @@ void Entity::Load(Stream&s)
 	Object::ObjectLoad(s);
 	s >> parent >> active >> components >> getTrans();
 }
+
+Entity::Entity(std::string name/*="New Game Object"*/, GameObjectManager * gm /*= nullptr*/) : parent(-1), gm(gm), active(true), Object(name)
+{
+	LUA_OBJECT_START(Entity);
+}
+

@@ -17,7 +17,7 @@ GameObjectTree* GameObjectViewer::getItem(Entity * dude)
 	{
 		QList<QTreeWidgetItem *> items;
 		for (const auto& elem : kids) {
-			items.append(getItem(elem));
+			items.append(getItem(gameManager.getEntity(elem)));
 		}
 		ret->addChildren(items);
 	}
