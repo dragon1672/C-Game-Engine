@@ -84,10 +84,26 @@ void GameObjectManager::paint() {
 	}
 }
 
+Entity * GameObjectManager::getNewEntity(std::string name) {
+	Entity * ret = nullptr;
+	for (auto itr = deletedEntities.begin(); ret == nullptr && itr != deletedEntities.end();) {
+		int e = *itr;
+		itr++;
+		deletedEntities.erase(e);
+		entities[e] = Entity(name,this);
+		ret = &entities[e];
+	}
+	if(ret == nullptr) {
+		entities.add(Entity(name,this));
+		ret = &entities.back();
+	}
+	return ret;
+}
+
 Entity * GameObjectManager::AddEntity(std::string name)
 {
-	entities.add(Entity(name,this));
-	Entity * ret = &entities.back();
+	Entity * ret = getNewEntity(name);
+	
 	if(componentSelectorFunction) ret->SelectorFunction(componentSelectorFunction);
 	EntityManager.Register(ret);
 	emitEvent(new EntityAddedEvent(ret));
@@ -143,6 +159,7 @@ void GameObjectManager::RemoveEntity(Entity * toRemove)
 			RemoveEntity(i);
 		}
 		entities[index].active = false;
+		deletedEntities.emplace(index);
 		entities[index].Parent(nullptr);
 		emitEvent(new EntityRemovedEvent(toRemove));
 	}
@@ -235,4 +252,14 @@ void GameObjectManager::Enable()
 {
 	disable = true;
 	eventManager.Enable();
+}
+
+LuaUserdata<Entity> GameObjectManager::getEntityFromName(std::string name)
+{
+	return (LuaUserdata<Entity>)*getEntity(name);
+}
+
+LuaUserdata<Entity> GameObjectManager::getEntityFromId(int id)
+{
+	return (LuaUserdata<Entity>)*getEntity(id);
 }

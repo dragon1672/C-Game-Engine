@@ -25,16 +25,16 @@ class ENGINE_SHARED GameObjectManager : public Object, public StreamableObject {
 	LUA_OBJECT(GameObjectManager);
 	ConstVector<Entity> entities;
 	ObjectManager EntityManager;
+
+	std::unordered_set<int> deletedEntities;
+
 	std::function<bool(Entity*)> selectorFunction;
 	std::function<bool(Component*)> componentSelectorFunction;
 
-	LuaUserdata<Entity> getEntityFromName(std::string name) {
-		return (LuaUserdata<Entity>)*getEntity(name);
-	}
-	LuaUserdata<Entity> getEntityFromId(int id) {
-		return (LuaUserdata<Entity>)*getEntity(id);
-	}
+	LuaUserdata<Entity> getEntityFromName(std::string name);
+	LuaUserdata<Entity> getEntityFromId(int id);
 	void rebuildEntityParents();
+	Entity * getNewEntity(std::string name);
 	bool disable;
 public:
 	void Enable();
