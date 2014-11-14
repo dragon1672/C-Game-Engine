@@ -63,6 +63,7 @@ Object * EventManager::EventInstance::Sender() const
 
 void EventManager::update(float dt)
 {
+	if(disable) return;
 	for (uint i = 0; i < fireQ.size(); i++) {
 		fireQ[i].timeLeft -= dt;
 		if(fireQ[i].timeLeft <= 0 ) {
@@ -76,7 +77,9 @@ void EventManager::update(float dt)
 void EventManager::fire(EventData * data, Object * sender, float inNumSeconds /*= 0*/)
 {
 	std::string event = data->getEventName();
-	if(functions.find(event)==functions.end()) return; // no one cares
+	if(disable || functions.find(event)==functions.end()) { // no one cares
+		return;
+	}
 	auto& list = functions[event].funs;
 	if(inNumSeconds > 0) {
 		for (uint i = 0; i < list.size(); i++) {
@@ -108,4 +111,19 @@ void EventManager::RemoveEvent(EventHandle*handle)
 	if(functions.find(handle->eventName) == functions.end()) return; // not in map
 	auto& list = functions[handle->eventName].funs;
 	VECTOR_REMOVE_CONDITION(list,.ID == handle->ID);
+}
+
+void EventManager::Disable()
+{
+	disable = true;
+}
+
+void EventManager::Enable()
+{
+	disable = false;
+}
+
+EventManager::EventManager() : disable(false)
+{
+
 }

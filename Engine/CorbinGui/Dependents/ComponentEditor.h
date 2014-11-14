@@ -16,6 +16,7 @@ public:
 	~ComponentEditor();
 
 	void update();
+	void reload();
 
 	void changeEntity(Entity * toUpdateTo, std::function<bool(Component*)> validComponentCheck);
 };

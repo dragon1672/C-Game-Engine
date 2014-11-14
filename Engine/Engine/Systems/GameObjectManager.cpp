@@ -20,7 +20,7 @@
 
 IMPLEMENT_SINGLETON(GameObjectManager);
 
-GameObjectManager::GameObjectManager() {
+GameObjectManager::GameObjectManager() :disable(false) {
 	LUA_OBJECT_START(GameObjectManager);
 }
 bool GameObjectManager::init() {
@@ -54,6 +54,7 @@ void GameObjectManager::update() {
 	inputManager.update();
 	resourceManager.update();
 	eventManager.update(Timer::getInstance().deltaTime());
+	if(disable) return;
 	for (uint i = 0; i < entities.size(); i++) { if(entities[i].active && (!selectorFunction || selectorFunction && selectorFunction(&entities[i]))) entities[i].earlyUpdate(); }
 	for (uint i = 0; i < entities.size(); i++) { if(entities[i].active && (!selectorFunction || selectorFunction && selectorFunction(&entities[i]))) entities[i].update();      }
 	for (uint i = 0; i < entities.size(); i++) { if(entities[i].active && (!selectorFunction || selectorFunction && selectorFunction(&entities[i]))) entities[i].lateUpdate();  }
@@ -225,4 +226,16 @@ void GameObjectManager::rebuildEntityParents()
 		Entity * parent = dude->Parent();
 		dude->Parent(parent);
 	}
+}
+
+void GameObjectManager::Disable()
+{
+	disable = false;
+	eventManager.Disable();
+}
+
+void GameObjectManager::Enable()
+{
+	disable = true;
+	eventManager.Enable();
 }

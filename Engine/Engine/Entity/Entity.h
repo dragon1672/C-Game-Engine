@@ -19,7 +19,6 @@ class GameObjectManager;
 
 class ENGINE_SHARED Entity : public Object, public StreamableObject {
 private:
-	void removeComponent_NOW(int toKill);
 	void removeComponent(int toKill);
 	template<typename T> int getIndex() const {
 		return getIndexFromClassName(typeid(T).name());

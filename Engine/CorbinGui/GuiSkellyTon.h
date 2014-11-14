@@ -36,6 +36,12 @@ class ENGINE_SHARED GuiSkellyTon : public QMainWindow  {
 		Editor,PlayingGame,PlayingPaused//saving?
 	} myState;
 	Stream tempStreamForGamePlay;
+
+	void LoadFromFile(Stream& s);
+	void SaveToStream(Stream& s);
+	Stream ExportToStream();
+	void Disable();
+	void Enable();
 public:
 	EditorGame * Game() const { return game; }
 	GuiSkellyTon();

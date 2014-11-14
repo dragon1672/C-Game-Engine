@@ -87,24 +87,17 @@ void GuiSkellyTon::initBar()
 			return;
 		std::string loadFileName = targetBin.toStdString();
 
-		myTimer.stop();
+		Disable();
 
-		Stream backup;
-		backup << gameManager;
-		resourceManager.ObjectSave(backup);
-		backup.resetToBeg();
 		try {
 			Stream leFile;
 			leFile.importFromFile(loadFileName.c_str());
-			resourceManager.ObjectLoad(leFile);
-			leFile >> gameManager;
+			this->LoadFromFile(leFile);
 		} catch (...) {
 			printErr(100) "error","file not loaded from:",loadFileName;
-			resourceManager.ObjectLoad(backup);
-			backup >> gameManager;
 		}
 
-		myTimer.start();
+		Enable();
 	});
 
 	fileMenu->addAction(action = new QAction("Save Project", this));	action->setShortcuts(QKeySequence::Save);
@@ -114,15 +107,15 @@ void GuiSkellyTon::initBar()
 			return;
 		std::string saveFileName = targetBin.toStdString();
 
-		Stream leFile;
-		resourceManager.ObjectSave(leFile);
-		leFile << gameManager;
+		Disable();
+		Stream leFile = ExportToStream();
 
 		try {
 			leFile.exportToFile(saveFileName.c_str());
 		} catch (...) {
 			printErr(100) "error","file not saved to:",saveFileName;
 		}
+		Enable();
 	});
 
 	fileMenu->addAction(action = new QAction("Exit Program", this));
@@ -281,4 +274,44 @@ void GuiSkellyTon::ToggleGamePauseResume()
 		gameManager.ComponentSelectorFunction(game->IsGameObject());
 		PlayResumeGameAction->setText("Resume");
 	}
+}
+
+void GuiSkellyTon::LoadFromFile(Stream& s)
+{
+	//backup
+	Stream backup = ExportToStream();
+	try {
+		resourceManager.ObjectLoad(s);
+		s >> gameManager;
+	} catch(...) {
+		printErr(100) "error","corrupt file";
+	}
+}
+
+void GuiSkellyTon::SaveToStream(Stream& s)
+{
+	resourceManager.ObjectSave(s);
+	s << gameManager;
+}
+
+Stream GuiSkellyTon::ExportToStream()
+{
+	Stream ret;
+	SaveToStream(ret);
+	ret.resetToBeg();
+	return ret;
+}
+
+void GuiSkellyTon::Disable()
+{
+	myTimer.stop();
+	gameManager.Disable();
+}
+
+void GuiSkellyTon::Enable()
+{
+	myTimer.start();
+	gameManager.Enable();
+	gameObjectList->update();
+	componentEditor->reload();
 }

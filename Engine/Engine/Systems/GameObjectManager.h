@@ -35,8 +35,10 @@ class ENGINE_SHARED GameObjectManager : public Object, public StreamableObject {
 		return (LuaUserdata<Entity>)*getEntity(id);
 	}
 	void rebuildEntityParents();
-
+	bool disable;
 public:
+	void Enable();
+	void Disable();
 	std::function<bool(Entity*)> SelectorFunction() const;
 	void SelectorFunction(std::function<bool(Entity*)> val);
 	std::function<bool(Component*)> ComponentSelectorFunction() const;

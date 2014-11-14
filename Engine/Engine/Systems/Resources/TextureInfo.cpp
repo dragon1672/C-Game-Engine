@@ -43,6 +43,7 @@ void TextureInfo::shutdown()
 void TextureInfo::ChildSave(Stream& s)
 {
 	s << width << height << numOfBytes;
+	SAFE_NEW(data,ubyte[numOfBytes]);
 	s.append(data,numOfBytes);
 }
 

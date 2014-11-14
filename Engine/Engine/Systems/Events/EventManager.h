@@ -47,8 +47,12 @@ class ENGINE_SHARED EventManager {
 	std::map<std::string,ListOfFunctions> functions;
 	std::vector<EventInstance> fireQ;
 	EventHandle Subscribe(std::string event,std::function<void(EventData*,Object*)> function);
+	bool disable;
 	DEFINE_SINGLETON(EventManager);
 public:
+	EventManager();
+	void Disable();
+	void Enable();
 	void update(float dt);
 
 	void fire(EventData * data, Object * sender, float inNumSeconds = 0);

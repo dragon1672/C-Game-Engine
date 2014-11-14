@@ -525,10 +525,10 @@ ComponentEditor::ComponentEditor()
 	privates = new ComponentEditorPrivates();
 	setLayout(privates->layout);
 	eventManager.Subscribe<ComponentAddedEvent>([this](EventData*d,Object*s) {
-		this->privates->reload();
+		this->reload();
 	});
 	eventManager.Subscribe<ComponentRemovedEvent>([this](EventData*d,Object*s) {
-		this->privates->reload();
+		this->reload();
 	});
 }
 
@@ -540,4 +540,9 @@ void ComponentEditor::update()
 ComponentEditor::~ComponentEditor()
 {
 	delete privates;
+}
+
+void ComponentEditor::reload()
+{
+	privates->reload();
 }
