@@ -195,18 +195,22 @@ void Entity::SelectorFunction(std::function<bool(Component*)> val)
 
 void Entity::saveValues(bool useSelector)
 {
-	getTrans()->saveValues();
-	for (uint i = 0; i < components.size(); i++) {
-		if(components[i]->active && (!selectorFunction || !useSelector || selectorFunction && selectorFunction(components[i]))) components[i]->saveValues();
-	}
+	this->tmpStream.resetToBeg();
+	Save(tmpStream);
+	//getTrans()->saveValues();
+	//for (uint i = 0; i < components.size(); i++) {
+	//	if(components[i]->active && (!selectorFunction || !useSelector || selectorFunction && selectorFunction(components[i]))) components[i]->saveValues();
+	//}
 }
 
 void Entity::restoreValues(bool useSelector)
 {
-	getTrans()->restoreValues();
-	for (uint i = 0; i < components.size(); i++) {
-		if(components[i]->active && (!selectorFunction || !useSelector || selectorFunction && selectorFunction(components[i]))) components[i]->restoreValues();
-	}
+	this->tmpStream.resetToBeg();
+	Load(tmpStream);
+	//getTrans()->restoreValues();
+	//for (uint i = 0; i < components.size(); i++) {
+	//	if(components[i]->active && (!selectorFunction || !useSelector || selectorFunction && selectorFunction(components[i]))) components[i]->restoreValues();
+	//}
 }
 
 std::vector<Component *> Entity::getAllComponents()
