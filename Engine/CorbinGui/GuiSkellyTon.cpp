@@ -82,12 +82,38 @@ void GuiSkellyTon::initBar()
 
 	fileMenu->addAction(action = new QAction("Load Project", this));	action->setShortcut(QKeySequence::Open);
 	connect(action, &QAction::triggered, [this](){ // TODO
-		printer.LogMessage("Open Clicked");
+		QString targetBin = QFileDialog::getOpenFileName(this, "Open Level", "..", "Corbin Engine File (*.EngCorb)");
+		if(targetBin == "")
+			return;
+		std::string loadFileName = targetBin.toStdString();
+
+		Stream backup;
+		backup << gameManager;
+		try {
+			Stream leFile;
+			leFile.importFromFile(loadFileName.c_str());
+			leFile >> gameManager;
+		} catch (...) {
+			printErr(100) "error","file not loaded from:",loadFileName;
+			backup >> gameManager;
+		}
 	});
 
 	fileMenu->addAction(action = new QAction("Save Project", this));	action->setShortcuts(QKeySequence::Save);
 	connect(action, &QAction::triggered, [this](){ // TODO
-		printer.LogMessage("Save Clicked");
+		QString targetBin = QFileDialog::getSaveFileName(this, "Save Level", "..", "Corbin Engine File (*.EngCorb)");
+		if(targetBin == "")
+			return;
+		std::string saveFileName = targetBin.toStdString();
+
+		Stream leFile;
+		leFile << gameManager;
+
+		try {
+			leFile.exportToFile(saveFileName.c_str());
+		} catch (...) {
+			printErr(100) "error","file not saved to:",saveFileName;
+		}
 	});
 
 	fileMenu->addAction(action = new QAction("Exit Program", this));
