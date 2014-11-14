@@ -87,8 +87,11 @@ void GuiSkellyTon::initBar()
 			return;
 		std::string loadFileName = targetBin.toStdString();
 
+		myTimer.stop();
+
 		Stream backup;
 		backup << gameManager;
+		backup.resetToBeg();
 		try {
 			Stream leFile;
 			leFile.importFromFile(loadFileName.c_str());
@@ -97,6 +100,8 @@ void GuiSkellyTon::initBar()
 			printErr(100) "error","file not loaded from:",loadFileName;
 			backup >> gameManager;
 		}
+
+		myTimer.start();
 	});
 
 	fileMenu->addAction(action = new QAction("Save Project", this));	action->setShortcuts(QKeySequence::Save);

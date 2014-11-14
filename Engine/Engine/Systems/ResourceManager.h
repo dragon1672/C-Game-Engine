@@ -17,14 +17,10 @@
 class ENGINE_SHARED ResourceManager : public Resource {
 	DEFINE_SINGLETON(ResourceManager);
 private:
-	ConstVector<ShaderProgram> shaders;
-	ObjectManager ShaderProgramObjs;
-	ConstVector<Mesh> geos;
-	ObjectManager MeshObjs;
-	ConstVector<TextureInfo> textures;
-	ObjectManager TextureInfoObjs;
-	ConstVector<Script> scripts;
-	ObjectManager ScriptObjs;
+	ObjectManager ShaderProgramObjs;		ConstVector<ShaderProgram> shaders;
+	ObjectManager MeshObjs;					ConstVector<Mesh> geos;
+	ObjectManager TextureInfoObjs;			ConstVector<TextureInfo> textures;
+	ObjectManager ScriptObjs;				ConstVector<Script> scripts;
 	void foreachOnAll(std::function<void(Resource&)> func);
 
 	ShaderProgram * defaultShader;

@@ -21,7 +21,7 @@
 	arrayName##[##indexName##++] = ShaderUniformPram( MATERIAL_STRINGY(name,Offset)    , ParameterType::PT_VEC2,      &name##Offset[0] )
 
 #define SAVE_TEXTURE_TO_STREAM(stream_name,name,Propercase)\
-	double temp##Propercase##Id = name != nullptr ? name->getID() : -1; \
+	double temp##Propercase##Id = name != nullptr ? name->getID() : Object::NULL_OBJECT; \
 	stream_name << temp##Propercase##Id << has##Propercase << name##Scale << name##Offset
 
 #define LOAD_TEXTURE_FROM_STREAM(stream_name,name,Propercase)\

@@ -146,12 +146,12 @@ void Entity::Parent(double newGuy)
 void Entity::Parent(Entity * newGuy)
 {
 	Entity * old = Parent();
-	if(Collections::contains(children,newGuy->getID())) {
+	if(newGuy != nullptr && Collections::contains(children,newGuy->getID())) {
 		throw std::invalid_argument("Recursive children detected");
 	}
 	if(old    != nullptr) old->children.erase(getID());
 	if(newGuy != nullptr) newGuy->children.emplace(getID());
-	parent = newGuy->getID();
+	parent = newGuy != nullptr ? newGuy->getID() : Object::NULL_OBJECT;
 	EntityParentChangedEvent data(this,old,newGuy);
 	emitEvent(data);
 	for (uint i = 0; i < StageChanged.size(); i++) StageChanged[i](this);
@@ -230,7 +230,7 @@ void Entity::Load(Stream&s)
 	s >> parent >> active >> components >> getTrans();
 }
 
-Entity::Entity(std::string name/*="New Game Object"*/, GameObjectManager * gm /*= nullptr*/) : parent(-1), gm(gm), active(true), Object(name)
+Entity::Entity(std::string name/*="New Game Object"*/, GameObjectManager * gm /*= nullptr*/) : parent(Object::NULL_OBJECT), gm(gm), active(true), Object(name)
 {
 	LUA_OBJECT_START(Entity);
 }

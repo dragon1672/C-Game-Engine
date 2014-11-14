@@ -14,6 +14,7 @@ class ENGINE_SHARED Mesh : public Resource {
 	GeometryInfo geo;
 	glm::vec3 min;
 	glm::vec3 max;
+	bool inHardware;
 public:
 	int drawStyle;
 	Mesh(std::string name="");

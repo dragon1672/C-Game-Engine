@@ -11,6 +11,7 @@ private:
 	GUID id;
 	std::string name;
 public:
+	static const double NULL_OBJECT;
 	Object(std::string name = "");
 	Object(std::string name,double id);
 	virtual ~Object() {}

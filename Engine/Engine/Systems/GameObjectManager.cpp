@@ -143,6 +143,7 @@ void GameObjectManager::RemoveEntity(Entity * toRemove)
 			RemoveEntity(i);
 		}
 		entities[index].active = false;
+		entities[index].Parent(nullptr);
 		EntityRemovedEvent data(toRemove);
 		emitEvent(data);
 	}
@@ -207,6 +208,11 @@ void GameObjectManager::Load(Stream&s)
 	s >> entities;
 	EntityManager.ClearAll();
 	EntityManager.Register(Collections::Select<Entity,Object*>(entities,[](Entity&e){ return &e; }));
+	for (uint i = 0; i < entities.size(); i++) {
+		EntityAddedEvent evt(&entities[i]);
+		emitEvent(evt);
+	}
+	rebuildEntityParents();
 }
 
 void GameObjectManager::rebuildEntityParents()
@@ -217,7 +223,6 @@ void GameObjectManager::rebuildEntityParents()
 	for (uint i = 0; i < entities.size(); i++) {
 		Entity * dude = &entities[i];
 		Entity * parent = dude->Parent();
-		if(parent != nullptr)
-			parent->children.emplace(dude->getID());
+		dude->Parent(parent);
 	}
 }

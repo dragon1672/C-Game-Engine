@@ -182,16 +182,18 @@ void Mesh::PassDownToHardWare()
 	updateMinAndMax();
 	geo.init(&verts[0],verts.size(),&indices[0],indices.size(),drawStyle);
 	geo.addStreamedParameters<Vert>(Vert::getAtribs(),Vert::getNumOfAtribs());
+	inHardware = true;
 }
 
 Mesh::Mesh(std::string name)
-	: Resource(name)
+	: Resource(name), inHardware(false)
 {
 	drawStyle = GL_TRIANGLES;
 }
 
 void Mesh::paint()
 {
+	if(!inHardware) PassDownToHardWare();
 	GeometryInfo& toDraw = geo;
 	glBindVertexArray(toDraw.vertexArrayObjectID);
 	glBindBuffer(toDraw.bufferInformation.bufferID,GL_ARRAY_BUFFER);
@@ -249,4 +251,5 @@ void Mesh::ChildSave(Stream& s)
 void Mesh::ChildLoad(Stream& s)
 {
 	s >> drawStyle >> verts >> indices;
+	inHardware = false;
 }
