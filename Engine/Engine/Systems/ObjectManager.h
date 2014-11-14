@@ -21,5 +21,5 @@ public:
 	Object * getFirst(const char * name) const;
 	std::vector<Object *> getAll(const char * name) const;
 	std::vector<Object *> getAll() const;
-	int getUniqueId();
+	void ClearAll();
 };

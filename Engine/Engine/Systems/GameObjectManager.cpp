@@ -146,6 +146,7 @@ void GameObjectManager::RemoveEntity(Entity * toRemove)
 		EntityRemovedEvent data(toRemove);
 		emitEvent(data);
 	}
+	if((unsigned)index == entities.size()-1) entities.pop_back();
 	EntityManager.UnRegister(toRemove);
 }
 
@@ -218,6 +219,7 @@ void GameObjectManager::Load(Stream&s)
 {
 	Object::ObjectLoad(s);
 	s >> entities;
+	EntityManager.ClearAll();
 	EntityManager.Register(Collections::Select<Entity,Object*>(entities,[](Entity&e){ return &e; }));
 }
 

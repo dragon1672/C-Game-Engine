@@ -8,11 +8,11 @@
 
 #include <Engine/Systems/Events/EventManager.h>
 #include <Engine/Systems/Events/Events/ObjectChangedNameEvent.h>
+#include <Engine/Defines/SafeNewAndDelete.h>
 
 
 class ObjectManagerPrivates {
 public:
-	uint GlobalId;
 	struct ObjectMatches : public std::vector<Object*> { public: operator std::vector<Object*>() { return *this; }};
 	std::map<std::string,ObjectMatches> nameMap;
 	std::map<double,Object *> idMap;
@@ -20,12 +20,11 @@ public:
 	bool ContainsName(Object * toCheck)  { return Contains(toCheck->Name()); }
 	bool Contains(double toCheck)       { return idMap.find(toCheck) != idMap.end();   }
 	bool Contains(std::string name)  { return nameMap.find(name)  != nameMap.end(); }
-	ObjectManagerPrivates() : GlobalId(0) {}
 };
 
-ObjectManager::ObjectManager()
+ObjectManager::ObjectManager() : privates(nullptr)
 {
-	privates = new ObjectManagerPrivates();
+	SAFE_NEW(privates,ObjectManagerPrivates());
 	eventManager.Subscribe<ObjectChangedNameEvent>([this](EventData*,Object*o){
 		if(privates->ContainsName(o)) { // TODO: optimize
 			UnRegister(o);
@@ -36,7 +35,7 @@ ObjectManager::ObjectManager()
 
 ObjectManager::~ObjectManager()
 {
-	delete privates;
+	SAFE_DELETE(privates);
 }
 
 void ObjectManager::Register(Object& toAdd) {
@@ -109,7 +108,7 @@ std::vector<Object *> ObjectManager::getAll(const char * name) const
 	return privates->Contains(name) ? privates->nameMap[name] : std::vector<Object*>();
 }
 
-int ObjectManager::getUniqueId()
+void ObjectManager::ClearAll()
 {
-	return privates->GlobalId++;
+	SAFE_NEW(privates,ObjectManagerPrivates());
 }

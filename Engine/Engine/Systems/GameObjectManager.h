@@ -58,6 +58,7 @@ public:
 	Entity * CloneEntity(int toCloneId) {
 		Entity * e = getEntity(toCloneId);
 		auto n = AddEntity(e->Name());
+
 		//clone all components ... somehow :/
 		return n;
 	}

@@ -3,6 +3,7 @@
 #include <QtWidgets/QFileDialog>
 #include <Engine/Systems/GameObjectManager.h>
 #include <CorbinGui/Dependents/ResourceViewer.h>
+#include <Engine/IO/Stream.h>
 
 
 
@@ -192,8 +193,9 @@ void GuiSkellyTon::ToggleGameStartStop()
 			game->start();
 
 			gameManager.ComponentSelectorFunction(game->IsGameObject());
-		
-			gameManager.saveValues();
+
+			tempStreamForGamePlay.resetToBeg();
+			tempStreamForGamePlay << gameManager;
 
 			ResouceBar->setEnabled(false);
 			GameObjectMenu->setEnabled(false);
@@ -211,7 +213,10 @@ void GuiSkellyTon::ToggleGameStartStop()
 		}
 	} else if (myState == EditorStates::PlayingGame || EditorStates::PlayingPaused) { // stop the phone!
 		myState = EditorStates::Editor;
-		gameManager.restoreValues();
+
+		//rebuild editor entities here
+		tempStreamForGamePlay.resetToBeg();
+		tempStreamForGamePlay >> gameManager;
 
 		gameManager.ComponentSelectorFunction(game->IsEditorObject());
 		game->start();

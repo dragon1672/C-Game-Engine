@@ -15,6 +15,7 @@
 #include <CorbinGui/Dependents/GameObjectViewer.h>
 #include <CorbinGui/ToolWindowManager/ToolWindowManager.h>
 #include <CorbinGui/ToolWindowManager/ToolWindowManagerArea.h>
+#include <Engine/IO/Stream.h>
 
 class ENGINE_SHARED GuiSkellyTon : public QMainWindow  {
 	QTimer myTimer;
@@ -34,6 +35,7 @@ class ENGINE_SHARED GuiSkellyTon : public QMainWindow  {
 	enum EditorStates{
 		Editor,PlayingGame,PlayingPaused//saving?
 	} myState;
+	Stream tempStreamForGamePlay;
 public:
 	EditorGame * Game() const { return game; }
 	GuiSkellyTon();
