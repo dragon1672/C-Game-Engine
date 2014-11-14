@@ -15,9 +15,9 @@ void EventManager::EventHandle::UnRegister()
 	manager->RemoveEvent(this);
 }
 
-void EventManager::EventHandle::Fire(EventData*data,Object * sender,float inNumSeconds /*= 0*/)
+void EventManager::EventHandle::Fire(EventData*data,Object * sender,std::function<void(EventData*)> destructor,float inNumSeconds /*= 0*/)
 {
-	manager->fire(data,sender,inNumSeconds);
+	manager->fire(data,sender,destructor,inNumSeconds);
 }
 
 int EventManager::EventHandle::MasterID = 0;
@@ -25,13 +25,15 @@ int EventManager::EventHandle::MasterID = 0;
 void EventManager::EventInstance::fire()
 {
 	handle.fun(evt,sender);
+	destructor(evt);
 }
 
-EventManager::EventInstance::EventInstance(EventHandle handle, EventData*evt,Object*sender,float timeLeft) :
+EventManager::EventInstance::EventInstance(EventHandle handle, EventData*evt,Object*sender,std::function<void(EventData*)> destructor,float timeLeft) :
 	handle(handle),
 	evt(evt),
 	sender(sender),
-	timeLeft(timeLeft)
+	timeLeft(timeLeft),
+	destructor(destructor)
 {
 
 }
@@ -74,26 +76,34 @@ void EventManager::update(float dt)
 	VECTOR_REMOVE_CONDITION(fireQ,.timeLeft <= 0);
 }
 
-void EventManager::fire(EventData * data, Object * sender, float inNumSeconds /*= 0*/)
+void EventManager::fire(EventData * data, Object * sender, std::function<void(EventData*)> destructor /*= [](EventData*e){delete e;}*/, float inNumSeconds /*= 0*/)
 {
 	std::string event = data->getEventName();
 	if(disable || functions.find(event)==functions.end()) { // no one cares
+		destructor(data);
 		return;
 	}
 	auto& list = functions[event].funs;
+
+	std::function<void(EventData*)> dummy = [](EventData*){};
+
 	if(inNumSeconds > 0) {
 		for (uint i = 0; i < list.size(); i++) {
-			fireQ.push_back(EventInstance(list[i],data,sender,inNumSeconds));
+			std::function<void(EventData*)> toUse = i==list.size()-1 ? destructor:dummy;
+			fireQ.push_back(EventInstance(list[i],data,sender,toUse,inNumSeconds));
 		}
+		if(list.size()==0) destructor(data);
 	} else {
 		for (uint i = 0; i < list.size(); i++) {
-			EventInstance(list[i],data,sender,inNumSeconds).fire();
+			EventInstance(list[i],data,sender,dummy,inNumSeconds).fire();
 		}
+		destructor(data);
 	}
 }
 void EventManager::fire(EventData& data, Object * sender, float inNumSeconds /*= 0*/)
 {
-	fire(&data,sender,inNumSeconds);
+	//assume that person who fired know about data
+	fire(&data,sender,[](EventData*){},inNumSeconds);
 }
 
 EventManager::EventHandle EventManager::Subscribe(std::string event,std::function<void(EventData*,Object*)> function)

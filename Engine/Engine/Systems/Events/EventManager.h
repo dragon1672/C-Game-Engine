@@ -19,11 +19,12 @@ class ENGINE_SHARED EventManager {
 		int ID;
 		std::string eventName;
 		std::function<void(EventData*,Object*)> fun;
+		std::function<void(EventData*)> destructor;
 		EventManager * manager;
 	public:
 		EventHandle(std::string eventName="", std::function<void(EventData*,Object*)> fun=std::function<void(EventData*,Object*)>(),EventManager * manager = nullptr);
 		void UnRegister();
-		void Fire(EventData*data,Object * sender,float inNumSeconds = 0);
+		void Fire(EventData*data,Object * sender,std::function<void(EventData*)> destructor=[](EventData*e){delete e;},float inNumSeconds = 0);
 		friend EventManager;
 		friend EventInstance;
 	};
@@ -32,10 +33,11 @@ class ENGINE_SHARED EventManager {
 		EventData*evt;
 		Object*sender;
 		EventManager * manager;
+		std::function<void(EventData*)> destructor;
 		float timeLeft;
 		void fire();
 	public:
-		EventInstance(EventHandle handle, EventData*evt,Object*sender,float timeLeft);
+		EventInstance(EventHandle handle, EventData*evt,Object*sender,std::function<void(EventData*)> destructor,float timeLeft);
 		float TimeLeft()        const;
 		EventManager * Manager() const;
 		std::string EventName() const;
@@ -55,7 +57,7 @@ public:
 	void Enable();
 	void update(float dt);
 
-	void fire(EventData * data, Object * sender, float inNumSeconds = 0);
+	void fire(EventData * data, Object * sender, std::function<void(EventData*)> destructor=[](EventData*e){delete e;}, float inNumSeconds = 0);
 	void fire(EventData&  data, Object * sender, float inNumSeconds = 0);
 	
 	template <typename T> EventHandle Subscribe(std::function<void(EventData*,Object*)> function) { return Subscribe(typeid(T).name(),function); }

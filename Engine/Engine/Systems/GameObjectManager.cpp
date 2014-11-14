@@ -90,8 +90,7 @@ Entity * GameObjectManager::AddEntity(std::string name)
 	Entity * ret = &entities.back();
 	if(componentSelectorFunction) ret->SelectorFunction(componentSelectorFunction);
 	EntityManager.Register(ret);
-	EntityAddedEvent eventData(ret);
-	emitEvent(eventData);
+	emitEvent(new EntityAddedEvent(ret));
 	return ret;
 }
 
@@ -145,8 +144,7 @@ void GameObjectManager::RemoveEntity(Entity * toRemove)
 		}
 		entities[index].active = false;
 		entities[index].Parent(nullptr);
-		EntityRemovedEvent data(toRemove);
-		emitEvent(data);
+		emitEvent(new EntityRemovedEvent(toRemove));
 	}
 	if((unsigned)index == entities.size()-1) entities.pop_back();
 	EntityManager.UnRegister(toRemove);
@@ -210,8 +208,7 @@ void GameObjectManager::Load(Stream&s)
 	EntityManager.ClearAll();
 	EntityManager.Register(Collections::Select<Entity,Object*>(entities,[](Entity&e){ return &e; }));
 	for (uint i = 0; i < entities.size(); i++) {
-		EntityAddedEvent evt(&entities[i]);
-		emitEvent(evt);
+		emitEvent(new EntityAddedEvent(&entities[i]));
 	}
 	rebuildEntityParents();
 }

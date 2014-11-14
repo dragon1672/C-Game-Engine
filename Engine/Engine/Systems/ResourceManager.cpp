@@ -17,8 +17,7 @@ Mesh * ResourceManager::addMesh(std::string name)
 {
 	geos.push_back(Mesh(name));
 	MeshObjs.Register(geos.back());
-	ResourceLoadedEvent eventData(&geos.back());
-	emitEvent(eventData);
+	emitEvent(new ResourceLoadedEvent(&geos.back()));
 	return &geos.back();
 }
 Mesh * ResourceManager::addMesh(std::string name, Neumont::ShapeData NUCrap)
@@ -33,16 +32,14 @@ Mesh * ResourceManager::addMesh(std::string name, Neumont::ShapeData NUCrap)
 		ret.indices.push_back(NUCrap.indices[i]);
 	}
 	MeshObjs.Register(geos.back());
-	ResourceLoadedEvent eventData(&geos.back());
-	emitEvent(eventData);
+	emitEvent(new ResourceLoadedEvent(&geos.back()));
 	return &geos.back();
 }
 Mesh * ResourceManager::addMesh(std::string name, std::string filePath, bool useRelPath)
 {
 	geos.push_back(FileIO::loadMeshFromFile((useRelPath?workingDir:"") + filePath,name));
 	MeshObjs.Register(geos.back());
-	ResourceLoadedEvent eventData(&geos.back());
-	emitEvent(eventData);
+	emitEvent(new ResourceLoadedEvent(&geos.back()));
 	return &geos.back();
 }
 Mesh * ResourceManager::addMesh(std::string name, const char * filePath,bool useRelPath)
@@ -66,8 +63,7 @@ ShaderProgram * ResourceManager::addShader_src (std::string name, const char * v
 	shaders.push_back(ShaderProgram(name));
 	ShaderProgramObjs.Register(shaders.back());
 	shaders.back().buildBasicProgram(vert,frag);
-	ResourceLoadedEvent eventData(&shaders.back());
-	emitEvent(eventData);
+	emitEvent(new ResourceLoadedEvent(&shaders.back()));
 	return &shaders.back();
 }
 
@@ -124,8 +120,7 @@ TextureInfo * ResourceManager::add2DTexture(std::string name, ubyte * data, uint
 	textures.back().type   = type;
 	textures.back().type2  = type2;
 	TextureInfoObjs.Register(textures.back());
-	ResourceLoadedEvent eventData(&textures.back());
-	emitEvent(eventData);
+	emitEvent(new ResourceLoadedEvent(&textures.back()));
 	return &textures.back();
 }
 
@@ -148,8 +143,7 @@ Script * ResourceManager::addScript_src (std::string file)
 	scripts.back().Src(file);
 	scripts.back().updateName();
 	ScriptObjs.Register(scripts.back());
-	ResourceLoadedEvent eventData(&scripts.back());
-	emitEvent(eventData);
+	emitEvent(new ResourceLoadedEvent(&scripts.back()));
 	return &scripts.back();
 }
 
@@ -222,8 +216,7 @@ ShaderProgram * ResourceManager::duplicate(ShaderProgram * toDup)
 	shaders.add(*toDup);
 	shaders.back().Name(toDup->Name()+"_dup");
 	ShaderProgramObjs.Register(shaders.back());
-	ResourceLoadedEvent eventData(&shaders.back());
-	emitEvent(eventData);
+	emitEvent(new ResourceLoadedEvent(&shaders.back()));
 	return &shaders.back();
 }
 
@@ -251,8 +244,7 @@ void ResourceManager::ChildSave(Stream& s)
 		newGuy.ObjectLoad(s);		   \
 		name##.push_back(newGuy);	   \
 		type##Objs.Register(##name##.back());			  \
-		ResourceLoadedEvent eventData(&##name##.back());  \
-		emitEvent(eventData);							  \
+		emitEvent(new ResourceLoadedEvent(&##name##.back()));  \
 		name##.back().PassDownToHardWare();               \
 	}								   \
 } 1==1

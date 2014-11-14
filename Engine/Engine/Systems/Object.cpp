@@ -34,8 +34,7 @@ void Object::Name(const std::string name)
 	std::string old = this->name;
 	this->name = name;
 	if(old != this->name) {
-		ObjectChangedNameEvent data(this,old,name);
-		emitEvent(data);
+		emitEvent(new ObjectChangedNameEvent(this,old,name));
 	}
 }
 
