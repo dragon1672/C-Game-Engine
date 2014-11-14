@@ -33,24 +33,26 @@ void RenderableComponent::addUniformParameter(ShaderObject& obj)
 }
 
 void RenderableComponent::drawWarmup() {
-	shader->useProgram();
+	Shader()->useProgram();
 
 	for (uint i = 0; i < uniformParameters.size(); i++) {
-		shader->passUniform(uniformParameters[i]);
+		Shader()->passUniform(uniformParameters[i]);
 	}
 	for (uint i = 0; i < objUniforms.size(); i++)
 	{
-		shader->passUniform(objUniforms[i]);
+		Shader()->passUniform(objUniforms[i]);
 	}
 }
 
 bool RenderableComponent::isValid()
 {
-	return this->shader != nullptr && this->geo != nullptr;
+	return this->Shader() != nullptr && this->Geo() != nullptr;
 }
 
-RenderableComponent::RenderableComponent(Mesh * geo /*= nullptr*/, ShaderProgram * shader /*= nullptr*/, ShaderUniformPram * uniforms /*= nullptr*/, int numOfUniforms /*= 0*/) : geo(geo), shader(shader), visable(true)
+RenderableComponent::RenderableComponent(Mesh * geo /*= nullptr*/, ShaderProgram * shader /*= nullptr*/, ShaderUniformPram * uniforms /*= nullptr*/, int numOfUniforms /*= 0*/) : visable(true)
 {
+	Geo(geo);
+	Shader(shader);
 	for (int i = 0; i < numOfUniforms; i++)
 	{
 		uniformParameters.push_back(uniforms[i]);
@@ -61,22 +63,19 @@ RenderableComponent::RenderableComponent(Mesh * geo /*= nullptr*/, ShaderProgram
 std::vector<std::string> RenderableComponent::getErrors()
 {
 	std::vector<std::string> ret;
-	if(shader == nullptr) ret.push_back("No Shader");
-	if(geo    == nullptr) ret.push_back("No Geo");
+	if(Shader() == nullptr) ret.push_back("No Shader");
+	if(Geo()  == nullptr) ret.push_back("No Geo");
 	return ret;
 }
 
 void RenderableComponent::ChildSave(Stream& s)
 {
-	s << geo->getID() << shader->getID() << material << visable;
+	s << geo << shader << material << visable;
 }
 
 void RenderableComponent::ChildLoad(Stream& s)
 {
-	double geoID, shaderID;
-	s >> geoID >> shaderID >> material >> visable;
-	geo = resourceManager.getMesh(geoID);
-	shader = resourceManager.getShaderProgram(shaderID);
+	s >> geo >> shader >> material >> visable;
 }
 
 bool RenderableComponent::CopyInto(Component* t)

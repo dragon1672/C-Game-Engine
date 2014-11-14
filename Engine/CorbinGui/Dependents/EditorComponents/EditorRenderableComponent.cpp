@@ -19,7 +19,7 @@ bool EditorRenderableComponent::isValid()
 void EditorRenderableComponent::sync()
 {
 	//editorInstance->material = gameInstance->material; // not required since uniforms are synced
-	editorInstance->geo = gameInstance->geo;
+	editorInstance->Geo(gameInstance->Geo());
 	editorInstance->visable = gameInstance->visable;
 	editorInstance->objUniforms = gameInstance->objUniforms;
 	editorInstance->uniformParameters = gameInstance->uniformParameters;

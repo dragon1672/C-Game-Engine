@@ -230,6 +230,7 @@ void GuiSkellyTon::ToggleGameStartStop()
 			gameManager.ComponentSelectorFunction(game->IsGameObject());
 
 			tempStreamForGamePlay.resetToBeg();
+			resourceManager.ObjectSave(tempStreamForGamePlay);
 			tempStreamForGamePlay << gameManager;
 
 			ResouceBar->setEnabled(false);
@@ -251,6 +252,7 @@ void GuiSkellyTon::ToggleGameStartStop()
 
 		//rebuild editor entities here
 		tempStreamForGamePlay.resetToBeg();
+		resourceManager.ObjectLoad(tempStreamForGamePlay);
 		tempStreamForGamePlay >> gameManager;
 
 		gameManager.ComponentSelectorFunction(game->IsEditorObject());

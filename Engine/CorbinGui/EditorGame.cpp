@@ -73,7 +73,7 @@ RenderableComponent * EditorGame::scoper::addComponent()
 	auto editorV = currentlySelectedEntity->addComponent<RenderableComponent>();
 	auto binder = currentlySelectedEntity->addComponent<EditorRenderableComponent>();
 	binder->init(editor->uniqueName,ret,editorV);
-	editorV->shader = resourceManager.getDefault<ShaderProgram>();
+	editorV->Shader(resourceManager.getDefault<ShaderProgram>());
 	binder->sync();
 	return ret;
 }

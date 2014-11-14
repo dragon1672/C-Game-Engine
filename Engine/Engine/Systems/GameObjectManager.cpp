@@ -76,7 +76,7 @@ void GameObjectManager::paint() {
 				if(renderable != nullptr && renderable->visable && renderable->isValid()) {
 					passStandardUniforms(renderable);
 					renderable->drawWarmup();
-					renderable->geo->paint();
+					renderable->Geo()->paint();
 				}
 			}
 		}
@@ -111,7 +111,7 @@ void GameObjectManager::passStandardUniforms(RenderableComponent * renderable)
 	}
 	camManager.ActiveCam()->width = width;
 	camManager.ActiveCam()->height = height;
-	ShaderProgram * prog = renderable->shader;
+	ShaderProgram * prog = renderable->Shader();
 	prog->useProgram();
 	auto model2World = renderable->Parent()->getWorldTransform();
 	auto world2cam = camManager.ActiveCam()->getWorld2View();

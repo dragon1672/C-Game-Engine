@@ -9,14 +9,30 @@
 #include <ExportHeader.h>
 
 class ENGINE_SHARED RenderableComponent : public Component {
+	double geo;
+	double shader;
 public:
 	std::vector<ShaderUniformPram> uniformParameters;
 	std::vector<ShaderObject*> objUniforms;
-	union {
-		Mesh * geo;
-		Mesh * mesh;
-	};
-	ShaderProgram * shader;
+	Mesh * Geo() {
+		return resourceManager.getMesh(geo);
+	}
+	void Geo(double id) {
+		geo = id;
+	}
+	void Geo(Mesh * data) {
+		geo = data != nullptr ? data->getID() : Object::NULL_OBJECT_ID();
+	}
+	ShaderProgram * Shader() {
+		return resourceManager.getShaderProgram(shader);
+	}
+	void Shader(double id) {
+		shader = id;
+	}
+	void Shader(ShaderProgram * id) {
+		shader = id != nullptr ? id->getID() : Object::NULL_OBJECT_ID();
+	}
+
 	Material material;
 	bool visable;
 

@@ -151,7 +151,7 @@ void Entity::Parent(Entity * newGuy)
 	}
 	if(old    != nullptr) old->children.erase(getID());
 	if(newGuy != nullptr) newGuy->children.emplace(getID());
-	parent = newGuy != nullptr ? newGuy->getID() : Object::NULL_OBJECT;
+	parent = newGuy != nullptr ? newGuy->getID() : Object::NULL_OBJECT_ID();
 	EntityParentChangedEvent data(this,old,newGuy);
 	emitEvent(data);
 	for (uint i = 0; i < StageChanged.size(); i++) StageChanged[i](this);
@@ -230,7 +230,7 @@ void Entity::Load(Stream&s)
 	s >> parent >> active >> components >> getTrans();
 }
 
-Entity::Entity(std::string name/*="New Game Object"*/, GameObjectManager * gm /*= nullptr*/) : parent(Object::NULL_OBJECT), gm(gm), active(true), Object(name)
+Entity::Entity(std::string name/*="New Game Object"*/, GameObjectManager * gm /*= nullptr*/) : parent(Object::NULL_OBJECT_ID()), gm(gm), active(true), Object(name)
 {
 	LUA_OBJECT_START(Entity);
 }

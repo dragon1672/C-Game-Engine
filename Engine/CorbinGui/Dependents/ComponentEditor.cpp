@@ -315,11 +315,11 @@ public:
 		widg->setLayout(tLay);															
 		tLay->addWidget(new QLabel(QString("Geo: ")));			
 		{																					
-			auto box = loadComboBox<Mesh>(script->geo);
+			auto box = loadComboBox<Mesh>(script->Geo());
 			tLay->addWidget(box);
 			void (QComboBox:: *indexChangedSignal)(int) = &QComboBox::currentIndexChanged;
 			connect(box, indexChangedSignal, [=] {
-				script->geo = resourceManager.getMesh(box->currentData().toDouble());
+				script->Geo(box->currentData().toDouble());
 			});
 		}
 		layout->addWidget(widg);
@@ -328,11 +328,11 @@ public:
 		widg->setLayout(tLay);															
 		tLay->addWidget(new QLabel(QString("Shader: ")));			
 		{																					
-			auto box = loadComboBox<ShaderProgram>(script->shader);
+			auto box = loadComboBox<ShaderProgram>(script->Shader());
 			tLay->addWidget(box);
 			void (QComboBox:: *indexChangedSignal)(int) = &QComboBox::currentIndexChanged;
 			connect(box, indexChangedSignal, [=] {
-				script->shader = resourceManager.getShaderProgram(box->currentData().toDouble());
+				script->Shader(box->currentData().toDouble());
 			});
 		}
 		layout->addWidget(widg);
