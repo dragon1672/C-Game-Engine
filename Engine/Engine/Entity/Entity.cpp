@@ -251,3 +251,7 @@ Entity::Entity(std::string name/*="New Game Object"*/, GameObjectManager * gm /*
 	LUA_OBJECT_START(Entity);
 }
 
+void Entity::resetChildren()
+{
+	children.clear();
+}

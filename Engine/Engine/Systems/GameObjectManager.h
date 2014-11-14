@@ -34,6 +34,7 @@ class ENGINE_SHARED GameObjectManager : public Object, public StreamableObject {
 	LuaUserdata<Entity> getEntityFromId(int id) {
 		return (LuaUserdata<Entity>)*getEntity(id);
 	}
+	void rebuildEntityParents();
 
 public:
 	std::function<bool(Entity*)> SelectorFunction() const;

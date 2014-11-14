@@ -216,3 +216,15 @@ void GameObjectManager::Load(Stream&s)
 {
 }
 
+void GameObjectManager::rebuildEntityParents()
+{
+	for (uint i = 0; i < entities.size(); i++) {
+		entities[i].resetChildren();
+	}
+	for (uint i = 0; i < entities.size(); i++) {
+		Entity * dude = &entities[i];
+		Entity * parent = dude->Parent();
+		if(parent != nullptr)
+			parent->children.emplace(dude->getID());
+	}
+}
