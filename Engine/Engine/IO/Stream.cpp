@@ -7,7 +7,7 @@
 void Stream::exportToFile(const char * filePath)
 {
 	std::ofstream out(filePath, std::ios::binary );
-	out.write(&buffer[0],buffer.size());
+	out.write(&(*buffer)[0],(*buffer).size());
 }
 
 void Stream::importFromFile(const char * filePath)
@@ -17,8 +17,8 @@ void Stream::importFromFile(const char * filePath)
 	input.seekg(0, std::ios::end);
 	int sizeResult = (int)input.tellg();
 	input.seekg(0, std::ios::beg);
-	buffer.resize(sizeResult);
-	input.read(&buffer[0], sizeResult);
+	(*buffer).resize(sizeResult);
+	input.read(&(*buffer)[0], sizeResult);
 	input.close();
 	currentPos = 0;
 }
@@ -38,9 +38,9 @@ int Stream::CurrentPos() const
 	return currentPos;
 }
 
-Stream::Stream() : currentPos(0)
+Stream::Stream() : currentPos(0), buffer(new std::vector<char>())
 {
-
+	
 }
 
 Stream& operator<<(Stream& os, const std::string& obj)
@@ -90,8 +90,18 @@ Stream& operator>>(Stream& os, StreamableObject * obj)
 void Stream::internalAppend(const void * d, int size)
 {
 	char * data = (char*)d;
-	buffer.resize(buffer.size()+size);
+	(*buffer).resize((*buffer).size()+size);
 	for (int i = 0; i < size; i++) {
-		buffer[currentPos++] = data[i];
+		(*buffer)[currentPos++] = data[i];
 	}
+}
+
+void Stream::Save(Stream&s)
+{
+	s.append(&(*buffer)[currentPos],buffer->size()-currentPos);
+}
+
+void Stream::Load(Stream&s)
+{
+	readAndMoveForwardArray(&(*s.buffer)[s.currentPos],s.buffer->size()-s.currentPos);
 }

@@ -7,6 +7,8 @@
 #include <Engine/Tools/ConstVector.h>
 #include <Engine/IO/StreamableObject.h>
 #include <Engine/IO/FileIO.h>
+#include <memory>
+
 
 
 #pragma region HelperDefines
@@ -20,8 +22,8 @@
 
 #pragma endregion
 
-class ENGINE_SHARED Stream {
-	std::vector<char> buffer;
+class ENGINE_SHARED Stream : StreamableObject {
+	std::shared_ptr<std::vector<char>> buffer;
 	int currentPos;
 	
 	void internalAppend(const void * d, int size);
@@ -29,7 +31,7 @@ public:
 	int CurrentPos() const;
 	void CurrentPos(int val);
 
-	Stream();;
+	Stream();
 
 	void resetToBeg();
 	template<typename T> void append(T*array,int count) {
@@ -43,11 +45,11 @@ public:
 		d = *reinterpret_cast<T*>(&buffer[currentPos]);
 	}
 	template<typename T> void readAndMoveForward(T&d) {
-		d = *reinterpret_cast<T*>(&buffer[currentPos]);
+		d = *reinterpret_cast<T*>(&(*buffer)[currentPos]);
 		currentPos += sizeof(T);
 	}
 	template<typename T> void readAndMoveForwardArray(T * array, int arraySize) {
-		FileIO::myMemCopy((T*)&buffer[currentPos],array,arraySize);
+		FileIO::myMemCopy((T*)&(*buffer)[currentPos],array,arraySize);
 		currentPos += arraySize*sizeof(T);
 	}
 
@@ -80,6 +82,9 @@ public:
 
 	ENGINE_SHARED friend Stream& operator<<(Stream& os, const std::string& obj);
 	ENGINE_SHARED friend Stream& operator>>(Stream& os, std::string& obj);
+
+	virtual void Save(Stream&s);
+	virtual void Load(Stream&s);
 
 
 
