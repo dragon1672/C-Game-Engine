@@ -26,10 +26,6 @@ private:
 	glm::mat4 translationMat;
 	glm::mat4 scaleMat;
 
-	glm::vec3 pos_saved;
-	glm::vec3 rot_saved;
-	glm::vec3 scale_saved;
-
 	glm::vec3 pos_old;
 	glm::vec3 rot_old;
 	glm::vec3 scale_old;
@@ -55,9 +51,6 @@ public:
 	~MatrixInfo() {
 		LUA_OBJECT_END(MatrixInfo);
 	}
-
-	virtual void saveValues();
-	virtual void restoreValues();
 
 	void lookAt(glm::vec3 posToLookAt);
 

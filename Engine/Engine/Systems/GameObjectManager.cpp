@@ -182,20 +182,6 @@ bool GameObjectManager::Valid()
 	return true;
 }
 
-void GameObjectManager::saveValues(bool useSelector /*= true*/)
-{
-	for (uint i = 0; i < entities.size(); i++) {
-		if(entities[i].active) entities[i].saveValues(useSelector);
-	}
-}
-
-void GameObjectManager::restoreValues(bool useSelector /*= true*/)
-{
-	for (uint i = 0; i < entities.size(); i++) {
-		if(entities[i].active) entities[i].restoreValues(useSelector);
-	}
-}
-
 std::vector<std::string> GameObjectManager::getErrors()
 {
 	std::vector<std::string> ret;

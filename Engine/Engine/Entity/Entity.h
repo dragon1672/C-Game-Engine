@@ -9,7 +9,7 @@
 
 #include <Engine/Tools/MatrixInfo.h>
 #include <Engine/Entity/Components/ScriptComponent.h>
-#include <Engine/IO/Stream.h>
+#include <Engine/IO/StreamableObject.h>
 
 class RenderableComponent;
 class GameObjectManager;
@@ -43,8 +43,6 @@ private:
 	void resetChildren();
 	friend GameObjectManager;
 
-
-	Stream tmpStream;
 public:
 	std::function<bool(Component*)> SelectorFunction() const;
 	void SelectorFunction(std::function<bool(Component*)> val);
@@ -113,8 +111,6 @@ public:
 
 		return ret;
 	}
-	void saveValues(bool useSelector = true);
-	void restoreValues(bool useSelector = true);
 
 	virtual void Save(Stream&s);
 

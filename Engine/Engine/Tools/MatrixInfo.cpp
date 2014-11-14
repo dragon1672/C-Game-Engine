@@ -73,20 +73,6 @@ bool MatrixInfo::isValid()
 	return true;
 }
 
-void MatrixInfo::saveValues()
-{
-	pos_saved   = pos;
-	rot_saved   = rot;
-	scale_saved = scale;
-}
-
-void MatrixInfo::restoreValues()
-{
-	pos	  = pos_saved;
-	rot	  = rot_saved;
-	scale = scale_saved;
-}
-
 std::vector<std::string> MatrixInfo::getErrors()
 {
 	return std::vector<std::string>();
