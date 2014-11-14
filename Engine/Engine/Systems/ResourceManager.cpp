@@ -120,6 +120,7 @@ TextureInfo * ResourceManager::add2DTexture(std::string name, ubyte * data, uint
 
 	textures.back().width  = width;
 	textures.back().height = height;
+	textures.back().numOfBytes = sizeofData;
 	textures.back().type   = type;
 	textures.back().type2  = type2;
 	TextureInfoObjs.Register(textures.back());
@@ -182,6 +183,10 @@ std::vector<std::string> ResourceManager::getErrors()
 
 void ResourceManager::shutdown()
 {
+	ShaderProgramObjs.ClearAll();
+	MeshObjs.ClearAll();
+	TextureInfoObjs.ClearAll();
+	ScriptObjs.ClearAll();
 	foreachOnAll([](Resource&r){r.shutdown();});
 }
 #include <Engine/Systems/Resources/Mesh.h>
@@ -226,7 +231,7 @@ ShaderProgram * ResourceManager::duplicate(ShaderProgram * toDup)
 {																									 \
 	uint size = resource_array_name##.size();														 \
 	s << size;																						 \
-	for (uint i = 0; i < resource_array_name##.size();  i++) resource_array_name##[i].ChildSave(s);	 \
+	for (uint i = 0; i < resource_array_name##.size();  i++) resource_array_name##[i].ObjectSave(s); \
 }	1==1
 
 void ResourceManager::ChildSave(Stream& s)
@@ -242,13 +247,18 @@ void ResourceManager::ChildSave(Stream& s)
 	s >> size;						   \
 	for (uint i = 0; i < size;  i++) { \
 		type newGuy;				   \
-		newGuy.ChildLoad(s);		   \
+		newGuy.ObjectLoad(s);		   \
 		name##.push_back(newGuy);	   \
+		type##Objs.Register(##name##.back());			  \
+		ResourceLoadedEvent eventData(&##name##.back());  \
+		emitEvent(eventData);							  \
+		newGuy.PassDownToHardWare();                      \
 	}								   \
 } 1==1
 
 void ResourceManager::ChildLoad(Stream& s)
 {
+	shutdown();
 	ImportPack(s);
 }
 

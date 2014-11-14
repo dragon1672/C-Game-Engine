@@ -90,14 +90,17 @@ void GuiSkellyTon::initBar()
 		myTimer.stop();
 
 		Stream backup;
+		//resourceManager.ObjectSave(backup);
 		backup << gameManager;
 		backup.resetToBeg();
 		try {
 			Stream leFile;
 			leFile.importFromFile(loadFileName.c_str());
+			//resourceManager.ObjectLoad(leFile);
 			leFile >> gameManager;
 		} catch (...) {
 			printErr(100) "error","file not loaded from:",loadFileName;
+			//resourceManager.ObjectLoad(backup);
 			backup >> gameManager;
 		}
 
@@ -112,6 +115,7 @@ void GuiSkellyTon::initBar()
 		std::string saveFileName = targetBin.toStdString();
 
 		Stream leFile;
+		//resourceManager.ObjectSave(leFile);
 		leFile << gameManager;
 
 		try {
