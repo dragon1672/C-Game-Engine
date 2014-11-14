@@ -226,7 +226,7 @@ public:
 
 		void (QComboBox:: *indexChangedSignal)(int) = &QComboBox::currentIndexChanged;
 		connect(comboBox,indexChangedSignal,[this](int i) {
-			this->script->myScript(resourceManager.getScript(this->comboBox->currentData().toInt()));
+			this->script->myScript(this->comboBox->currentData().toDouble());
 		});
 
 

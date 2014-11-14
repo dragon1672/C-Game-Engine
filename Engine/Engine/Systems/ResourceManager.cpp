@@ -229,7 +229,6 @@ ShaderProgram * ResourceManager::duplicate(ShaderProgram * toDup)
 
 void ResourceManager::ChildSave(Stream& s)
 {
-	
 	SAVE_RESOURCE(shaders);
 	SAVE_RESOURCE(geos);
 	SAVE_RESOURCE(textures);

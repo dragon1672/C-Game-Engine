@@ -244,13 +244,13 @@ void GameObjectManager::rebuildEntityParents()
 
 void GameObjectManager::Disable()
 {
-	disable = false;
+	disable = true;
 	eventManager.Disable();
 }
 
 void GameObjectManager::Enable()
 {
-	disable = true;
+	disable = false;
 	eventManager.Enable();
 }
 
@@ -262,4 +262,33 @@ LuaUserdata<Entity> GameObjectManager::getEntityFromName(std::string name)
 LuaUserdata<Entity> GameObjectManager::getEntityFromId(int id)
 {
 	return (LuaUserdata<Entity>)*getEntity(id);
+}
+
+Entity * GameObjectManager::getEntity(double id)
+{
+	return (Entity*)EntityManager.getFirst(id);
+}
+
+Entity * GameObjectManager::getEntity(std::string name)
+{
+	return (Entity*)EntityManager.getFirst(name.c_str());
+}
+
+Entity * GameObjectManager::CloneEntity(int toCloneId)
+{
+	Entity * e = getEntity(toCloneId);
+	auto n = AddEntity(e->Name());
+
+	//clone all components ... somehow :/
+	return n;
+}
+
+GameObjectManager::operator LuaUserdata<GameObjectManager>()
+{
+	MAKE_LUA_INSTANCE_RET(GameObjectManager,ret);
+
+	ret.Bind("getEntityFromName",&GameObjectManager::getEntityFromName);
+	ret.Bind("getEntityFromId",&GameObjectManager::getEntityFromId);
+
+	return ret;
 }

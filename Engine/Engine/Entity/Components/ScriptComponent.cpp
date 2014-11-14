@@ -19,7 +19,7 @@ public:
 };
 
 void ScriptComponent::start() {
-	std::string instancename = script->getInstanceName();
+	std::string instancename = myScript()->getInstanceName();
 	auto context = LUA_INSTANCE.GetGlobalEnvironment().Get<LuaTable>(instancename);
 	context.Set("parent",((LuaUserdata<Entity>)*parent));
 	SAFE_NEW(privates,ScriptComponentPrivates(context,instancename));
@@ -41,11 +41,11 @@ ScriptComponent::~ScriptComponent()
 	SAFE_DELETE(privates);
 }
 
-ScriptComponent::ScriptComponent() :script(nullptr), privates(nullptr) { }
+ScriptComponent::ScriptComponent() :script(Object::NULL_OBJECT_ID()), privates(nullptr) { }
 
-ScriptComponent::ScriptComponent(int scriptId) :script(resourceManager.getScript(scriptId)), privates(nullptr) { }
+ScriptComponent::ScriptComponent(int scriptId) :script(scriptId), privates(nullptr) { }
 
-ScriptComponent::ScriptComponent(Script * script) :script(script), privates(nullptr) { }
+ScriptComponent::ScriptComponent(Script * script) :script(Object::NULL_OBJECT_ID()), privates(nullptr) { }
 
 LuaTable ScriptComponent::getContext()
 {
@@ -54,31 +54,29 @@ LuaTable ScriptComponent::getContext()
 
 bool ScriptComponent::isValid()
 {
-	return script != nullptr;
+	return myScript() != nullptr;
 }
 
 std::string ScriptComponent::getScriptName()
 {
-	return script != nullptr ? script->Name() : "";
+	return myScript() != nullptr ? myScript()->Name() : "";
 }
 
 std::vector<std::string> ScriptComponent::getErrors()
 {
 	std::vector<std::string> ret;
-	if(script == nullptr) ret.push_back("no script");
+	if(myScript() == nullptr) ret.push_back("no script");
 	return ret;
 }
 
 void ScriptComponent::ChildSave(Stream& s)
 {
-	s << script->getID();
+	s << script;
 }
 
 void ScriptComponent::ChildLoad(Stream& s)
 {
-	double id;
-	s >> id;
-	script = resourceManager.getScript(id);
+	s >> script;
 }
 
 bool ScriptComponent::CopyInto(Component* t)
@@ -88,4 +86,19 @@ bool ScriptComponent::CopyInto(Component* t)
 	that->script = this->script;
 	that->start();
 	return true;
+}
+
+Script * ScriptComponent::myScript() const
+{
+	return resourceManager.getScript(script);
+}
+
+void ScriptComponent::myScript(Script * val)
+{
+	script = val != nullptr ? val->getID() : Object::NULL_OBJECT_ID();
+}
+
+void ScriptComponent::myScript(double val)
+{
+	script = val;
 }

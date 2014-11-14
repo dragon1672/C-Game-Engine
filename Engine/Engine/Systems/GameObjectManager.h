@@ -50,20 +50,10 @@ public:
 	void RemoveEntity(Entity * toRemove);
 	void RemoveEntity(double toRemove);
 
-	Entity * getEntity(std::string name) {
-		return (Entity*)EntityManager.getFirst(name.c_str());
-	}
-	Entity * getEntity(double id) {
-		return (Entity*)EntityManager.getFirst(id);
-	}
+	Entity * getEntity(std::string name);
+	Entity * getEntity(double id);
 	//will copy components
-	Entity * CloneEntity(int toCloneId) {
-		Entity * e = getEntity(toCloneId);
-		auto n = AddEntity(e->Name());
-
-		//clone all components ... somehow :/
-		return n;
-	}
+	Entity * CloneEntity(int toCloneId);
 	int width;
 	int height;
 
@@ -79,14 +69,7 @@ public:
 	bool Valid();
 	std::vector<std::string> getErrors();
 
-	inline operator LuaUserdata<GameObjectManager>() {
-		MAKE_LUA_INSTANCE_RET(GameObjectManager,ret);
-
-		ret.Bind("getEntityFromName",&GameObjectManager::getEntityFromName);
-		ret.Bind("getEntityFromId",&GameObjectManager::getEntityFromId);
-
-		return ret;
-	}
+	operator LuaUserdata<GameObjectManager>();
 	virtual void Save(Stream&s);
 
 	virtual void Load(Stream&s);
