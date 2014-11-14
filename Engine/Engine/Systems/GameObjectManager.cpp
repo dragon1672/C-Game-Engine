@@ -210,10 +210,15 @@ GameObjectManager::~GameObjectManager()
 
 void GameObjectManager::Save(Stream&s)
 {
+	Object::ObjectSave(s);
+	s << entities;
 }
 
 void GameObjectManager::Load(Stream&s)
 {
+	Object::ObjectLoad(s);
+	s >> entities;
+	EntityManager.Register(Collections::Select<Entity,Object*>(entities,[](Entity&e){ return &e; }));
 }
 
 void GameObjectManager::rebuildEntityParents()
