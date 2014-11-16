@@ -66,6 +66,7 @@ public:
 	void paint();
 	bool Valid();
 	std::vector<std::string> getErrors();
+	std::vector<Entity *> getAllEntities();
 
 	operator LuaUserdata<GameObjectManager>();
 	virtual void Save(Stream&s);

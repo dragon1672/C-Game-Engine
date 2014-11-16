@@ -201,18 +201,21 @@ GameObjectManager::~GameObjectManager()
 
 void GameObjectManager::Save(Stream&s)
 {
-	auto entitesToSave = std::vector<Entity*>();
-	for (uint i = 0; i < entities.size(); i++) {
-		if(deletedEntities.find(i)==deletedEntities.end()) entitesToSave.push_back(&entities[i]);
-	}
+	//std::vector<Entity *> ret;
+	//for (uint i = 0; i < entities.size(); i++) {
+	//	ret.push_back(&entities[i]);
+	//}
+	//ret;
 	Object::ObjectSave(s);
-	s << entitesToSave;
+	//s << ret;
+	s << getAllEntities();
 }
 
 void GameObjectManager::Load(Stream&s)
 {
 	Object::ObjectLoad(s);
 	s >> entities;
+	deletedEntities.clear();
 	EntityManager.ClearAll();
 	EntityManager.Register(Collections::Select<Entity,Object*>(entities,[](Entity&e){ return &e; }));
 	for (uint i = 0; i < entities.size(); i++) {
@@ -281,5 +284,16 @@ GameObjectManager::operator LuaUserdata<GameObjectManager>()
 	ret.Bind("getEntityFromName",&GameObjectManager::getEntityFromName);
 	ret.Bind("getEntityFromId",&GameObjectManager::getEntityFromId);
 
+	return ret;
+}
+
+std::vector<Entity *> GameObjectManager::getAllEntities()
+{
+	std::vector<Entity *> ret;
+	for (uint i = 0; i < entities.size(); i++) {
+		if(deletedEntities.find(i) == deletedEntities.end()) {
+			ret.push_back(&entities[i]);
+		}
+	}
 	return ret;
 }
