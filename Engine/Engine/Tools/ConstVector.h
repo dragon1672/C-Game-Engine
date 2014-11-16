@@ -80,6 +80,7 @@ public:
 			delete [] arrays[end];
 			arrays.erase(arrays.begin() + end);
 		}
+		currentIndex = 0;
 	}
 	~ConstVector() {
 		clear();

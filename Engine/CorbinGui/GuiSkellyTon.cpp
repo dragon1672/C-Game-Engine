@@ -225,9 +225,9 @@ void GuiSkellyTon::ToggleGameStartStop()
 			tempStreamForGamePlay.resetToBeg();
 			tempStreamForGamePlay << gameManager;
 
+			//setup menu options
 			ResouceBar->setEnabled(false);
 			GameObjectMenu->setEnabled(false);
-
 			StartStopGameAction->setEnabled(true);
 			StartStopGameAction->setText("Stop Game");
 			PlayResumeGameAction->setEnabled(true);
@@ -236,7 +236,7 @@ void GuiSkellyTon::ToggleGameStartStop()
 			auto tmp = gameManager.getErrors();
 			for (uint i = 0; i < tmp.size(); i++)
 			{
-				printErr(100) tmp[0];
+				printErr(100) tmp[i];
 			}
 		}
 	} else if (myState == EditorStates::PlayingGame || EditorStates::PlayingPaused) { // stop the phone!
@@ -249,9 +249,9 @@ void GuiSkellyTon::ToggleGameStartStop()
 		gameManager.ComponentSelectorFunction(game->IsEditorObject());
 		game->start();
 
+		//set menu options
 		ResouceBar->setEnabled(true);
 		GameObjectMenu->setEnabled(true);
-
 		StartStopGameAction->setEnabled(true);
 		StartStopGameAction->setText("Start Game");
 		PlayResumeGameAction->setEnabled(false);

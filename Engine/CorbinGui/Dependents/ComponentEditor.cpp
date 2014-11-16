@@ -332,7 +332,8 @@ public:
 			tLay->addWidget(box);
 			void (QComboBox:: *indexChangedSignal)(int) = &QComboBox::currentIndexChanged;
 			connect(box, indexChangedSignal, [=] {
-				script->Shader(box->currentData().toDouble());
+				auto tmp = resourceManager.getShaderProgram(box->currentData().toDouble());
+				script->Shader(tmp);
 			});
 		}
 		layout->addWidget(widg);
@@ -469,13 +470,7 @@ public:
 		std::vector<Component*> allcomps;
 		if(toUpdateTo != nullptr) {
 			allcomps.push_back(toUpdateTo->getTrans());
-			auto tmp = toUpdateTo->getAllComponents();
-			for (uint i = 0; i < tmp.size(); i++) {
-				allcomps.push_back(tmp[i]);
-			}
-
-			allcomps = Collections::Where<Component*>(allcomps,validComponentCheck);
-
+			Collections::AddToFirstVector(allcomps,toUpdateTo->getAllComponents());
 		}
 		initList(allcomps);
 		std::vector<SingleComponentEditor *>& list = TrackedEditors;
