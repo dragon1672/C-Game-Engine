@@ -6,7 +6,7 @@
 #include <Engine/Tools/PropertyWrapper.h>
 #include <Engine/Tools/Ray.h>
 
-class ENGINE_SHARED CameraComponent : public Component {
+class ENGINE_SHARED MAKE_COMPONENT_CLASS(CameraComponent) {
 	bool perspectiveNeedsUpdate;
 	glm::mat4 perspective;
 	glm::mat4 world2View;

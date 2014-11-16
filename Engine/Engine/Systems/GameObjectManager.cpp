@@ -200,8 +200,12 @@ GameObjectManager::~GameObjectManager()
 
 void GameObjectManager::Save(Stream&s)
 {
+	auto entitesToSave = std::vector<Entity*>();
+	for (uint i = 0; i < entities.size(); i++) {
+		if(deletedEntities.find(i)==deletedEntities.end()) entitesToSave.push_back(&entities[i]);
+	}
 	Object::ObjectSave(s);
-	s << entities;
+	s << entitesToSave;
 }
 
 void GameObjectManager::Load(Stream&s)

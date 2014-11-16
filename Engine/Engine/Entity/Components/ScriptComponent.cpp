@@ -7,6 +7,7 @@
 #include <Engine/Defines/SafeNewAndDelete.h>
 #include <Engine/IO/Stream.h>
 
+REGISTER_COMPONENT(ScriptComponent);
 
 class ScriptComponentPrivates {
 public:

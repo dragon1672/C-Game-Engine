@@ -7,11 +7,8 @@
 #include <Engine/Entity/Components/ScriptComponent.h>
 #include <ExportHeader.h>
 
-#include <CorbinGui/Dependents/EditorComponents/EditorRenderableComponent.h>
-
 class ENGINE_SHARED EditorGame {
 private:
-	std::string uniqueName; // all editor components must have this as the name
 	Entity * currentlySelectedEntity;
 	Entity * EditorCamera;
 	std::unordered_set<Object*> editorObjects;

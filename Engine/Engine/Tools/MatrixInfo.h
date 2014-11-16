@@ -18,7 +18,7 @@
 	inline void set##Uppercase_name##(##set_set_type##& toSet) { name = toSet; name##Changed = true; }
 
 
-class ENGINE_SHARED MatrixInfo : public Component {
+class ENGINE_SHARED MAKE_COMPONENT_CLASS(MatrixInfo) {
 private:
 	LUA_OBJECT(MatrixInfo);
 	glm::mat4 transform;

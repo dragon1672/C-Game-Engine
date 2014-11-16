@@ -3,6 +3,7 @@
 #include <Engine/Systems/CameraManager.h>
 #include <Engine/IO/Stream.h>
 
+REGISTER_COMPONENT(CameraComponent);
 
 glm::mat4x4& CameraComponent::getWorld2View()
 {
@@ -24,7 +25,7 @@ glm::mat4& CameraComponent::getPerspective()
 }
 
 CameraComponent::CameraComponent(std::string name /*= nullptr*/)
-	: Component(name)
+	: Component_CRTP(name)
 {
 	perspectiveNeedsUpdate = true;
 	nearPlane.setter = [this](float& val, float&newGuy) { perspectiveNeedsUpdate = perspectiveNeedsUpdate || val != newGuy; val = newGuy; };

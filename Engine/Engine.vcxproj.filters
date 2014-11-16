@@ -94,14 +94,11 @@
     <ClInclude Include="Engine\Entity\Components\CameraComponent.h" />
     <ClInclude Include="Engine\Systems\CameraManager.h" />
     <ClInclude Include="CorbinGui\EditorGame.h" />
-    <ClInclude Include="CorbinGui\Dependents\EditorComponents\EditorRenderableComponent.h" />
-    <ClInclude Include="CorbinGui\Dependents\EditorComponents\EditorCamComponent.h" />
     <ClInclude Include="CorbinGui\ToolWindowManager\ToolWindowManager.h" />
     <ClInclude Include="CorbinGui\ToolWindowManager\ToolWindowManagerArea.h" />
     <ClInclude Include="CorbinGui\ToolWindowManager\ToolWindowManagerWrapper.h" />
     <ClInclude Include="CorbinGui\Dependents\ComponentEditor.h" />
     <ClInclude Include="Engine\Defines\SafeNewAndDelete.h" />
-    <ClInclude Include="CorbinGui\Dependents\EditorComponents\EditorCam.h" />
     <ClInclude Include="Engine\Systems\Events\EventManager.h" />
     <ClInclude Include="Engine\Systems\Events\Events\ComponentRemovedEvent.h" />
     <ClInclude Include="Engine\Systems\Events\Events\ComponentAddedEvent.h" />
@@ -115,6 +112,7 @@
     <ClInclude Include="dirent.h" />
     <ClInclude Include="Engine\IO\Stream.h" />
     <ClInclude Include="Engine\IO\StreamableObject.h" />
+    <ClInclude Include="CorbinGui\Dependents\EditorComponents\EditorMasterSyncer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -166,15 +164,15 @@
     <ClCompile Include="CorbinGui\ToolWindowManager\ToolWindowManagerArea_mock.cpp" />
     <ClCompile Include="CorbinGui\ToolWindowManager\ToolWindowManagerWrapper_mock.cpp" />
     <ClCompile Include="CorbinGui\EditorGame.cpp" />
-    <ClCompile Include="CorbinGui\Dependents\EditorComponents\EditorRenderableComponent.cpp" />
     <ClCompile Include="CorbinGui\Dependents\GameObjectViewer.cpp" />
     <ClCompile Include="CorbinGui\Dependents\ComponentEditor.cpp" />
     <ClCompile Include="CorbinGui\GuiSkellyTon.cpp" />
     <ClCompile Include="Engine\Systems\Resources\Script.cpp" />
-    <ClCompile Include="CorbinGui\Dependents\EditorComponents\EditorCam.cpp" />
     <ClCompile Include="Engine\Systems\Events\EventManager.cpp" />
     <ClCompile Include="CorbinGui\Dependents\ResourceViewer.cpp" />
     <ClCompile Include="Engine\IO\Stream.cpp" />
+    <ClCompile Include="CorbinGui\Dependents\EditorComponents\EditorMasterSyncer.cpp" />
+    <ClCompile Include="Engine\Entity\Component.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Tools\MyMath\Matrix2D.inl" />

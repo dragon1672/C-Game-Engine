@@ -5,8 +5,12 @@
 #include <Engine/Systems/Resources/Shaders/ShaderObject.h>
 #include <string>
 #include <vector>
+#include <functional>
 
 #include <Engine/IO/StreamableObject.h>
+
+//place in CPP file of each component
+#define REGISTER_COMPONENT(class_name) namespace { int RegisterSuccessful = Component::RegisterComponentConstructor(typeid(class_name).name(),[](){ return new class_name(); }); }
 
 class Entity;
 class ENGINE_SHARED Component : public Object, public ShaderObject, public StreamableObject { 
@@ -17,7 +21,7 @@ protected:
 	virtual void ChildLoad(Stream& s) = 0;
 public:
 	bool active;
-	Component(std::string name = "") : Object(name), active(true) {}
+	Component(std::string name = "");
 	virtual ~Component(){}
 	inline Entity * Parent() { return parent; }
 	virtual void init()        {} // called once
@@ -29,13 +33,25 @@ public:
 	virtual void restoreValues()  {}
 	virtual bool isValid() = 0;
 	virtual std::vector<std::string> getErrors() = 0;
-	void Save(Stream& s) {
-		Object::ObjectSave(s);
-		ChildSave(s);
-	}
-	void Load(Stream& s) {
-		Object::ObjectLoad(s);
-		ChildLoad(s);
-	}
+	void Save(Stream& s);
+	void Load(Stream& s);
 	virtual bool CopyInto(Component* that) = 0;
+	virtual Component * Clone() = 0;
+	static Component * GetInstance(std::string name);
+	static bool RegisterComponentConstructor(std::string name, std::function<Component*()> createMethod);
 };
+
+
+#define MAKE_COMPONENT_CLASS(name) name : public Component_CRTP<name>
+
+template<typename Derived>
+class Component_CRTP : public Component {
+public:
+	Component_CRTP(std::string name = "") : Component(name) {}
+	Component * Clone() {
+		return new Derived(dynamic_cast<Derived const&>(*this));
+	}
+};
+
+
+

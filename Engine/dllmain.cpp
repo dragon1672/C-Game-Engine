@@ -8,7 +8,7 @@ BOOL APIENTRY DllMain( HMODULE /*hModule*/,
                        LPVOID /*lpReserved*/
 					 )
 {
-	//_CrtSetBreakAlloc(329); // used for debugging mem leak
+	//_CrtSetBreakAlloc(309); // used for debugging mem leak
 	// save the module handle as an instance handle for the engine
 	switch (ul_reason_for_call)
 	{

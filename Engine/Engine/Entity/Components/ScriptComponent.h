@@ -8,7 +8,9 @@
 
 class ScriptComponentPrivates;
 
-class ENGINE_SHARED ScriptComponent : public Component {
+
+
+class ENGINE_SHARED MAKE_COMPONENT_CLASS(ScriptComponent) {
 	ScriptComponentPrivates * privates;
 	double script;
 public:

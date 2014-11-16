@@ -10,6 +10,7 @@
 #include <Engine/Tools/MatrixInfo.h>
 #include <Engine/Entity/Components/ScriptComponent.h>
 #include <Engine/IO/StreamableObject.h>
+#include <Engine/Tools/CollectionEditing.h>
 
 class RenderableComponent;
 class GameObjectManager;

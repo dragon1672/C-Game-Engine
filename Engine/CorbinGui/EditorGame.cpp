@@ -1,13 +1,13 @@
 #include "EditorGame.h"
 #include <Engine/Tools/StringManapulation.h>
 #include <Engine/Tools/Random/StringRandom.h>
-#include <CorbinGui/Dependents/EditorComponents/EditorCam.h>
+#include <CorbinGui/Dependents/EditorComponents/EditorMasterSyncer.h>
+#include <Engine/Entity/Entity.h>
 
 
 
 EditorGame::EditorGame()
 {
-	uniqueName = Random::rString::Letters(4)+"EditorInstance"+Random::rString::Letters(4);
 	isEditorObject = [this](Object* o){
 		return editorObjects.find(o) != editorObjects.end();
 	};
@@ -16,9 +16,8 @@ EditorGame::EditorGame()
 	};
 	gameManager.SelectorFunction(isEditorObject);
 	currentEntity.editor = this;
-	EditorCamera = gameManager.AddEntity(uniqueName);
-	auto tmp = EditorCamera->addComponent<EditorCam>();
-	tmp->Name(uniqueName);
+	EditorCamera = gameManager.AddEntity();
+	EditorCamera->addComponent<CameraComponent>();
 }
 
 void EditorGame::RemoveCurrentEntity()
@@ -31,7 +30,9 @@ void EditorGame::RemoveCurrentEntity()
 
 void EditorGame::AddEntity(std::string name)
 {
-	currentEntity.currentlySelectedEntity = gameManager.AddEntity(name);
+	auto curr = gameManager.AddEntity(name);
+	gameManager.AddEntity("Editor_"+name)->addComponent<EditorMasterSyncer>()->init(curr);
+	currentEntity.currentlySelectedEntity = curr;
 }
 
 void EditorGame::initGl()
@@ -70,11 +71,11 @@ template<>
 RenderableComponent * EditorGame::scoper::addComponent()
 {
 	auto ret = currentlySelectedEntity->addComponent<RenderableComponent>();
-	auto editorV = currentlySelectedEntity->addComponent<RenderableComponent>();
-	auto binder = currentlySelectedEntity->addComponent<EditorRenderableComponent>();
-	binder->init(editor->uniqueName,ret,editorV);
-	editorV->Shader(resourceManager.getDefault<ShaderProgram>());
-	binder->sync();
+	//auto editorV = currentlySelectedEntity->addComponent<RenderableComponent>();
+	//auto binder = currentlySelectedEntity->addComponent<EditorRenderableComponent>();
+	//binder->init(editor->uniqueName,ret,editorV);
+	//editorV->Shader(resourceManager.getDefault<ShaderProgram>());
+	//binder->sync();
 	return ret;
 }
 

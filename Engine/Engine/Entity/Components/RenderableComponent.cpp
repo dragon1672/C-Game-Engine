@@ -4,6 +4,8 @@
 #include <Engine/Systems/Resources/Shaders/ShaderPreProcessor.h>
 #include <Engine/IO/Stream.h>
 
+REGISTER_COMPONENT(RenderableComponent);
+
 void RenderableComponent::addUniformParameter(const char * name, const bool& value)      { addUniformParameter(name,ParameterType::PT_BOOLEAN,&value);       }
 void RenderableComponent::addUniformParameter(const char * name, const int&  value)      { addUniformParameter(name,ParameterType::PT_INT,    &value);       }
 void RenderableComponent::addUniformParameter(const char * name, const float& value)     { addUniformParameter(name,ParameterType::PT_FLOAT,  &value);       }

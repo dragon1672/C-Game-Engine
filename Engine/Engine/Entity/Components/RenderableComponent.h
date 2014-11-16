@@ -8,7 +8,7 @@
 #include <Engine\Systems\Resources\Material.h>
 #include <ExportHeader.h>
 
-class ENGINE_SHARED RenderableComponent : public Component {
+class ENGINE_SHARED MAKE_COMPONENT_CLASS(RenderableComponent) {
 	double geo;
 	double shader;
 public:

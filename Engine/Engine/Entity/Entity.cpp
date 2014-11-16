@@ -208,13 +208,31 @@ std::vector<std::string> Entity::getErrors()
 void Entity::Save(Stream&s)
 {
 	Object::ObjectSave(s);
-	s << parent << active << components << getTrans();
+	s << parent << active;
+	s << getTrans();
+	s << components.size();
+	for (uint i = 0; i < components.size(); i++)
+	{
+		s << std::string(typeid(*components[i]).name());
+		s << components[i];
+	}
 }
 
 void Entity::Load(Stream&s)
 {
 	Object::ObjectLoad(s);
-	s >> parent >> active >> components >> getTrans();
+	s >> parent >> active;
+	s >> getTrans();
+	DELETE_VECTOR(components); // TODO FIX LOADING
+	uint size;
+	s >> size;
+	for (uint i = 0; i < size; i++)
+	{
+		std::string componentName;
+		s >> componentName;
+		auto currentComponent = addComponent(Component::GetInstance(componentName));
+		s >> currentComponent;
+	}
 }
 
 Entity::Entity(std::string name/*="New Game Object"*/, GameObjectManager * gm /*= nullptr*/) : parent(Object::NULL_OBJECT_ID()), gm(gm), active(true), Object(name)
