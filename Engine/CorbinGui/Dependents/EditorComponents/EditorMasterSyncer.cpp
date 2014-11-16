@@ -18,7 +18,8 @@ void EditorMasterSyncer::lateUpdate()
 	{
 		syncRens(theirRens[i],myRenderables[i]);
 	}
-	//Parent()->getTrans()->CopyInto(toSyncWith->Parent()->getTrans()); // copy da trans
+	toSyncWith->getTrans()->CopyInto(Parent()->getTrans());
+	Parent()->Parent(toSyncWith->Parent());
 }
 
 void EditorMasterSyncer::syncRens(RenderableComponent * gameRen, RenderableComponent * editorRen)

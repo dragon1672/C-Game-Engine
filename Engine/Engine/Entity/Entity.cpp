@@ -150,7 +150,7 @@ void Entity::Parent(Entity * newGuy)
 	if(old    != nullptr) old->children.erase(getID());
 	if(newGuy != nullptr) newGuy->children.emplace(getID());
 	parent = newGuy != nullptr ? newGuy->getID() : Object::NULL_OBJECT_ID();
-	emitEvent(new EntityParentChangedEvent (this,old,newGuy));
+	if(newGuy != old) emitEvent(new EntityParentChangedEvent (this,old,newGuy));
 	for (uint i = 0; i < StageChanged.size(); i++) StageChanged[i](this);
 }
 

@@ -71,7 +71,7 @@ void GameObjectManager::paint() {
 
 	for (uint i = 0; i < entities.size(); i++) {
 		Entity& currentEntity = entities[i];
-		if(currentEntity.active) {
+		if(currentEntity.active && (!selectorFunction || selectorFunction && selectorFunction(&currentEntity))) {
 			auto renderables = currentEntity.getComponents<RenderableComponent>();
 			for (RenderableComponent * renderable : renderables) {
 				if(renderable != nullptr && renderable->visable && renderable->isValid()) {
@@ -90,6 +90,7 @@ Entity * GameObjectManager::getNewEntity(std::string name) {
 		int e = *itr;
 		itr++;
 		deletedEntities.erase(e);
+		if((unsigned)e >= entities.size()) continue;
 		entities[e] = Entity(name,this);
 		ret = &entities[e];
 	}
@@ -158,11 +159,11 @@ void GameObjectManager::RemoveEntity(Entity * toRemove)
 			RemoveEntity(i);
 		}
 		entities[index].active = false;
-		deletedEntities.emplace(index);
 		entities[index].Parent(nullptr);
 		emitEvent(new EntityRemovedEvent(toRemove));
 	}
 	if((unsigned)index == entities.size()-1) entities.pop_back();
+	else deletedEntities.emplace(index);
 	EntityManager.UnRegister(toRemove);
 }
 
