@@ -16,8 +16,7 @@ EditorGame::EditorGame()
 	};
 	gameManager.SelectorFunction(isEditorObject);
 	currentEntity.editor = this;
-	EditorCamera = gameManager.AddEntity();
-	EditorCamera->addComponent<CameraComponent>();
+	createEditorObjects();
 }
 
 void EditorGame::RemoveCurrentEntity()
@@ -31,7 +30,9 @@ void EditorGame::RemoveCurrentEntity()
 void EditorGame::AddEntity(std::string name)
 {
 	auto curr = gameManager.AddEntity(name);
-	gameManager.AddEntity("Editor_"+name)->addComponent<EditorMasterSyncer>()->init(curr);
+	auto editorV = gameManager.AddEntity("Editor_"+curr->Name());
+	editorV->addComponent<EditorMasterSyncer>()->init(curr);
+	editorObjects.emplace(editorV);
 	currentEntity.currentlySelectedEntity = curr;
 }
 
@@ -67,15 +68,52 @@ EditorGame::~EditorGame()
 	gameManager.delInstance();
 }
 
+void EditorGame::createEditorObjects()
+{
+	auto ents = gameManager.getAllEntities();
+	EditorCamera = gameManager.AddEntity("Editor Cam");
+	EditorCamera->addComponent<CameraComponent>();
+	editorObjects.emplace(EditorCamera);
+	for (uint i = 0; i < ents.size(); i++)
+	{
+		auto editorV = gameManager.AddEntity("Editor_"+ents[i]->Name());
+		editorV->addComponent<EditorMasterSyncer>()->init(ents[i]);
+		editorObjects.emplace(editorV);
+	}
+	activateEditorObjects();
+}
+
+void EditorGame::destoryEditorObjects()
+{
+	deactiveEditorObjects();
+	for(auto e : editorObjects) {
+		gameManager.RemoveEntity((Entity*)e);
+	}
+	editorObjects.clear();
+}
+
+void EditorGame::activateEditorObjects()
+{
+	gameManager.SelectorFunction(isEditorObject);
+	camManager.ActiveCam(EditorCamera->getComponent<CameraComponent>());
+	for(auto e : editorObjects) {
+		((Entity*)e)->active = true;
+	}
+}
+
+void EditorGame::deactiveEditorObjects()
+{
+	gameManager.SelectorFunction(isGameObject);
+	camManager.ActiveCam(nullptr);
+	for(auto e : editorObjects) {
+		((Entity*)e)->active = false;
+	}
+}
+
 template<>
 RenderableComponent * EditorGame::scoper::addComponent()
 {
 	auto ret = currentlySelectedEntity->addComponent<RenderableComponent>();
-	//auto editorV = currentlySelectedEntity->addComponent<RenderableComponent>();
-	//auto binder = currentlySelectedEntity->addComponent<EditorRenderableComponent>();
-	//binder->init(editor->uniqueName,ret,editorV);
-	//editorV->Shader(resourceManager.getDefault<ShaderProgram>());
-	//binder->sync();
 	return ret;
 }
 
@@ -90,7 +128,6 @@ template<>
 CameraComponent * EditorGame::scoper::addComponent()
 {
 	auto ret = currentlySelectedEntity->addComponent<CameraComponent>();
-
 	return ret;
 }
 
@@ -143,4 +180,14 @@ std::vector<Component*> EditorGame::scoper::getAllComponents()
 void EditorGame::scoper::SetCurrent(Entity * toSet)
 {
 	currentlySelectedEntity = toSet;
+}
+
+void EditorGame::scoper::EditName(std::string newName)
+{
+	currentlySelectedEntity->Name(newName);
+}
+
+Entity * EditorGame::scoper::GetCurrent() const
+{
+	return currentlySelectedEntity;
 }

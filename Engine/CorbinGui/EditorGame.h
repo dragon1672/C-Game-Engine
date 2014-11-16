@@ -45,10 +45,8 @@ public:
 		std::vector<RenderableComponent *> getAllRenderables();
 		std::vector<CameraComponent     *> getAllCameras();
 		void SetCurrent(Entity * toSet);
-		Entity * GetCurrent() const { return currentlySelectedEntity; }
-		void EditName(std::string newName) {
-			currentlySelectedEntity->Name(newName);
-		}
+		Entity * GetCurrent() const;
+		void EditName(std::string newName);
 
 		void Parent(const char * name);
 
@@ -63,12 +61,8 @@ public:
 	void AddEntity(std::string name);
 	void RemoveCurrentEntity();
 
-	void deactiveEditorObjects() {
-		gameManager.SelectorFunction(isGameObject);
-		camManager.ActiveCam(nullptr);
-	}
-	void activateEditorObjects() {
-		gameManager.SelectorFunction(isEditorObject);
-		camManager.ActiveCam(EditorCamera->getComponent<CameraComponent>());
-	}
+	void deactiveEditorObjects();
+	void activateEditorObjects();
+	void destoryEditorObjects();
+	void createEditorObjects();
 };

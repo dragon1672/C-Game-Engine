@@ -213,15 +213,13 @@ void GuiSkellyTon::ToggleGameStartStop()
 			myState = EditorStates::PlayingGame;
 			camManager.ActiveCam(nullptr);
 			
-			game->deactiveEditorObjects();
-			gameManager.init();
-
-			game->start();
-
-			gameManager.SelectorFunction(game->IsGameObject());
-
+			game->destoryEditorObjects();
 			tempStreamForGamePlay.resetToBeg();
 			tempStreamForGamePlay << gameManager;
+			
+			gameManager.init();
+			game->start();
+
 
 			//setup menu options
 			ResouceBar->setEnabled(false);
@@ -240,11 +238,10 @@ void GuiSkellyTon::ToggleGameStartStop()
 	} else if (myState == EditorStates::PlayingGame || EditorStates::PlayingPaused) { // stop the phone!
 		myState = EditorStates::Editor;
 
-		//rebuild editor entities here
 		tempStreamForGamePlay.resetToBeg();
 		tempStreamForGamePlay >> gameManager;
+		game->createEditorObjects();
 
-		game->activateEditorObjects();
 		game->start();
 
 		//set menu options
