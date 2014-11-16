@@ -9,15 +9,15 @@ EditorGame::EditorGame()
 {
 	uniqueName = Random::rString::Letters(4)+"EditorInstance"+Random::rString::Letters(4);
 	isEditorObject = [this](Object* o){
-		return StringManapulation::startsWith(o->Name(),this->uniqueName);
+		return editorObjects.find(o) != editorObjects.end();
 	};
 	isGameObject = [this](Object* o){
-		return !StringManapulation::startsWith(o->Name(),this->uniqueName);
+		return editorObjects.find(o) == editorObjects.end();
 	};
-	gameManager.ComponentSelectorFunction(isEditorObject);
+	gameManager.SelectorFunction(isEditorObject);
 	currentEntity.editor = this;
-	EditorEntity = gameManager.AddEntity(uniqueName);
-	auto tmp = EditorEntity->addComponent<EditorCam>();
+	EditorCamera = gameManager.AddEntity(uniqueName);
+	auto tmp = EditorCamera->addComponent<EditorCam>();
 	tmp->Name(uniqueName);
 }
 
@@ -137,11 +137,6 @@ void EditorGame::scoper::Parent(const char * name)
 std::vector<Component*> EditorGame::scoper::getAllComponents()
 {
 	return currentlySelectedEntity->getAllComponents();
-}
-
-std::vector<Component*> EditorGame::scoper::getAllGameComponents()
-{
-	return Collections::Where<Component*>(currentlySelectedEntity->getAllComponents(),[this](Component*c){ return !(gameManager.ComponentSelectorFunction()(c)); });
 }
 
 void EditorGame::scoper::SetCurrent(Entity * toSet)

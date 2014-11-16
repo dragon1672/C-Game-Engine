@@ -213,6 +213,7 @@ void GuiSkellyTon::ToggleGameStartStop()
 			myState = EditorStates::PlayingGame;
 			camManager.ActiveCam(nullptr);
 			
+			game->deactiveEditorObjects();
 			gameManager.init();
 
 			game->start();

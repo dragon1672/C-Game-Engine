@@ -13,7 +13,8 @@ class ENGINE_SHARED EditorGame {
 private:
 	std::string uniqueName; // all editor components must have this as the name
 	Entity * currentlySelectedEntity;
-	Entity * EditorEntity;
+	Entity * EditorCamera;
+	std::unordered_set<Object*> editorObjects;
 	std::function<bool(Object*)> isEditorObject;
 	std::function<bool(Object*)> isGameObject;
 public:
@@ -39,7 +40,6 @@ public:
 		template<> CameraComponent * addComponent<CameraComponent>();
 		//returns all the components on the current object
 		std::vector<Component*> getAllComponents();
-		std::vector<Component*> getAllGameComponents();
 		MatrixInfo          * getTrans();
 		ScriptComponent     * getScript();
 		RenderableComponent * getRenderable();
@@ -65,4 +65,13 @@ public:
 	void paint();
 	void AddEntity(std::string name);
 	void RemoveCurrentEntity();
+
+	void deactiveEditorObjects() {
+		gameManager.SelectorFunction(isGameObject);
+		camManager.ActiveCam(nullptr);
+	}
+	void activateEditorObjects() {
+		gameManager.SelectorFunction(isEditorObject);
+		camManager.ActiveCam(EditorCamera->getComponent<CameraComponent>());
+	}
 };
