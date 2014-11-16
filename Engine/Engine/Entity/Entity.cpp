@@ -56,21 +56,21 @@ void Entity::start()       {
 }
 void Entity::earlyUpdate() {
 	for(uint i=0; i<components.size(); i++) {
-		if(components[i]->active && (!selectorFunction || selectorFunction && selectorFunction(components[i]))) {
+		if(components[i]->active) {
 			components[i]->earlyUpdate();
 		}
 	}
 }
 void Entity::update()      {
 	for(uint i=0; i<components.size(); i++) {
-		if(components[i]->active && (!selectorFunction || selectorFunction && selectorFunction(components[i]))) {
+		if(components[i]->active) {
 			components[i]->update();     
 		}
 	}
 }
 void Entity::lateUpdate()  {
 	for(uint i=0; i<components.size(); i++) {
-		if(components[i]->active && (!selectorFunction || selectorFunction && selectorFunction(components[i]))) {
+		if(components[i]->active) {
 			components[i]->lateUpdate(); 
 		}
 	}
@@ -178,16 +178,6 @@ std::vector<int> Entity::getAllFromClassName(const char * toFind) const
 		if(toCheck.compare(std::string(typeid(*components[i]).name()))==0) ret.push_back(i);
 	}
 	return ret;
-}
-
-std::function<bool(Component*)> Entity::SelectorFunction() const
-{
-	return selectorFunction;
-}
-
-void Entity::SelectorFunction(std::function<bool(Component*)> val)
-{
-	selectorFunction = val;
 }
 
 std::vector<Component *> Entity::getAllComponents()

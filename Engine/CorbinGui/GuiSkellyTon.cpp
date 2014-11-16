@@ -36,7 +36,7 @@ GuiSkellyTon::GuiSkellyTon()
 		std::string name2 = EPrevious != nullptr ? std::string(EPrevious->Name()) : "NULL";
 		printMsg(0) "from",name2,"to",name1;
 
-		componentEditor->changeEntity(ECurrent,game->IsGameObject());
+		componentEditor->changeEntity(ECurrent);
 
 		addComponentBar->setEnabled(ECurrent != nullptr);
 
@@ -198,13 +198,11 @@ void GuiSkellyTon::initBar()
 	addComponentBar->addAction(action = new QAction("Renderable Component", this));
 	connect(action, &QAction::triggered, [this](){
 		this->game->currentEntity.addComponent<RenderableComponent>();
-		componentEditor->changeEntity(this->game->currentEntity.GetCurrent(),game->IsGameObject());
 	});
 	//addComponentBar->addAction(action = new QAction("Collider Component", this));		connect(action, &QAction::triggered, [this](){ printer.LogMessage("Add Collider Clicked"); });
 	addComponentBar->addAction(action = new QAction("Script Component", this));
 	connect(action, &QAction::triggered, [this](){
 		this->game->currentEntity.addComponent<ScriptComponent>();
-		componentEditor->changeEntity(this->game->currentEntity.GetCurrent(),game->IsGameObject());
 	});
 }
 
@@ -214,13 +212,12 @@ void GuiSkellyTon::ToggleGameStartStop()
 		if(gameManager.Valid()) {
 			myState = EditorStates::PlayingGame;
 			camManager.ActiveCam(nullptr);
-			//disable all editor components
-			//remove selector function
+			
 			gameManager.init();
 
 			game->start();
 
-			gameManager.ComponentSelectorFunction(game->IsGameObject());
+			gameManager.SelectorFunction(game->IsGameObject());
 
 			tempStreamForGamePlay.resetToBeg();
 			tempStreamForGamePlay << gameManager;
@@ -246,7 +243,7 @@ void GuiSkellyTon::ToggleGameStartStop()
 		tempStreamForGamePlay.resetToBeg();
 		tempStreamForGamePlay >> gameManager;
 
-		gameManager.ComponentSelectorFunction(game->IsEditorObject());
+		game->activateEditorObjects();
 		game->start();
 
 		//set menu options
@@ -263,7 +260,7 @@ void GuiSkellyTon::ToggleGamePauseResume()
 {
 	if(myState == EditorStates::PlayingGame) { // hold the phone
 		myState = EditorStates::PlayingPaused;
-		gameManager.ComponentSelectorFunction([this](Object*o){
+		gameManager.SelectorFunction([this](Object*o){
 			if(std::string(typeid(RenderableComponent).name()).compare(typeid(*o).name()) == 0)
 				return game->IsGameObject()(o);
 			return false;
@@ -271,7 +268,7 @@ void GuiSkellyTon::ToggleGamePauseResume()
 		PlayResumeGameAction->setText("Resume");
 	} else if(myState == EditorStates::PlayingPaused) { // time to resume
 		myState = EditorStates::PlayingGame;
-		gameManager.ComponentSelectorFunction(game->IsGameObject());
+		gameManager.SelectorFunction(game->IsGameObject());
 		PlayResumeGameAction->setText("Resume");
 	}
 }

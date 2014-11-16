@@ -18,5 +18,5 @@ public:
 	void update();
 	void reload();
 
-	void changeEntity(Entity * toUpdateTo, std::function<bool(Component*)> validComponentCheck);
+	void changeEntity(Entity * toUpdateTo);
 };

@@ -41,8 +41,6 @@ public:
 	void Disable();
 	std::function<bool(Entity*)> SelectorFunction() const;
 	void SelectorFunction(std::function<bool(Entity*)> val);
-	std::function<bool(Component*)> ComponentSelectorFunction() const;
-	void ComponentSelectorFunction(std::function<bool(Component*)> val);
 
 	std::vector<Entity *> getTopLevelEntities();
 	//add

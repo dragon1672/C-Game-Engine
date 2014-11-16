@@ -417,7 +417,6 @@ public:
 class ComponentEditorPrivates {
 public:
 	Entity * toUpdateTo;
-	std::function<bool(Component*)> validComponentCheck;
 	QVBoxLayout * layout;
 	std::map<std::string,EditorCreatorInterface*> map;
 	ComponentEditorPrivates() {
@@ -503,9 +502,8 @@ public:
 #pragma endregion
 
 
-void ComponentEditor::changeEntity(Entity * toUpdateTo, std::function<bool(Component*)> validComponentCheck) {
+void ComponentEditor::changeEntity(Entity * toUpdateTo) {
 	privates->toUpdateTo = toUpdateTo;
-	privates->validComponentCheck = validComponentCheck;
 	privates->reload();
 }
 

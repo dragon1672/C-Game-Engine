@@ -37,14 +37,11 @@ private:
 	double parent;
 	Component* addComponent(Component * toAdd);
 	std::unordered_set<double> children;
-	std::function<bool(Component*)> selectorFunction;
 
 	void resetChildren();
 	friend GameObjectManager;
 
 public:
-	std::function<bool(Component*)> SelectorFunction() const;
-	void SelectorFunction(std::function<bool(Component*)> val);
 	std::unordered_set<double> Children();
 	std::vector<std::function<void(Entity*me)>> StageChanged;
 	Entity * Parent();
@@ -80,8 +77,6 @@ public:
 	}
 	template<class T> std::vector<T*> getComponents() {
 		std::vector<int> tmp = getAllIndexs<T>();
-		if(selectorFunction)
-			tmp = Collections::Where<int>(tmp,[this](int&index){ return components[index]->active && selectorFunction(components[index]); });
 		return Collections::Select<int,T*>(tmp,[this](int index) {return (T*)components[index];} );
 	}
 	std::vector<Component *> getAllComponents();

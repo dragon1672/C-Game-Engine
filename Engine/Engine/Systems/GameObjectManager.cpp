@@ -104,7 +104,6 @@ Entity * GameObjectManager::AddEntity(std::string name)
 {
 	Entity * ret = getNewEntity(name);
 	
-	if(componentSelectorFunction) ret->SelectorFunction(componentSelectorFunction);
 	EntityManager.Register(ret);
 	emitEvent(new EntityAddedEvent(ret));
 	return ret;
@@ -165,19 +164,6 @@ void GameObjectManager::RemoveEntity(Entity * toRemove)
 	}
 	if((unsigned)index == entities.size()-1) entities.pop_back();
 	EntityManager.UnRegister(toRemove);
-}
-
-void GameObjectManager::ComponentSelectorFunction(std::function<bool(Component*)> val)
-{
-	componentSelectorFunction = val;
-	for (uint i = 0; i < entities.size(); i++) {
-		entities[i].SelectorFunction(val);
-	}
-}
-
-std::function<bool(Component*)> GameObjectManager::ComponentSelectorFunction() const
-{
-	return componentSelectorFunction;
 }
 
 void GameObjectManager::SelectorFunction(std::function<bool(Entity*)> val)
