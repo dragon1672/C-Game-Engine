@@ -93,7 +93,7 @@ std::string Script::getClassTemplate(std::string class_name,std::string startFun
 
 std::string Script::getUniqueName()
 {
-	return Random::rString::Letters(5)+"CorbinEnginTmpVar"+Random::rString::Letters(5);
+	return Random::rString::Letters(5)+"CorbinEngin"+Name()+"InstanceID"+Random::rString::Letters(5);
 }
 
 std::string Script::getInstanceName()
