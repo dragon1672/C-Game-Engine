@@ -419,7 +419,7 @@ public:
 	Entity * toUpdateTo;
 	QVBoxLayout * layout;
 	std::map<std::string,EditorCreatorInterface*> map;
-	ComponentEditorPrivates() {
+	ComponentEditorPrivates() : toUpdateTo(nullptr) {
 		//init map here
 		layout = new QVBoxLayout();
 		ADD_INTERFACE_TO_MAP(MatrixInfo,TranslationEdtor);
@@ -466,6 +466,14 @@ public:
 
 	void reload()
 	{
+		QLayoutItem* item;
+		while ( ( item = layout->takeAt( 0 ) ) != NULL ) {
+			delete item->widget();
+			delete item;
+		}
+
+		if(toUpdateTo==nullptr) return;
+
 		std::vector<Component*> allcomps;
 		if(toUpdateTo != nullptr) {
 			allcomps.push_back(toUpdateTo->getTrans());
@@ -474,11 +482,6 @@ public:
 		initList(allcomps);
 		std::vector<SingleComponentEditor *>& list = TrackedEditors;
 
-		QLayoutItem* item;
-		while ( ( item = layout->takeAt( 0 ) ) != NULL ) {
-			delete item->widget();
-			delete item;
-		}
 
 		auto vbox = new QVBoxLayout();
 		QWidget* widget = new QWidget;
@@ -510,6 +513,7 @@ void ComponentEditor::changeEntity(Entity * toUpdateTo) {
 #include <Engine/Systems/Events/EventManager.h>
 #include <Engine/Systems/Events/Events/ComponentAddedEvent.h>
 #include <Engine/Systems/Events/Events/ComponentRemovedEvent.h>
+#include <Engine/Systems/Events/Events/ResourceLoadedEvent.h>
 
 ComponentEditor::ComponentEditor()
 {
@@ -521,6 +525,9 @@ ComponentEditor::ComponentEditor()
 		this->reload();
 	});
 	eventManager.Subscribe<ComponentRemovedEvent>([this](EventData*d,Object*s) {
+		this->reload();
+	});
+	eventManager.Subscribe<ResourceLoadedEvent>([this](EventData*d,Object*s) {
 		this->reload();
 	});
 }
