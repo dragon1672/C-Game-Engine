@@ -1,7 +1,10 @@
 #pragma once
 
 #include <Engine/Systems/Events/EventData.h>
-#include <Engine/Systems/Object.h>
+
+#include <string>
+
+class Object;
 
 class ObjectChangedNameEvent : public EventData {
 public:

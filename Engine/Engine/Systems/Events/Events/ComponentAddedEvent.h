@@ -1,8 +1,9 @@
 #pragma once
 
 #include <Engine/Systems/Events/EventData.h>
-#include <Engine/Entity/Entity.h>
-#include <Engine/Entity/Component.h>
+
+class Entity;
+class Component;
 
 class ComponentAddedEvent : public EventData {
 public:

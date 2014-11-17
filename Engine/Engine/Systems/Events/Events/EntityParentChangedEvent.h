@@ -1,8 +1,10 @@
 #pragma once
 
 #include <Engine/Systems/Events/EventData.h>
-#include <Engine/Entity/Entity.h>
-#include <Engine/Entity/Component.h>
+
+
+class Entity;
+class Component;
 
 class EntityParentChangedEvent : public EventData {
 public:
