@@ -133,14 +133,14 @@ void GuiSkellyTon::initBar()
 			return;
 
 		QString command("CSharpOBJConverter.exe ");
-		QString nativeFileName = "level.bin";
+		QString nativeFileName = "tmp.bin";
 		command += "-o \""+nativeFileName+ "\"" + " " + "\"" + targetObj  + "\"";
 		std::string t = command.toStdString();
 		int result = system(command.toUtf8().constData());
 		if(result!=0) {
 			printErr(100) "File failed to load";
 		} else {
-			auto tmp = resourceManager.addMesh("From File",nativeFileName.toStdString(),false);
+			auto tmp = resourceManager.addMesh(FileIO::extractFileName(targetObj.toStdString()),nativeFileName.toStdString(),false);
 			tmp->PassDownToHardWare();
 		}
 		printer.LogMessage("Load Obj Clicked");
@@ -150,7 +150,7 @@ void GuiSkellyTon::initBar()
 		QString workingDir = resourceManager.WorkingDir().c_str();
 		QString targetObj = QFileDialog::getOpenFileName(this, "Open Texture", workingDir, "Supported Images (*.png)"); if(targetObj == "") return;
 
-		auto tmp = resourceManager.add2DTexture("From File",targetObj.toStdString(),false);
+		auto tmp = resourceManager.add2DTexture(FileIO::extractFileName(targetObj.toStdString()),targetObj.toStdString(),false);
 		tmp->PassDownToHardWare();
 		printer.LogMessage("Load Texture Clicked");
 	});
@@ -160,7 +160,7 @@ void GuiSkellyTon::initBar()
 		QString FragPath = QFileDialog::getOpenFileName(this, "Open FragShader",  workingDir, "Shader (*.glsl)");	if(FragPath == "") return;
 		QString VertPath = QFileDialog::getOpenFileName(this, "Open VertexShader", workingDir, "Shader (*.glsl)");	if(VertPath == "") return;
 
-		auto tmp = resourceManager.addShader_file("From File",VertPath.toStdString(),FragPath.toStdString(),false);
+		auto tmp = resourceManager.addShader_file(FileIO::extractFileName(VertPath.toStdString()),VertPath.toStdString(),FragPath.toStdString(),false);
 		tmp->PassDownToHardWare();
 		printer.LogMessage("Load Shader Clicked");
 	});
