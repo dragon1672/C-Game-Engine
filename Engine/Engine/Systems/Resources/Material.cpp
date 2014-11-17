@@ -25,6 +25,7 @@
 
 #define LOAD_TEXTURE_FROM_STREAM(stream_name,name,Propercase)\
 	stream_name >> name >> has##Propercase >> name##Scale >> name##Offset; \
+	Propercase (name)/* updates uniforms*/
 
 #pragma  endregion
 
