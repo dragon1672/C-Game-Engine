@@ -112,3 +112,8 @@ void ObjectManager::ClearAll()
 {
 	SAFE_NEW(privates,ObjectManagerPrivates());
 }
+
+bool ObjectManager::Contains(Object *o)
+{
+	return privates->ContainsId(o);
+}

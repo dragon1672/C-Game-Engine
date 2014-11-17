@@ -22,4 +22,5 @@ public:
 	std::vector<Object *> getAll(const char * name) const;
 	std::vector<Object *> getAll() const;
 	void ClearAll();
+	bool Contains(Object *o);
 };
