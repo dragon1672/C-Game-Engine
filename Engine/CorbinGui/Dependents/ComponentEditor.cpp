@@ -447,7 +447,7 @@ public:
 
 	std::vector<SingleComponentEditor *> TrackedEditors;
 	void clearList() {
-		DELETE_VECTOR(TrackedEditors);
+		TrackedEditors.clear();
 	}
 	void initList(std::vector<Component *>& list) {
 		clearList();
@@ -471,6 +471,8 @@ public:
 			delete item->widget();
 			delete item;
 		}
+
+		clearList();
 
 		if(toUpdateTo==nullptr) return;
 

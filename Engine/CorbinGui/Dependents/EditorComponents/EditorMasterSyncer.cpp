@@ -1,6 +1,7 @@
 #include "EditorMasterSyncer.h"
 #include <Engine/Entity/Entity.h>
 #include <Engine/Entity/Components/RenderableComponent.h>
+#include <Engine/Systems/GameObjectManager.h>
 
 //events
 #include <Engine/Systems/Events/EventManager.h>
@@ -10,6 +11,7 @@ REGISTER_COMPONENT(EditorMasterSyncer);
 
 void EditorMasterSyncer::lateUpdate()
 {
+	if(toSyncWith == nullptr) return;
 	auto theirRens = toSyncWith->getComponents<RenderableComponent>();
 	while(theirRens.size() > myRenderables.size()) {
 		myRenderables.push_back(Parent()->addComponent<RenderableComponent>());
@@ -41,7 +43,7 @@ EditorMasterSyncer::EditorMasterSyncer() : toSyncWith(nullptr)
 	eventManager.Subscribe<EntityRemovedEvent>([this](EventData*d,Object*) {
 		EntityRemovedEvent * data = (EntityRemovedEvent*)d;
 		if(data->entity == toSyncWith) {
-			this->shutdown();
+			gameManager.RemoveEntity(this->Parent());
 		}
 	});
 }
