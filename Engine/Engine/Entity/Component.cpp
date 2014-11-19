@@ -51,3 +51,8 @@ Component * Component::GetInstance(std::string name)
 {
 	return (*creationMap.data)[name]();
 }
+
+std::string Component::Class_Name()
+{
+	return std::string(typeid(*this).name());
+}

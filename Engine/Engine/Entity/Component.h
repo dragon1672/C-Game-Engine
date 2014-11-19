@@ -39,6 +39,7 @@ public:
 	virtual Component * Clone() = 0;
 	static Component * GetInstance(std::string name);
 	static bool RegisterComponentConstructor(std::string name, std::function<Component*()> createMethod);
+	std::string Class_Name();
 };
 
 
