@@ -27,9 +27,13 @@ public:
 	inline void push_back(const T * toAdd, unsigned int size) { add(toAdd,size); }
 
 	inline int find(T * toMatch) {
-		for (uint i = 0; i < size(); i++)
-			if(&(*this)[i] == toMatch) return i;
-		return -1;
+		for (uint i = 0; i < arrays.size(); i++) {
+			int indexDis = toMatch - arrays[i]; // pointer arithmetic :D
+			if(indexDis < startSize) {
+				return i * startSize + indexDis;
+			}
+		}
+		return -1''
 	}
 	inline int find(std::function<bool(const T&)> checker) {
 		for (uint i = 0; i < size(); i++)
