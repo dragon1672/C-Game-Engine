@@ -97,15 +97,7 @@ public:
 	LUA_GET_FUN_PTR(Entity,Parent);
 	LUA_GET_FUN_PTR(MatrixInfo,getTrans);
 
-	inline operator LuaUserdata<Entity>() {
-		MAKE_LUA_INSTANCE_RET(Entity,ret);
-
-		LUA_BIND_FUN(Entity,ret,Parent);
-		LUA_BIND_FUN(Entity,ret,getTrans);
-		ret.Bind("GetScript",&Entity::getScriptLua);
-
-		return ret;
-	}
+	operator LuaUserdata<Entity>();
 
 	virtual void Save(Stream&s);
 

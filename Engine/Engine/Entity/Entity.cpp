@@ -214,7 +214,7 @@ void Entity::Save(Stream&s)
 	s << components.size();
 	for (uint i = 0; i < components.size(); i++)
 	{
-		s << std::string(typeid(*components[i]).name());
+		s << components[i]->Class_Name();
 		s << components[i];
 	}
 }
@@ -244,4 +244,15 @@ Entity::Entity(std::string name/*="New Game Object"*/, GameObjectManager * gm /*
 void Entity::resetChildren()
 {
 	children.clear();
+}
+
+Entity::operator LuaUserdata<Entity>()
+{
+	MAKE_LUA_INSTANCE_RET(Entity,ret);
+
+	LUA_BIND_FUN(Entity,ret,Parent);
+	LUA_BIND_FUN(Entity,ret,getTrans);
+	ret.Bind("GetScript",&Entity::getScriptLua);
+
+	return ret;
 }

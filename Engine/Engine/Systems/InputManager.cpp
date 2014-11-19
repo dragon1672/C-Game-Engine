@@ -31,6 +31,16 @@ bool InputManager::getKeyUp(KeyCode key)
 	return !getKeyDown(key);
 }
 
+InputManager::operator LuaUserdata<InputManager>()
+{
+	MAKE_LUA_INSTANCE_RET(InputManager,ret);
+	ret.Bind("getKeyDown",&InputManager::getKeyDown_Lua);
+	ret.Bind("getKeyUp",  &InputManager::getKeyUp_Lua);
+	LUA_BIND_FUN(InputManager,ret,getMouse);
+
+	return ret;
+}
+
 bool InputManager::Mouse::getMouseButtondown(MouseCodes btn)
 {
 	return GetAsyncKeyState(btn)!=0;
@@ -49,4 +59,14 @@ wrap::vec2&InputManager::Mouse::mousePos()
 wrap::vec2& InputManager::Mouse::delta()
 {
 	return mouseDelta;
+}
+
+bool InputManager::Mouse::getMouseButtondown_LUA(int btn)
+{
+	return getMouseButtondown((MouseCodes)btn);
+}
+
+bool InputManager::Mouse::getMouseButtonup_LUA(int btn)
+{
+	return getMouseButtonup((MouseCodes)btn);
 }

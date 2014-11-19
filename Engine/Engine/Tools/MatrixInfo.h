@@ -64,15 +64,7 @@ public:
 	//called by renderer in draw before passing uniforms to shader
 	void lateUpdate();
 		
-	inline operator LuaUserdata<MatrixInfo>() {
-		MAKE_LUA_INSTANCE_RET(MatrixInfo,ret);
-
-		BIND_LUA_VER(MatrixInfo,ret,pos  ); // myObj.pos()
-		BIND_LUA_VER(MatrixInfo,ret,scale);
-		BIND_LUA_VER(MatrixInfo,ret,rot  );
-
-		return ret;
-	}
+	operator LuaUserdata<MatrixInfo>();
 
 	virtual ShaderUniformPram * getUniforms();
 

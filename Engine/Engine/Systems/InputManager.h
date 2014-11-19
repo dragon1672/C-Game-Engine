@@ -38,8 +38,8 @@ public:
 		wrap::vec2 currentMouse;
 		LUA_GET_FUN(wrap::vec2,mousePos);
 		LUA_GET_FUN(wrap::vec2,delta);
-		bool getMouseButtondown_LUA(int btn) { return getMouseButtondown((MouseCodes)btn); }
-		bool getMouseButtonup_LUA(int btn)   { return getMouseButtonup((MouseCodes)btn); }
+		bool getMouseButtondown_LUA(int btn);
+		bool getMouseButtonup_LUA(int btn);
 	public:
 		MAKE_DEFAULT_LUA_CONST_AND_DEST(Mouse);
 		bool getMouseButtondown(MouseCodes btn);
@@ -74,12 +74,5 @@ public:
 	void init();
 	void update();
 
-	operator LuaUserdata<InputManager>() {
-		MAKE_LUA_INSTANCE_RET(InputManager,ret);
-		ret.Bind("getKeyDown",&InputManager::getKeyDown_Lua);
-		ret.Bind("getKeyUp",  &InputManager::getKeyUp_Lua);
-		LUA_BIND_FUN(InputManager,ret,getMouse);
-
-		return ret;
-	}
+	operator LuaUserdata<InputManager>();
 };

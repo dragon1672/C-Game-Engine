@@ -60,3 +60,12 @@ Timer::~Timer()
 {
 	LUA_OBJECT_END(Timer);
 }
+
+Timer::operator LuaUserdata<Timer>()
+{
+	MAKE_LUA_INSTANCE_RET(Timer,ret);
+	ret.Bind("deltaTime",&Timer::deltaTime);
+	ret.Bind("runningTime",&Timer::getElapsedTime);
+
+	return ret;
+}
