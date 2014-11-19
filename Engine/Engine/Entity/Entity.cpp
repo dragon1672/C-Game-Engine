@@ -8,6 +8,7 @@
 #include <Engine/Defines/Vectors.h>
 #include <Engine/IO/Stream.h>
 #include <Engine/Systems/GameObjectManager.h>
+#include <Engine/DebugTools/DebugMemHeader.h>
 
 //events
 #include <Engine/Systems/Events/EventManager.h>
