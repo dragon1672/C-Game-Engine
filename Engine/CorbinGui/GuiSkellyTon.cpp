@@ -183,22 +183,6 @@ void GuiSkellyTon::initBar()
 
 #pragma endregion
 
-#pragma region toggle buttons
-
-	//start/stop
-	menuBar()->addAction(action = new QAction("Start Game", this));
-	connect(action, &QAction::triggered, [this](){ // TODO
-		this->ToggleGameStartStop();
-	});
-	StartStopGameAction = action;
-	menuBar()->addAction(action = new QAction("", this));
-	connect(action, &QAction::triggered, [this](){ // TODO
-		this->ToggleGamePauseResume();
-	});
-	PlayResumeGameAction = action;
-	PlayResumeGameAction->setEnabled(false);
-#pragma endregion
-
 #pragma region ToolBar GameObject and Components
 
 	fileMenu = GameObjectMenu = menuBar()->addMenu("GameObject");
@@ -219,6 +203,23 @@ void GuiSkellyTon::initBar()
 		this->game->currentEntity.addComponent<ScriptComponent>();
 	});
 #pragma endregion
+
+#pragma region toggle buttons
+
+	//start/stop
+	menuBar()->addAction(action = new QAction("Start Game", this));
+	connect(action, &QAction::triggered, [this](){ // TODO
+		this->ToggleGameStartStop();
+	});
+	StartStopGameAction = action;
+	menuBar()->addAction(action = new QAction("", this));
+	connect(action, &QAction::triggered, [this](){ // TODO
+		this->ToggleGamePauseResume();
+	});
+	PlayResumeGameAction = action;
+	PlayResumeGameAction->setEnabled(false);
+#pragma endregion
+
 }
 
 void GuiSkellyTon::ToggleGameStartStop()
