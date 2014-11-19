@@ -210,9 +210,6 @@ ShaderProgram::ShaderProgram(std::string name)
 
 bool ShaderProgram::isValid()
 {
-	for (uint i = 0; i < files.size(); i++) {
-		if(files[i].code == "") return false;
-	}
 	return true;
 }
 
