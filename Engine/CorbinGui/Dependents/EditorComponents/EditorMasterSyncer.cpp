@@ -2,6 +2,10 @@
 #include <Engine/Entity/Entity.h>
 #include <Engine/Entity/Components/RenderableComponent.h>
 
+//events
+#include <Engine/Systems/Events/EventManager.h>
+#include <Engine/Systems/Events/Events/EntityRemovedEvent.h>
+
 REGISTER_COMPONENT(EditorMasterSyncer);
 
 void EditorMasterSyncer::lateUpdate()
@@ -30,4 +34,14 @@ void EditorMasterSyncer::syncRens(RenderableComponent * gameRen, RenderableCompo
 	editorRen->uniformParameters = gameRen->uniformParameters;
 	editorRen->active = gameRen->active;
 	editorRen->Shader(resourceManager.getDefault<ShaderProgram>());
+}
+
+EditorMasterSyncer::EditorMasterSyncer() : toSyncWith(nullptr)
+{
+	eventManager.Subscribe<EntityRemovedEvent>([this](EventData*d,Object*) {
+		EntityRemovedEvent * data = (EntityRemovedEvent*)d;
+		if(data->entity == toSyncWith) {
+			this->shutdown();
+		}
+	});
 }

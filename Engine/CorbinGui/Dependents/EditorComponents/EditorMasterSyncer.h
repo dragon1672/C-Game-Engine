@@ -10,9 +10,13 @@ class ENGINE_SHARED MAKE_COMPONENT_CLASS(EditorMasterSyncer) {
 	Entity * toSyncWith;
 	std::vector<RenderableComponent*> myRenderables;
 public:
-	EditorMasterSyncer() : toSyncWith(nullptr) {}
+	EditorMasterSyncer();
 	void init(Entity * that) {
 		toSyncWith = that;
+	}
+	void shutdown() {
+		toSyncWith = nullptr;
+		myRenderables.clear();
 	}
 	void lateUpdate();
 	virtual void ChildSave(Stream& s)
