@@ -7,10 +7,10 @@
 template<typename T> class ENGINE_SHARED ConstVector {
 private:
 	std::vector<T*> arrays;
-	unsigned int startSize;
+	unsigned int chunkSize;
 	unsigned int currentIndex;
 	void init(int size) {
-		startSize = size;
+		chunkSize = size;
 		currentIndex = 0;
 	}
 public:
@@ -28,12 +28,12 @@ public:
 
 	inline int find(T * toMatch) {
 		for (uint i = 0; i < arrays.size(); i++) {
-			int indexDis = toMatch - arrays[i]; // pointer arithmetic :D
-			if(indexDis < startSize) {
-				return i * startSize + indexDis;
+			uint indexDis = toMatch - arrays[i]; // pointer arithmetic :D also neg numbers become HUGE
+			if(indexDis < chunkSize) {
+				return i * chunkSize + indexDis;
 			}
 		}
-		return -1''
+		return -1;
 	}
 	inline int find(std::function<bool(const T&)> checker) {
 		for (uint i = 0; i < size(); i++)
@@ -42,10 +42,10 @@ public:
 	}
 
 	inline void add(const T& toAdd) {
-		unsigned int a = currentIndex / startSize;
-		unsigned int b = currentIndex % startSize;
-		while(!(a < arrays.size() && b < startSize))
-			arrays.push_back(new T[startSize]);
+		unsigned int a = currentIndex / chunkSize;
+		unsigned int b = currentIndex % chunkSize;
+		while(!(a < arrays.size() && b < chunkSize))
+			arrays.push_back(new T[chunkSize]);
 		arrays[a][b] = toAdd;
 		currentIndex++;
 	}
@@ -79,8 +79,8 @@ public:
 	inline T& operator[](std::size_t idx) {
 		if(idx >= size())
 			throw std::range_error("Out Of Bounds");//std::to_string(idx)+" is out of "+std::to_string(size())+" bounds");
-		unsigned int a = idx / startSize;
-		unsigned int b = idx % startSize;
+		unsigned int a = idx / chunkSize;
+		unsigned int b = idx % chunkSize;
 		return arrays[a][b];
 	};
 	void clear() {
@@ -96,10 +96,10 @@ public:
 	}
 
 	void resize(unsigned int index) {
-		unsigned int a = index / startSize;
-		unsigned int b = index % startSize;
-		while(!(a < arrays.size() && b < startSize))
-			arrays.push_back(new T[startSize]);
+		unsigned int a = index / chunkSize;
+		unsigned int b = index % chunkSize;
+		while(!(a < arrays.size() && b < chunkSize))
+			arrays.push_back(new T[chunkSize]);
 		currentIndex = index;
 	}
 
