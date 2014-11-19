@@ -36,8 +36,6 @@ void CameraManager::ActiveCam(CameraComponent * val)
 CameraComponent * CameraManager::getNewCam(const char * name)
 {
 	auto ret = new CameraComponent(name);
-	allCams.Register(ret);
-	if(activeCam == nullptr) activeCam = ret;
 	return ret;
 }
 

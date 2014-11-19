@@ -182,6 +182,10 @@ void ResourceManager::shutdown()
 	TextureInfoObjs.ClearAll();
 	ScriptObjs.ClearAll();
 	foreachOnAll([](Resource&r){r.shutdown();});
+	shaders.clear();
+	geos.clear();
+	textures.clear();
+	scripts.clear();
 }
 #include <Engine/Systems/Resources/Mesh.h>
 void ResourceManager::loadNeumontStuff()

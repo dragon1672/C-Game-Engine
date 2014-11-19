@@ -287,20 +287,27 @@ void GuiSkellyTon::ToggleGamePauseResume()
 	}
 }
 
-void GuiSkellyTon::LoadFromFile(Stream& s)
+void GuiSkellyTon::LoadFromFile(Stream& s, bool backup)
 {
 	//backup
-	Stream backup = ExportToStream();
+	Stream backupStream;
+	if(backup) backupStream = ExportToStream();
 	try {
 		resourceManager.ObjectLoad(s);
 		s >> gameManager;
 	} catch(...) {
 		printErr(100) "error","corrupt file";
+		if(backup) {
+			backupStream >> gameManager;
+		}
 	}
+	game->activateEditorObjects();
+	this->gameObjectList->update();
 }
 
 void GuiSkellyTon::SaveToStream(Stream& s)
 {
+	game->destoryEditorObjects();
 	resourceManager.ObjectSave(s);
 	s << gameManager;
 }

@@ -12,6 +12,7 @@
 class ENGINE_SHARED CameraManager {
 	ObjectManager allCams;
 	CameraComponent * activeCam;
+	friend CameraComponent;
 	DEFINE_SINGLETON(CameraManager);
 public:
 	CameraManager();

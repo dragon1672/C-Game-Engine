@@ -27,6 +27,11 @@ glm::mat4& CameraComponent::getPerspective()
 CameraComponent::CameraComponent(std::string name /*= nullptr*/)
 	: Component_CRTP(name)
 {
+	
+	camManager.allCams.Register(this);
+	if(camManager.ActiveCam() == nullptr) camManager.ActiveCam(this);
+
+
 	perspectiveNeedsUpdate = true;
 	nearPlane.setter = [this](float& val, float&newGuy) { perspectiveNeedsUpdate = perspectiveNeedsUpdate || val != newGuy; val = newGuy; };
 	farPlane.setter  = [this](float& val, float&newGuy) { perspectiveNeedsUpdate = perspectiveNeedsUpdate || val != newGuy; val = newGuy; };

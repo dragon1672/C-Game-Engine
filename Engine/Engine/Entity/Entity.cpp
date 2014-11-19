@@ -222,6 +222,7 @@ void Entity::Save(Stream&s)
 
 void Entity::Load(Stream&s)
 {
+	shutdown(true);
 	Object::ObjectLoad(s);
 	s >> parent >> active;
 	s >> getTrans();
