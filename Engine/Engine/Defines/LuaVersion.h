@@ -29,10 +29,10 @@
 
 
 #define LUA_OBJECT(class_name)									\
-struct LUA_HOLDER {											\
-	LuaUserdata<class_name> val;							\
+struct LUA_HOLDER {												\
+	LuaUserdata<class_name> val;								\
 	LUA_HOLDER(LuaUserdata<class_name> init) : val(init) { }	\
-};															\
+};																\
 	LUA_HOLDER * LUA_HOLDER_INSTANCE
 
 #define LUA_OBJECT_START(class_name) \
