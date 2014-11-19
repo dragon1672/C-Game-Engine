@@ -3,10 +3,11 @@
 #include <glm/glm.hpp>
 #include <Engine/Tools/MasterLua.h>
 #include <Engine/TypeDefs.h>
+#include <luareference.h>
 
 namespace wrap {
 
-	class vec2 : public glm::vec2 {
+	class ENGINE_SHARED vec2 : public glm::vec2 {
 		LUA_OBJECT(vec2);
 	public:
 		vec2() { LUA_OBJECT_START(vec2); }
@@ -43,18 +44,18 @@ namespace wrap {
 		}
 	};
 
-	class vec3 : public glm::vec3 {
+	class ENGINE_SHARED vec3 : public glm::vec3 {
 		LUA_OBJECT(vec3);
 	public:
-		vec3() { LUA_OBJECT_START(vec3); }
-		vec3(const glm::vec3& that) { set(that); LUA_OBJECT_START(vec3); }
-		vec3(float x, float y, float z) { set(x,y,z); LUA_OBJECT_START(vec3); }
-		vec3(const vec3& that) { set(that); this->LUA_HOLDER_INSTANCE = that.LUA_HOLDER_INSTANCE; }
-		~vec3() { LUA_OBJECT_END(vec3); }
-		inline operator glm::vec3&() { return *reinterpret_cast<glm::vec3*>(this); }
-		inline operator glm::vec3()  { return *reinterpret_cast<glm::vec3*>(this); }
-		vec3& operator=(const glm::vec3& that) { set(that);  return *this; }
-		vec3& operator=(const vec3& that) { set(that); this->LUA_HOLDER_INSTANCE = that.LUA_HOLDER_INSTANCE; return *this; }
+		vec3();
+		vec3(const glm::vec3& that);
+		vec3(float x, float y, float z);
+		vec3(const vec3& that);
+		~vec3();
+		inline operator glm::vec3&() { LUA_OBJECT_END(vec3); return *reinterpret_cast<glm::vec3*>(this); }
+		inline operator glm::vec3()  { LUA_OBJECT_END(vec3); return *reinterpret_cast<glm::vec3*>(this); }
+		vec3& operator=(const glm::vec3& that);
+		vec3& operator=(const vec3& that);
 		LUA_VECTOR_MAKE_GETTER_SETTER(X,x);
 		LUA_VECTOR_MAKE_GETTER_SETTER(Y,y);
 		LUA_VECTOR_MAKE_GETTER_SETTER(Z,z);
@@ -62,31 +63,13 @@ namespace wrap {
 		LUA_VECTOR_MAKE_GETTER_SETTER(R,r);
 		LUA_VECTOR_MAKE_GETTER_SETTER(G,g);
 		LUA_VECTOR_MAKE_GETTER_SETTER(B,b);
-		void  set(const glm::vec3& that) {
-			for (uint i = 0; i < that.length(); i++)
-				(*this)[i] = that[i];
-		}
-		void  set(float x, float y, float z) {
-			this->x = x;
-			this->y = y;
-			this->z = z;
-		}
+		void  set(const glm::vec3& that);
+		void  set(float x, float y, float z);
 
-		inline operator LuaUserdata<vec3>() {
-			MAKE_LUA_INSTANCE_RET(vec3,ret);
-			LUA_VECTOR_BIND(vec3,ret,X);
-			LUA_VECTOR_BIND(vec3,ret,Y);
-			LUA_VECTOR_BIND(vec3,ret,Z);
-
-			LUA_VECTOR_BIND(vec3,ret,R);
-			LUA_VECTOR_BIND(vec3,ret,G);
-			LUA_VECTOR_BIND(vec3,ret,B);
-
-			return ret;
-		}
+		operator LuaUserdata<vec3>();
 	};
 
-	class vec4 : public glm::vec4 {
+	class ENGINE_SHARED vec4 : public glm::vec4 {
 		LUA_OBJECT(vec4);
 	public:
 		vec4() { LUA_OBJECT_START(vec4); }

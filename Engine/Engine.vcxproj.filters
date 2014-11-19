@@ -173,6 +173,7 @@
     <ClCompile Include="Engine\IO\Stream.cpp" />
     <ClCompile Include="CorbinGui\Dependents\EditorComponents\EditorMasterSyncer.cpp" />
     <ClCompile Include="Engine\Entity\Component.cpp" />
+    <ClCompile Include="Engine\Tools\GlmWrap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Tools\MyMath\Matrix2D.inl" />

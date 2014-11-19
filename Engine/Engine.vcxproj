@@ -253,6 +253,7 @@
     <ClCompile Include="Engine\Systems\Resources\ShaderProgram.cpp" />
     <ClCompile Include="Engine\Systems\Resources\TextureInfo.cpp" />
     <ClCompile Include="Engine\Tools\BinaryToShapeLoader.cpp" />
+    <ClCompile Include="Engine\Tools\GlmWrap.cpp" />
     <ClCompile Include="Engine\Tools\MasterLua.cpp" />
     <ClCompile Include="Engine\Tools\MatrixInfo.cpp" />
     <ClCompile Include="Engine\Tools\Printer.cpp" />
