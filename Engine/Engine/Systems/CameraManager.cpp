@@ -10,12 +10,12 @@ IMPLEMENT_SINGLETON(CameraManager);
 
 CameraManager::CameraManager() : activeCam(nullptr)
 {
-	eventManager.Subscribe<ComponentRemovedEvent>([this](EventData*d,Object*o){
-		ComponentRemovedEvent * data = (ComponentRemovedEvent*)d;
-		if(allCams.Contains(data->beingTrashed)) {
-			allCams.UnRegister(data->beingTrashed);
-		}
-	});
+	//eventManager.Subscribe<ComponentRemovedEvent>([this](EventData*d,Object*o){
+	//	ComponentRemovedEvent * data = (ComponentRemovedEvent*)d;
+	//	if(allCams.Contains(data->beingTrashed)) {
+	//		allCams.UnRegister(data->beingTrashed);
+	//	}
+	//});
 }
 
 CameraComponent * CameraManager::ActiveCam()

@@ -13,6 +13,7 @@ class ENGINE_SHARED MAKE_COMPONENT_CLASS(CameraComponent) {
 	ShaderUniformPram uniforms[6];
 public:
 	CameraComponent(std::string name = "");
+	~CameraComponent();
 	bool isActive();
 	void setActive();
 	PropertyGetSet<int> width;

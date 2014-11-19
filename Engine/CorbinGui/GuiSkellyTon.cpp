@@ -229,9 +229,8 @@ void GuiSkellyTon::ToggleGameStartStop()
 			myState = EditorStates::PlayingGame;
 			camManager.ActiveCam(nullptr);
 			
-			game->destoryEditorObjects();
 			tempStreamForGamePlay.resetToBeg();
-			tempStreamForGamePlay << gameManager;
+			SaveToStream(tempStreamForGamePlay);
 			
 			gameManager.init();
 			game->start();
@@ -255,9 +254,8 @@ void GuiSkellyTon::ToggleGameStartStop()
 		myState = EditorStates::Editor;
 
 		tempStreamForGamePlay.resetToBeg();
-		tempStreamForGamePlay >> gameManager;
-		game->createEditorObjects();
-
+		LoadFromFile(tempStreamForGamePlay,false);
+		
 		game->start();
 
 		//set menu options
@@ -301,7 +299,7 @@ void GuiSkellyTon::LoadFromFile(Stream& s, bool backup)
 			backupStream >> gameManager;
 		}
 	}
-	game->activateEditorObjects();
+	game->createEditorObjects();
 	this->gameObjectList->update();
 }
 

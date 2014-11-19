@@ -8,7 +8,7 @@ REGISTER_COMPONENT(CameraComponent);
 glm::mat4x4& CameraComponent::getWorld2View()
 {
 	glm::vec3 tmp = parent->getTrans()->scale;
-	parent->getTrans()->scale = glm::vec3();
+	parent->getTrans()->scale = glm::vec3(1,1,1);
 	world2View = parent->getTrans()->getCompleteTransform();
 	parent->getTrans()->scale = tmp;
 	return world2View;
@@ -121,4 +121,9 @@ bool CameraComponent::CopyInto(Component* t)
 	that->width.getRef()     = this->width;
 	that->height.getRef()    = this->height;
 	return true;
+}
+
+CameraComponent::~CameraComponent()
+{
+	camManager.removeCam(this);
 }

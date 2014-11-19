@@ -25,8 +25,12 @@ public:
 	ShaderUniformPram(const char * name, const glm::mat4& value);
 	inline ParameterType Type()   const { return type; }
 	inline const char * Title()   const { return title; }
-	inline const void * Pointer() const { return cashedPointer; }
-	void Pointer(const void * val) { cashedPointer = val; }
+	inline const void * Pointer() const {
+		return cashedPointer;
+	}
+	void Pointer(const void * val) {
+		cashedPointer = val;
+	}
 	
 	void init(const char * name, ParameterType type, const void * val);
 };
