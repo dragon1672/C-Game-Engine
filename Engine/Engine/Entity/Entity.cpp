@@ -16,10 +16,11 @@
 #include <Engine/Systems/Events/Events/ComponentRemovedEvent.h>
 #include <Engine/Systems/Events/Events/EntityParentChangedEvent.h>
 
-void Entity::removeComponent(int toKill) {
-	if(toKill >= 0 && toKill < (int)components.size()) {
+void Entity::removeComponent(uint toKill) {
+	if(toKill >= 0 && toKill < components.size()) {
 		Component * c = components[toKill];
-		components.erase(components.begin() + toKill);
+		if(toKill == components.size()-1) components.pop_back();
+		else components.erase(components.begin() + toKill);
 		emitEvent(new ComponentRemovedEvent(this,c));
 		delete(c);
 	}
@@ -134,15 +135,16 @@ ScriptComponent * Entity::getScript(std::string name) {
 
 Entity * Entity::Parent()
 {
+	if(gm == nullptr) gm = &gameManager;
 	return gm->getEntity(parent);
 }
 
-void Entity::Parent(double newGuy)
+void Entity::Parent(double newGuy, bool fireEvents)
 {
-	Parent(gm->getEntity(newGuy));
+	Parent(gm->getEntity(newGuy),fireEvents);
 }
 
-void Entity::Parent(Entity * newGuy)
+void Entity::Parent(Entity * newGuy, bool fireEvents)
 {
 	Entity * old = Parent();
 	if(newGuy != nullptr && Collections::contains(children,newGuy->getID())) {
@@ -151,7 +153,7 @@ void Entity::Parent(Entity * newGuy)
 	if(old    != nullptr) old->children.erase(getID());
 	if(newGuy != nullptr) newGuy->children.emplace(getID());
 	parent = newGuy != nullptr ? newGuy->getID() : Object::NULL_OBJECT_ID();
-	if(newGuy != old) emitEvent(new EntityParentChangedEvent (this,old,newGuy));
+	if(fireEvents && newGuy != old) emitEvent(new EntityParentChangedEvent (this,old,newGuy));
 	for (uint i = 0; i < StageChanged.size(); i++) StageChanged[i](this);
 }
 
@@ -188,8 +190,7 @@ std::vector<Component *> Entity::getAllComponents()
 
 Entity::~Entity()
 {
-	DELETE_VECTOR(components);
-	LUA_OBJECT_END(Entity);
+	shutdown(false);
 }
 
 LuaTable Entity::getScriptLua(std::string name)
@@ -224,7 +225,6 @@ void Entity::Load(Stream&s)
 	Object::ObjectLoad(s);
 	s >> parent >> active;
 	s >> getTrans();
-	DELETE_VECTOR(components); // TODO FIX LOADING
 	uint size;
 	s >> size;
 	for (uint i = 0; i < size; i++)
@@ -255,4 +255,13 @@ Entity::operator LuaUserdata<Entity>()
 	ret.Bind("GetScript",&Entity::getScriptLua);
 
 	return ret;
+}
+
+void Entity::shutdown(bool fireEvents)
+{
+	LUA_OBJECT_END(Entity);
+	while(fireEvents && components.size()>0)
+		removeComponent(components.size()-1);
+	DELETE_VECTOR(components); // clean up if fireEvents is false
+	Parent(nullptr,fireEvents);
 }

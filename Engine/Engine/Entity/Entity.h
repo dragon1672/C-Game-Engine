@@ -20,7 +20,7 @@ class GameObjectManager;
 
 class ENGINE_SHARED Entity : public Object, public StreamableObject {
 private:
-	void removeComponent(int toKill);
+	void removeComponent(uint toKill);
 	template<typename T> int getIndex() const {
 		return getIndexFromClassName(typeid(T).name());
 	}
@@ -46,8 +46,8 @@ public:
 	std::unordered_set<double> Children();
 	std::vector<std::function<void(Entity*me)>> StageChanged;
 	Entity * Parent();
-	void Parent(Entity * newGuy);
-	void Parent(double newGuy);
+	void Parent(Entity * newGuy, bool fireEvents = true);
+	void Parent(double newGuy,   bool fireEvents = true);
 	bool active;
 
 
@@ -102,6 +102,6 @@ public:
 	virtual void Save(Stream&s);
 
 	virtual void Load(Stream&s);
-
+	void shutdown(bool fireEvents = true);
 };
 

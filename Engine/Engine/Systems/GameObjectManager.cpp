@@ -156,12 +156,17 @@ void GameObjectManager::RemoveEntity(Entity * toRemove)
 {
 	int index = entities.find(toRemove);
 	if(index >= 0) {
+		entities[index].active = false;
+
 		for (auto i : toRemove->Children()) {
 			RemoveEntity(i);
 		}
-		entities[index].active = false;
+
 		entities[index].Parent(nullptr);
+
 		emitEvent(new EntityRemovedEvent(toRemove));
+
+		entities[index].shutdown();
 	}
 	if((unsigned)index == entities.size()-1) entities.pop_back();
 	else deletedEntities.emplace(index);
@@ -219,6 +224,9 @@ void GameObjectManager::Load(Stream&s)
 	deletedEntities.clear();
 	EntityManager.ClearAll();
 	EntityManager.Register(Collections::Select<Entity,Object*>(entities,[](Entity&e){ return &e; }));
+	for (uint i = 0; i < entities.size(); i++) {
+		entities[i].gm = this;
+	}
 	for (uint i = 0; i < entities.size(); i++) {
 		emitEvent(new EntityAddedEvent(&entities[i]));
 	}
