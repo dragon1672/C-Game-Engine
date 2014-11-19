@@ -62,7 +62,12 @@ public:
 		return true;
 	}
 
-	inline void ConstVector<T>::pop_back() { if(currentIndex > 0) currentIndex--; }
+	inline void ConstVector<T>::pop_back() {
+		if(currentIndex > 0) {
+			back() = T();
+			currentIndex--;
+		}
+	}
 
 	inline unsigned int size() { return currentIndex;   }
 	inline const T& operator[](std::size_t idx) const { return const_cast<T&>(*this)[idx]; };
