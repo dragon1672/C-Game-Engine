@@ -75,6 +75,9 @@ void GuiSkellyTon::initBar()
 	QMenu * fileMenu = menuBar()->addMenu("File");
 	//setting up file actions
 	QAction* action; // master action, used to preserve context
+
+#pragma region File Menu IO
+
 	fileMenu->addAction(action = new QAction("New Project", this));		action->setShortcut(QKeySequence::New);
 	connect(action, &QAction::triggered, [this](){ // TODO
 		printer.LogMessage("New Clicked");
@@ -118,11 +121,15 @@ void GuiSkellyTon::initBar()
 		Enable();
 	});
 
+#pragma endregion
+
 	fileMenu->addAction(action = new QAction("Exit Program", this));
 	connect(action, &QAction::triggered, [this](){
 		printer.LogMessage("Exiting Editor");
 		this->close();
 	});
+
+#pragma region Menu toolbar resources
 
 	fileMenu = ResouceBar = menuBar()->addMenu("Resources");
 	fileMenu->addAction(action = new QAction("Load Obj", this));
@@ -173,12 +180,10 @@ void GuiSkellyTon::initBar()
 		tmp->PassDownToHardWare();
 		printer.LogMessage("Load Script Clicked");
 	});
-	fileMenu = GameObjectMenu = menuBar()->addMenu("GameObject");
-	fileMenu->addAction(action = new QAction("New Game Object", this));
-	connect(action, &QAction::triggered, [this](){
-		game->AddEntity("New Game Object");
-	});
 
+#pragma endregion
+
+#pragma region toggle buttons
 
 	//start/stop
 	menuBar()->addAction(action = new QAction("Start Game", this));
@@ -192,6 +197,15 @@ void GuiSkellyTon::initBar()
 	});
 	PlayResumeGameAction = action;
 	PlayResumeGameAction->setEnabled(false);
+#pragma endregion
+
+#pragma region ToolBar GameObject and Components
+
+	fileMenu = GameObjectMenu = menuBar()->addMenu("GameObject");
+	fileMenu->addAction(action = new QAction("New Game Object", this));
+	connect(action, &QAction::triggered, [this](){
+		game->AddEntity("New Game Object");
+	});
 
 
 	addComponentBar = fileMenu->addMenu("Add Component");
@@ -204,6 +218,7 @@ void GuiSkellyTon::initBar()
 	connect(action, &QAction::triggered, [this](){
 		this->game->currentEntity.addComponent<ScriptComponent>();
 	});
+#pragma endregion
 }
 
 void GuiSkellyTon::ToggleGameStartStop()
