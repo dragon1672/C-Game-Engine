@@ -121,3 +121,15 @@ Printer::SingleLinePrintConsole::~SingleLinePrintConsole()
 	if(lineReturn) { std::cout << std::endl; }
 	SetConsoleTextAttribute ( consoleHandle, m_currentConsoleAttr);
 }
+
+bool Printer::SingleLinePrintConsole::printSingleVarPrep()
+{
+	if(disabled) return false;
+	if(spaces && insertSpace) { std::cout << ' '; }
+	return true;
+}
+
+void Printer::SingleLinePrintConsole::printSingleVarEnd()
+{
+	insertSpace = true;
+}

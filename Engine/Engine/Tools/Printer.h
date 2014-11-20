@@ -43,13 +43,23 @@ public:
 		bool spaces,insertSpace,lineReturn,disabled;
 		SingleLinePrintConsole(int color, bool spaces, bool lineReturn, bool disabled=false);
 		~SingleLinePrintConsole();
+		bool printSingleVarPrep();
+		void printSingleVarEnd();
 
 		template <typename T>
 		SingleLinePrintConsole &operator , (const T &t) {
-			if(disabled) return *this;
-			if(spaces && insertSpace) { std::cout << ' '; }
-			std::cout << t;
-			insertSpace = true;
+			if(printSingleVarPrep()) {
+				std::cout << t;
+				printSingleVarEnd();
+			}
+			return *this;
+		}
+		template <typename T>
+		SingleLinePrintConsole &operator << (const T &t) {
+			if(printSingleVarPrep()) {
+				std::cout << t;
+				printSingleVarEnd();
+			}
 			return *this;
 		}
 	};
