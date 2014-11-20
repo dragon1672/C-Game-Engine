@@ -52,7 +52,7 @@ ShaderProgram * ResourceManager::addShader_file(std::string name, const char * v
 }
 ShaderProgram * ResourceManager::addShader_file(std::string name, std::string vertFilePath, std::string fragFilePath, bool useRelPath)
 {
-	return addShader_src(name, FileIO::readFile((useRelPath?workingDir:"") + vertFilePath),FileIO::readFile((useRelPath?workingDir:"") + fragFilePath));
+	return addShader_src(name, FileIO::readFile2String((useRelPath?workingDir:"") + vertFilePath),FileIO::readFile2String((useRelPath?workingDir:"") + fragFilePath));
 }
 ShaderProgram * ResourceManager::addShader_src (std::string name, std::string vert, std::string frag)
 {
@@ -131,7 +131,7 @@ Script * ResourceManager::addScript_file(const char * filePath, bool useRelPath)
 }
 Script * ResourceManager::addScript_file(std::string filePath, bool useRelPath)
 {
-	return addScript_src(FileIO::readFile((useRelPath?workingDir:"") + filePath));
+	return addScript_src(FileIO::readFile2String((useRelPath?workingDir:"") + filePath));
 }
 Script * ResourceManager::addScript_src (const char * file)
 {

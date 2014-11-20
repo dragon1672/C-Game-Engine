@@ -22,7 +22,7 @@ namespace FileIO {
 		QImage myTexture = QGLWidget::convertToGLFormat(QImage(fileName).mirrored(flipHorz,flipVert));
 
 		if(myTexture.isNull()) {
-			qDebug() << "attempt to load " << fileName << " failed";
+			printErr(100) "attempt to load",fileName.toStdString(),"failed";
 			assert(false);
 		} else {
 			QString formatedName = fileName.replace(QRegExp("[_]")," ");
@@ -32,9 +32,8 @@ namespace FileIO {
 			formatedName = formatedName.mid(lastSlash,formatedName.size()-lastSlash);
 			lastSlash = formatedName.lastIndexOf('\\');
 			formatedName = formatedName.mid(lastSlash,formatedName.size()-lastSlash);
-			qDebug() << "Texture Loaded ( " << myTexture.width() << "x" << myTexture.width() << " ): " << formatFileName(fileName);
+			printMsg(10) "Texture Loaded (",myTexture.width(),"x",myTexture.width()," ): ",formatFileName(fileName).toStdString();
 		}
-
 		return myTexture;
 	}
 
@@ -47,6 +46,17 @@ namespace FileIO {
 	QImage loadImage(std::string path, bool flipHorz /*= false*/, bool flipVert /*= false*/)
 	{
 		return loadImage(path.c_str(),flipHorz,flipVert);
+	}
+
+	FileIO::BinaryImage loadBinaryImage(const char * path)
+	{
+		FileIO::FileData file = FileIO::loadFile(path);
+		return *(BinaryImage*)&file.data;
+	}
+
+	FileIO::BinaryImage loadBinaryImage(std::string path)
+	{
+		return loadBinaryImage(path.c_str());
 	}
 
 }

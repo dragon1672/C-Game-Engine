@@ -25,8 +25,8 @@ namespace FileIO {
 		FileData();
 		void cleanup();
 	};
-	ENGINE_SHARED std::string readFile(std::string filePath);
-	ENGINE_SHARED std::string readFile(const char * filePath);
+	ENGINE_SHARED std::string readFile2String(std::string filePath);
+	ENGINE_SHARED std::string readFile2String(const char * filePath);
 	ENGINE_SHARED FileData loadFile(std::string filePath);
 	ENGINE_SHARED FileData loadFile(const char * filePath);
 	ENGINE_SHARED bool validFile(std::string filePath);
@@ -42,9 +42,9 @@ namespace FileIO {
 	ENGINE_SHARED std::string extractExtension(std::string fullPath);
 	ENGINE_SHARED std::string extractFilePath(std::string fullPath);
 
-	FILETIME LastWritten(std::wstring filePath, bool& validFile);
-	bool OutOfDate(std::string sourceFilePath, std::string generatedFilePath);
-	bool OutOfDate(std::wstring sourceFilePath, std::wstring generatedFilePath);
+	ENGINE_SHARED FILETIME LastWritten(std::wstring filePath, bool& validFile);
+	ENGINE_SHARED bool OutOfDate(std::string sourceFilePath, std::string generatedFilePath);
+	ENGINE_SHARED bool OutOfDate(std::wstring sourceFilePath, std::wstring generatedFilePath);
 
 
 	template<typename T>

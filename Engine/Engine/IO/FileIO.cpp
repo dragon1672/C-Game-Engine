@@ -8,10 +8,10 @@
 #include <Engine/Defines/SafeNewAndDelete.h>
 
 namespace FileIO {
-	std::string readFile(std::string filePath) {
-		return readFile(filePath.c_str());
+	std::string readFile2String(std::string filePath) {
+		return readFile2String(filePath.c_str());
 	}
-	std::string readFile(const char * filePath) {
+	std::string readFile2String(const char * filePath) {
 		std::ifstream file(filePath);
 		return std::string(
 			std::istreambuf_iterator<char>(file),
@@ -161,6 +161,7 @@ namespace FileIO {
 	{
 		QString file(fullPath.c_str());
 		QStringList tmp = file.split('.');
+		if(tmp.size() < 2) return "";
 		QString extension = tmp[tmp.size()-1];
 		return extension.toStdString();
 	}
@@ -241,7 +242,7 @@ namespace FileIO {
 
 	}
 
-	
+
 
 	FILETIME LastWritten(std::wstring filePath, bool& validFile)
 	{
@@ -276,8 +277,8 @@ namespace FileIO {
 		return CompareFileTime(&src,&gen) > 0;
 	}
 
-	
 
-	
+
+
 
 }
