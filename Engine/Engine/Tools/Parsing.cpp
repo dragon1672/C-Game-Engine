@@ -69,13 +69,14 @@ bool EngineParser::tryParseDoubleGobbleSrc(std::string& src, double& out)
 	double power = 1;
 	bool afterDot = false;
 	bool done = false;
-	bool valid = true;
+	bool valid = false;
 
 	bool negitive = src[0] == '-';
 
 	unsigned int i = negitive ? 1 : 0;
-	for (; !done && valid && i < src.size(); i++) {
+	for (; !done && i < src.size(); i++) {
 		if('0' <= src[i] && src[i] <= '9') {
+			valid = true;
 			if(!afterDot) {
 				ret *= 10; // move numbers to the left as new numbers are found
 				ret += src[i] - '0';

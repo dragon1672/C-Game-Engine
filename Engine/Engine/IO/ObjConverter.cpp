@@ -124,9 +124,9 @@ namespace std {
 	};
 };
 
+#pragma endregion
 
-
-Mesh FileIO::Obj2Mesh(fileByte * bytes, uint fileSize, LoadingCallBack callback /*= LoadingCallBack()*/)
+Mesh FileIO::Obj2Mesh(fileByte * bytes, uint fileSize, std::string name, LoadingCallBack callback /*= LoadingCallBack()*/)
 {
 #pragma region init parsers
 	std::vector<ObjVertex> verts;
@@ -185,7 +185,7 @@ Mesh FileIO::Obj2Mesh(fileByte * bytes, uint fileSize, LoadingCallBack callback 
 	}
 #pragma endregion
 
-#pragma region converting
+#pragma region setting OBJVector
 
 	//because of some class casting crap, i'm unable to use orginal vector of my custom object for sorting
 	//saving new vector that holds onto indexs of indicees and the vert orginal position and sorting that vector
@@ -207,7 +207,11 @@ Mesh FileIO::Obj2Mesh(fileByte * bytes, uint fileSize, LoadingCallBack callback 
 		verts.push_back(orginalVector[myVec[i].first]);
 	}
 
-	Mesh ret;
+#pragma endregion
+
+#pragma region converting
+
+	Mesh ret(name);
 
 	ret.indices = indicees;
 	ret.verts = Collections::Select<ObjVertex,Vert>(verts,[](ObjVertex&v) {
@@ -217,15 +221,21 @@ Mesh FileIO::Obj2Mesh(fileByte * bytes, uint fileSize, LoadingCallBack callback 
 		for (int i = 0; i < 3; i++) { ret.norm[i] = v.Norm.data[i];     }
 		return ret;
 	});
-	ret.updateTangents();
 
 	return ret;
 
 #pragma endregion
 }
 
-Mesh FileIO::ObjFilej2Mesh(char * filePath, LoadingCallBack callback /*= LoadingCallBack()*/)
+Mesh FileIO::ObjFilej2Mesh(const char * filePath, std::string name, LoadingCallBack callback /*= LoadingCallBack()*/)
 {
 	FileData tmp = FileIO::loadFile(filePath);
-	return Obj2Mesh(tmp.data,tmp.size,callback);
+	auto ret = Obj2Mesh(tmp.data,tmp.size,name, callback);
+	tmp.cleanup();
+	return ret;
+}
+
+Mesh FileIO::ObjFilej2Mesh(std::string filePath, std::string name, LoadingCallBack callback /*= LoadingCallBack()*/)
+{
+	return ObjFilej2Mesh(filePath.c_str(),name,callback);
 }
