@@ -32,7 +32,7 @@ namespace FileIO {
 	ENGINE_SHARED bool validFile(std::string filePath);
 	ENGINE_SHARED bool validFile(const char * filePath);
 
-	ENGINE_SHARED std::vector<std::string> filesInDir(std::string dir);
+	ENGINE_SHARED std::vector<std::string> filesInDir(std::string dir, bool recursive = true);
 	ENGINE_SHARED std::vector<std::string> filesInDirFullPath(std::string dir, std::string fileWildCard = "*.*");
 	ENGINE_SHARED int filesInDirFullPath(std::string dir,std::string fileWildCard,std::vector<std::string> &files);
 	ENGINE_SHARED std::string workingDirectory();

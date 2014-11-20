@@ -6,6 +6,7 @@
 #include <QtCore/QStringList>
 #include <windows.h>
 #include <Engine/Defines/SafeNewAndDelete.h>
+#include <Engine/Tools/StringManapulation.h>
 
 namespace FileIO {
 	std::string readFile2String(std::string filePath) {
@@ -35,22 +36,32 @@ namespace FileIO {
 		return valid;
 	}
 
-	std::vector<std::string> filesInDir(std::string dir)
+	std::vector<std::string> filesInDir(std::string dir, bool recursive, std::string currentDir,std::vector<std::string>&files)
 	{
-		std::vector< std::string > files;
 		DIR *dp;
+		dir += "/" + currentDir;
 		struct dirent *dirp;
 		if((dp  = opendir(dir.c_str())) == NULL) {
 			printErr(100) "Error(", errno, ") opening ", dir;
 			return std::vector<std::string>();
 		}
 		while ((dirp = readdir(dp)) != NULL) {
-			if (validFile(dir+"/"+dirp->d_name)) {
-				files.push_back(dirp->d_name);
+			std::string path = dir+"/"+dirp->d_name;
+			if (validFile(path)) {
+				files.push_back(StringManapulation::replace("./","",currentDir+"/"+dirp->d_name));
+			}
+			if (recursive && std::string(dirp->d_name) != "." && std::string(dirp->d_name) != ".." && validDir(path)) {
+				filesInDir(dir,recursive,path,files);
 			}
 		}
 		closedir(dp);
 		return files;
+	}
+
+	std::vector<std::string> filesInDir(std::string dir, bool recursive)
+	{
+		std::vector<std::string> ret;
+		return filesInDir(dir,recursive,".",ret);
 	}
 	std::vector<std::string> foldersInDir(std::string dir)
 	{
