@@ -177,6 +177,7 @@
     <ClInclude Include="Engine\Systems\Resources\TextureInfo.h" />
     <ClInclude Include="Engine\Tools\BinaryToShapeLoader.h" />
     <ClInclude Include="Engine\Tools\CollectionEditing.h" />
+    <ClInclude Include="Engine\Tools\Console.h" />
     <ClInclude Include="Engine\Tools\ConstVector.h" />
     <ClInclude Include="Engine\Tools\GlmWrap.h" />
     <ClInclude Include="Engine\Tools\MasterLua.h" />
@@ -258,6 +259,7 @@
     <ClCompile Include="Engine\Systems\Resources\ShaderProgram.cpp" />
     <ClCompile Include="Engine\Systems\Resources\TextureInfo.cpp" />
     <ClCompile Include="Engine\Tools\BinaryToShapeLoader.cpp" />
+    <ClCompile Include="Engine\Tools\Console.cpp" />
     <ClCompile Include="Engine\Tools\GlmWrap.cpp" />
     <ClCompile Include="Engine\Tools\MasterLua.cpp" />
     <ClCompile Include="Engine\Tools\MatrixInfo.cpp" />
