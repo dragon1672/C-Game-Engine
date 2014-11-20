@@ -36,22 +36,23 @@ namespace FileIO {
 		return valid;
 	}
 
-	std::vector<std::string> filesInDir(std::string dir, bool recursive, std::string currentDir,std::vector<std::string>&files)
+	std::vector<std::string> filesInDir(std::string dir, bool recursive, std::string currentDir,std::vector<std::string>& files)
 	{
 		DIR *dp;
-		dir += "/" + currentDir;
+		std::string fullDir = StringManapulation::replace("./","",dir+"/"+currentDir);
+		if(fullDir=="") fullDir = '.';
 		struct dirent *dirp;
-		if((dp  = opendir(dir.c_str())) == NULL) {
+		if((dp  = opendir(fullDir.c_str())) == NULL) {
 			printErr(100) "Error(", errno, ") opening ", dir;
-			return std::vector<std::string>();
+			return files;
 		}
 		while ((dirp = readdir(dp)) != NULL) {
-			std::string path = dir+"/"+dirp->d_name;
+			std::string path = fullDir+"/"+dirp->d_name;
 			if (validFile(path)) {
 				files.push_back(StringManapulation::replace("./","",currentDir+"/"+dirp->d_name));
 			}
 			if (recursive && std::string(dirp->d_name) != "." && std::string(dirp->d_name) != ".." && validDir(path)) {
-				filesInDir(dir,recursive,path,files);
+				filesInDir(dir,recursive,currentDir+"/"+dirp->d_name,files);
 			}
 		}
 		closedir(dp);
