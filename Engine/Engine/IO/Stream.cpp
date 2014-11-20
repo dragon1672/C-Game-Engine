@@ -1,13 +1,15 @@
 #include "Stream.h"
 #include <Engine/TypeDefs.h>
 #include <fstream>
+#include <Engine/IO/FileIOWriting.h>
 
 
 
 void Stream::exportToFile(const char * filePath)
 {
-	std::ofstream out(filePath, std::ios::binary );
-	out.write(&(*buffer)[0],(*buffer).size());
+	auto data = &(*buffer)[0];
+	uint size  = (*buffer).size();
+	FileIO::saveFile(data,size,filePath);
 }
 
 void Stream::importFromFile(const char * filePath)
