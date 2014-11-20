@@ -5,6 +5,7 @@
 #include <Engine/Systems/Resources/Shaders/DefaultShaders.h>
 #include <Engine/DebugTools/DebugMemHeader.h>
 #include <ShapeGenerator.h>
+#include <Engine/IO/ObjConverter.h>
 
 #include <Engine/Systems/Events/EventManager.h>
 #include <Engine/Systems/Events/Events/ResourceLoadedEvent.h>
@@ -45,6 +46,18 @@ Mesh * ResourceManager::addMesh(std::string name, std::string filePath, bool use
 Mesh * ResourceManager::addMesh(std::string name, const char * filePath,bool useRelPath)
 {
 	return addMesh(name, std::string(filePath), useRelPath);
+}
+Mesh * ResourceManager::addMeshFromOBJ(std::string name, std::string filePath, bool useRelPath)
+{
+	std::string fileLocation = (useRelPath?workingDir:"") + filePath;
+	geos.push_back(FileIO::ObjFilej2Mesh(fileLocation.c_str(),name));
+	MeshObjs.Register(geos.back());
+	emitEvent(new ResourceLoadedEvent(&geos.back()));
+	return &geos.back();
+}
+Mesh * ResourceManager::addMeshFromOBJ(std::string name, const char * filePath,bool useRelPath)
+{
+	return addMeshFromOBJ(name, std::string(filePath), useRelPath);
 }
 ShaderProgram * ResourceManager::addShader_file(std::string name, const char * vertFilePath, const char * fragFilePath, bool useRelPath)
 {
@@ -217,11 +230,15 @@ Mesh * ResourceManager::duplicate(Mesh * toDup)
 
 ShaderProgram * ResourceManager::duplicate(ShaderProgram * toDup)
 {
-	shaders.add(*toDup);
-	shaders.back().Name(toDup->Name()+"_dup");
-	ShaderProgramObjs.Register(shaders.back());
-	emitEvent(new ResourceLoadedEvent(&shaders.back()));
-	return &shaders.back();
+	shaders.push_back(ShaderProgram(toDup->Name()+"_dup"));
+	auto ret = &shaders.back();
+	Object objData(ret->Name(),ret->getID());
+	*ret = *toDup; // copy!
+	Object& obj = *ret;
+	obj = objData;
+	ShaderProgramObjs.Register(ret);
+	emitEvent(new ResourceLoadedEvent(ret));
+	return ret;
 }
 
 #define SAVE_RESOURCE(resource_array_name)\

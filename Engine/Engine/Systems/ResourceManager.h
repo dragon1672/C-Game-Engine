@@ -37,6 +37,8 @@ public:
 	Mesh * addMesh(std::string name, Neumont::ShapeData NUCrap);
 	Mesh * addMesh(std::string name, std::string  filePath, bool useRelPath = true);
 	Mesh * addMesh(std::string name, const char * filePath, bool useRelPath = true);
+	Mesh * addMeshFromOBJ(std::string name, const char * filePath, bool useRelPath = true);
+	Mesh * addMeshFromOBJ(std::string name, std::string  filePath, bool useRelPath = true);
 
 	ShaderProgram * addShader_file(std::string name, const char * vertFilePath, const char * fragFilePath, bool useRelPath = true);
 	ShaderProgram * addShader_file(std::string name, std::string  vertFilePath, std::string  fragFilePath, bool useRelPath = true);
