@@ -1,5 +1,6 @@
 #pragma once
 #include <utility>
+#include <Engine/TypeDefs.h>
 
 #include <ExportHeader.h>
 
@@ -10,6 +11,7 @@ namespace Console {
 	};
 	ENGINE_SHARED void setColor(Color foreground, Color background = Color::BLACK);
 	ENGINE_SHARED void setCursorPos(short x, short y);
+	ENGINE_SHARED void setCursorPos(std::pair<long,long> pos);
 	ENGINE_SHARED std::pair<long,long> getCursorPos();
 	ENGINE_SHARED void setCursorVisability(bool shown);
 	ENGINE_SHARED void hideCursor();
@@ -19,4 +21,7 @@ namespace Console {
 	ENGINE_SHARED void setWindowVisability(bool shown);
 	ENGINE_SHARED void hideWindow();
 	ENGINE_SHARED void showWindow();
+
+
+	void PrintLoadingBar(std::pair<long,long> pos, int iteration, int maxIteration, uint length);
 }

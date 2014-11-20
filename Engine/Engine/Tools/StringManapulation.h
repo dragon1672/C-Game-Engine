@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <unordered_set>
+#include <Engine/TypeDefs.h>
 
 namespace StringManapulation {
 	ENGINE_SHARED void split(const std::string &s, char delim, std::vector<std::string> &elems, bool ignoreBlank = true);
@@ -35,4 +36,21 @@ namespace StringManapulation {
 	ENGINE_SHARED std::string replace(std::string what,std::string with,std::string source);
 	ENGINE_SHARED bool startsWith(const char * source,std::string toCheck);
 	ENGINE_SHARED bool startsWith(std::string source, std::string toCheck);
+
+	
+	template<typename T> std::string toString(T data) {
+		static_assert(false,"toString not created");
+	}
+
+	template<> std::string toString(int num);
+	template<> std::string toString(long num);
+	template<> std::string toString(short num);
+	template<> std::string toString(float num);
+	template<> std::string toString(double num);
+	template<> std::string toString(unsigned int num);
+	template<> std::string toString(unsigned long num);
+	template<> std::string toString(unsigned short num);
+
+
+	ENGINE_SHARED std::string LoadingBar(float percent,uint length, bool showPercent = true);
 }
