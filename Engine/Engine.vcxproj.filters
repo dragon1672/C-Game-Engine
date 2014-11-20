@@ -115,6 +115,7 @@
     <ClInclude Include="CorbinGui\Dependents\EditorComponents\EditorMasterSyncer.h" />
     <ClInclude Include="Engine\IO\FileIOWriting.h" />
     <ClInclude Include="Engine\Tools\Parsing.h" />
+    <ClInclude Include="Engine\IO\ObjConverter.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -178,6 +179,7 @@
     <ClCompile Include="Engine\Tools\GlmWrap.cpp" />
     <ClCompile Include="Engine\IO\FileIOWriting.cpp" />
     <ClCompile Include="Engine\Tools\Parsing.cpp" />
+    <ClCompile Include="Engine\IO\ObjConverter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\Tools\MyMath\Matrix2D.inl" />

@@ -128,6 +128,7 @@
     <ClInclude Include="Engine\IO\FileIO.h" />
     <ClInclude Include="Engine\IO\FileIOWriting.h" />
     <ClInclude Include="Engine\IO\MeshLoader.h" />
+    <ClInclude Include="Engine\IO\ObjConverter.h" />
     <ClInclude Include="Engine\IO\QImageIO.h" />
     <ClInclude Include="Engine\IO\Stream.h" />
     <ClInclude Include="Engine\IO\StreamableObject.h" />
@@ -185,6 +186,7 @@
     <ClInclude Include="Engine\Tools\MyMath\SquareMatrix.h" />
     <ClInclude Include="Engine\Tools\MyMath\Vector 2.h" />
     <ClInclude Include="Engine\Tools\MyMath\Vector3D.h" />
+    <ClInclude Include="Engine\Tools\Parsing.h" />
     <ClInclude Include="Engine\Tools\Printer.h" />
     <ClInclude Include="Engine\Tools\PropertyWrapper.h" />
     <ClInclude Include="Engine\Tools\QT\ButtonInfo.h" />
