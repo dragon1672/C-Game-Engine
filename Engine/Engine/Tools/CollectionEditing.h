@@ -13,6 +13,12 @@ namespace Collections {
 	template<typename Key, typename Hash, typename Pred, typename Alloc> bool contains(std::unordered_set<Key,Hash,Pred,Alloc> map, Key toFind) {
 		return map.find(toFind) != map.end();
 	}
+	template<class MapType, typename KeyType, typename ValType>
+	bool tryReadMap(MapType& map, KeyType& toFind, ValType& outVal) {
+		if(map.find(toFind)==map.end()) return false;
+		outVal = map[toFind];
+		return true;
+	}
 
 	//vector
 	template <typename T> int	 find(std::vector<T>& array, T toFind) {
