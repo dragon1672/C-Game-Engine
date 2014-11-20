@@ -46,6 +46,8 @@ namespace FileIO {
 	ENGINE_SHARED bool OutOfDate(std::string sourceFilePath, std::string generatedFilePath);
 	ENGINE_SHARED bool OutOfDate(std::wstring sourceFilePath, std::wstring generatedFilePath);
 
+	//returns new pos in file, sizeLeft will be edited as file is read
+	ENGINE_SHARED fileByte * readLine(fileByte * currentPos, uint& sizeLeft, std::string& out);
 
 	template<typename T>
 	void myMemCopy(T * from, T * to, uint size) {

@@ -289,6 +289,22 @@ namespace FileIO {
 		return CompareFileTime(&src,&gen) > 0;
 	}
 
+	fileByte * readLine(fileByte * currentPos, uint& sizeLeft, std::string& out)
+	{
+		out = "";
+		while(sizeLeft > 0) {
+			if(currentPos[0] == '\n') {
+				sizeLeft--;
+				return currentPos+1;
+			} else {
+				out += currentPos[0];
+				sizeLeft--;
+				currentPos++;
+			}
+		}
+		return currentPos;
+	}
+
 
 
 
