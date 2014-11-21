@@ -221,7 +221,7 @@ void GuiSkellyTon::ToggleGameStartStop()
 			myState = EditorStates::PlayingGame;
 			camManager.ActiveCam(nullptr);
 			
-			tempStreamForGamePlay.resetToBeg();
+			tempStreamForGamePlay = Stream();
 			SaveToStream(tempStreamForGamePlay);
 			
 			gameManager.init();
@@ -283,7 +283,7 @@ void GuiSkellyTon::LoadFromFile(Stream& s, bool backup)
 	Stream backupStream;
 	if(backup) backupStream = ExportToStream();
 	try {
-		resourceManager.ObjectLoad(s);
+		//resourceManager.ObjectLoad(s);
 		s >> gameManager;
 	} catch(...) {
 		printErr(100) "error","corrupt file";
@@ -298,7 +298,7 @@ void GuiSkellyTon::LoadFromFile(Stream& s, bool backup)
 void GuiSkellyTon::SaveToStream(Stream& s)
 {
 	game->destoryEditorObjects();
-	resourceManager.ObjectSave(s);
+	//resourceManager.ObjectSave(s);
 	s << gameManager;
 }
 
