@@ -25,5 +25,7 @@ public:
 	static double GUID2Double(const GUID& guid);
 	static GUID double2GIUD(const double d);
 	static std::string GUID2string(const GUID& guid);
+	static void generateNewIdForObject(Object * obj);
+	static void generateNewIdForObject(Object& obj);
 };
 

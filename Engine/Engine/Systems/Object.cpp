@@ -77,3 +77,14 @@ void Object::ObjectLoad(Stream& os)
 {
 	os >> id >> name;
 }
+
+void Object::generateNewIdForObject(Object * obj)
+{
+	generateNewIdForObject(*obj);
+}
+
+void Object::generateNewIdForObject(Object& obj)
+{
+	Object newIdGuy(obj.Name());
+	obj = newIdGuy;
+}
