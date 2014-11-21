@@ -50,7 +50,9 @@ class Component_CRTP : public Component {
 public:
 	Component_CRTP(std::string name = "") : Component(name) {}
 	Component * Clone() {
-		return new Derived(dynamic_cast<Derived const&>(*this));
+		auto ret = new Derived(dynamic_cast<Derived const&>(*this));
+		Object::generateNewIdForObject(ret);
+		return ret;
 	}
 };
 
