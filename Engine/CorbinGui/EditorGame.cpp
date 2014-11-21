@@ -191,3 +191,8 @@ Entity * EditorGame::scoper::GetCurrent() const
 {
 	return currentlySelectedEntity;
 }
+
+void EditorGame::scoper::DuplicateCurrent()
+{
+	currentlySelectedEntity->Clone();
+}

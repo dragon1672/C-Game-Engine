@@ -99,6 +99,8 @@ public:
 	void update();
 	void lateUpdate();
 
+	Entity * Clone(bool cloneChildren = true);
+
 	bool ComponentsAreReady();
 	std::vector<std::string> getErrors();
 

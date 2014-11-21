@@ -280,34 +280,14 @@ Entity * GameObjectManager::getEntity(std::string name)
 	return (Entity*)EntityManager.getFirst(name.c_str());
 }
 
-void GameObjectManager::CloneEntityChild(Entity * toClone, std::string newName, Entity * parent) {
-	auto tmp = CloneEntity(toClone, newName,true);
-	tmp->Parent(parent);
+Entity * GameObjectManager::CloneEntity(Entity * existingEntity, bool cloneChildren)
+{
+	return existingEntity->Clone(cloneChildren);
 }
 
-Entity * GameObjectManager::CloneEntity(double toCloneId, std::string newName, bool cloneChildren)
+Entity * GameObjectManager::CloneEntity(double toCloneId, bool cloneChildren /*= true*/)
 {
-	return CloneEntity(getEntity(toCloneId),newName,cloneChildren);
-}
-Entity * GameObjectManager::CloneEntity(Entity * existingEntity, std::string newName, bool cloneChildren)
-{
-	auto newClonedEntity = AddEntity(newName);
-	auto componentsToCopy = existingEntity->getAllComponents();
-	for (uint i = 0; i < componentsToCopy.size(); i++) {
-		auto newInstance = componentsToCopy[i]->getNewInstanceOfCurrentType();
-		componentsToCopy[i]->CopyInto(newInstance);
-		newClonedEntity->addComponent(newInstance);
-	}
-	existingEntity->getTrans()->CopyInto(newClonedEntity->getTrans());
-	newClonedEntity->Parent(existingEntity->Parent());
-	if(cloneChildren) {
-		auto children = existingEntity->Children();
-		for(auto& eID : children) {
-			Entity * e = getEntity(eID);
-			CloneEntityChild(e,e->Name(),newClonedEntity);
-		}
-	}
-	return newClonedEntity;
+	return CloneEntity(getEntity(toCloneId),cloneChildren);
 }
 
 GameObjectManager::operator LuaUserdata<GameObjectManager>()

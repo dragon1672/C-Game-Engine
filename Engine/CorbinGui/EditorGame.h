@@ -48,12 +48,7 @@ public:
 		Entity * GetCurrent() const;
 		void EditName(std::string newName);
 
-		void DuplicateCurrent() {
-			DuplicateCurrent(currentlySelectedEntity->Name());
-		}
-		void DuplicateCurrent(std::string newName) {
-			gameManager.CloneEntity(currentlySelectedEntity->getID(),newName);
-		}
+		void DuplicateCurrent();
 
 		void Parent(const char * name);
 

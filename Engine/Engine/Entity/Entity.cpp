@@ -280,3 +280,25 @@ void Entity::callLuaMethod(std::string methodName, bool callInChildren)
 		}
 	}
 }
+
+Entity * Entity::Clone(bool cloneChildren)
+{
+	auto newClonedEntity = gameManager.AddEntity(Name()+"_Clone");
+	auto componentsToCopy = this->getAllComponents();
+	for (uint i = 0; i < componentsToCopy.size(); i++) {
+		auto newInstance = componentsToCopy[i]->getNewInstanceOfCurrentType();
+		componentsToCopy[i]->CopyInto(newInstance);
+		newClonedEntity->addComponent(newInstance);
+	}
+	this->getTrans()->CopyInto(newClonedEntity->getTrans());
+	newClonedEntity->Parent(this->Parent());
+	if(cloneChildren) {
+		auto children = this->Children();
+		for(auto& eID : children) {
+			Entity * e = gameManager.getEntity(eID);
+			e->Clone();
+			e->Parent(newClonedEntity);
+		}
+	}
+	return newClonedEntity;
+}
