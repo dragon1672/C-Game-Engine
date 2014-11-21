@@ -51,12 +51,8 @@ public:
 	bool active;
 
 	void callLuaMethod(std::string methodName, bool callInChildren);
-	void Brodcast(std::string methodName) {
-		callLuaMethod(methodName,false);
-	}
-	void BrodcastInChildren(std::string methodName) {
-		callLuaMethod(methodName,true);
-	}
+	void Broadcast(std::string methodName);
+	void BroadcastInChildren(std::string methodName);
 
 
 	Entity(std::string name="New Game Object", GameObjectManager * gm = nullptr);

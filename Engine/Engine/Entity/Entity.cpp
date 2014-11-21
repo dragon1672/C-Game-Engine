@@ -253,8 +253,8 @@ Entity::operator LuaUserdata<Entity>()
 	LUA_BIND_FUN(Entity,ret,Parent);
 	LUA_BIND_FUN(Entity,ret,getTrans);
 	ret.Bind("GetScript",&Entity::getScriptLua);
-	ret.Bind("Brodcast",&Entity::Brodcast);
-	ret.Bind("BrodcastInChildren",&Entity::BrodcastInChildren);
+	ret.Bind("Broadcast",&Entity::Broadcast);
+	ret.Bind("BroadcastInChildren",&Entity::BroadcastInChildren);
 
 	return ret;
 }
@@ -301,4 +301,14 @@ Entity * Entity::Clone(bool cloneChildren)
 		}
 	}
 	return newClonedEntity;
+}
+
+void Entity::Broadcast(std::string methodName)
+{
+	callLuaMethod(methodName,false);
+}
+
+void Entity::BroadcastInChildren(std::string methodName)
+{
+	callLuaMethod(methodName,true);
 }
