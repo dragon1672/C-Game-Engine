@@ -8,6 +8,7 @@
 #include <engine/Tools/Random/MyRandom.h>
 #include <Engine/Tools/Random/StringRandom.h>
 #include <Engine/Systems/InputManager.h>
+#include <Engine/Systems/GameObjectManager.h>
 
 const std::string MasterLua::ComponentBaseClass = "ScriptComponent";
 IMPLEMENT_SINGLETON(MasterLua);
@@ -67,6 +68,7 @@ void MasterLua::init()
 	auto global = lua.GetGlobalEnvironment();
 	global.Set("Timer",(LuaUserdata<Timer>)Timer::getInstance());
 	global.Set("Input",(LuaUserdata<InputManager>)InputManager::getInstance());
+	global.Set("GameManager",(LuaUserdata<GameObjectManager>)GameObjectManager::getInstance());
 }
 
 void MasterLua::runLua(std::string toRun)

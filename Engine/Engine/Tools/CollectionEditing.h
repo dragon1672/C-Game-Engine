@@ -10,7 +10,7 @@
 namespace Collections {
 
 	//sets
-	template<typename Key, typename Hash, typename Pred, typename Alloc> bool contains(std::unordered_set<Key,Hash,Pred,Alloc> map, Key toFind) {
+	template<typename Key, typename Hash, typename Pred, typename Alloc> bool contains(std::unordered_set<Key,Hash,Pred,Alloc>& map, Key toFind) {
 		return map.find(toFind) != map.end();
 	}
 	template<class MapType, typename KeyType, typename ValType>
