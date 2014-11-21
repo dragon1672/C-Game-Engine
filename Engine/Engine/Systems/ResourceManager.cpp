@@ -62,7 +62,7 @@ Mesh * ResourceManager::addMeshFromOBJ(std::string name, std::string filePath, b
 			} else {
 				line = line + std::string(50-pre.size()-line.size(),' '); // fill with spaces
 			}
-			printMsg(100) "Processing", line;
+			printer.Log(pre+line,Console::Color::CYAN);
 		}
 	}));
 	MeshObjs.Register(geos.back());
@@ -246,10 +246,8 @@ ShaderProgram * ResourceManager::duplicate(ShaderProgram * toDup)
 {
 	shaders.push_back(ShaderProgram(toDup->Name()+"_dup"));
 	auto ret = &shaders.back();
-	Object objData(ret->Name(),ret->getID());
 	*ret = *toDup; // copy!
-	Object& obj = *ret;
-	obj = objData;
+	Object::generateNewIdForObject(ret);
 	ShaderProgramObjs.Register(ret);
 	emitEvent(new ResourceLoadedEvent(ret));
 	return ret;
