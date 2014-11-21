@@ -4,12 +4,13 @@
 #include <Engine/Tools/CollectionEditing.h>
 #include <unordered_map>
 #include <algorithm>
+#include <array>
 
 
 
 #pragma region Converter
 __interface IParser {
-	void Parse(std::string line);
+	void Parse(std::string& line);
 };
 __interface ILineParser
 {
@@ -47,14 +48,28 @@ template<unsigned int N>
 class Vec : public IParser {
 public:
 	static const unsigned int size = N;
-	float data[size];
+	std::array<float,size> data;
 	Vec() {
 		for (int i = 0; i < size; i++) {
 			data[i] = 0;
 		}
 	}
 
-	virtual void Parse(std::string line) {
+	Vec<N>& operator=(const Vec<N>& that) // copy assignment
+	{
+		if (this != &that) {
+			this->data = that.data;
+		}
+		return *this;
+	}
+	Vec<N>& operator=(Vec<N>&& that) // move assignment
+	{
+		assert(this != &that); // self-assignment check not required
+		this->data = that.data;
+		return *this;
+	}
+
+	virtual void Parse(std::string& line) {
 		for (int i = 0; i < size; i++) {
 			const float defaultVal = 0;
 			bool valid = false;
@@ -87,7 +102,12 @@ public:
 		posID(pos),uvID(uv), normID(norm)
 	{ }
 	size_t GetHashCode() const {
-		return std::hash<int>()(posID) ^ std::hash<int>()(uvID) ^ std::hash<int>()(normID);
+		const int prime = 761;
+		int result = 1;
+		result *= prime * posID;
+		result *= prime * uvID;
+		result *= prime * normID;
+		return result;
 	}
 };
 
@@ -102,8 +122,9 @@ inline bool operator!=(const ObjVertex& rhs, const ObjVertex& lhs){return !( rhs
 class Indicee : public IParser {
 public:
 	std::vector<ObjVertex> verts;
-	virtual void Parse(std::string line) {
-		auto vecs = StringManapulation::split(line,' ');
+	virtual void Parse(std::string& line) {
+		std::vector<std::string>vecs;
+		StringManapulation::split(line,' ',vecs);
 		for (unsigned int i = 0; i < vecs.size(); i++) {
 			bool valid = false;
 			auto tmp = ObjVertex::ParseVert(vecs[i],valid);
@@ -128,6 +149,13 @@ namespace std {
 
 Mesh FileIO::Obj2Mesh(fileByte * bytes, uint fileSize, std::string name, LoadingCallBack callback /*= LoadingCallBack()*/)
 {
+	uint currentSize = fileSize;
+	fileByte * currentFileSpot = bytes;
+
+	int lineCount = FileIO::lineCount(bytes,fileSize)-1;
+	int currentLine = 0;
+
+
 #pragma region init parsers
 	std::vector<ObjVertex> verts;
 	std::vector<unsigned int> indicees;
@@ -142,12 +170,12 @@ Mesh FileIO::Obj2Mesh(fileByte * bytes, uint fileSize, std::string name, Loading
 			for (int i = 0; i < 3; i++) {
 				ObjVertex& v = toAdd.verts[indexs[i]];
 				int vertIndicee;
-				if(!Collections::tryReadMap(_allVerts,v,vertIndicee)) {
+				if(!Collections::tryReadMap(_allVerts,v,vertIndicee)) { // adding new vert
 					vertIndicee = _allVerts.size();
 
-					if(v.posID  > 0) { for (int i = 0; i < 3; i++) { v.Position.data[i] = _posParser. ParsedData[v.posID  - 1].data[i]; } }
-					if(v.uvID   > 0) { for (int i = 0; i < 2; i++) { v.Uv.data[i]       = _uvsParser. ParsedData[v.uvID   - 1].data[i]; } }
-					if(v.normID > 0) { for (int i = 0; i < 3; i++) { v.Norm.data[i]     = _normParser.ParsedData[v.normID - 1].data[i]; } }
+					if(v.posID  > 0) { v.Position = _posParser. ParsedData[v.posID  - 1]; }
+					if(v.uvID   > 0) { v.Uv       = _uvsParser. ParsedData[v.uvID   - 1]; }
+					if(v.normID > 0) { v.Norm     = _normParser.ParsedData[v.normID - 1]; }
 
 					_allVerts.emplace(v,vertIndicee);
 				}
@@ -156,6 +184,12 @@ Mesh FileIO::Obj2Mesh(fileByte * bytes, uint fileSize, std::string name, Loading
 			toAdd.verts.pop_back();
 		}
 	});
+	//reserving some space to decrease vector resizing
+	_posParser.ParsedData.reserve(lineCount/2);
+	_normParser.ParsedData.reserve(lineCount/2);
+	_uvsParser.ParsedData.reserve(lineCount/2);
+	_verParser.ParsedData.reserve(lineCount/2);
+	
 	std::vector<ILineParser *> rawParsers;
 	rawParsers.push_back(&_posParser);
 	rawParsers.push_back(&_normParser);
@@ -164,12 +198,6 @@ Mesh FileIO::Obj2Mesh(fileByte * bytes, uint fileSize, std::string name, Loading
 #pragma endregion
 
 #pragma region Parsing
-	uint currentSize = fileSize;
-	fileByte * currentFileSpot = bytes;
-
-	int lineCount = FileIO::lineCount(bytes,fileSize);
-	int currentLine = 0;
-
 	while(currentSize > 0) {
 		std::string line;
 		currentFileSpot = FileIO::readLine(currentFileSpot,currentSize,line);
@@ -190,8 +218,8 @@ Mesh FileIO::Obj2Mesh(fileByte * bytes, uint fileSize, std::string name, Loading
 
 #pragma region setting OBJVector
 
-	//because of some class casting crap, i'm unable to use orginal vector of my custom object for sorting
-	//saving new vector that holds onto indexs of indicees and the vert orginal position and sorting that vector
+	//because of some class casting crap, I'm unable to use original vector of my custom object for sorting
+	//saving new vector that holds onto indexs of indicees and the vert original position and sorting that vector
 
 	//original index, indiceeIndex
 	std::vector<std::pair<int,int>> myVec;
