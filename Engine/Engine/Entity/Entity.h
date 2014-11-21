@@ -50,6 +50,14 @@ public:
 	void Parent(double newGuy,   bool fireEvents = true);
 	bool active;
 
+	void callLuaMethod(std::string methodName, bool callInChildren);
+	void Brodcast(std::string methodName) {
+		callLuaMethod(methodName,false);
+	}
+	void BrodcastInChildren(std::string methodName) {
+		callLuaMethod(methodName,true);
+	}
+
 
 	Entity(std::string name="New Game Object", GameObjectManager * gm = nullptr);
 	std::string Name() const;

@@ -135,13 +135,12 @@ ScriptComponent * Entity::getScript(std::string name) {
 
 Entity * Entity::Parent()
 {
-	if(gm == nullptr) gm = &gameManager;
-	return gm->getEntity(parent);
+	return gameManager.getEntity(parent);
 }
 
 void Entity::Parent(double newGuy, bool fireEvents)
 {
-	Parent(gm->getEntity(newGuy),fireEvents);
+	Parent(gameManager.getEntity(newGuy),fireEvents);
 }
 
 void Entity::Parent(Entity * newGuy, bool fireEvents)
@@ -254,6 +253,8 @@ Entity::operator LuaUserdata<Entity>()
 	LUA_BIND_FUN(Entity,ret,Parent);
 	LUA_BIND_FUN(Entity,ret,getTrans);
 	ret.Bind("GetScript",&Entity::getScriptLua);
+	ret.Bind("Brodcast",&Entity::Brodcast);
+	ret.Bind("BrodcastInChildren",&Entity::BrodcastInChildren);
 
 	return ret;
 }
@@ -265,4 +266,17 @@ void Entity::shutdown(bool fireEvents)
 		removeComponent(components.size()-1);
 	DELETE_VECTOR(components); // clean up if fireEvents is false
 	Parent(nullptr,fireEvents);
+}
+
+void Entity::callLuaMethod(std::string methodName, bool callInChildren)
+{
+	auto scripts = getComponents<ScriptComponent>();
+	for(auto& s : scripts) {
+		s->callMethod(methodName);
+	}
+	if(callInChildren) {
+		for(double id : children) {
+			gameManager.getEntity(id)->callLuaMethod(methodName,callInChildren);
+		}
+	}
 }
