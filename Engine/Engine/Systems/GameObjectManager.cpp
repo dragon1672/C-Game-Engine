@@ -277,15 +277,18 @@ Entity * GameObjectManager::getEntity(std::string name)
 	return (Entity*)EntityManager.getFirst(name.c_str());
 }
 
-Entity * GameObjectManager::CloneEntity(int toCloneId)
+Entity * GameObjectManager::CloneEntity(double toCloneId, std::string newName)
 {
-	Entity * e = getEntity(toCloneId);
-	auto n = AddEntity(e->Name());
+	return CloneEntity(getEntity(toCloneId),newName);
+}
+Entity * GameObjectManager::CloneEntity(Entity * e, std::string newName)
+{
+	auto n = AddEntity(newName);
 	auto componentsToCopy = e->getAllComponents();
 	for (uint i = 0; i < componentsToCopy.size(); i++) {
 		n->addComponent(componentsToCopy[i]->Clone());
 	}
-
+	e->getTrans()->CopyInto(n->getTrans());
 	//clone all components ... somehow :/
 	return n;
 }
