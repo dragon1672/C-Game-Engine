@@ -139,17 +139,9 @@ void GuiSkellyTon::initBar()
 		if(targetObj == "")
 			return;
 
-		QString command("CSharpOBJConverter.exe ");
-		QString nativeFileName = "tmp.bin";
-		command += "-o \""+nativeFileName+ "\"" + " " + "\"" + targetObj  + "\"";
-		std::string t = command.toStdString();
-		int result = system(command.toUtf8().constData());
-		if(result!=0) {
-			printErr(100) "File failed to load";
-		} else {
-			auto tmp = resourceManager.addMesh(FileIO::extractFileName(targetObj.toStdString()),nativeFileName.toStdString(),false);
-			tmp->PassDownToHardWare();
-		}
+		auto tmp = resourceManager.addMeshFromOBJ(FileIO::extractFileName(targetObj.toStdString()),targetObj.toStdString(),false);
+		tmp->PassDownToHardWare();
+		
 		printer.LogMessage("Load Obj Clicked");
 	});
 	fileMenu->addAction(action = new QAction("Load Texture", this));
