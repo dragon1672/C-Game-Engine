@@ -281,6 +281,10 @@ Entity * GameObjectManager::CloneEntity(int toCloneId)
 {
 	Entity * e = getEntity(toCloneId);
 	auto n = AddEntity(e->Name());
+	auto componentsToCopy = e->getAllComponents();
+	for (uint i = 0; i < componentsToCopy.size(); i++) {
+		n->addComponent(componentsToCopy[i]->Clone());
+	}
 
 	//clone all components ... somehow :/
 	return n;
