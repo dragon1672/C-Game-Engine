@@ -53,6 +53,10 @@ public:
 	//the real calls
 	void addUniformParameter(const char * name, ParameterType parameterType, const void * value);
 
+	void start() {
+		material.start();
+	}
+
 	void drawWarmup();
 
 	virtual bool isValid();

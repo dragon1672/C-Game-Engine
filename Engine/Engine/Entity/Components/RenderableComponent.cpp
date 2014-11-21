@@ -84,8 +84,8 @@ bool RenderableComponent::CopyInto(Component* t)
 {
 	if(typeid(*t) != typeid(*this)) return false;
 	RenderableComponent * that = (RenderableComponent*)t;
-	that->geo = this->geo;
-	that->shader = this->shader;
-	that->material = this->material;
+	that->Geo(this->geo);
+	that->Shader(shader);
+	this->material.Clone(that->material);
 	return true;
 }

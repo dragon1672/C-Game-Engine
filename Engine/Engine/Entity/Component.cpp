@@ -47,7 +47,7 @@ bool Component::RegisterComponentConstructor(std::string name, std::function<Com
 	return true;
 }
 
-Component * Component::GetInstance(std::string name)
+Component * Component::GetInstanceFromTypeString(std::string name)
 {
 	return (*creationMap.data)[name]();
 }

@@ -14,6 +14,7 @@
 
 class ENGINE_SHARED EventManager {
 	class EventInstance;
+public:
 	class ENGINE_SHARED EventHandle {
 		static int MasterID;
 		int ID;
@@ -28,6 +29,7 @@ class ENGINE_SHARED EventManager {
 		friend EventManager;
 		friend EventInstance;
 	};
+private:
 	class EventInstance {
 		EventHandle handle;
 		EventData*evt;

@@ -1,6 +1,9 @@
 #include "Material.h"
 #include <Engine/IO/Stream.h>
 
+#include <Engine/Systems/Events/EventManager.h>
+#include <Engine/Systems/Events/Events/GameEvents.h>
+
 
 #pragma region define helpers
 #define MATERIAL_CONSTR_TEXTURE(name,properCase)\
@@ -72,4 +75,25 @@ Material::Material()
 	MATERIAL_ADD_UNIFORM(uniforms,index,normalMap,NormalMap);
 	MATERIAL_ADD_UNIFORM(uniforms,index,ambOcc,   AmbOcc   );
 	MATERIAL_ADD_UNIFORM(uniforms,index,alphaMask,AlphaMask);
+}
+
+void Material::start()
+{
+	Diffuse  (diffuse  );
+	NormalMap(normalMap);
+	AmbOcc   (ambOcc   );
+	AlphaMask(alphaMask);
+}
+
+void Material::Clone(Material& ret)
+{
+	ret.Diffuse  (diffuse  );
+	ret.NormalMap(normalMap);
+	ret.AmbOcc   (ambOcc   );
+	ret.AlphaMask(alphaMask);
+}
+
+Material::~Material()
+{
+
 }

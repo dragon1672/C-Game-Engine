@@ -20,6 +20,7 @@ public:
 };
 
 void ScriptComponent::start() {
+	hasBeenInited = true;
 	std::string instancename = myScript()->getInstanceName();
 	auto context = LUA_INSTANCE.GetGlobalEnvironment().Get<LuaTable>(instancename);
 	context.Set("parent",((LuaUserdata<Entity>)*parent));
@@ -27,13 +28,16 @@ void ScriptComponent::start() {
 	privates->runMethod("start");
 }
 void ScriptComponent::earlyUpdate() {
+	if(!hasBeenInited) start();
 	privates->runMethod("earlyUpdate");
 }
 void ScriptComponent::update() {
+	if(!hasBeenInited) start();
 	privates->runMethod("update");
 }
 
 void ScriptComponent::lateUpdate() {
+	if(!hasBeenInited) start();
 	privates->runMethod("lateUpdate");
 }
 
@@ -42,11 +46,11 @@ ScriptComponent::~ScriptComponent()
 	SAFE_DELETE(privates);
 }
 
-ScriptComponent::ScriptComponent() :script(Object::NULL_OBJECT_ID()), privates(nullptr) { }
+ScriptComponent::ScriptComponent() :script(Object::NULL_OBJECT_ID()), privates(nullptr), hasBeenInited(false) { }
 
-ScriptComponent::ScriptComponent(int scriptId) :script(scriptId), privates(nullptr) { }
+ScriptComponent::ScriptComponent(int scriptId) :script(scriptId), privates(nullptr), hasBeenInited(false) { }
 
-ScriptComponent::ScriptComponent(Script * script) :script(Object::NULL_OBJECT_ID()), privates(nullptr) { }
+ScriptComponent::ScriptComponent(Script * script) :script(Object::NULL_OBJECT_ID()), privates(nullptr), hasBeenInited(false) { }
 
 LuaTable ScriptComponent::getContext()
 {
@@ -85,7 +89,7 @@ bool ScriptComponent::CopyInto(Component* t)
 	if(typeid(*t) != typeid(*this)) return false;
 	ScriptComponent * that = (ScriptComponent*)t;
 	that->script = this->script;
-	that->start();
+	that->hasBeenInited = false;
 	return true;
 }
 

@@ -232,7 +232,7 @@ void Entity::Load(Stream&s)
 	{
 		std::string componentName;
 		s >> componentName;
-		auto currentComponent = addComponent(Component::GetInstance(componentName));
+		auto currentComponent = addComponent(Component::GetInstanceFromTypeString(componentName));
 		s >> currentComponent;
 	}
 }

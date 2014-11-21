@@ -13,13 +13,12 @@
 	inline TextureInfo * properCase##() const { return resourceManager.getTextureInfo(name); }      \
 	inline void properCase##(TextureInfo * val) {                     \
 		name = val != nullptr ? val->getID() : Object::NULL_OBJECT_ID();                                                   \
-		has##properCase = name != Object::NULL_OBJECT_ID();                            \
+		has##properCase = val != nullptr;                            \
 		uniforms[##uniformIndex##properCase##].Pointer(val);         \
 	}                                                                 \
 	inline void properCase##(double index) {                          \
-	name = index##;             \
-		has##properCase = name != Object::NULL_OBJECT_ID();                            \
-		uniforms[##uniformIndex##properCase##].Pointer( properCase##() );         \
+		name = index##;             \
+		properCase##(##properCase##());                            \
 	}                                                                 \
 	inline glm::vec2& properCase##Scale()  { return name##Scale; }    \
 	inline glm::vec2& properCase##Offset() { return name##Offset; }
@@ -43,8 +42,8 @@ public:
 	MATERIAL_TEXTURE_GET_SET_WRAP(alphaMask,AlphaMask);
 
 	Material();
+	~Material();
 	wrap::vec4 color;
-
 	virtual ShaderUniformPram * getUniforms();
 
 	virtual int numOfUniforms();
@@ -54,5 +53,9 @@ public:
 	virtual void Save(Stream&s);
 
 	virtual void Load(Stream&s);
+
+	void start();
+
+	void Clone(Material& ret);
 
 };

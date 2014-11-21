@@ -51,8 +51,9 @@ public:
 	Entity * getEntity(std::string name);
 	Entity * getEntity(double id);
 	//will copy components
-	Entity * CloneEntity(double  toCloneId, std::string newName);
-	Entity * CloneEntity(Entity * toClone,  std::string newName);
+	Entity * CloneEntity(double  toCloneId, std::string newName, bool cloneChildren = true);
+	Entity * CloneEntity(Entity * toClone,  std::string newName, bool cloneChildren = true);
+	void CloneEntityChild(Entity * toClone,  std::string newName, Entity * parent);
 	int width;
 	int height;
 

@@ -37,7 +37,10 @@ public:
 	void Load(Stream& s);
 	virtual bool CopyInto(Component* that) = 0;
 	virtual Component * Clone() = 0;
-	static Component * GetInstance(std::string name);
+	virtual Component * getNewInstanceOfCurrentType() = 0;
+
+	static Component * GetInstanceFromTypeString(std::string name);
+
 	static bool RegisterComponentConstructor(std::string name, std::function<Component*()> createMethod);
 	std::string Class_Name();
 };
@@ -53,6 +56,9 @@ public:
 		auto ret = new Derived(dynamic_cast<Derived const&>(*this));
 		Object::generateNewIdForObject(ret);
 		return ret;
+	}
+	Component * getNewInstanceOfCurrentType() {
+		return new Derived();
 	}
 };
 

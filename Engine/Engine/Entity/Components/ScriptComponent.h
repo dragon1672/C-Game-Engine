@@ -13,6 +13,7 @@ class ScriptComponentPrivates;
 class ENGINE_SHARED MAKE_COMPONENT_CLASS(ScriptComponent) {
 	ScriptComponentPrivates * privates;
 	double script;
+	bool hasBeenInited;
 public:
 	Script * myScript() const;
 	void myScript(Script * val);

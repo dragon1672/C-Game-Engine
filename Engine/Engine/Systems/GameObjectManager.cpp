@@ -18,6 +18,7 @@
 #include <Engine/Systems/Events/EventManager.h>
 #include <Engine/Systems/Events/Events/EntityAddedEvent.h>
 #include <Engine/Systems/Events/Events/EntityRemovedEvent.h>
+#include <Engine/Systems/Events/Events/GameEvents.h>
 
 IMPLEMENT_SINGLETON(GameObjectManager);
 
@@ -33,9 +34,19 @@ bool GameObjectManager::init() {
 	inputManager.init();
 	return true;
 }
+bool GameObjectManager::initGl()
+{
+	glewInit();
+	glClearColor(0.1f, 0.1f, 0.1f, 0.0f);
+	glEnable(GL_DEPTH_TEST);
+	resourceManager.PassDownToHardWare();
+	emitEvent(new GLInited());
+	return true;
+}
 bool GameObjectManager::start() {
 	Timer::getInstance().start();
 	for (uint i = 0; i < entities.size(); i++) { entities[i].start(); }
+	emitEvent(new GameStarted());
 	return true;
 }
 bool GameObjectManager::shutdown() {
@@ -57,6 +68,7 @@ void GameObjectManager::update() {
 	eventManager.update(Timer::getInstance().deltaTime());
 	if(disable) return;
 	for (uint i = 0; i < entities.size(); i++) { if(entities[i].active && (!selectorFunction || selectorFunction && selectorFunction(&entities[i]))) entities[i].earlyUpdate(); }
+	emitEvent(new GameUpdate());
 	for (uint i = 0; i < entities.size(); i++) { if(entities[i].active && (!selectorFunction || selectorFunction && selectorFunction(&entities[i]))) entities[i].update();      }
 	for (uint i = 0; i < entities.size(); i++) { if(entities[i].active && (!selectorFunction || selectorFunction && selectorFunction(&entities[i]))) entities[i].lateUpdate();  }
 }
@@ -109,15 +121,6 @@ Entity * GameObjectManager::AddEntity(std::string name)
 	EntityManager.Register(ret);
 	emitEvent(new EntityAddedEvent(ret));
 	return ret;
-}
-
-bool GameObjectManager::initGl()
-{
-	glewInit();
-	glClearColor(0.1f, 0.1f, 0.1f, 0.0f);
-	glEnable(GL_DEPTH_TEST);
-	resourceManager.PassDownToHardWare();
-	return true;
 }
 
 void GameObjectManager::passStandardUniforms(RenderableComponent * renderable)
@@ -277,20 +280,34 @@ Entity * GameObjectManager::getEntity(std::string name)
 	return (Entity*)EntityManager.getFirst(name.c_str());
 }
 
-Entity * GameObjectManager::CloneEntity(double toCloneId, std::string newName)
-{
-	return CloneEntity(getEntity(toCloneId),newName);
+void GameObjectManager::CloneEntityChild(Entity * toClone, std::string newName, Entity * parent) {
+	auto tmp = CloneEntity(toClone, newName,true);
+	tmp->Parent(parent);
 }
-Entity * GameObjectManager::CloneEntity(Entity * e, std::string newName)
+
+Entity * GameObjectManager::CloneEntity(double toCloneId, std::string newName, bool cloneChildren)
 {
-	auto n = AddEntity(newName);
-	auto componentsToCopy = e->getAllComponents();
+	return CloneEntity(getEntity(toCloneId),newName,cloneChildren);
+}
+Entity * GameObjectManager::CloneEntity(Entity * existingEntity, std::string newName, bool cloneChildren)
+{
+	auto newClonedEntity = AddEntity(newName);
+	auto componentsToCopy = existingEntity->getAllComponents();
 	for (uint i = 0; i < componentsToCopy.size(); i++) {
-		n->addComponent(componentsToCopy[i]->Clone());
+		auto newInstance = componentsToCopy[i]->getNewInstanceOfCurrentType();
+		componentsToCopy[i]->CopyInto(newInstance);
+		newClonedEntity->addComponent(newInstance);
 	}
-	e->getTrans()->CopyInto(n->getTrans());
-	//clone all components ... somehow :/
-	return n;
+	existingEntity->getTrans()->CopyInto(newClonedEntity->getTrans());
+	newClonedEntity->Parent(existingEntity->Parent());
+	if(cloneChildren) {
+		auto children = existingEntity->Children();
+		for(auto& eID : children) {
+			Entity * e = getEntity(eID);
+			CloneEntityChild(e,e->Name(),newClonedEntity);
+		}
+	}
+	return newClonedEntity;
 }
 
 GameObjectManager::operator LuaUserdata<GameObjectManager>()
