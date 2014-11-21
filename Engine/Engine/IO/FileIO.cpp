@@ -305,6 +305,18 @@ namespace FileIO {
 		return currentPos;
 	}
 
+	int lineCount(fileByte * file, uint size)
+	{
+		fileByte * currentSpot = file;
+		uint sizeLeft = size;
+		int ret = 0;
+		while(sizeLeft>0) {
+			currentSpot = readLine(currentSpot,sizeLeft,std::string());
+			ret++;
+		}
+		return ret;
+	}
+
 
 
 

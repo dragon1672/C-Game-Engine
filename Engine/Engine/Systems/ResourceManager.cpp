@@ -6,6 +6,7 @@
 #include <Engine/DebugTools/DebugMemHeader.h>
 #include <ShapeGenerator.h>
 #include <Engine/IO/ObjConverter.h>
+#include <Engine/Tools/Printer.h>
 
 #include <Engine/Systems/Events/EventManager.h>
 #include <Engine/Systems/Events/Events/ResourceLoadedEvent.h>
@@ -50,7 +51,20 @@ Mesh * ResourceManager::addMesh(std::string name, const char * filePath,bool use
 Mesh * ResourceManager::addMeshFromOBJ(std::string name, std::string filePath, bool useRelPath)
 {
 	std::string fileLocation = (useRelPath?workingDir:"") + filePath;
-	geos.push_back(FileIO::ObjFilej2Mesh(fileLocation.c_str(),name));
+	printMsg(100) "Loading OBJ File";
+	std::pair<int,int> pos = Console::getCursorPos();
+
+	geos.push_back(FileIO::ObjFilej2Mesh(fileLocation.c_str(),name,[&](uint currentIndex, uint maxIndex, std::string line, bool wasValid) {
+		if(Console::PrintLoadingBar(pos,currentIndex,maxIndex,50)) {
+			const std::string pre = "Processing ";
+			if(line.size()>(50-pre.size())) {
+				line = line.substr(0,50-pre.size()-3) + "...";
+			} else {
+				line = line + std::string(50-pre.size()-line.size(),' '); // fill with spaces
+			}
+			printMsg(100) "Processing", line;
+		}
+	}));
 	MeshObjs.Register(geos.back());
 	emitEvent(new ResourceLoadedEvent(&geos.back()));
 	return &geos.back();

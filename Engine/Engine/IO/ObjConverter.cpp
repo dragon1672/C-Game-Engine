@@ -167,10 +167,12 @@ Mesh FileIO::Obj2Mesh(fileByte * bytes, uint fileSize, std::string name, Loading
 	uint currentSize = fileSize;
 	fileByte * currentFileSpot = bytes;
 
+	int lineCount = FileIO::lineCount(bytes,fileSize);
+	int currentLine = 0;
+
 	while(currentSize > 0) {
 		std::string line;
 		currentFileSpot = FileIO::readLine(currentFileSpot,currentSize,line);
-		int index = fileSize - currentSize;
 
 		bool added = false;
 		for (unsigned int parserIndex = 0; parserIndex < rawParsers.size(); parserIndex++) {
@@ -180,8 +182,9 @@ Mesh FileIO::Obj2Mesh(fileByte * bytes, uint fileSize, std::string name, Loading
 			break;
 		}
 		if(callback) {
-			callback(index,fileSize,line,added);
+			callback(currentLine,lineCount,line,added);
 		}
+		currentLine++;
 	}
 #pragma endregion
 

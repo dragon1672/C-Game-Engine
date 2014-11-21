@@ -11,8 +11,10 @@ namespace Console {
 	};
 	ENGINE_SHARED void setColor(Color foreground, Color background = Color::BLACK);
 	ENGINE_SHARED void setCursorPos(short x, short y);
-	ENGINE_SHARED void setCursorPos(std::pair<long,long> pos);
-	ENGINE_SHARED std::pair<long,long> getCursorPos();
+	ENGINE_SHARED void setCursorPos(std::pair<int,int> pos);
+	ENGINE_SHARED std::pair<int,int> getCursorPos();
+	ENGINE_SHARED int CursorXPos();
+	ENGINE_SHARED int CursorYPos();
 	ENGINE_SHARED void setCursorVisability(bool shown);
 	ENGINE_SHARED void hideCursor();
 	ENGINE_SHARED void showCursor();
@@ -23,5 +25,5 @@ namespace Console {
 	ENGINE_SHARED void showWindow();
 
 
-	void PrintLoadingBar(std::pair<long,long> pos, int iteration, int maxIteration, uint length);
+	bool PrintLoadingBar(std::pair<long,long> pos, int iteration, int maxIteration, uint length);
 }

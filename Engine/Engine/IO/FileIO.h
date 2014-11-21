@@ -48,6 +48,7 @@ namespace FileIO {
 
 	//returns new pos in file, sizeLeft will be edited as file is read
 	ENGINE_SHARED fileByte * readLine(fileByte * currentPos, uint& sizeLeft, std::string& out);
+	ENGINE_SHARED int lineCount(fileByte * file, uint size);
 
 	template<typename T>
 	void myMemCopy(T * from, T * to, uint size) {

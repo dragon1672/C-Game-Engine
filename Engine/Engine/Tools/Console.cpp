@@ -2,6 +2,7 @@
 #include <windows.h>
 #include <Engine/Tools/StringManapulation.h>
 #include <iostream>
+#include <Engine/Tools/Printer.h>
 
 
 
@@ -15,22 +16,26 @@ namespace Console {
 
 	void setCursorPos(short x, short y)
 	{
-		COORD position = {x, y};
-		SetConsoleCursorPosition ( GetStdHandle ( STD_OUTPUT_HANDLE ), position );
+		COORD position = {x,y};
+		if(!SetConsoleCursorPosition ( GetStdHandle ( STD_OUTPUT_HANDLE ), position )) {
+			printErr(100) "set cursor failed with",GetLastError();
+		}
 	}
 
-	void setCursorPos(std::pair<long,long> pos)
+	void setCursorPos(std::pair<int,int> pos)
 	{
 		setCursorPos((short)pos.first,(short)pos.second);
 	}
 
-	std::pair<long,long> getCursorPos()
+	ENGINE_SHARED std::pair<int,int> getCursorPos()
 	{
-		LPPOINT cur = nullptr;
-		if(!GetCursorPos(cur)) {
-			//err
+		CONSOLE_SCREEN_BUFFER_INFO csbi;
+		if (!GetConsoleScreenBufferInfo( GetStdHandle( STD_OUTPUT_HANDLE ), &csbi )) {
+			printErr(100) "get cursor failed with",GetLastError();
+			return std::pair<int,int>(-1,-1);
 		}
-		return std::pair<long,long>(cur->x,cur->y);
+		
+		return std::pair<int,int>(csbi.dwCursorPosition.X,csbi.dwCursorPosition.Y);
 	}
 
 	void setCursorVisability(bool shown)
@@ -95,18 +100,29 @@ namespace Console {
 
 	bool updateProgressBar(int iteration, int maxIterator, int barLength)
 	{
-		return (iteration % (maxIterator / barLength) == 0) // mid bar
-			|| (barLength > maxIterator)
-			|| iteration == maxIterator - 1 // bar is complete
+		return (barLength > maxIterator) // each iteration will require update
+			|| (iteration % (maxIterator / barLength) == 0) // mid bar
+			|| iteration == maxIterator // bar is complete
 			|| iteration == 0;
 	}
 
-	void PrintLoadingBar(std::pair<long,long> pos, int iteration, int maxIteration, uint length)
+	bool PrintLoadingBar(std::pair<long,long> pos, int iteration, int maxIteration, uint length)
 	{
-		if(!updateProgressBar(iteration,maxIteration,length)) return;
+		if(!updateProgressBar(iteration,maxIteration,length)) return false;
 		float percent = (float)iteration/(float)maxIteration;
 		setCursorPos(pos);
-		std::cout << StringManapulation::LoadingBar(percent,length,true);
+		std::cout << StringManapulation::LoadingBar(percent,length,true) << std::endl;
+		return true;
+	}
+
+	int CursorXPos()
+	{
+		return getCursorPos().first;
+	}
+
+	int CursorYPos()
+	{
+		return getCursorPos().second;
 	}
 
 }
