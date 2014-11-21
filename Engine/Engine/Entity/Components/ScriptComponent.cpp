@@ -14,7 +14,7 @@ public:
 	LuaTable context;
 	std::string uniqueName;
 	void runMethod(std::string methodName) {
-		MasterLua::runLua(uniqueName+":"+methodName+"()");
+		MasterLua::runLua("if(type("+uniqueName+"."+methodName+") == 'function') then "+uniqueName+":"+methodName+"(); end");
 	}
 	ScriptComponentPrivates(LuaTable context,std::string uniqueName) : context(context),uniqueName(uniqueName) { }
 };
@@ -106,4 +106,9 @@ void ScriptComponent::myScript(Script * val)
 void ScriptComponent::myScript(double val)
 {
 	script = val;
+}
+
+void ScriptComponent::callMethod(std::string methodName)
+{
+	privates->runMethod(methodName);
 }

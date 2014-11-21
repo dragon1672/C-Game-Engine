@@ -39,4 +39,6 @@ public:
 
 	virtual bool CopyInto(Component* that);
 
+	void callMethod(std::string methodName);
+
 };
