@@ -30,7 +30,8 @@ public:
 		for (uint i = 0; i < arrays.size(); i++) {
 			uint indexDis = toMatch - arrays[i]; // pointer arithmetic :D also neg numbers become HUGE
 			if(indexDis < chunkSize) {
-				return i * chunkSize + indexDis;
+				uint ret = i * chunkSize + indexDis;
+				return (ret < size()) ? ret : -1;
 			}
 		}
 		return -1;

@@ -210,12 +210,12 @@ void Entity::Save(Stream&s)
 {
 	Object::ObjectSave(s);
 	s << parent << active;
-	s << getTrans();
+	s << *getTrans();
 	s << components.size();
 	for (uint i = 0; i < components.size(); i++)
 	{
 		s << components[i]->Class_Name();
-		s << components[i];
+		s << *components[i];
 	}
 }
 
@@ -224,7 +224,7 @@ void Entity::Load(Stream&s)
 	shutdown(true);
 	Object::ObjectLoad(s);
 	s >> parent >> active;
-	s >> getTrans();
+	s >> *getTrans();
 	uint size;
 	s >> size;
 	for (uint i = 0; i < size; i++)
@@ -232,7 +232,7 @@ void Entity::Load(Stream&s)
 		std::string componentName;
 		s >> componentName;
 		auto currentComponent = addComponent(Component::GetInstanceFromTypeString(componentName));
-		s >> currentComponent;
+		s >> *currentComponent;
 	}
 }
 

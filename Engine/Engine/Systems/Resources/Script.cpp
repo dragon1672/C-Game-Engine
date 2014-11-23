@@ -70,11 +70,10 @@ bool Script::isValid()
 	return StringManapulation::startsWith(src,"--class ");
 }
 
-std::string Script::getClassTemplate(std::string class_name,std::string startFunction/*="--star the T"*/, std::string updateFunction/*="--up the dates"*/)
+std::string Script::getScriptComponentTemplate(std::string class_name,std::string startFunction/*="--star the T"*/, std::string updateFunction/*="--up the dates"*/)
 {
-	return ""
-		"--class "+class_name+"                       \n"
-		"--above line is required as the first line   \n"
+	return getScriptFileTemplate(class_name,
+		class_name+" = class("+MasterLua::ComponentBaseClass+");\n"
 		"                                             \n"
 		"--available functions                        \n"
 		"--start,earlyUpdate,update,lateUpdate        \n"
@@ -88,7 +87,7 @@ std::string Script::getClassTemplate(std::string class_name,std::string startFun
 		"   "+updateFunction+"                        \n"
 		"end                                          \n"
 		"                                             \n"
-		"";
+		"");
 }
 
 std::string Script::getUniqueName()

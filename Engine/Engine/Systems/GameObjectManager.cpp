@@ -216,13 +216,19 @@ void GameObjectManager::Save(Stream&s)
 	//}
 	//ret;
 	Object::ObjectSave(s);
+	s << entities;
 	//s << ret;
-	s << getAllEntities();
 }
 
 void GameObjectManager::Load(Stream&s)
 {
 	Object::ObjectLoad(s);
+	while(entities.size() > 0)
+	{
+		entities.back().shutdown(false);
+		RemoveEntity(&entities.back());
+	}
+	entities.clear();
 	s >> entities;
 	deletedEntities.clear();
 	EntityManager.ClearAll();

@@ -21,8 +21,15 @@ public:
 
 	std::string getInstanceName();
 
-	static std::string getClassTemplate(std::string class_name,std::string startFunction="--star the T", std::string updateFunction="--up the dates");
-
+	static std::string getScriptComponentTemplate(std::string class_name,std::string startFunction="--star the T", std::string updateFunction="--up the dates");
+	static std::string getScriptFileTemplate(std::string class_name,std::string fileStuffs="--put classname = class(stuff)") {
+		return "--class "+class_name+"                       \n"
+			"--above line is required as the first line   \n"
+			"                                             \n"
+			+fileStuffs+
+			"";
+	}
+	
 	bool isValid();
 	void updateName();
 
