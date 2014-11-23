@@ -61,8 +61,6 @@ public:
 
 	ENGINE_SHARED friend Stream& operator<<(Stream& os, StreamableObject& obj);
 	ENGINE_SHARED friend Stream& operator>>(Stream& os, StreamableObject& obj);
-	ENGINE_SHARED friend Stream& operator<<(Stream& os, StreamableObject * obj);
-	ENGINE_SHARED friend Stream& operator>>(Stream& os, StreamableObject * obj);
 
 	STREAMER_FOR_TYPE(ENGINE_SHARED,friend,float);
 	STREAMER_FOR_TYPE(ENGINE_SHARED,friend,double);
