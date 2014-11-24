@@ -159,11 +159,10 @@ void GameObjectManager::RemoveEntity(Entity * toRemove)
 {
 	int index = entities.find(toRemove);
 	if(index >= 0) {
-		entities[index].active = false;
-
 		for (auto i : toRemove->Children()) {
 			RemoveEntity(i);
 		}
+		entities[index].active = false;
 
 		entities[index].Parent(nullptr);
 

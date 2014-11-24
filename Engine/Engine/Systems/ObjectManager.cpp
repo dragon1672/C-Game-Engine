@@ -67,6 +67,7 @@ void ObjectManager::UnRegister(Object& toKill) {
 }
 void ObjectManager::UnRegister(Object * toKill)
 {
+	if(toKill==nullptr) return;
 	if(privates->ContainsId(toKill))
 		privates->idMap.erase(toKill->getID());
 
