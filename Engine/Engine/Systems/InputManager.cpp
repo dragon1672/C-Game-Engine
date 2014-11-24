@@ -2,6 +2,8 @@
 #include <windows.h>
 #include <QtGui/QCursor>
 #include <Engine/DebugTools/DebugMemHeader.h>
+#include <Engine/Tools/CollectionEditing.h>
+#include <Engine/Tools/Timer.h>
 
 IMPLEMENT_SINGLETON(InputManager);
 
@@ -15,6 +17,9 @@ void InputManager::update()
 	mouse.lastMouse = mouse.currentMouse;
 	mouse.currentMouse = wrap::vec2(QCursor::pos().x(),QCursor::pos().y());
 	mouse.mouseDelta = mouse.currentMouse - mouse.lastMouse;
+	for(auto& k : trackedKeys) {
+		k.second.update(Timer::getInstance().deltaTime());
+	}
 }
 
 bool InputManager::getKeyDown(KeyCode key)
@@ -36,9 +41,19 @@ InputManager::operator LuaUserdata<InputManager>()
 	MAKE_LUA_INSTANCE_RET(InputManager,ret);
 	ret.Bind("getKeyDown",&InputManager::getKeyDown_Lua);
 	ret.Bind("getKeyUp",  &InputManager::getKeyUp_Lua);
+	ret.Bind("getKeyClicked", &InputManager::checkKeyClick_Lua);
 	LUA_BIND_FUN(InputManager,ret,getMouse);
 
 	return ret;
+}
+
+bool InputManager::checkKeyClick(KeyCode key)
+{
+	if(!Collections::contains(trackedKeys,key)) {
+		trackedKeys.emplace(key,SingleKeyManager(key));
+		trackedKeys[key].update(Timer::getInstance().deltaTime());
+	}
+	return trackedKeys[key].hasBeenClicked();
 }
 
 bool InputManager::Mouse::getMouseButtondown(MouseCodes btn)

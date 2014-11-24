@@ -7,6 +7,8 @@
 #include <Engine/Tools/MasterLua.h>
 #include <glm/glm.hpp>
 #include <Engine/TypeDefs.h>
+#include <Engine/Tools/SingleKeyManager.h>
+#include <unordered_map>
 
 #define inputManager InputManager::getInstance()
 
@@ -36,6 +38,7 @@ public:
 		wrap::vec2 mouseDelta;
 		wrap::vec2 lastMouse;
 		wrap::vec2 currentMouse;
+
 		LUA_GET_FUN(wrap::vec2,mousePos);
 		LUA_GET_FUN(wrap::vec2,delta);
 		bool getMouseButtondown_LUA(int btn);
@@ -62,6 +65,8 @@ private:
 	LUA_GET_FUN(Mouse,getMouse);
 	inline bool getKeyDown_Lua(uchar key) { return getKeyDown((KeyCode)key); }
 	inline bool getKeyUp_Lua(uchar key) { return getKeyUp((KeyCode)key); }
+	inline bool checkKeyClick_Lua(uchar key) { return checkKeyClick((KeyCode)key); }
+	std::unordered_map<KeyCode,SingleKeyManager> trackedKeys;
 	DEFINE_SINGLETON(InputManager);
 public:
 	MAKE_DEFAULT_LUA_CONST_AND_DEST(InputManager);
@@ -69,6 +74,7 @@ public:
 
 	bool getKeyDown(KeyCode key);
 	bool getKeyUp(KeyCode key);
+	bool checkKeyClick(KeyCode key);
 	Mouse& getMouse() { return mouse; }
 
 	void init();
