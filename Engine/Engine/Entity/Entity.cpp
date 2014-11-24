@@ -236,7 +236,7 @@ void Entity::Load(Stream&s)
 	}
 }
 
-Entity::Entity(std::string name/*="New Game Object"*/, GameObjectManager * gm /*= nullptr*/) : parent(Object::NULL_OBJECT_ID()), gm(gm), active(true), Object(name)
+Entity::Entity(std::string name/*="New Game Object"*/, GameObjectManager * gm /*= nullptr*/) : parent(Object::NULL_OBJECT_ID()), active(true), Object(name), tag(-1)
 {
 	LUA_OBJECT_START(Entity);
 }
@@ -255,6 +255,8 @@ Entity::operator LuaUserdata<Entity>()
 	ret.Bind("GetScript",&Entity::getScriptLua);
 	ret.Bind("Broadcast",&Entity::Broadcast);
 	ret.Bind("BroadcastInChildren",&Entity::BroadcastInChildren);
+	ret.Bind("SetActive",&Entity::SetActive);
+	ret.Bind("SetActive",&Entity::GetActive);
 
 	return ret;
 }
@@ -311,4 +313,14 @@ void Entity::Broadcast(std::string methodName)
 void Entity::BroadcastInChildren(std::string methodName)
 {
 	callLuaMethod(methodName,true);
+}
+
+void Entity::Tag(std::string val)
+{
+	tag = gameManager.getTagVal(val);
+}
+
+void Entity::SetTag(std::string val)
+{
+	tag = gameManager.getTagVal(val);
 }

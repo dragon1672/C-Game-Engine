@@ -34,21 +34,30 @@ private:
 	}
 	LUA_OBJECT(Entity);
 
-	GameObjectManager * gm;
+	int tag;
 	double parent;
 	Component* addComponent(Component * toAdd);
+
 	std::unordered_set<double> children;
-
 	void resetChildren();
-	friend GameObjectManager;
 
+	friend GameObjectManager;
 public:
 	std::unordered_set<double> Children();
 	std::vector<std::function<void(Entity*me)>> StageChanged;
 	Entity * Parent();
 	void Parent(Entity * newGuy, bool fireEvents = true);
-	void Parent(double newGuy,   bool fireEvents = true);
+	void Parent(double   newGuy, bool fireEvents = true);
 	bool active;
+	bool GetActive() const { return active; }
+	void SetActive(bool val) { active = val; }
+	int  Tag() const { return tag; }
+	void Tag(int val) { tag = val; }
+	void Tag(std::string val);
+	int  GetTag() const { return tag; }
+	void SetTag(int val) { tag = val; }
+	void SetTag(std::string val);
+
 
 	void callLuaMethod(std::string methodName, bool callInChildren);
 	void Broadcast(std::string methodName);

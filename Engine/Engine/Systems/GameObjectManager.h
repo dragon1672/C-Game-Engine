@@ -39,6 +39,23 @@ class ENGINE_SHARED GameObjectManager : public Object, public StreamableObject {
 public:
 	void Enable();
 	void Disable();
+
+	int getTagVal(std::string val) {
+		return -1;
+	}
+	int numberOfObjectsByType(std::string val) {
+		return numberOfObjectsByType(getTagVal(val));
+	}
+	int numberOfObjectsByType(int val) {
+		return -1;
+	}
+	Entity * getOfEntityByType(std::string val,int index) {
+		return getOfEntityByType(getTagVal(val),index);
+	}
+	Entity * getOfEntityByType(int val,int index) {
+		return nullptr;
+	}
+
 	std::function<bool(Entity*)> SelectorFunction() const;
 	void SelectorFunction(std::function<bool(Entity*)> val);
 

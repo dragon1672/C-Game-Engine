@@ -234,9 +234,6 @@ void GameObjectManager::Load(Stream&s)
 	EntityManager.ClearAll();
 	EntityManager.Register(Collections::Select<Entity,Object*>(entities,[](Entity&e){ return &e; }));
 	for (uint i = 0; i < entities.size(); i++) {
-		entities[i].gm = this;
-	}
-	for (uint i = 0; i < entities.size(); i++) {
 		emitEvent(new EntityAddedEvent(&entities[i]));
 	}
 	rebuildEntityParents();
