@@ -148,7 +148,7 @@ MasterLua::MasterLua()
 		"end                                                                                                                                                       \n"
 		"function BaseVector:toString()                                                                                                                            \n"
 		"  local ret = '{ '                                                                                                                                        \n"
-		"  local dim = "";                                                                                                                                         \n"
+		"  local dim = '';                                                                                                                                         \n"
 		"  for i=1,self:Size() do                                                                                                                                  \n"
 		"    ret = ret .. dim .. self:Get(i);                                                                                                                      \n"
 		"    dim = ', ';                                                                                                                                           \n"
@@ -453,7 +453,9 @@ MasterLua::MasterLua()
 
 	auto KeyCodes = lua.CreateTable();
 	for (int i = KeyCode::A; i < KeyCode::Z; i++) KeyCodes.Set(std::string(1,(char)i),i);
-	for (int i = KeyCode::ZERO; i < KeyCode::NINE; i++) KeyCodes.Set(std::string(1,(char)i),i);
+	std::string kodes[] = { "ZERO", "ONE", "TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE" };
+	for (int i = KeyCode::ZERO; i < KeyCode::NINE; i++) KeyCodes.Set(kodes[i-KeyCode::ZERO],i);
+	KeyCodes.Set("SHIFT",(int)KeyCode::SHIFT);
 	lua.GetGlobalEnvironment().Set("KeyCode",KeyCodes);
 
 
