@@ -20,24 +20,26 @@ public:
 };
 
 void ScriptComponent::start() {
+	Script * meScript = myScript();
+	if(meScript == nullptr) return;
 	hasBeenInited = true;
-	std::string instancename = myScript()->getInstanceName();
+	std::string instancename = meScript->getInstanceName();
 	auto context = LUA_INSTANCE.GetGlobalEnvironment().Get<LuaTable>(instancename);
 	context.Set("parent",((LuaUserdata<Entity>)*parent));
 	SAFE_NEW(privates,ScriptComponentPrivates(context,instancename));
 	privates->runMethod("start");
 }
 void ScriptComponent::earlyUpdate() {
-	if(!hasBeenInited) start();
+	if(!hasBeenInited || privates == nullptr) start();
 	privates->runMethod("earlyUpdate");
 }
 void ScriptComponent::update() {
-	if(!hasBeenInited) start();
+	if(!hasBeenInited || privates == nullptr) start();
 	privates->runMethod("update");
 }
 
 void ScriptComponent::lateUpdate() {
-	if(!hasBeenInited) start();
+	if(!hasBeenInited || privates == nullptr) start();
 	privates->runMethod("lateUpdate");
 }
 
