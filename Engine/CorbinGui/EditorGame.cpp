@@ -4,6 +4,9 @@
 #include <CorbinGui/Dependents/EditorComponents/EditorMasterSyncer.h>
 #include <Engine/Entity/Entity.h>
 
+#include <Engine/Systems/Events/EventManager.h>
+#include <Engine/Systems/Events/Events/EntityRemovedEvent.h>
+
 
 
 EditorGame::EditorGame()
@@ -14,6 +17,12 @@ EditorGame::EditorGame()
 	isGameObject = [this](Object* o){
 		return editorObjects.find(o) == editorObjects.end();
 	};
+	eventManager.Subscribe<EntityRemovedEvent>([this](EventData*d,Object*) {
+		EntityRemovedEvent * data = (EntityRemovedEvent*)d;
+		if(editorObjects.find(data->entity) != editorObjects.end()) {
+			editorObjects.erase(data->entity);
+		}
+	});
 	gameManager.SelectorFunction(isEditorObject);
 	currentEntity.editor = this;
 	createEditorObjects();
@@ -86,8 +95,9 @@ void EditorGame::createEditorObjects()
 void EditorGame::destoryEditorObjects()
 {
 	deactiveEditorObjects();
-	for(auto e : editorObjects) {
-		gameManager.RemoveEntity((Entity*)e);
+	while(editorObjects.size() > 0) {
+		std::unordered_set<Object*>::iterator itr = editorObjects.begin();
+		gameManager.RemoveEntity((Entity*)(*itr));
 	}
 	editorObjects.clear();
 }
