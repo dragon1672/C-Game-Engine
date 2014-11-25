@@ -255,8 +255,9 @@ Entity::operator LuaUserdata<Entity>()
 	ret.Bind("GetScript",&Entity::getScriptLua);
 	ret.Bind("Broadcast",&Entity::Broadcast);
 	ret.Bind("BroadcastInChildren",&Entity::BroadcastInChildren);
-	ret.Bind("SetActive",&Entity::SetActive);
-	ret.Bind("SetActive",&Entity::GetActive);
+	ret.Bind("Active",&Entity::SetActive);
+	ret.Bind("Active",&Entity::GetActive);
+	ret.Bind("Parent",&Entity::ParentFromLUA);
 
 	return ret;
 }
@@ -323,4 +324,9 @@ void Entity::Tag(std::string val)
 void Entity::SetTag(std::string val)
 {
 	tag = gameManager.getTagVal(val);
+}
+
+void Entity::ParentFromLUA(LuaUserdata<Entity> e)
+{
+	Parent(e->getID());
 }

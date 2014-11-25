@@ -32,6 +32,7 @@ private:
 	template<typename T> std::vector<int> getAllIndexs() const {
 		return getAllFromClassName(typeid(T).name());
 	}
+	void ParentFromLUA(LuaUserdata<Entity> e);
 	LUA_OBJECT(Entity);
 
 	int tag;
@@ -48,6 +49,10 @@ public:
 	Entity * Parent();
 	void Parent(Entity * newGuy, bool fireEvents = true);
 	void Parent(double   newGuy, bool fireEvents = true);
+
+	Entity * GetParent() { return Parent(); }
+	void SetParentFromID(double newGuy) { Parent(newGuy); }
+
 	bool active;
 	bool GetActive() const { return active; }
 	void SetActive(bool val) { active = val; }
