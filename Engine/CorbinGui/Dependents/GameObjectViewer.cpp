@@ -51,7 +51,7 @@ void GameObjectViewer::update()
 	QList<QTreeWidgetItem *> items;
 	auto topLevelGameObjects = gameManager.getTopLevelEntities();
 	for (uint i = 0; i < topLevelGameObjects.size(); ++i) {
-		if(!game->IsEditorObject()(topLevelGameObjects[i]))
+		if(game->IsGameObject()(topLevelGameObjects[i]))
 			items.append(getItem(topLevelGameObjects[i]));
 	}
 	insertTopLevelItems(0, items);
@@ -97,6 +97,7 @@ Entity * GameObjectViewer::convertTree2Entity(QTreeWidgetItem * treeItem)
 void GameObjectViewer::renameCurrentObject()
 {
 	bool pressedOk;
+	if(currentItem() == nullptr) return;
 	QString newName = QInputDialog::getText(this,"Rename Entity","New Name:",QLineEdit::Normal,((GameObjectTree*)this->currentItem())->GameObj->Name().c_str(),&pressedOk);
 	if(pressedOk) ((GameObjectTree*)this->currentItem())->GameObj->Name(newName.toStdString());
 }
