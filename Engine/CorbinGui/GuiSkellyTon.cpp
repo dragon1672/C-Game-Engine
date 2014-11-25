@@ -181,6 +181,7 @@ void GuiSkellyTon::initBar()
 	fileMenu->addAction(action = new QAction("New Game Object", this));
 	connect(action, &QAction::triggered, [this](){
 		game->AddEntity("New Game Object");
+		gameObjectList->update();
 	});
 
 
