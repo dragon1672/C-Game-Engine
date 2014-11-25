@@ -70,6 +70,10 @@ public:
 	//will copy components
 	Entity * CloneEntity(double  toCloneId, bool cloneChildren = true);
 	Entity * CloneEntity(Entity * toClone,  bool cloneChildren = true);
+	Entity * CloneFromEntity(Entity * e, bool recursive = true);
+	Entity * CloneFromID(double e, bool recursive = true);
+	LuaUserdata<Entity> CloneFromEntity_LUA(Entity * e, bool recursive = true) { return *CloneFromEntity(e,recursive); }
+	LuaUserdata<Entity> CloneFromID_LUA(double e, bool recursive = true) { return *CloneFromID(e,recursive); }
 	int width;
 	int height;
 
@@ -90,6 +94,7 @@ public:
 	virtual void Save(Stream&s);
 
 	virtual void Load(Stream&s);
+
 private:
 	void passStandardUniforms(RenderableComponent * renderable);
 

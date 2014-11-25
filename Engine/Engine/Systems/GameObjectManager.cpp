@@ -284,6 +284,7 @@ Entity * GameObjectManager::getEntity(std::string name)
 
 Entity * GameObjectManager::CloneEntity(Entity * existingEntity, bool cloneChildren)
 {
+	if(existingEntity == nullptr) return nullptr;
 	return existingEntity->Clone(cloneChildren);
 }
 
@@ -298,6 +299,8 @@ GameObjectManager::operator LuaUserdata<GameObjectManager>()
 
 	ret.Bind("getEntityFromName",&GameObjectManager::getEntityFromName);
 	ret.Bind("getEntityFromId",&GameObjectManager::getEntityFromId);
+	ret.Bind("Clone",&GameObjectManager::CloneFromID_LUA);
+	ret.Bind("Clone",&GameObjectManager::CloneFromEntity_LUA);
 
 	return ret;
 }
@@ -311,4 +314,14 @@ std::vector<Entity *> GameObjectManager::getAllEntities()
 		}
 	}
 	return ret;
+}
+
+Entity * GameObjectManager::CloneFromEntity(Entity * e, bool recursive /*= true*/)
+{
+	return CloneEntity(e,recursive);
+}
+
+Entity * GameObjectManager::CloneFromID(double e, bool recursive /*= true*/)
+{
+	return CloneEntity(e,recursive);
 }
