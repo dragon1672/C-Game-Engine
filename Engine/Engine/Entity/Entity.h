@@ -42,6 +42,8 @@ private:
 	std::unordered_set<double> children;
 	void resetChildren();
 
+	double getID_LUA() { return getID(); }
+
 	friend GameObjectManager;
 public:
 	std::unordered_set<double> Children();
@@ -110,6 +112,7 @@ public:
 	void lateUpdate();
 
 	Entity * Clone(bool cloneChildren = true);
+	LuaUserdata<Entity> Clone_Lua(bool recursive);
 
 	bool ComponentsAreReady();
 	std::vector<std::string> getErrors();

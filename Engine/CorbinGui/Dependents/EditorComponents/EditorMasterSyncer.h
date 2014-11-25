@@ -48,5 +48,8 @@ public:
 
 	void syncRens(RenderableComponent * gameRen, RenderableComponent * editorRen);
 
+	Component * getNewInstanceOfCurrentType() {
+		return nullptr;
+	}
 
 };

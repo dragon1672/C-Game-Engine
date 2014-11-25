@@ -258,6 +258,8 @@ Entity::operator LuaUserdata<Entity>()
 	ret.Bind("Active",&Entity::SetActive);
 	ret.Bind("Active",&Entity::GetActive);
 	ret.Bind("Parent",&Entity::ParentFromLUA);
+	ret.Bind("Clone",&Entity::Clone_Lua);
+	ret.Bind("getID",&Entity::getID_LUA);
 
 	return ret;
 }
@@ -290,8 +292,10 @@ Entity * Entity::Clone(bool cloneChildren)
 	auto componentsToCopy = this->getAllComponents();
 	for (uint i = 0; i < componentsToCopy.size(); i++) {
 		auto newInstance = componentsToCopy[i]->getNewInstanceOfCurrentType();
-		componentsToCopy[i]->CopyInto(newInstance);
-		newClonedEntity->addComponent(newInstance);
+		if(newInstance != nullptr) {
+			componentsToCopy[i]->CopyInto(newInstance);
+			newClonedEntity->addComponent(newInstance);
+		}
 	}
 	this->getTrans()->CopyInto(newClonedEntity->getTrans());
 	newClonedEntity->Parent(this->Parent());
@@ -329,4 +333,9 @@ void Entity::SetTag(std::string val)
 void Entity::ParentFromLUA(LuaUserdata<Entity> e)
 {
 	Parent(e->getID());
+}
+
+LuaUserdata<Entity> Entity::Clone_Lua(bool recursive)
+{
+	return *Clone(recursive);
 }
