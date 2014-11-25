@@ -112,6 +112,7 @@ MasterLua::MasterLua()
 	lua.RunScript("function class(a,b)local c={}if not b and type(a)=='function'then b=a;a=nil elseif type(a)=='table'then for d,e in pairs(a)do c[d]=e end;c._base=a end;"
 		"c.__index=c;local f={}f.__call=function(g,...)local h={}setmetatable(h,c)if b then b(h,...)else if a and a.init then a.init(h,...)end end;return h end;c.init=b;"
 		"c.is_a=function(i,j)local k=getmetatable(i)while k do if k==j then return true end;k=k._base end;return false end;setmetatable(c,f)return c end");
+	lua.RunScript("function between(num, min,max) return min <= num and num <= max; end");
 	lua.RunScript(ComponentBaseClass+" = class();"
 		//setting up defaults for functions
 		"function "+ComponentBaseClass+":init()        return true end \n"
@@ -429,7 +430,7 @@ MasterLua::MasterLua()
 		"--removes the last element and returns it                           \n"
 		"function List:popBack()                                             \n"
 		"  self.size = self.size-1;                                          \n"
-		"  return self._table[self.size];                                    \n"
+		"  return self._table[self.size+1];                                  \n"
 		"end                                                                 \n"
 		"");
 
