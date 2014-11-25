@@ -257,7 +257,7 @@ Entity::operator LuaUserdata<Entity>()
 	ret.Bind("BroadcastInChildren",&Entity::BroadcastInChildren);
 	ret.Bind("Active",&Entity::SetActive);
 	ret.Bind("Active",&Entity::GetActive);
-	ret.Bind("Parent",&Entity::ParentFromLUA);
+	ret.Bind("Parent",&Entity::SetParentFromID);
 	ret.Bind("Clone",&Entity::Clone_Lua);
 	ret.Bind("getID",&Entity::getID_LUA);
 
@@ -328,11 +328,6 @@ void Entity::Tag(std::string val)
 void Entity::SetTag(std::string val)
 {
 	tag = gameManager.getTagVal(val);
-}
-
-void Entity::ParentFromLUA(LuaUserdata<Entity> e)
-{
-	Parent(e->getID());
 }
 
 LuaUserdata<Entity> Entity::Clone_Lua(bool recursive)

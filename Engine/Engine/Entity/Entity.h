@@ -32,7 +32,6 @@ private:
 	template<typename T> std::vector<int> getAllIndexs() const {
 		return getAllFromClassName(typeid(T).name());
 	}
-	void ParentFromLUA(LuaUserdata<Entity> e);
 	LUA_OBJECT(Entity);
 
 	int tag;
