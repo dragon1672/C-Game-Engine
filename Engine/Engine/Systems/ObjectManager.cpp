@@ -8,7 +8,9 @@
 
 #include <Engine/Systems/Events/EventManager.h>
 #include <Engine/Systems/Events/Events/ObjectChangedNameEvent.h>
+#include <Engine/Systems/Events/Events/EntityRemovedEvent.h>
 #include <Engine/Defines/SafeNewAndDelete.h>
+#include <Engine/Entity/Entity.h>
 
 
 class ObjectManagerPrivates {
@@ -25,11 +27,16 @@ public:
 ObjectManager::ObjectManager() : privates(nullptr)
 {
 	SAFE_NEW(privates,ObjectManagerPrivates());
-	eventManager.Subscribe<ObjectChangedNameEvent>([this](EventData*,Object*o){
-		if(privates->ContainsName(o)) { // TODO: optimize
-			UnRegister(o);
-			Register(o);
-		}
+	eventManager.Subscribe<ObjectChangedNameEvent>([this](EventData*d,Object*o){
+		if(o==nullptr) return;
+		if(!privates->ContainsId(o)) return;
+		ObjectChangedNameEvent * data = (ObjectChangedNameEvent*)d;
+		removeName(data->oldName,o);
+		addName(data->newName,o);
+	});
+	eventManager.Subscribe<EntityRemovedEvent>([this](EventData*d,Object*o){
+		EntityRemovedEvent * data = (EntityRemovedEvent*)d;
+		UnRegister(data->entity);
 	});
 }
 
@@ -43,16 +50,10 @@ void ObjectManager::Register(Object& toAdd) {
 }
 void ObjectManager::Register(Object * toAdd)
 {
-	if(privates->ContainsId(toAdd)) {
-		printer.LogError("Object with same ID already exists in object manager");
-		assert(false);
-	}
-	privates->idMap.emplace(toAdd->getID(),toAdd);
+	if(toAdd == nullptr) return;
+	addId(toAdd->getID(),toAdd);
 
-	if(!privates->ContainsName(toAdd)) { // not in map
-		privates->nameMap.emplace(toAdd->Name(),ObjectManagerPrivates::ObjectMatches());
-	}
-	privates->nameMap[toAdd->Name()].push_back(toAdd);
+	addName(toAdd->Name(),toAdd);
 }
 
 void ObjectManager::Register(std::vector<Object *> toAdd)
@@ -67,23 +68,10 @@ void ObjectManager::UnRegister(Object& toKill) {
 }
 void ObjectManager::UnRegister(Object * toKill)
 {
-	if(toKill==nullptr) return;
-	if(privates->ContainsId(toKill))
-		privates->idMap.erase(toKill->getID());
-
-	if(!privates->ContainsName(toKill))// not in map
-		return;
-
-	auto& data = privates->nameMap[toKill->Name()];
-	for (unsigned int i = 0; i < data.size(); i++) { // loop through matches to remove
-		if(data[i] == toKill) {
-			data.erase(data.begin() + i);
-			i--;
-		}
-	}
-	if(data.size() <= 0) {
-		privates->nameMap.erase(toKill->Name());
-	}
+	if(toKill == nullptr) return;
+	removeId(toKill->getID());
+	
+	removeName(toKill->Name(),toKill);
 }
 
 Object * ObjectManager::getFirst(double id) const
@@ -117,4 +105,44 @@ void ObjectManager::ClearAll()
 bool ObjectManager::Contains(Object *o)
 {
 	return privates->ContainsId(o);
+}
+
+void ObjectManager::removeId(double id)
+{
+	if(privates->Contains(id))
+		privates->idMap.erase(id);
+}
+
+void ObjectManager::removeName(std::string name, Object * ptr)
+{
+	if(!privates->Contains(name))// not in map
+		return;
+
+	auto& data = privates->nameMap[name];
+	for (unsigned int i = 0; i < data.size(); i++) { // loop through matches to remove
+		if(data[i] == ptr) {
+			data.erase(data.begin() + i);
+			i--;
+		}
+	}
+	if(data.size() <= 0) {
+		privates->nameMap.erase(name);
+	}
+}
+
+void ObjectManager::addName(std::string name, Object * ptr)
+{
+	if(!privates->Contains(name)) { // not in map
+		privates->nameMap.emplace(name,ObjectManagerPrivates::ObjectMatches());
+	}
+	privates->nameMap[name].push_back(ptr);
+}
+
+void ObjectManager::addId(double id, Object * ptr)
+{
+	if(privates->Contains(id)) {
+		printer.LogError("Object with same ID already exists in object manager");
+		assert(false);
+	}
+	privates->idMap.emplace(id,ptr);
 }
