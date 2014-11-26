@@ -33,19 +33,15 @@ CameraComponent::CameraComponent(std::string name /*= nullptr*/)
 
 
 	perspectiveNeedsUpdate = true;
-	nearPlane.setter = [this](float& val, float&newGuy) { perspectiveNeedsUpdate = perspectiveNeedsUpdate || val != newGuy; val = newGuy; };
-	farPlane.setter  = [this](float& val, float&newGuy) { perspectiveNeedsUpdate = perspectiveNeedsUpdate || val != newGuy; val = newGuy; };
-	width.setter     = [this](int& val,   int&newGuy)   { perspectiveNeedsUpdate = perspectiveNeedsUpdate || val != newGuy; val = newGuy; };
-	height.setter    = [this](int& val,   int&newGuy)   { perspectiveNeedsUpdate = perspectiveNeedsUpdate || val != newGuy; val = newGuy; };
-	nearPlane = .1f;
-	farPlane  = 100;
+	NearPlane(.1f);
+	FarPlane(100);
 	
-	uniforms[0] = ShaderUniformPram("nearPlane",   nearPlane.getRef() );
-	uniforms[1] = ShaderUniformPram("farPlane" ,   farPlane.getRef()  );
-	uniforms[2] = ShaderUniformPram("width",       width.getRef()     );
-	uniforms[3] = ShaderUniformPram("height",      height.getRef()    );
-	uniforms[4] = ShaderUniformPram("perspective", perspective        );
-	uniforms[5] = ShaderUniformPram("world2View",  world2View         );
+	uniforms[0] = ShaderUniformPram("nearPlane",   nearPlane   );
+	uniforms[1] = ShaderUniformPram("farPlane" ,   farPlane    );
+	uniforms[2] = ShaderUniformPram("width",       width       );
+	uniforms[3] = ShaderUniformPram("height",      height      );
+	uniforms[4] = ShaderUniformPram("perspective", perspective );
+	uniforms[5] = ShaderUniformPram("world2View",  world2View  );
 }
 
 bool CameraComponent::isActive()
@@ -102,24 +98,24 @@ std::vector<std::string> CameraComponent::getErrors()
 
 void CameraComponent::ChildSave(Stream& s)
 {
-	s << nearPlane.getRef() << farPlane.getRef() << width.getRef() << height.getRef();
+	s << nearPlane << farPlane << width << height;
 }
 
 void CameraComponent::ChildLoad(Stream& s)
 {
 	perspectiveNeedsUpdate = true;
-	s >> nearPlane.getRef() >> farPlane.getRef() >> width.getRef() >> height.getRef();
+	s >> nearPlane >> farPlane >> width >> height;
 }
 
 bool CameraComponent::CopyInto(Component* t)
 {
 	if(typeid(*t) != typeid(*this)) return false;
 	CameraComponent * that = (CameraComponent *)t;
-	that->active             = this->active;
-	that->farPlane.getRef()  = this->farPlane;
-	that->nearPlane.getRef() = this->nearPlane;
-	that->width.getRef()     = this->width;
-	that->height.getRef()    = this->height;
+	that->active    = this->active;
+	that->farPlane  = this->farPlane;
+	that->nearPlane = this->nearPlane;
+	that->width     = this->width;
+	that->height    = this->height;
 	return true;
 }
 

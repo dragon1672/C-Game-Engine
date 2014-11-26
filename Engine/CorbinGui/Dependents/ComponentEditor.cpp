@@ -237,6 +237,7 @@ public:
 
 		layout->addWidget(comboBox);
 		layout->addWidget(scriptVarsContainer);
+		updateVars();
 	}
 	void updateVars() {
 		while (auto item = scriptVarsContainer->layout()->takeAt( 0 ) ) {
@@ -265,6 +266,8 @@ public:
 				index = src.find(srcStr,index+1);
 			}
 		}
+
+		setMinimumSize(300,150 + entries.size() * 20);
 
 		for (uint i = 0; i < entries.size(); i++)
 		{
@@ -425,11 +428,11 @@ public:
 
 		nearPlane = new QLineEdit();	nearPlane->setValidator(&validator);
 		layout->addWidget(new QLabel("Near Plane: "));	layout->addWidget(nearPlane);
-		connect(nearPlane,&QLineEdit::textEdited,[=](const QString &newGuy){ script->nearPlane = (float)(newGuy.toDouble()); });
+		connect(nearPlane,&QLineEdit::textEdited,[=](const QString &newGuy){ script->NearPlane((float)(newGuy.toDouble())); });
 
 		farPlane = new QLineEdit();	farPlane->setValidator(&validator);
 		layout->addWidget(new QLabel("Far Plane: "));	layout->addWidget(farPlane);
-		connect(farPlane,&QLineEdit::textEdited,[=](const QString &newGuy){ script->farPlane = (float)(newGuy.toDouble()); });
+		connect(farPlane,&QLineEdit::textEdited,[=](const QString &newGuy){ script->FarPlane((float)(newGuy.toDouble())); });
 	}
 	void updateFromModel() {
 		admin->update();

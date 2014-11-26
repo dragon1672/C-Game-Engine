@@ -11,15 +11,23 @@ class ENGINE_SHARED MAKE_COMPONENT_CLASS(CameraComponent) {
 	glm::mat4 perspective;
 	glm::mat4 world2View;
 	ShaderUniformPram uniforms[6];
+	int width,height;
+	float nearPlane,farPlane;
 public:
 	CameraComponent(std::string name = "");
 	~CameraComponent();
 	bool isActive();
 	void setActive();
-	PropertyGetSet<int> width;
-	PropertyGetSet<int> height;
-	PropertyGetSet<float> nearPlane;
-	PropertyGetSet<float> farPlane;
+
+	void  NearPlane(float val) { perspectiveNeedsUpdate = perspectiveNeedsUpdate || val != nearPlane; nearPlane = val;  }
+	void  FarPlane(float val)  { perspectiveNeedsUpdate = perspectiveNeedsUpdate || val != farPlane;  farPlane  = val;  }
+	void  Width(int val)       { perspectiveNeedsUpdate = perspectiveNeedsUpdate || val != width;     width  = val;     }
+	void  Height(int val)      { perspectiveNeedsUpdate = perspectiveNeedsUpdate || val != height;    height = val;     }
+	float NearPlane() const    { return nearPlane; }
+	float FarPlane() const     { return farPlane;  }
+	int   Width() const        { return width;     }
+	int   Height() const       { return height;    }
+
 	glm::mat4& getWorld2View();
 	glm::mat4& getPerspective();
 

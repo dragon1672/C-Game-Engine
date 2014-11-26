@@ -129,8 +129,8 @@ void GameObjectManager::passStandardUniforms(RenderableComponent * renderable)
 		printErr(100) "No cam in scene";
 		return;
 	}
-	camManager.ActiveCam()->width = width;
-	camManager.ActiveCam()->height = height;
+	camManager.ActiveCam()->Width(width);
+	camManager.ActiveCam()->Height(height);
 	ShaderProgram * prog = renderable->Shader();
 	prog->useProgram();
 	auto model2World = renderable->Parent()->getWorldTransform();
