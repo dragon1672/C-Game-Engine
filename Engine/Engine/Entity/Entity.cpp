@@ -9,6 +9,7 @@
 #include <Engine/IO/Stream.h>
 #include <Engine/Systems/GameObjectManager.h>
 #include <Engine/DebugTools/DebugMemHeader.h>
+#include <Engine/Tools/Printer.h>
 
 //events
 #include <Engine/Systems/Events/EventManager.h>
@@ -255,9 +256,9 @@ Entity::operator LuaUserdata<Entity>()
 	ret.Bind("GetScript",&Entity::getScriptLua);
 	ret.Bind("Broadcast",&Entity::Broadcast);
 	ret.Bind("BroadcastInChildren",&Entity::BroadcastInChildren);
-	ret.Bind("Active",&Entity::SetActive);
-	ret.Bind("Active",&Entity::GetActive);
-	ret.Bind("Parent",&Entity::SetParentFromID);
+	ret.Bind("SetActive",&Entity::SetActive);
+	ret.Bind("GetActive",&Entity::GetActive);
+	ret.Bind("SetParent",&Entity::SetParentFromID);
 	ret.Bind("Clone",&Entity::Clone_Lua);
 	ret.Bind("getID",&Entity::getID_LUA);
 
@@ -333,4 +334,14 @@ void Entity::SetTag(std::string val)
 LuaUserdata<Entity> Entity::Clone_Lua(bool recursive)
 {
 	return *Clone(recursive);
+}
+
+void Entity::SetActive(bool val)
+{
+	active = val;
+}
+
+bool Entity::GetActive() const
+{
+	return active;
 }

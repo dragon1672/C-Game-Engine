@@ -55,8 +55,8 @@ public:
 	void SetParentFromID(double newGuy) { Parent(newGuy); }
 
 	bool active;
-	bool GetActive() const { return active; }
-	void SetActive(bool val) { active = val; }
+	bool GetActive() const;
+	void SetActive(bool val);
 	int  Tag() const { return tag; }
 	void Tag(int val) { tag = val; }
 	void Tag(std::string val);
