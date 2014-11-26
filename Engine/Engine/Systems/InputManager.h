@@ -9,6 +9,7 @@
 #include <Engine/TypeDefs.h>
 #include <Engine/Tools/SingleKeyManager.h>
 #include <unordered_map>
+#include <Engine/Tools/Printer.h>
 
 #define inputManager InputManager::getInstance()
 

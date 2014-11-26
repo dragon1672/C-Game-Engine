@@ -32,16 +32,7 @@ namespace wrap {
 			this->y = y;
 		}
 
-		inline operator LuaUserdata<vec2>() {
-			MAKE_LUA_INSTANCE_RET(vec2,ret);
-			LUA_VECTOR_BIND(vec2,ret,X);
-			LUA_VECTOR_BIND(vec2,ret,Y);
-			
-			LUA_VECTOR_BIND(vec2,ret,R);
-			LUA_VECTOR_BIND(vec2,ret,G);
-
-			return ret;
-		}
+		operator LuaUserdata<vec2>();
 	};
 
 	class ENGINE_SHARED vec3 : public glm::vec3 {
@@ -99,19 +90,6 @@ namespace wrap {
 			this->w = w;
 		}
 
-		inline operator LuaUserdata<vec4>() {
-			MAKE_LUA_INSTANCE_RET(vec4,ret);
-			LUA_VECTOR_BIND(vec4,ret,X);
-			LUA_VECTOR_BIND(vec4,ret,Y);
-			LUA_VECTOR_BIND(vec4,ret,Z);
-			LUA_VECTOR_BIND(vec4,ret,W);
-
-			LUA_VECTOR_BIND(vec4,ret,R);
-			LUA_VECTOR_BIND(vec4,ret,G);
-			LUA_VECTOR_BIND(vec4,ret,B);
-			LUA_VECTOR_BIND(vec4,ret,A);
-
-			return ret;
-		}
+		operator LuaUserdata<vec4>();
 	};
 }

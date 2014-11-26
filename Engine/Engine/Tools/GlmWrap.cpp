@@ -1,5 +1,6 @@
 #include "GlmWrap.h"
 #include <Engine/DebugTools/DebugMemHeader.h>
+#include <Engine/Tools/Printer.h>
 
 
 namespace wrap {
@@ -70,4 +71,34 @@ namespace wrap {
 	{
 		LUA_OBJECT_START(vec3);
 	}
+
+	vec4::operator LuaUserdata<vec4>()
+	{
+		MAKE_LUA_INSTANCE_RET(vec4,ret);
+		LUA_VECTOR_BIND(vec4,ret,X);
+		LUA_VECTOR_BIND(vec4,ret,Y);
+		LUA_VECTOR_BIND(vec4,ret,Z);
+		LUA_VECTOR_BIND(vec4,ret,W);
+
+		LUA_VECTOR_BIND(vec4,ret,R);
+		LUA_VECTOR_BIND(vec4,ret,G);
+		LUA_VECTOR_BIND(vec4,ret,B);
+		LUA_VECTOR_BIND(vec4,ret,A);
+
+		return ret;
+	}
+
+
+	vec2::operator LuaUserdata<vec2>()
+	{
+		MAKE_LUA_INSTANCE_RET(vec2,ret);
+		LUA_VECTOR_BIND(vec2,ret,X);
+		LUA_VECTOR_BIND(vec2,ret,Y);
+
+		LUA_VECTOR_BIND(vec2,ret,R);
+		LUA_VECTOR_BIND(vec2,ret,G);
+
+		return ret;
+	}
+
 }
