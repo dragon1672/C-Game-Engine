@@ -37,9 +37,9 @@ class ENGINE_SHARED GuiSkellyTon : public QMainWindow  {
 	} myState;
 	Stream tempStreamForGamePlay;
 
-	void LoadFromFile(Stream& s, bool backup = true);
-	void SaveToStream(Stream& s);
-	Stream ExportToStream();
+	void LoadFromFile(Stream& s, bool backup = true, bool resources = false);
+	void SaveToStream(Stream& s, bool resources = false);
+	Stream ExportToStream(bool resources = false);
 	void Disable();
 	void Enable();
 public:

@@ -89,18 +89,15 @@ void GuiSkellyTon::initBar()
 		if(targetBin == "")
 			return;
 		std::string loadFileName = targetBin.toStdString();
-
-		Disable();
-
+		game->destoryEditorObjects();
 		try {
 			Stream leFile;
 			leFile.importFromFile(loadFileName.c_str());
-			this->LoadFromFile(leFile);
+			this->LoadFromFile(leFile,true,true);
 		} catch (...) {
 			printErr(100) "error","file not loaded from:",loadFileName;
 		}
-
-		Enable();
+		game->createEditorObjects();
 	});
 
 	fileMenu->addAction(action = new QAction("Save Project", this));	action->setShortcuts(QKeySequence::Save);
@@ -110,15 +107,16 @@ void GuiSkellyTon::initBar()
 			return;
 		std::string saveFileName = targetBin.toStdString();
 
-		Disable();
-		Stream leFile = ExportToStream();
+		gameManager.Disable();
+		Stream leFile = ExportToStream(true);
+		game->createEditorObjects();
+		gameManager.Enable();
 
 		try {
 			leFile.exportToFile(saveFileName.c_str());
 		} catch (...) {
 			printErr(100) "error","file not saved to:",saveFileName;
 		}
-		Enable();
 	});
 
 #pragma endregion
@@ -220,14 +218,6 @@ void GuiSkellyTon::ToggleGameStartStop()
 	if(myState == EditorStates::Editor) { // start!
 		if(gameManager.Valid()) {
 			myState = EditorStates::PlayingGame;
-			camManager.ActiveCam(nullptr);
-			
-			tempStreamForGamePlay = Stream();
-			SaveToStream(tempStreamForGamePlay);
-			
-			gameManager.init();
-			game->start();
-
 
 			//setup menu options
 			ResouceBar->setEnabled(false);
@@ -236,6 +226,14 @@ void GuiSkellyTon::ToggleGameStartStop()
 			StartStopGameAction->setText("Stop Game");
 			PlayResumeGameAction->setEnabled(true);
 			PlayResumeGameAction->setText("Pause");
+
+			camManager.ActiveCam(nullptr);
+			
+			tempStreamForGamePlay = Stream();
+			SaveToStream(tempStreamForGamePlay);
+			
+			gameManager.init();
+			game->start();
 		} else {
 			auto tmp = gameManager.getErrors();
 			for (uint i = 0; i < tmp.size(); i++)
@@ -246,11 +244,6 @@ void GuiSkellyTon::ToggleGameStartStop()
 	} else if (myState == EditorStates::PlayingGame || EditorStates::PlayingPaused) { // stop the phone!
 		myState = EditorStates::Editor;
 
-		tempStreamForGamePlay.resetToBeg();
-		LoadFromFile(tempStreamForGamePlay,false);
-		
-		game->start();
-
 		//set menu options
 		ResouceBar->setEnabled(true);
 		GameObjectMenu->setEnabled(true);
@@ -258,6 +251,11 @@ void GuiSkellyTon::ToggleGameStartStop()
 		StartStopGameAction->setText("Start Game");
 		PlayResumeGameAction->setEnabled(false);
 		PlayResumeGameAction->setText("");
+
+		tempStreamForGamePlay.resetToBeg();
+		LoadFromFile(tempStreamForGamePlay,false);
+		
+		game->start();
 	}
 }
 
@@ -278,17 +276,22 @@ void GuiSkellyTon::ToggleGamePauseResume()
 	}
 }
 
-void GuiSkellyTon::LoadFromFile(Stream& s, bool backup)
+void GuiSkellyTon::LoadFromFile(Stream& s, bool backup, bool resources)
 {
 	//backup
 	Stream backupStream;
-	if(backup) backupStream = ExportToStream();
+	if(backup) backupStream = ExportToStream(resources);
 	try {
-		//resourceManager.ObjectLoad(s);
+		if(resources) {
+			resourceManager.ObjectLoad(s);
+		}
 		s >> gameManager;
 	} catch(...) {
 		printErr(100) "error","corrupt file";
 		if(backup) {
+			if(resources) {
+				resourceManager.ObjectLoad(backupStream);
+			}
 			backupStream >> gameManager;
 		}
 	}
@@ -296,17 +299,19 @@ void GuiSkellyTon::LoadFromFile(Stream& s, bool backup)
 	this->gameObjectList->update();
 }
 
-void GuiSkellyTon::SaveToStream(Stream& s)
+void GuiSkellyTon::SaveToStream(Stream& s, bool resources)
 {
 	game->destoryEditorObjects();
-	//resourceManager.ObjectSave(s);
+	if(resources) {
+		resourceManager.ObjectSave(s);
+	}
 	s << gameManager;
 }
 
-Stream GuiSkellyTon::ExportToStream()
+Stream GuiSkellyTon::ExportToStream(bool resources)
 {
 	Stream ret;
-	SaveToStream(ret);
+	SaveToStream(ret,resources);
 	ret.resetToBeg();
 	return ret;
 }
