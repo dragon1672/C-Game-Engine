@@ -15,6 +15,7 @@
 #include <Engine/Tools/QT/ButtonInfo.h>
 #include <Engine/Entity/Components/CameraComponent.h>
 #include <Engine/Systems/CameraManager.h>
+#include <QtGui/QPalette>
 
 #pragma region Component Editors
 class SingleComponentEditor : public QWidget {
@@ -209,9 +210,10 @@ class ScriptEdtor : public SingleComponentEditor {
 	ScriptComponent * script;
 	QComboBox *comboBox;
 	AdminEditor * admin;
+	QGroupBox * scriptVarsContainer;
 public:
 	ScriptEdtor(ScriptComponent * script) {
-		setMinimumSize(300,100);
+		setMinimumSize(300,150);
 		setWindowTitle("Script Component");
 
 		this->script = script;
@@ -227,10 +229,57 @@ public:
 		void (QComboBox:: *indexChangedSignal)(int) = &QComboBox::currentIndexChanged;
 		connect(comboBox,indexChangedSignal,[this](int i) {
 			this->script->myScript(this->comboBox->currentData().toDouble());
+			this->updateVars();
 		});
 
+		scriptVarsContainer = new QGroupBox("Script Editor Prams");
+		scriptVarsContainer->setLayout(new QVBoxLayout());
 
 		layout->addWidget(comboBox);
+		layout->addWidget(scriptVarsContainer);
+	}
+	void updateVars() {
+		while (auto item = scriptVarsContainer->layout()->takeAt( 0 ) ) {
+			delete item->widget();
+			delete item;
+		}
+		std::vector<std::string> entries;
+
+		if(script->myScript() != nullptr) {
+			std::string src = script->myScript()->Src();
+			const char * srcStr = "GameManager.getEntityFromName";
+			int index = src.find(srcStr);
+			while(0 <= index && (unsigned)index < src.size()) {
+				int firstP = src.find('(',index);
+				int lastP = src.find(')',index);
+				int countOfStartP = 0;
+				for (int i = firstP+1; i <= lastP; i++) {
+					if(src[i] == '(') countOfStartP++;
+				}
+				if(countOfStartP != 0) countOfStartP++;
+				while(countOfStartP > 0) {
+					lastP = src.find(')',lastP+1);
+					countOfStartP--;
+				}
+				entries.push_back(src.substr(firstP+1,lastP-firstP-1));
+				index = src.find(srcStr,index+1);
+			}
+		}
+
+		for (uint i = 0; i < entries.size(); i++)
+		{
+			QLineEdit * entry = new QLineEdit();
+			QPalette  myPallet = entry->palette();
+			QColor col = myPallet.color(QPalette::Button);
+			myPallet.setColor(QPalette::Base, col);
+			myPallet.setColor(QPalette::Text, Qt::black);
+			entry->setReadOnly(true);
+			entry->setPalette(myPallet);
+
+			entry->setText(entries[i].c_str());
+
+			scriptVarsContainer->layout()->addWidget(entry);
+		}
 	}
 	void updateFromModel() {
 		admin->update();
@@ -466,8 +515,7 @@ public:
 
 	void reload()
 	{
-		QLayoutItem* item;
-		while ( ( item = layout->takeAt( 0 ) ) != NULL ) {
+		while (auto item = layout->takeAt( 0 )) {
 			delete item->widget();
 			delete item;
 		}
