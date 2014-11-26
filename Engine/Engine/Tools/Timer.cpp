@@ -1,6 +1,7 @@
 #include <Engine\Tools\Timer.h>
 #include <windows.h>
 #include <Engine/DebugTools/DebugMemHeader.h>
+#include <Engine/Tools/Printer.h>
 
 IMPLEMENT_SINGLETON(Timer);
 

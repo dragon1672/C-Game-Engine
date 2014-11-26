@@ -4,6 +4,7 @@
 #include <Engine/DebugTools/DebugMemHeader.h>
 #include <Engine/Tools/CollectionEditing.h>
 #include <Engine/Tools/Timer.h>
+#include <Engine/Tools/Printer.h>
 
 IMPLEMENT_SINGLETON(InputManager);
 

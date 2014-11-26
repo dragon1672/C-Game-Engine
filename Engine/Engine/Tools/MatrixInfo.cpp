@@ -2,6 +2,7 @@
 #include <glm\gtc\quaternion.hpp>
 #include <Engine\Entity\Entity.h>
 #include <Engine\IO\Stream.h>
+#include <Engine\Tools\Printer.h>
 
 namespace {
 	bool Equal(glm::vec3& a, glm::vec3& b) {
