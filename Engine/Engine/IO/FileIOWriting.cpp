@@ -10,8 +10,10 @@ void FileIO::createDir(const char * dir)
 
 void FileIO::createDir(std::string dir)
 {
-	std::string makeADir = "mkdir "+ dir;
-	system(makeADir.c_str());
+	if(!validDir(dir)) {
+		std::string makeADir = "mkdir "+ dir;
+		system(makeADir.c_str());
+	}
 }
 
 void FileIO::saveFile(FileData * toSave, std::string filePath)
