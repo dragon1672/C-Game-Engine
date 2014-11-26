@@ -46,6 +46,7 @@ struct LUA_HOLDER {												\
 //This creates a LuaUserData for your class
 //it overrides the default destructor that calls delete since we are pointing to "this"
 #define MAKE_LUA_INSTANCE_RET(class_name,Userdata_var_name)\
+	if(this == nullptr) { printErr(100) "trying to return null lua", #class_name ; } \
 	if(LUA_HOLDER_INSTANCE == nullptr) { LUA_HOLDER_INSTANCE = new LUA_HOLDER(LUA_INSTANCE.CreateUserdata<class_name>((##class_name##*)this,[](class_name*){})); } \
 	else return LUA_HOLDER_INSTANCE->val; \
 	LuaUserdata<class_name>& Userdata_var_name = LUA_HOLDER_INSTANCE->val;
