@@ -253,13 +253,11 @@ void GameObjectManager::rebuildEntityParents()
 void GameObjectManager::Disable()
 {
 	disable = true;
-	eventManager.Disable();
 }
 
 void GameObjectManager::Enable()
 {
 	disable = false;
-	eventManager.Enable();
 }
 
 LuaUserdata<Entity> GameObjectManager::getEntityFromName(std::string name)
