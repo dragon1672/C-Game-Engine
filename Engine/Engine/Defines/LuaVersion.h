@@ -72,9 +72,9 @@ struct LUA_HOLDER {												\
 #define GET_LUA_VER(var_type,real_var) LuaUserdata<var_type>get_lua_##real_var##() { return (LuaUserdata<var_type>)real_var; }
 
 //calls function de-refs and casts as LuaUserdata
-#define LUA_GET_FUN_PTR(var_type,fun_name) LuaUserdata<##var_type##> fun_name##_LUA() { return (LuaUserdata<##var_type##>)*##fun_name##(); }
+#define LUA_GET_FUN_PTR(var_type,fun_name) LuaUserdata<##var_type##> fun_name##_LUA() { return *##fun_name##(); }
 
-#define LUA_GET_FUN(var_type,fun_name) LuaUserdata<##var_type##> fun_name##_LUA() { return (LuaUserdata<##var_type##>)##fun_name##(); }
+#define LUA_GET_FUN(var_type,fun_name) LuaUserdata<##var_type##> fun_name##_LUA() { return fun_name##(); }
 
 
 

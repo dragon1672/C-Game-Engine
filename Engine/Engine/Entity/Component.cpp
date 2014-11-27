@@ -30,7 +30,7 @@ void Component::Load(Stream& s)
 	ChildLoad(s);
 }
 
-Component::Component(std::string name /*= ""*/) : Object(name), active(true)
+Component::Component(std::string name /*= ""*/) : Object(name), active(true), parent(nullptr)
 {
 
 }
