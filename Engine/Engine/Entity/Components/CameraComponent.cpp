@@ -7,11 +7,12 @@ REGISTER_COMPONENT(CameraComponent);
 
 glm::mat4x4& CameraComponent::getWorld2View()
 {
-	glm::vec3 tmp = parent->getTrans()->scale;
-	parent->getTrans()->scale = glm::vec3(1,1,1);
-	world2View = parent->getTrans()->getCompleteTransform();
-	parent->getTrans()->scale = tmp;
-	return world2View;
+	//glm::vec3 tmp = parent->getTrans()->scale;
+	//parent->getTrans()->scale = glm::vec3(1,1,1);
+	//world2View = parent->getTrans()->getCompleteTransform();
+	//parent->getTrans()->scale = tmp;
+	//return world2View;
+	return world2View = glm::lookAt(Parent()->getTrans()->pos,Parent()->getTrans()->pos + viewDir,glm::vec3(0,1,0));
 }
 
 glm::mat4& CameraComponent::getPerspective()
@@ -31,6 +32,8 @@ CameraComponent::CameraComponent(std::string name /*= nullptr*/)
 	camManager.allCams.Register(this);
 	if(camManager.ActiveCam() == nullptr) camManager.ActiveCam(this);
 
+	viewDir = glm::vec3(0,0,-1);
+	setPos(glm::vec3(0,0,0));
 
 	perspectiveNeedsUpdate = true;
 	NearPlane(.1f);
@@ -123,3 +126,77 @@ CameraComponent::~CameraComponent()
 {
 	camManager.removeCam(this);
 }
+
+void CameraComponent::lookAtLua(float targetX,float targetY,float targetZ)
+{
+	lookAt(glm::vec3(targetX,targetY,targetZ));
+}
+
+void CameraComponent::NearPlane(float val)
+{
+	perspectiveNeedsUpdate = perspectiveNeedsUpdate || val != nearPlane; nearPlane = val;
+}
+
+float CameraComponent::NearPlane() const
+{
+	return nearPlane;
+}
+
+void CameraComponent::FarPlane(float val)
+{
+	perspectiveNeedsUpdate = perspectiveNeedsUpdate || val != farPlane;  farPlane  = val;
+}
+
+float CameraComponent::FarPlane() const
+{
+	return farPlane;
+}
+
+void CameraComponent::Width(int val)
+{
+	perspectiveNeedsUpdate = perspectiveNeedsUpdate || val != width;     width  = val;
+}
+
+int CameraComponent::Width() const
+{
+	return width;
+}
+
+void CameraComponent::Height(int val)
+{
+	perspectiveNeedsUpdate = perspectiveNeedsUpdate || val != height;    height = val;
+}
+
+int CameraComponent::Height() const
+{
+	return height;
+}
+
+void CameraComponent::setPos(glm::vec3& position) {
+	setPos(position,viewDir);
+}
+void CameraComponent::setPos(glm::vec3& position, glm::vec3& viewDirection) {
+	if(Parent() != nullptr) Parent()->getTrans()->pos = position;
+	float lenSquared = glm::dot(viewDirection,viewDirection);
+	viewDir = lenSquared > 1 ?
+		lenSquared == 0 ? glm::vec3(0,0,-1) : glm::normalize(viewDirection)
+		: viewDirection;
+	strafeDir= glm::normalize(glm::cross(viewDir, glm::vec3(0,1,0)));
+}
+void CameraComponent::lookAt(glm::vec3& target)
+{
+	lookAt(target,Parent()->getTrans()->pos);
+}
+void CameraComponent::lookAt(glm::vec3& target, glm::vec3& position)
+{
+	glm::vec3 dir = target - position;
+	setPos(position,dir);
+}
+void CameraComponent::rotate(glm::vec2 pitchYaw)
+{
+	strafeDir= glm::normalize(glm::cross(viewDir, glm::vec3(0,1,0)));
+	glm::mat4 mouseRot =  glm::rotate(-pitchYaw.x, glm::vec3(0,1,0))
+		* glm::rotate(-pitchYaw.y, strafeDir);
+	viewDir = glm::vec3(mouseRot * glm::vec4(viewDir,1));
+}
+

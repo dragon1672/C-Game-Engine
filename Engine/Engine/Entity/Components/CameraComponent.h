@@ -3,30 +3,39 @@
 #include <ExportHeader.h>
 #include <Engine/Entity/Component.h>
 #include <glm/glm.hpp>
-#include <Engine/Tools/PropertyWrapper.h>
 #include <Engine/Tools/Ray.h>
+#include <Engine/Tools/MasterLua.h>
 
 class ENGINE_SHARED MAKE_COMPONENT_CLASS(CameraComponent) {
 	bool perspectiveNeedsUpdate;
 	glm::mat4 perspective;
 	glm::mat4 world2View;
 	ShaderUniformPram uniforms[6];
+
+	glm::vec3 viewDir;
+	glm::vec3 strafeDir;
 	int width,height;
 	float nearPlane,farPlane;
+
+	void setPosLua(float x, float y, float z);
+	void setViewDirLua(float x, float y, float z);
+	void lookAtLua(float targetX,float targetY,float targetZ);
+	void rotateLua(float pitch, float yaw);
+	LUA_OBJECT(CameraComponent);
 public:
 	CameraComponent(std::string name = "");
 	~CameraComponent();
 	bool isActive();
 	void setActive();
 
-	void  NearPlane(float val) { perspectiveNeedsUpdate = perspectiveNeedsUpdate || val != nearPlane; nearPlane = val;  }
-	void  FarPlane(float val)  { perspectiveNeedsUpdate = perspectiveNeedsUpdate || val != farPlane;  farPlane  = val;  }
-	void  Width(int val)       { perspectiveNeedsUpdate = perspectiveNeedsUpdate || val != width;     width  = val;     }
-	void  Height(int val)      { perspectiveNeedsUpdate = perspectiveNeedsUpdate || val != height;    height = val;     }
-	float NearPlane() const    { return nearPlane; }
-	float FarPlane() const     { return farPlane;  }
-	int   Width() const        { return width;     }
-	int   Height() const       { return height;    }
+	void  NearPlane(float val);
+	void  FarPlane(float val);
+	void  Width(int val);
+	void  Height(int val);
+	float NearPlane() const;
+	float FarPlane() const;
+	int   Width() const;
+	int   Height() const;
 
 	glm::mat4& getWorld2View();
 	glm::mat4& getPerspective();
