@@ -2,6 +2,7 @@
 #include <Engine/Entity/Entity.h>
 #include <Engine/Systems/CameraManager.h>
 #include <Engine/IO/Stream.h>
+#include <Engine/Tools/Printer.h>
 
 REGISTER_COMPONENT(CameraComponent);
 
@@ -28,7 +29,7 @@ glm::mat4& CameraComponent::getPerspective()
 CameraComponent::CameraComponent(std::string name /*= nullptr*/)
 	: Component_CRTP(name)
 {
-	
+	LUA_OBJECT_START(CameraComponent);
 	camManager.allCams.Register(this);
 	if(camManager.ActiveCam() == nullptr) camManager.ActiveCam(this);
 
@@ -125,11 +126,22 @@ bool CameraComponent::CopyInto(Component* t)
 CameraComponent::~CameraComponent()
 {
 	camManager.removeCam(this);
+	LUA_OBJECT_END(CameraComponent);
 }
 
 void CameraComponent::lookAtLua(float targetX,float targetY,float targetZ)
 {
 	lookAt(glm::vec3(targetX,targetY,targetZ));
+}
+
+void CameraComponent::setViewDirLua(float x, float y, float z)
+{
+	viewDir = glm::vec3(x,y,z);
+}
+
+void CameraComponent::setPosLua(float x, float y, float z)
+{
+	setPos(glm::vec3(x,y,z));
 }
 
 void CameraComponent::NearPlane(float val)
@@ -200,3 +212,19 @@ void CameraComponent::rotate(glm::vec2 pitchYaw)
 	viewDir = glm::vec3(mouseRot * glm::vec4(viewDir,1));
 }
 
+CameraComponent::operator LuaUserdata<CameraComponent>()
+{
+	MAKE_LUA_INSTANCE_RET(CameraComponent,ret);
+
+	ret.Bind("rotate",&CameraComponent::rotateLua);
+	ret.Bind("setPos",&CameraComponent::setPosLua);
+	ret.Bind("setViewDir",&CameraComponent::setViewDirLua);
+	ret.Bind("lookAt",&CameraComponent::lookAtLua);
+
+	return ret;
+}
+
+void CameraComponent::rotateLua(float pitch, float yaw)
+{
+	rotate(glm::vec2(yaw,pitch));
+}

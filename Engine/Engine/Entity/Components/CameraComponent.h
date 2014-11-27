@@ -40,6 +40,13 @@ public:
 	glm::mat4& getWorld2View();
 	glm::mat4& getPerspective();
 
+	void setPos(glm::vec3& position);
+	void setPos(glm::vec3& position, glm::vec3& viewDirection);
+	void lookAt(glm::vec3& target);
+	void lookAt(glm::vec3& target,glm::vec3& position);
+
+	void rotate(glm::vec2 pitchYaw);
+
 	virtual bool isValid();
 
 	Ray getRayFromMouse(glm::vec2 mousePos);
@@ -57,5 +64,8 @@ public:
 	virtual void ChildLoad(Stream& s);
 
 	virtual bool CopyInto(Component* that);
+
+
+	operator LuaUserdata<CameraComponent>();
 
 };
