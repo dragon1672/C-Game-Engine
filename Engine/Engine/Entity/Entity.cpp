@@ -10,6 +10,7 @@
 #include <Engine/Systems/GameObjectManager.h>
 #include <Engine/DebugTools/DebugMemHeader.h>
 #include <Engine/Tools/Printer.h>
+#include <Engine/Entity/Components/CameraComponent.h>
 
 //events
 #include <Engine/Systems/Events/EventManager.h>
@@ -253,6 +254,7 @@ Entity::operator LuaUserdata<Entity>()
 
 	LUA_BIND_FUN(Entity,ret,Parent);
 	LUA_BIND_FUN(Entity,ret,getTrans);
+	ret.Bind("getCam",&Entity::getCam_LUA);
 	ret.Bind("GetScript",&Entity::getScriptLua);
 	ret.Bind("Broadcast",&Entity::Broadcast);
 	ret.Bind("BroadcastInChildren",&Entity::BroadcastInChildren);
@@ -261,6 +263,7 @@ Entity::operator LuaUserdata<Entity>()
 	ret.Bind("SetParent",&Entity::SetParentFromID);
 	ret.Bind("Clone",&Entity::Clone_Lua);
 	ret.Bind("getID",&Entity::getID_LUA);
+	ret.Bind("hasScript", &Entity::hasScript);
 
 	return ret;
 }
@@ -344,4 +347,19 @@ void Entity::SetActive(bool val)
 bool Entity::GetActive() const
 {
 	return active;
+}
+
+bool Entity::hasScript(std::string name)
+{
+	return getScript(name) != nullptr;
+}
+
+CameraComponent * Entity::getCam()
+{
+	return getComponent<CameraComponent>();
+}
+
+LuaUserdata<CameraComponent> Entity::getCam_LUA()
+{
+	return *getCam();
 }

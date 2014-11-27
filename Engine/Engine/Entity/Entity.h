@@ -43,6 +43,10 @@ private:
 
 	double getID_LUA() { return getID(); }
 
+	LUA_GET_FUN_PTR(Entity,Parent);
+	LUA_GET_FUN_PTR(MatrixInfo,getTrans);
+	LuaUserdata<CameraComponent> getCam_LUA();
+
 	friend GameObjectManager;
 public:
 	std::unordered_set<double> Children();
@@ -79,9 +83,11 @@ public:
 	glm::mat4 getWorldTransform();
 	MatrixInfo localTrans;
 	MatrixInfo * getTrans();
+	CameraComponent * getCam();
 	RenderableComponent * getRenderable();
 	ScriptComponent * getScript(std::string name="");
 	LuaTable getScriptLua(std::string name="");
+	bool hasScript(std::string name);
 
 	template<typename T> T* addComponent() { return (T*)addComponent(new T()); }
 	template<typename T> void removeComponent() {
@@ -115,9 +121,6 @@ public:
 
 	bool ComponentsAreReady();
 	std::vector<std::string> getErrors();
-
-	LUA_GET_FUN_PTR(Entity,Parent);
-	LUA_GET_FUN_PTR(MatrixInfo,getTrans);
 
 	operator LuaUserdata<Entity>();
 
