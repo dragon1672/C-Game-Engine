@@ -204,6 +204,7 @@ std::vector<std::string> ResourceManager::getErrors()
 
 void ResourceManager::shutdown()
 {
+	defaultShader = nullptr;
 	ShaderProgramObjs.ClearAll();
 	MeshObjs.ClearAll();
 	TextureInfoObjs.ClearAll();
