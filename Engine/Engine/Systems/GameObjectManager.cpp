@@ -159,20 +159,19 @@ void GameObjectManager::RemoveEntity(Entity * toRemove)
 {
 	int index = entities.find(toRemove);
 	if(index >= 0) {
+		Entity * toKill = &entities[index];
 		for (auto i : toRemove->Children()) {
 			RemoveEntity(i);
 		}
-		entities[index].active = false;
+		toKill->active = false;
 
-		entities[index].Parent(nullptr);
+		toKill->Parent(nullptr);
 
 		emitEvent(new EntityRemovedEvent(toRemove));
-
-		entities[index].shutdown();
+		toKill->shutdown();
+		EntityManager.UnRegister(toRemove);
+		entities.remove(toKill);
 	}
-	if((unsigned)index == entities.size()-1) entities.pop_back();
-	else deletedEntities.emplace(index);
-	EntityManager.UnRegister(toRemove);
 }
 
 void GameObjectManager::SelectorFunction(std::function<bool(Entity*)> val)
@@ -224,7 +223,6 @@ void GameObjectManager::Load(Stream&s)
 	Object::ObjectLoad(s);
 	while(entities.size() > 0)
 	{
-		entities.back().shutdown(false);
 		RemoveEntity(&entities.back());
 	}
 	entities.clear();

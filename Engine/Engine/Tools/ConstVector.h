@@ -7,16 +7,8 @@
 template<typename T> class ENGINE_SHARED ConstVector {
 private:
 	std::vector<T*> arrays;
-	unsigned int chunkSize;
-	unsigned int currentIndex;
-	void init(int size) {
-		chunkSize = size;
-		currentIndex = 0;
-	}
 public:
 
-	ConstVector() { init(17); }
-	ConstVector(unsigned int startSize)    { init(startSize); }
 	inline void add(const std::vector<T>& toAdd)        { add(&toAdd[0],toAdd.size()); }
 	inline void add(const ConstVector<T>& toAdd)        { for (int i = 0; i < toAdd.size(); i++) add(toAdd[i]); }
 	inline void add(const T * toAdd, unsigned int size) { for (int i = 0; i < size;         i++) add(toAdd[i]); }
@@ -28,11 +20,8 @@ public:
 
 	inline int find(T * toMatch) {
 		for (uint i = 0; i < arrays.size(); i++) {
-			uint indexDis = toMatch - arrays[i]; // pointer arithmetic :D also neg numbers become HUGE
-			if(indexDis < chunkSize) {
-				uint ret = i * chunkSize + indexDis;
-				return (ret < size()) ? ret : -1;
-			}
+			if(arrays[i] == toMatch)
+				return i;
 		}
 		return -1;
 	}
@@ -43,65 +32,48 @@ public:
 	}
 
 	inline void add(const T& toAdd) {
-		unsigned int a = currentIndex / chunkSize;
-		unsigned int b = currentIndex % chunkSize;
-		while(!(a < arrays.size() && b < chunkSize))
-			arrays.push_back(new T[chunkSize]);
-		arrays[a][b] = toAdd;
-		currentIndex++;
+		arrays.push_back(new T(toAdd));
 	}
 	inline T& get(int index)   { return (*this)[index]; }
 	inline T& ConstVector<T>::first() { return (*this)[0]; }
 	inline T& ConstVector<T>::back() { return (*this)[size()-1]; }
-	inline void swap(int indexA, int indexB) {
-		T& tmp = (*this)[indexA];
-		(*this)[indexA] = (*this)[indexB];
-		(*this)[indexB] = tmp;
-	}
+	inline bool remove(T*toKill) { return remove(find(toKill)); }
 	inline bool remove(int index) {
-		(*this)[index];
-		while((unsigned)index < size()-1) {
-			(*this)[index] = (*this)[index+1];
-			index--;
-		}
+		delete arrays[index];
+		arrays.erase(arrays.begin() + index);
 		return true;
 	}
 
 	inline void ConstVector<T>::pop_back() {
-		if(currentIndex > 0) {
-			back() = T();
-			currentIndex--;
-		}
+		delete arrays.back();
+		arrays.pop_back();
 	}
 
-	inline unsigned int size() { return currentIndex;   }
+	inline unsigned int size() { return arrays.size();   }
 	inline const T& operator[](std::size_t idx) const { return const_cast<T&>(*this)[idx]; };
 
 	inline T& operator[](std::size_t idx) {
-		if(idx >= size())
-			throw std::range_error("Out Of Bounds");//std::to_string(idx)+" is out of "+std::to_string(size())+" bounds");
-		unsigned int a = idx / chunkSize;
-		unsigned int b = idx % chunkSize;
-		return arrays[a][b];
+		return *arrays[idx];
 	};
 	void clear() {
 		while(arrays.size() > 0) {
-			int end = arrays.size() - 1;
-			delete [] arrays[end];
-			arrays.erase(arrays.begin() + end);
+			delete arrays.back();
+			arrays.pop_back();
 		}
-		currentIndex = 0;
 	}
 	~ConstVector() {
 		clear();
 	}
 
 	void resize(unsigned int index) {
-		unsigned int a = index / chunkSize;
-		unsigned int b = index % chunkSize;
-		while(!(a < arrays.size() && b < chunkSize))
-			arrays.push_back(new T[chunkSize]);
-		currentIndex = index;
+		int old = arrays.size();
+		for (uint i = old; i > index; i--) { // if making smaller
+			delete arrays[i];
+		}
+		arrays.resize(index);
+		for (uint i = old; i < arrays.size(); i++) { // if making bigger
+			arrays[i] = new T();
+		}
 	}
 
 

@@ -37,6 +37,10 @@ std::vector<std::string> TextureInfo::getErrors()
 
 void TextureInfo::shutdown()
 {
+	type = (GLenum)GL_RGBA;
+	type2 = (GLenum)-1;
+	slotID = (uint)-1;
+	bufferID = (uint)-1;
 	SAFE_DELETE(data);
 }
 

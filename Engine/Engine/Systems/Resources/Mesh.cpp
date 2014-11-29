@@ -253,3 +253,8 @@ void Mesh::ChildLoad(Stream& s)
 	s >> drawStyle >> verts >> indices;
 	inHardware = false;
 }
+
+void Mesh::shutdown()
+{
+	inHardware = false;
+}

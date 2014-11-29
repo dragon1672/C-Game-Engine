@@ -52,4 +52,6 @@ public:
 
 	virtual void ChildLoad(Stream& s);
 
+	virtual void shutdown();
+
 };
