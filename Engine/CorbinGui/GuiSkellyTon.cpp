@@ -29,12 +29,8 @@ GuiSkellyTon::GuiSkellyTon()
 
 	connect(gameObjectList,&QTreeWidget::currentItemChanged,[this](QTreeWidgetItem *current, QTreeWidgetItem *previous){
 		Entity * ECurrent  = GameObjectViewer::convertTree2Entity(current);
-		Entity * EPrevious = GameObjectViewer::convertTree2Entity(previous);
+		//Entity * EPrevious = GameObjectViewer::convertTree2Entity(previous);
 		game->currentEntity.SetCurrent(ECurrent);
-
-		std::string name1 = ECurrent  != nullptr ? std::string(ECurrent->Name())  : "NULL";
-		std::string name2 = EPrevious != nullptr ? std::string(EPrevious->Name()) : "NULL";
-		printMsg(0) "from",name2,"to",name1;
 
 		componentEditor->changeEntity(ECurrent);
 
@@ -263,6 +259,7 @@ void GuiSkellyTon::ToggleGameStartStop()
 		
 		game->start();
 	}
+	gameObjectList->update();
 	working = false;
 }
 

@@ -120,6 +120,7 @@
     <ClInclude Include="Engine\Systems\Events\Events\GameEvents.h" />
     <ClInclude Include="Engine\Tools\Dims.h" />
     <ClInclude Include="Engine\Systems\Events\Events\ObjectChangeIDEvent.h" />
+    <ClInclude Include="Engine\Systems\Events\Events\EntityListChangedEvent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />

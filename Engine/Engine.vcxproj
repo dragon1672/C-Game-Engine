@@ -155,6 +155,7 @@
     <ClInclude Include="Engine\Systems\Events\EventManager.h" />
     <ClInclude Include="Engine\Systems\Events\Events\ComponentAddedEvent.h" />
     <ClInclude Include="Engine\Systems\Events\Events\ComponentRemovedEvent.h" />
+    <ClInclude Include="Engine\Systems\Events\Events\EntityListChangedEvent.h" />
     <ClInclude Include="Engine\Systems\Events\Events\EntityParentChangedEvent.h" />
     <ClInclude Include="Engine\Systems\Events\Events\GameEvents.h" />
     <ClInclude Include="Engine\Systems\Events\Events\ObjectChangedNameEvent.h" />

@@ -1,6 +1,7 @@
 #include "GameObjectViewer.h"
 #include <Engine/Tools/Printer.h>
 #include <Engine/Systems/Events/EventManager.h>
+#include <Engine/Systems/Events/Events/EntityListChangedEvent.h>
 
 
 class GameObjectTree : public QTreeWidgetItem {
@@ -86,8 +87,7 @@ GameObjectViewer::GameObjectViewer(EditorGame * game) : game(game)
 				this->update();
 			}
 	});
-	eventManager.Subscribe<EntityAddedEvent>([this](EventData*d,Object*sender){this->update();});
-	eventManager.Subscribe<EntityRemovedEvent>([this](EventData*d,Object*sender){this->update();});
+	eventManager.Subscribe<EntityListChangedEvent>([this](EventData*d,Object*sender){this->update();});
 }
 
 Entity * GameObjectViewer::convertTree2Entity(QTreeWidgetItem * treeItem)

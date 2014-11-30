@@ -19,6 +19,7 @@
 #include <Engine/Systems/Events/Events/EntityAddedEvent.h>
 #include <Engine/Systems/Events/Events/EntityRemovedEvent.h>
 #include <Engine/Systems/Events/Events/GameEvents.h>
+#include <Engine/Systems/Events/Events/EntityListChangedEvent.h>
 
 IMPLEMENT_SINGLETON(GameObjectManager);
 
@@ -132,6 +133,7 @@ Entity * GameObjectManager::AddEntity(std::string name)
 	
 	EntityManager.Register(ret);
 	emitEvent(new EntityAddedEvent(ret));
+	emitEvent(new EntityListChangedEvent());
 	return ret;
 }
 
@@ -156,7 +158,7 @@ std::vector<Entity *> GameObjectManager::getTopLevelEntities()
 	std::vector<Entity*> tmp;
 	for (uint i = 0; i < entities.size(); i++)
 		tmp.push_back(&entities[i]);
-	return Collections::Where<Entity*>(tmp,[](Entity*& a){ return a->active && a->Parent() == nullptr; });
+	return Collections::Where<Entity*>(tmp,[](Entity*& a){ return a->Parent() == nullptr; });
 }
 
 void GameObjectManager::RemoveEntity(double toRemove) {
@@ -178,6 +180,7 @@ void GameObjectManager::RemoveEntity(Entity * toRemove)
 		toKill->shutdown();
 		EntityManager.UnRegister(toRemove);
 		entities.remove(toKill);
+		emitEvent(new EntityListChangedEvent());
 	}
 }
 
