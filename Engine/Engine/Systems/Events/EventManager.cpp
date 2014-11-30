@@ -123,6 +123,11 @@ void EventManager::RemoveEvent(EventHandle*handle)
 	VECTOR_REMOVE_CONDITION(list,.ID == handle->ID);
 }
 
+void EventManager::RemoveEvent(EventHandle&handle)
+{
+	RemoveEvent(&handle);
+}
+
 void EventManager::Disable()
 {
 	disable = true;

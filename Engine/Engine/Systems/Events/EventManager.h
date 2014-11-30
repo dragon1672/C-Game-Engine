@@ -64,4 +64,5 @@ public:
 	
 	template <typename T> EventHandle Subscribe(std::function<void(EventData*,Object*)> function) { return Subscribe(typeid(T).name(),function); }
 	void RemoveEvent(EventHandle*handle);
+	void RemoveEvent(EventHandle&handle);
 };
