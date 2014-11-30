@@ -219,6 +219,7 @@ void Entity::Save(Stream&s)
 		s << components[i]->Class_Name();
 		s << *components[i];
 	}
+	s << active;
 }
 
 void Entity::Load(Stream&s)
@@ -236,6 +237,7 @@ void Entity::Load(Stream&s)
 		auto currentComponent = addComponent(Component::GetInstanceFromTypeString(componentName));
 		s >> *currentComponent;
 	}
+	s >> active;
 }
 
 Entity::Entity(std::string name/*="New Game Object"*/, GameObjectManager * gm /*= nullptr*/) : parent(Object::NULL_OBJECT_ID()), active(true), Object(name), tag(-1)

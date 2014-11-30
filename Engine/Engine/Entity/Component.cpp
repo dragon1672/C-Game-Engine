@@ -2,6 +2,7 @@
 #include <map>
 #include <functional>
 #include <memory>
+#include <Engine/IO/Stream.h>
 
 namespace {
 	template<typename T>
@@ -21,12 +22,14 @@ namespace {
 void Component::Save(Stream& s)
 {
 	Object::ObjectSave(s);
+	s << active;
 	ChildSave(s);
 }
 
 void Component::Load(Stream& s)
 {
 	Object::ObjectLoad(s);
+	s >> active;
 	ChildLoad(s);
 }
 
