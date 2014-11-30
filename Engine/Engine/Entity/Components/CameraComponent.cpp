@@ -18,44 +18,34 @@ glm::mat4x4& CameraComponent::getWorld2View()
 
 glm::mat4& CameraComponent::getPerspective()
 {
+	perspectiveNeedsUpdate = perspectiveNeedsUpdate || dims.HasChanged();
 	if(perspectiveNeedsUpdate) {
-		const float aspectRatio = (float)width/(float)height;
+		const float aspectRatio = dims.WidthPixel()/dims.HeightPixel();
 		perspective = glm::perspective(60.0f,aspectRatio,(float)nearPlane,(float)farPlane);
 	}
+	dims.resetChanged();
 	perspectiveNeedsUpdate = false;
 	return perspective;
 }
 
 CameraComponent::CameraComponent(std::string name /*= nullptr*/)
-	: Component_CRTP(name)
+	: active(true), clearColor(.1f,.1f,.1f), Component_CRTP(name)
 {
 	LUA_OBJECT_START(CameraComponent);
 	camManager.allCams.Register(this);
-	if(camManager.ActiveCam() == nullptr) camManager.ActiveCam(this);
 
 	viewDir = glm::vec3(0,0,-1);
 	setPos(glm::vec3(0,0,0));
 
 	perspectiveNeedsUpdate = true;
+
 	NearPlane(.1f);
 	FarPlane(100);
 	
 	uniforms[0] = ShaderUniformPram("nearPlane",   nearPlane   );
 	uniforms[1] = ShaderUniformPram("farPlane" ,   farPlane    );
-	uniforms[2] = ShaderUniformPram("width",       width       );
-	uniforms[3] = ShaderUniformPram("height",      height      );
-	uniforms[4] = ShaderUniformPram("perspective", perspective );
-	uniforms[5] = ShaderUniformPram("world2View",  world2View  );
-}
-
-bool CameraComponent::isActive()
-{
-	return camManager.ActiveCam() == this;
-}
-
-void CameraComponent::setActive()
-{
-	camManager.ActiveCam(this);
+	uniforms[2] = ShaderUniformPram("perspective", perspective );
+	uniforms[3] = ShaderUniformPram("world2View",  world2View  );
 }
 
 bool CameraComponent::isValid()
@@ -79,14 +69,15 @@ std::string CameraComponent::getShaderName()
 	return "Camera";
 }
 
-Ray CameraComponent::getRayFromMouse(glm::vec2 mousePos)
+Ray CameraComponent::getRayFromMouse(glm::vec2 mp)
 {
-	float x = (2.0f*mousePos.x)/width - 1.0f;
-	float y = 1.0f - (2.0f* mousePos.y)/height;
+	glm::vec2 mousePos = mp - dims.StartPixel();
+	float x = (2.0f*mousePos.x)/dims.WidthPixel() - 1.0f;
+	float y = 1.0f - (2.0f* mousePos.y)/dims.HeightPixel();
 	float z = -1.0f;
-
+	
 	glm::mat4x4 undoCam = glm::inverse(getWorld2View());
-	glm::vec4 temp = glm::inverse(perspective * undoCam) * glm::vec4(x,y,z,0.0);
+	glm::vec4 temp = glm::inverse(getPerspective() * undoCam) * glm::vec4(x,y,z,0.0);
 
 	Ray ret;
 
@@ -102,13 +93,13 @@ std::vector<std::string> CameraComponent::getErrors()
 
 void CameraComponent::ChildSave(Stream& s)
 {
-	s << nearPlane << farPlane << width << height;
+	s << nearPlane << farPlane << dims << active; // also save priority
 }
 
 void CameraComponent::ChildLoad(Stream& s)
 {
+	s >> nearPlane >> farPlane >> dims >> active;
 	perspectiveNeedsUpdate = true;
-	s >> nearPlane >> farPlane >> width >> height;
 }
 
 bool CameraComponent::CopyInto(Component* t)
@@ -118,8 +109,8 @@ bool CameraComponent::CopyInto(Component* t)
 	that->active    = this->active;
 	that->farPlane  = this->farPlane;
 	that->nearPlane = this->nearPlane;
-	that->width     = this->width;
-	that->height    = this->height;
+	that->dims      = this->dims;
+	that->perspective = this->perspective;
 	return true;
 }
 
@@ -129,17 +120,17 @@ CameraComponent::~CameraComponent()
 	LUA_OBJECT_END(CameraComponent);
 }
 
-void CameraComponent::lookAtLua(float targetX,float targetY,float targetZ)
+void CameraComponent::LUA_lookAt(float targetX,float targetY,float targetZ)
 {
 	lookAt(glm::vec3(targetX,targetY,targetZ));
 }
 
-void CameraComponent::setViewDirLua(float x, float y, float z)
+void CameraComponent::LUA_setViewDir(float x, float y, float z)
 {
 	viewDir = glm::vec3(x,y,z);
 }
 
-void CameraComponent::setPosLua(float x, float y, float z)
+void CameraComponent::LUA_setPos(float x, float y, float z)
 {
 	setPos(glm::vec3(x,y,z));
 }
@@ -162,26 +153,6 @@ void CameraComponent::FarPlane(float val)
 float CameraComponent::FarPlane() const
 {
 	return farPlane;
-}
-
-void CameraComponent::Width(int val)
-{
-	perspectiveNeedsUpdate = perspectiveNeedsUpdate || val != width;     width  = val;
-}
-
-int CameraComponent::Width() const
-{
-	return width;
-}
-
-void CameraComponent::Height(int val)
-{
-	perspectiveNeedsUpdate = perspectiveNeedsUpdate || val != height;    height = val;
-}
-
-int CameraComponent::Height() const
-{
-	return height;
 }
 
 void CameraComponent::setPos(glm::vec3& position) {
@@ -216,15 +187,15 @@ CameraComponent::operator LuaUserdata<CameraComponent>()
 {
 	MAKE_LUA_INSTANCE_RET(CameraComponent,ret);
 
-	ret.Bind("rotate",&CameraComponent::rotateLua);
-	ret.Bind("setPos",&CameraComponent::setPosLua);
-	ret.Bind("setViewDir",&CameraComponent::setViewDirLua);
-	ret.Bind("lookAt",&CameraComponent::lookAtLua);
+	ret.Bind("rotate",&CameraComponent::LUA_rotate);
+	ret.Bind("setPos",&CameraComponent::LUA_setPos);
+	ret.Bind("setViewDir",&CameraComponent::LUA_setViewDir);
+	ret.Bind("lookAt",&CameraComponent::LUA_lookAt);
 
 	return ret;
 }
 
-void CameraComponent::rotateLua(float pitch, float yaw)
+void CameraComponent::LUA_rotate(float pitch, float yaw)
 {
 	rotate(glm::vec2(yaw,pitch));
 }

@@ -1,14 +1,17 @@
 #include "CameraManager.h"
-#include <Engine/DebugTools/DebugMemHeader.h>
+#include <Engine/Entity/Entity.h>
 
 #include <Engine/Systems/Events/EventManager.h>
 #include <Engine/Systems/Events/Events/ComponentRemovedEvent.h>
+#include <Engine/Systems/GameObjectManager.h>
+
+#include <Engine/DebugTools/DebugMemHeader.h>
 
 IMPLEMENT_SINGLETON(CameraManager);
 
 
 
-CameraManager::CameraManager() : activeCam(nullptr)
+CameraManager::CameraManager()
 {
 	//eventManager.Subscribe<ComponentRemovedEvent>([this](EventData*d,Object*o){
 	//	ComponentRemovedEvent * data = (ComponentRemovedEvent*)d;
@@ -16,27 +19,6 @@ CameraManager::CameraManager() : activeCam(nullptr)
 	//		allCams.UnRegister(data->beingTrashed);
 	//	}
 	//});
-}
-
-CameraComponent * CameraManager::ActiveCam()
-{
-	if(activeCam == nullptr || !activeCam->active) {//set new active can
-		std::vector<Object*> tmp = allCams.getAll();
-		if(tmp.size() == 0) activeCam = nullptr;
-		else activeCam = (CameraComponent*)tmp[0];
-	}
-	return activeCam;
-}
-
-void CameraManager::ActiveCam(CameraComponent * val)
-{
-	activeCam = val;
-}
-
-CameraComponent * CameraManager::getNewCam(const char * name)
-{
-	auto ret = new CameraComponent(name);
-	return ret;
 }
 
 CameraComponent * CameraManager::getCam(int index)
@@ -57,5 +39,13 @@ std::vector<CameraComponent *> CameraManager::getAllCamMatches(const char * name
 void CameraManager::removeCam(CameraComponent * c)
 {
 	allCams.UnRegister(c);
-	if(activeCam == c) activeCam = nullptr;
+}
+
+std::vector<CameraComponent *> CameraManager::getAllActiveCams()
+{
+	auto tmp = Collections::Where<Object*>(allCams.getAll(),[](Object*o){
+		CameraComponent * c = (CameraComponent*)o;
+		return c->Active() && c->Parent()->active && gameManager.SelectorFunction()(c->Parent());
+	});
+	return Collections::RICVec<CameraComponent*,Object*>(tmp);
 }

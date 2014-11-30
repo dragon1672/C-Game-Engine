@@ -73,24 +73,36 @@ void GameObjectManager::update() {
 	for (uint i = 0; i < entities.size(); i++) { if(entities[i].active && (!selectorFunction || selectorFunction && selectorFunction(&entities[i]))) entities[i].lateUpdate();  }
 }
 
-void GameObjectManager::paint() {
-	CameraComponent * current = camManager.ActiveCam();
-	if(current == nullptr) {
+void GameObjectManager::paint(std::function<void(int startX,int startY,int width,int height)> setViewPort) {
+	auto cams = camManager.getAllActiveCams();
+	if(cams.size() == 0) {
 		printer.LogError("No camera in scene");
 		return;
 	}
-	glClearColor(.1f,.1f,.1f,1);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	for (uint CamIndex = 0; CamIndex < cams.size(); CamIndex++)
+	{
+		CameraComponent * activeCam = cams[CamIndex];
+		{
+			float * t = &activeCam->clearColor[0]; //so I don't have to write out full thing 3 times
+			glClearColor(t[0],t[1],t[2],1);
+		}
+		Dims tmp = activeCam->getDimsAsPixels();
+		setViewPort((int)tmp.Start().x,(int)tmp.Start().y,(int)tmp.End().x,(int)tmp.End().y);
+		glScissor((int)tmp.Start().x,(int)tmp.Start().y,(int)tmp.End().x,(int)tmp.End().y);
+		glEnable(GL_SCISSOR_TEST);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glDisable(GL_SCISSOR_TEST);
 
-	for (uint i = 0; i < entities.size(); i++) {
-		Entity& currentEntity = entities[i];
-		if(currentEntity.active && (!selectorFunction || selectorFunction && selectorFunction(&currentEntity))) {
-			auto renderables = currentEntity.getComponents<RenderableComponent>();
-			for (RenderableComponent * renderable : renderables) {
-				if(renderable != nullptr && renderable->visable && renderable->isValid()) {
-					passStandardUniforms(renderable);
-					renderable->drawWarmup();
-					renderable->Geo()->paint();
+		for (uint i = 0; i < entities.size(); i++) {
+			Entity& currentEntity = entities[i];
+			if(currentEntity.active && (!selectorFunction || selectorFunction && selectorFunction(&currentEntity))) {
+				auto renderables = currentEntity.getComponents<RenderableComponent>();
+				for (RenderableComponent * renderable : renderables) {
+					if(renderable != nullptr && renderable->visable && renderable->isValid()) {
+						passStandardUniforms(renderable, activeCam);
+						renderable->drawWarmup();
+						renderable->Geo()->paint();
+					}
 				}
 			}
 		}
@@ -123,24 +135,19 @@ Entity * GameObjectManager::AddEntity(std::string name)
 	return ret;
 }
 
-void GameObjectManager::passStandardUniforms(RenderableComponent * renderable)
+void GameObjectManager::passStandardUniforms(RenderableComponent * renderable, CameraComponent * cam)
 {
-	if(camManager.ActiveCam() == nullptr) {
-		printErr(100) "No cam in scene";
-		return;
-	}
-	camManager.ActiveCam()->Width(width);
-	camManager.ActiveCam()->Height(height);
+	cam->getDims()->MasterDims((float)width,(float)height);
 	ShaderProgram * prog = renderable->Shader();
 	prog->useProgram();
 	auto model2World = renderable->Parent()->getWorldTransform();
-	auto world2cam = camManager.ActiveCam()->getWorld2View();
+	auto world2cam = cam->getWorld2View();
 	auto model2cam = world2cam * model2World;
-	auto MVP = camManager.ActiveCam()->getPerspective() * model2cam;
+	auto MVP = cam->getPerspective() * model2cam;
 	prog->passUniform("model2WorldTransform",model2World);
 	prog->passUniform("world2Cam",world2cam);
 	prog->passUniform("model2Cam",model2cam);
-	prog->passUniform("perspective",camManager.ActiveCam()->getPerspective());
+	prog->passUniform("perspective",cam->getPerspective());
 	prog->passUniform("MVP",MVP);
 }
 

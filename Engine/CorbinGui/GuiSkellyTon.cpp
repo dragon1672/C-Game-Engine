@@ -188,10 +188,13 @@ void GuiSkellyTon::initBar()
 	connect(action, &QAction::triggered, [this](){
 		this->game->currentEntity.addComponent<RenderableComponent>();
 	});
-	//addComponentBar->addAction(action = new QAction("Collider Component", this));		connect(action, &QAction::triggered, [this](){ printer.LogMessage("Add Collider Clicked"); });
 	addComponentBar->addAction(action = new QAction("Script Component", this));
 	connect(action, &QAction::triggered, [this](){
 		this->game->currentEntity.addComponent<ScriptComponent>();
+	});
+	addComponentBar->addAction(action = new QAction("Camera Component", this));
+	connect(action, &QAction::triggered, [this](){
+		this->game->currentEntity.addComponent<CameraComponent>();
 	});
 #pragma endregion
 
@@ -227,7 +230,7 @@ void GuiSkellyTon::ToggleGameStartStop()
 			PlayResumeGameAction->setEnabled(true);
 			PlayResumeGameAction->setText("Pause");
 
-			camManager.ActiveCam(nullptr);
+			//camManager.ActiveCam(nullptr);
 			
 			tempStreamForGamePlay = Stream();
 			SaveToStream(tempStreamForGamePlay);

@@ -118,6 +118,7 @@
     <ClInclude Include="Engine\IO\ObjConverter.h" />
     <ClInclude Include="Engine\Tools\Console.h" />
     <ClInclude Include="Engine\Systems\Events\Events\GameEvents.h" />
+    <ClInclude Include="Engine\Tools\Dims.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />

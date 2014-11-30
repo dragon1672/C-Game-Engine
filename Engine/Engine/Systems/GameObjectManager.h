@@ -85,7 +85,7 @@ public:
 	bool start(); // called when scene is loaded (use for setting variable starting values)
 	bool shutdown();
 	void update();
-	void paint();
+	void paint(std::function<void(int startX,int startY,int width,int height)> setViewPort);
 	bool Valid();
 	std::vector<std::string> getErrors();
 	std::vector<Entity *> getAllEntities();
@@ -96,6 +96,6 @@ public:
 	virtual void Load(Stream&s);
 
 private:
-	void passStandardUniforms(RenderableComponent * renderable);
+	void passStandardUniforms(RenderableComponent * renderable, CameraComponent * cam);
 
 };

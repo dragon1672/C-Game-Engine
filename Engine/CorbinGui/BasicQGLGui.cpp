@@ -39,12 +39,14 @@ void BasicQGLGui::update()
 
 void BasicQGLGui::resizeGL(int w, int h)
 {
-	glViewport(0, 0, w, h);
+	//glViewport(0, 0, w, h);
 	meGame.width = w;
 	meGame.height = h;
 }
 
 void BasicQGLGui::paintGL()
 {
-	meGame.paint();
+	meGame.paint([this](int startX,int startY,int width,int height) {
+		glViewport(startX,startY,width,height);
+	});
 }

@@ -42,7 +42,7 @@ RenderableComponent* Entity::addComponent()
 template<>
 CameraComponent* Entity::addComponent()
 {
-	return (CameraComponent*)addComponent(camManager.getNewCam("newCam"));
+	return (CameraComponent*)addComponent(new CameraComponent());
 }
 
 void Entity::removeComponent(Component * toKill) {

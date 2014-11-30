@@ -11,16 +11,13 @@
 
 class ENGINE_SHARED CameraManager {
 	ObjectManager allCams;
-	CameraComponent * activeCam;
 	friend CameraComponent;
 	DEFINE_SINGLETON(CameraManager);
 public:
 	CameraManager();
-	CameraComponent * ActiveCam();
-	void ActiveCam(CameraComponent * val);
-	CameraComponent * getNewCam(const char * name);
 	CameraComponent * getCam(int index);
 	CameraComponent * getCam(const char * name);
 	void removeCam(CameraComponent * c);
 	std::vector<CameraComponent *> getAllCamMatches(const char * name);
+	std::vector<CameraComponent *> getAllActiveCams();
 };

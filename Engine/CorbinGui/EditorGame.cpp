@@ -67,9 +67,9 @@ void EditorGame::update()
 	gameManager.height = height;
 }
 
-void EditorGame::paint()
+void EditorGame::paint(std::function<void(int startX,int startY,int width,int height)> setViewPort)
 {
-	gameManager.paint();
+	gameManager.paint(setViewPort);
 }
 
 EditorGame::~EditorGame()
@@ -105,7 +105,7 @@ void EditorGame::destoryEditorObjects()
 void EditorGame::activateEditorObjects()
 {
 	gameManager.SelectorFunction(isEditorObject);
-	camManager.ActiveCam(EditorCamera->getComponent<CameraComponent>());
+	//camManager.ActiveCam(EditorCamera->getComponent<CameraComponent>());
 	for(auto e : editorObjects) {
 		((Entity*)e)->active = true;
 	}
@@ -114,7 +114,6 @@ void EditorGame::activateEditorObjects()
 void EditorGame::deactiveEditorObjects()
 {
 	gameManager.SelectorFunction(isGameObject);
-	camManager.ActiveCam(nullptr);
 	for(auto e : editorObjects) {
 		((Entity*)e)->active = false;
 	}

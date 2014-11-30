@@ -115,21 +115,27 @@ class QTVecEditor : public SingleComponentEditor {
 			char letter = names[clamp(i,0,names.length()-1)];
 			QString name = QString(letter);
 			layout->addWidget(new QLabel(name+": "));	layout->addWidget(editors[i]);
-			connect(editors[i],&QLineEdit::textEdited,[&,this,i](const QString &newGuy){ this->vec[i] = (float)(newGuy.toDouble()); });
-		}
-	}
-	void updateFromModel() {
-		for(uint i=0;i<size;i++) {
-			if(editors[i]->text().toDouble() != vec[i]) {
-				editors[i]->setText(QString::number(vec[i]));
-			}
+			connect(editors[i],&QLineEdit::textEdited,[&,this,i](const QString &newGuy){
+				if(updatedFromGUICallBack) updatedFromGUICallBack(vec[i],newGuy.toDouble(),i);
+				this->vec[i] = (float)(newGuy.toDouble());
+			});
 		}
 	}
 public:
+	std::function<void(QLineEdit*editor,double old, double n, int index)> updatedFromModelCallBack;
+	std::function<void(double old, double n, int index)> updatedFromGUICallBack;
 	QTVecEditor(float * data,QString title = "", std::string names = "xyzw?") {
 		static_assert(size > 0,"Vector must be larger than 0");
 		vec = data;
 		init(title,names);
+	}
+	void updateFromModel() {
+		for(uint i=0;i<size;i++) {
+			if(editors[i]->text().toDouble() != vec[i]) {
+				if(updatedFromModelCallBack) updatedFromModelCallBack(editors[i],vec[i],editors[i]->text().toDouble(),i);
+				editors[i]->setText(QString::number(vec[i]));
+			}
+		}
 	}
 };
 
@@ -415,9 +421,11 @@ class CamEditor : public SingleComponentEditor {
 	QLineEdit * nearPlane;
 	QLineEdit * farPlane; //textEdited
 	QDoubleValidator validator;
+	QTVecEditor<2> * startBounds, * endBounds;
+	QTVecEditor<3> * clearColor;
 public:
 	CamEditor(CameraComponent * script) {
-		setMinimumSize(300,200);
+		setMinimumSize(300,300);
 		setWindowTitle("Camera Component");
 		this->script = script;
 		QVBoxLayout * layout = new QVBoxLayout();
@@ -433,9 +441,24 @@ public:
 		farPlane = new QLineEdit();	farPlane->setValidator(&validator);
 		layout->addWidget(new QLabel("Far Plane: "));	layout->addWidget(farPlane);
 		connect(farPlane,&QLineEdit::textEdited,[=](const QString &newGuy){ script->FarPlane((float)(newGuy.toDouble())); });
+
+		layout->addWidget(startBounds = new QTVecEditor<2>(&script->getDims()->ref_start()[0],"Offset"));
+		startBounds->updatedFromGUICallBack = [script](double old, double n, int index){
+			script->getDims()->setChanged();
+		};
+		layout->addWidget(endBounds = new QTVecEditor<2>(&script->getDims()->ref_end()[0],"WidthAndHeight","WH?"));
+		endBounds->updatedFromGUICallBack = [script](double old, double n, int index){
+			script->getDims()->setChanged();
+		};
+		layout->addWidget(clearColor = new QTVecEditor<3>(&script->clearColor[0],"Clear Color"));
 	}
 	void updateFromModel() {
 		admin->update();
+		if(nearPlane->text().toDouble() != script->NearPlane()) nearPlane->setText(QString::number(script->NearPlane()));
+		if(farPlane ->text().toDouble() != script->FarPlane())  farPlane ->setText(QString::number(script->FarPlane()) );
+		startBounds->updateFromModel();
+		endBounds->updateFromModel();
+		clearColor->updateFromModel();
 	}
 };
 

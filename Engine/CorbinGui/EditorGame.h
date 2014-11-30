@@ -59,7 +59,7 @@ public:
 	void initGl();
 	void start();
 	void update();
-	void paint();
+	void paint(std::function<void(int startX,int startY,int width,int height)> setViewPort);
 	void AddEntity(std::string name);
 	void RemoveCurrentEntity();
 
