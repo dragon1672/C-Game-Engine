@@ -9,8 +9,8 @@ class ObjectManagerPrivates;
 class ENGINE_SHARED ObjectManager {
 private:
 	ObjectManagerPrivates * privates;
-	void removeName(std::string name, Object * ptr);
-	void removeId(double id);
+	bool removeName(std::string name, Object * ptr);
+	bool removeId(double id);
 	void addName(std::string name, Object * ptr);
 	void addId(double id, Object * ptr);
 public:

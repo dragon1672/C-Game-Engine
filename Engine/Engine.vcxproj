@@ -158,6 +158,7 @@
     <ClInclude Include="Engine\Systems\Events\Events\EntityParentChangedEvent.h" />
     <ClInclude Include="Engine\Systems\Events\Events\GameEvents.h" />
     <ClInclude Include="Engine\Systems\Events\Events\ObjectChangedNameEvent.h" />
+    <ClInclude Include="Engine\Systems\Events\Events\ObjectChangeIDEvent.h" />
     <ClInclude Include="Engine\Systems\Events\Events\ResourceLoadedEvent.h" />
     <ClInclude Include="Engine\Systems\InputManager.h" />
     <ClInclude Include="Engine\Systems\Resources\Material.h" />

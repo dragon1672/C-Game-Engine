@@ -8,9 +8,11 @@
 
 #include <Engine/Systems/Events/EventManager.h>
 #include <Engine/Systems/Events/Events/ObjectChangedNameEvent.h>
+#include <Engine/Systems/Events/Events/ObjectChangeIDEvent.h>
 #include <Engine/Systems/Events/Events/EntityRemovedEvent.h>
 #include <Engine/Defines/SafeNewAndDelete.h>
 #include <Engine/Entity/Entity.h>
+#include <Engine/Defines/Vectors.h>
 
 
 class ObjectManagerPrivates {
@@ -29,10 +31,19 @@ ObjectManager::ObjectManager() : privates(nullptr)
 	SAFE_NEW(privates,ObjectManagerPrivates());
 	eventManager.Subscribe<ObjectChangedNameEvent>([this](EventData*d,Object*o){
 		if(o==nullptr) return;
-		if(!privates->ContainsId(o)) return;
 		ObjectChangedNameEvent * data = (ObjectChangedNameEvent*)d;
-		removeName(data->oldName,o);
-		addName(data->newName,o);
+		if(!privates->Contains(data->oldName)) return;
+		if(removeName(data->oldName,o)) {
+			addName(data->newName,o);
+		}
+	});
+	eventManager.Subscribe<ObjectChangeIDEvent>([this](EventData*d,Object*o){
+		if(o==nullptr) return;
+		ObjectChangeIDEvent * data = (ObjectChangeIDEvent*)d;
+		if(!privates->Contains(data->old)) return;
+		if(removeId(data->old)) {
+			addId(data->n,o);
+		}
 	});
 	eventManager.Subscribe<EntityRemovedEvent>([this](EventData*d,Object*o){
 		EntityRemovedEvent * data = (EntityRemovedEvent*)d;
@@ -107,27 +118,28 @@ bool ObjectManager::Contains(Object *o)
 	return privates->ContainsId(o);
 }
 
-void ObjectManager::removeId(double id)
+bool ObjectManager::removeId(double id)
 {
-	if(privates->Contains(id))
+	if(privates->Contains(id)) {
 		privates->idMap.erase(id);
+		return true;
+	}
+	return false;
 }
 
-void ObjectManager::removeName(std::string name, Object * ptr)
+bool ObjectManager::removeName(std::string name, Object * ptr)
 {
 	if(!privates->Contains(name))// not in map
-		return;
+		return false;
 
 	auto& data = privates->nameMap[name];
-	for (unsigned int i = 0; i < data.size(); i++) { // loop through matches to remove
-		if(data[i] == ptr) {
-			data.erase(data.begin() + i);
-			i--;
-		}
-	}
+	int oldSize = data.size();
+	VECTOR_REMOVE_CONDITION(data, == ptr);
+	int newSize = data.size();
 	if(data.size() <= 0) {
 		privates->nameMap.erase(name);
 	}
+	return oldSize != newSize; // return if something got removed
 }
 
 void ObjectManager::addName(std::string name, Object * ptr)

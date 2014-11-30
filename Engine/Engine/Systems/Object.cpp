@@ -1,7 +1,10 @@
 #include "Object.h"
+#include <Engine/IO/Stream.h>
+
 #include <Engine/Systems/Events/EventManager.h>
 #include <Engine/Systems/Events/Events/ObjectChangedNameEvent.h>
-#include <Engine/IO/Stream.h>
+#include <Engine/Systems/Events/Events/ObjectChangeIDEvent.h>
+
 
 namespace {
 	union GUIDBinder {
@@ -71,11 +74,17 @@ double Object::GUID2Double(const GUID& guid)
 void Object::ObjectSave(Stream& os)
 {
 	os << id << name;
+	
 }
 
 void Object::ObjectLoad(Stream& os)
 {
+	double tmpID = getID();
+	std::string tmpName = name;
 	os >> id >> name;
+	if(tmpID   != getID())
+		emitEvent(new ObjectChangeIDEvent   ( this, tmpID,   getID(), true));
+	if(tmpName != name   ) emitEvent(new ObjectChangedNameEvent( this, tmpName, name,    true));
 }
 
 void Object::generateNewIdForObject(Object * obj)
