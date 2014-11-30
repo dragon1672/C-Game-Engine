@@ -218,6 +218,9 @@ void GuiSkellyTon::initBar()
 
 void GuiSkellyTon::ToggleGameStartStop()
 {
+	static bool working;
+	if(working) return;
+	working = true;
 	if(myState == EditorStates::Editor) { // start!
 		if(gameManager.Valid()) {
 			myState = EditorStates::PlayingGame;
@@ -260,6 +263,7 @@ void GuiSkellyTon::ToggleGameStartStop()
 		
 		game->start();
 	}
+	working = false;
 }
 
 void GuiSkellyTon::ToggleGamePauseResume()
