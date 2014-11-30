@@ -3,21 +3,19 @@
 #include <Engine/Entity/Component.h>
 #include <ExportHeader.h>
 #include <vector>
+#include <Engine/Systems/Events/EventManager.h>
 
 
 class RenderableComponent;
 class ENGINE_SHARED MAKE_COMPONENT_CLASS(EditorMasterSyncer) {
 	Entity * toSyncWith;
 	std::vector<RenderableComponent*> myRenderables;
+	EventManager::EventHandle SyncRemoveHandle;
 public:
 	EditorMasterSyncer();
-	void init(Entity * that) {
-		toSyncWith = that;
-	}
-	void shutdown() {
-		toSyncWith = nullptr;
-		myRenderables.clear();
-	}
+	~EditorMasterSyncer();
+	void init(Entity * that);
+	void shutdown();
 	void lateUpdate();
 	virtual void ChildSave(Stream& s)
 	{

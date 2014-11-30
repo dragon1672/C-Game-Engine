@@ -40,10 +40,26 @@ void EditorMasterSyncer::syncRens(RenderableComponent * gameRen, RenderableCompo
 
 EditorMasterSyncer::EditorMasterSyncer() : toSyncWith(nullptr)
 {
-	eventManager.Subscribe<EntityRemovedEvent>([this](EventData*d,Object*) {
+	SyncRemoveHandle = eventManager.Subscribe<EntityRemovedEvent>([this](EventData*d,Object*) {
 		EntityRemovedEvent * data = (EntityRemovedEvent*)d;
 		if(data->entity == toSyncWith) {
 			gameManager.RemoveEntity(this->Parent());
 		}
 	});
+}
+
+EditorMasterSyncer::~EditorMasterSyncer()
+{
+	eventManager.RemoveEvent(SyncRemoveHandle);
+}
+
+void EditorMasterSyncer::init(Entity * that)
+{
+	toSyncWith = that;
+}
+
+void EditorMasterSyncer::shutdown()
+{
+	toSyncWith = nullptr;
+	myRenderables.clear();
 }
