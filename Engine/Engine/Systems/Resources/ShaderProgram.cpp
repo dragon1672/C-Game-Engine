@@ -3,7 +3,6 @@
 #include <fstream>
 #pragma warning(disable: 4127)
 #pragma warning(push)
-#include <QtCore\QDebug>
 #include <QtCore/QFile>
 #include <QtGui/QImage>
 #include <QtCore/QCoreApplication>
@@ -13,6 +12,7 @@
 #include <Engine\Systems\Resources\TextureInfo.h>
 #include <Engine/Systems/Resources/Shaders/ShaderPreProcessor.h>
 #include <Engine/IO/Stream.h>
+#include <Engine/Tools/Printer.h>
 
 
 GLuint ShaderProgram::currentProgram;
@@ -38,14 +38,14 @@ bool ShaderProgram::compileShader(CodeBlock& block)
 {
 	bool isValid;
 	uint id = glCreateShader(block.type);
-	qDebug() << "Shader Load Successful ID: " << id;
+	printMsg(10) "Shader Load Successful ID: ", id;
 	std::string code = ShaderPreProcessor::processGLSL(block.code);
 	isValid = complileShader(code.c_str(),id,true);
 	if(isValid) {
 		glAttachShader(programID,id);
-		qDebug() << "File(" << id << ") Compile Successful ProgramID: " << programID << "\n";
+		printMsg(10) "File(", id, ") Compile Successful ProgramID:", programID,"\n";
 	} else {
-		qDebug() << "File(" << id << ") Failed to Compile - NOT ADDED TO PROGRAM\n";
+		printErr(100) "File(",id,") Failed to Compile - NOT ADDED TO PROGRAM\n";
 		assert(false);
 	}
 	return isValid;
@@ -138,7 +138,6 @@ bool ShaderProgram::complileShader(const char * code, GLuint id, bool debug) {
 	codeAdapt[0] = code;
 	glShaderSource(id,1,codeAdapt,0);
 	
-	//qDebug() << "Compiling Shader " << id;
 	glCompileShader(id);
 	
 
@@ -151,7 +150,7 @@ bool ShaderProgram::complileShader(const char * code, GLuint id, bool debug) {
 			char * buffer = new char[logLength];
 			GLsizei someRandom;
 			glGetShaderInfoLog(id,logLength,&someRandom,buffer);
-			qDebug() << buffer;
+			printMsg(100) buffer;
 			delete [] buffer;
 
 			valid = false;
@@ -161,7 +160,7 @@ bool ShaderProgram::complileShader(const char * code, GLuint id, bool debug) {
 }
 
 void ShaderProgram::link() {
-	qDebug() << "Linking Program ID: " << programID;
+	printMsg(10) "Linking Program ID: ", programID;
 	glLinkProgram(programID);
 }
 
@@ -176,7 +175,6 @@ bool ShaderProgram::isCurrentProgram() {
 }
 void ShaderProgram::useProgram() {
 	if(!isCurrentProgram()) {
-		//qDebug() << "Registering Shader Program  from " << currentProgram << " to " << programID << " into pipeline";
 		currentProgram = programID;
 		glUseProgram(programID);
 	}
@@ -191,7 +189,7 @@ GLuint ShaderProgram::linkAndRun() {
 void ShaderProgram::PassDownToHardWare()
 {
 	programID = glCreateProgram();
-	qDebug() << "Creating Shader Program ID: " << programID;
+	printMsg(10) "Creating Shader Program ID: ", programID;
 	//compile and link :D
 	for (uint i = 0; i < files.size(); i++)
 	{
