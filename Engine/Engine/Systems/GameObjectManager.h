@@ -26,8 +26,6 @@ class ENGINE_SHARED GameObjectManager : public Object, public StreamableObject {
 	ConstVector<Entity> entities;
 	ObjectManager EntityManager;
 
-	std::unordered_set<int> deletedEntities;
-
 	std::function<bool(Entity*)> selectorFunction;
 	std::function<bool(Component*)> componentSelectorFunction;
 

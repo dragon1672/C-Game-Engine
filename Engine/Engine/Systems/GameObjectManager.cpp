@@ -112,18 +112,8 @@ void GameObjectManager::paint(std::function<void(int startX,int startY,int width
 
 Entity * GameObjectManager::getNewEntity(std::string name) {
 	Entity * ret = nullptr;
-	for (auto itr = deletedEntities.begin(); ret == nullptr && itr != deletedEntities.end();) {
-		int e = *itr;
-		itr++;
-		deletedEntities.erase(e);
-		if((unsigned)e >= entities.size()) continue;
-		entities[e] = Entity(name,this);
-		ret = &entities[e];
-	}
-	if(ret == nullptr) {
-		entities.add(Entity(name,this));
-		ret = &entities.back();
-	}
+	entities.add(Entity(name,this));
+	ret = &entities.back();
 	return ret;
 }
 
@@ -237,7 +227,6 @@ void GameObjectManager::Load(Stream&s)
 	}
 	entities.clear();
 	s >> entities;
-	deletedEntities.clear();
 	EntityManager.ClearAll();
 	EntityManager.Register(Collections::Select<Entity,Object*>(entities,[](Entity&e){ return &e; }));
 	for (uint i = 0; i < entities.size(); i++) {
@@ -315,9 +304,7 @@ std::vector<Entity *> GameObjectManager::getAllEntities()
 {
 	std::vector<Entity *> ret;
 	for (uint i = 0; i < entities.size(); i++) {
-		if(deletedEntities.find(i) == deletedEntities.end()) {
-			ret.push_back(&entities[i]);
-		}
+		ret.push_back(&entities[i]);
 	}
 	return ret;
 }
