@@ -50,6 +50,7 @@ namespace FileIO {
 	ENGINE_SHARED fileByte * readLine(fileByte * currentPos, uint& sizeLeft, std::string& out);
 	ENGINE_SHARED int lineCount(fileByte * file, uint size);
 
+#pragma region Unwrapped Forloops
 	template<typename T>
 	void myMemCopy(T * from, T * to, uint size) {
 		int n = (size + 30) / 31;
@@ -89,4 +90,47 @@ namespace FileIO {
 			} while(--n > 0);
 		}
 	}
+	template<typename T>
+	bool equalBits(T * aData, T * bData, uint size) {
+		int n = (size + 30) / 31;
+		int a,b;
+		a = b = 0;
+		switch(size % 31) {
+		case 0:
+			do {    	if(bData[b] != aData[a]) { return false; }
+		case 30:		if(bData[b] != aData[a]) { return false; }
+		case 29:		if(bData[b] != aData[a]) { return false; }
+		case 28:		if(bData[b] != aData[a]) { return false; }
+		case 27:		if(bData[b] != aData[a]) { return false; }
+		case 26:		if(bData[b] != aData[a]) { return false; }
+		case 25:		if(bData[b] != aData[a]) { return false; }
+		case 24:		if(bData[b] != aData[a]) { return false; }
+		case 23:		if(bData[b] != aData[a]) { return false; }
+		case 22:		if(bData[b] != aData[a]) { return false; }
+		case 21:		if(bData[b] != aData[a]) { return false; }
+		case 20:		if(bData[b] != aData[a]) { return false; }
+		case 19:		if(bData[b] != aData[a]) { return false; }
+		case 18:		if(bData[b] != aData[a]) { return false; }
+		case 17:		if(bData[b] != aData[a]) { return false; }
+		case 16:		if(bData[b] != aData[a]) { return false; }
+		case 15:		if(bData[b] != aData[a]) { return false; }
+		case 14:		if(bData[b] != aData[a]) { return false; }
+		case 13:		if(bData[b] != aData[a]) { return false; }
+		case 12:		if(bData[b] != aData[a]) { return false; }
+		case 11:		if(bData[b] != aData[a]) { return false; }
+		case 10:		if(bData[b] != aData[a]) { return false; }
+		case 9: 		if(bData[b] != aData[a]) { return false; }
+		case 8: 		if(bData[b] != aData[a]) { return false; }
+		case 7: 		if(bData[b] != aData[a]) { return false; }
+		case 6: 		if(bData[b] != aData[a]) { return false; }
+		case 5: 		if(bData[b] != aData[a]) { return false; }
+		case 4: 		if(bData[b] != aData[a]) { return false; }
+		case 3: 		if(bData[b] != aData[a]) { return false; }
+		case 2: 		if(bData[b] != aData[a]) { return false; }
+		case 1: 		if(bData[b] != aData[a]) { return false; }
+			} while(--n > 0);
+		}
+		return true;
+	}
+#pragma endregion
 }
