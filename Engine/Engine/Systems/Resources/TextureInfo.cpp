@@ -37,30 +37,26 @@ std::vector<std::string> TextureInfo::getErrors()
 
 void TextureInfo::shutdown()
 {
-	type = (GLenum)GL_RGBA;
-	type2 = (GLenum)-1;
-	slotID = (uint)-1;
-	bufferID = (uint)-1;
 	SAFE_DELETE(data);
+	if((int)bufferID < 0) glDeleteTextures(1,&bufferID);
 }
 
 void TextureInfo::ChildSave(Stream& s)
 {
-	s << width << height << numOfBytes;
-	SAFE_NEW(data,ubyte[numOfBytes]);
+	s << width << height << numOfBytes << type << type2;
 	s.append(data,numOfBytes);
 }
 
 void TextureInfo::ChildLoad(Stream& s)
 {
-	s >> width >> height >> numOfBytes;
+	s >> width >> height >> numOfBytes >> type >> type2;
 	SAFE_NEW(data,ubyte[numOfBytes]);
 	s.readAndMoveForwardArray(data,numOfBytes);
 }
 
 void TextureInfo::resetAll()
 {
-	NumTextures = 0;
+	//NumTextures = 0;
 }
 
 bool TextureInfo::equals(TextureInfo& that) const
