@@ -68,7 +68,7 @@ public:
 
 	virtual void Load(Stream&s)
 	{
-		s << hasChanged << percent << start << end << masterDims;
+		s >> hasChanged >> percent >> start >> end >> masterDims;
 		hasChanged = true;
 	}
 

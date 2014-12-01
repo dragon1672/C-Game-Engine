@@ -93,12 +93,12 @@ std::vector<std::string> CameraComponent::getErrors()
 
 void CameraComponent::ChildSave(Stream& s)
 {
-	s << nearPlane << farPlane << dims << active; // also save priority
+	s << nearPlane << farPlane << dims << active << clearColor; // also save priority
 }
 
 void CameraComponent::ChildLoad(Stream& s)
 {
-	s >> nearPlane >> farPlane >> dims >> active;
+	s >> nearPlane >> farPlane >> dims >> active >> clearColor;
 	perspectiveNeedsUpdate = true;
 }
 
