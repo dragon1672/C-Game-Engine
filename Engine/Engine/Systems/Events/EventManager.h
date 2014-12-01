@@ -9,7 +9,7 @@
 #include <map>
 
 #define eventManager EventManager::getInstance()
-#define emitEvent(data) eventManager.fire(data,this)
+#define emitEvent(data) eventManager.fire(data)
 #define emitTimedEvent(data,time) eventManager.fire(data,this,time)
 
 class ENGINE_SHARED EventManager {
@@ -59,8 +59,8 @@ public:
 	void Enable();
 	void update(float dt);
 
-	void fire(EventData * data, Object * sender, std::function<void(EventData*)> destructor=[](EventData*e){delete e;}, float inNumSeconds = 0);
-	void fire(EventData&  data, Object * sender, float inNumSeconds = 0);
+	void fire(EventData * data, Object * sender = nullptr, std::function<void(EventData*)> destructor=[](EventData*e){delete e;}, float inNumSeconds = 0);
+	void fire(EventData&  data, Object * sender = nullptr, float inNumSeconds = 0);
 	
 	template <typename T> EventHandle Subscribe(std::function<void(EventData*,Object*)> function) { return Subscribe(typeid(T).name(),function); }
 	void RemoveEvent(EventHandle*handle);

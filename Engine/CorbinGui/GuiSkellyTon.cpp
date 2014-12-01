@@ -287,14 +287,14 @@ void GuiSkellyTon::LoadFromFile(Stream& s, bool backup, bool resources)
 	if(backup) backupStream = ExportToStream(resources);
 	try {
 		if(resources) {
-			resourceManager.ObjectLoad(s);
+			resourceManager.Load(s);
 		}
 		s >> gameManager;
 	} catch(...) {
 		printErr(100) "error","corrupt file";
 		if(backup) {
 			if(resources) {
-				resourceManager.ObjectLoad(backupStream);
+				resourceManager.Load(backupStream);
 			}
 			backupStream >> gameManager;
 		}
@@ -307,7 +307,7 @@ void GuiSkellyTon::SaveToStream(Stream& s, bool resources)
 {
 	game->destoryEditorObjects();
 	if(resources) {
-		resourceManager.ObjectSave(s);
+		resourceManager.Save(s);
 	}
 	s << gameManager;
 }

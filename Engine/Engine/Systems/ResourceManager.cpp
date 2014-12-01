@@ -202,16 +202,6 @@ Mesh * ResourceManager::getDefault()
 	return addMesh("Meshy");
 }
 
-bool ResourceManager::isValid()
-{
-	return true;
-}
-
-std::vector<std::string> ResourceManager::getErrors()
-{
-	return std::vector<std::string>();
-}
-
 void ResourceManager::shutdown()
 {
 	defaultShader = nullptr;
@@ -272,7 +262,7 @@ ShaderProgram * ResourceManager::duplicate(ShaderProgram * toDup)
 	for (uint i = 0; i < resource_array_name##.size();  i++) resource_array_name##[i].ObjectSave(s); \
 }	1==1
 
-void ResourceManager::ChildSave(Stream& s)
+void ResourceManager::Save(Stream& s)
 {
 	SAVE_RESOURCE(shaders);
 	SAVE_RESOURCE(geos);
@@ -293,7 +283,7 @@ void ResourceManager::ChildSave(Stream& s)
 	}								   \
 } 1==1
 
-void ResourceManager::ChildLoad(Stream& s)
+void ResourceManager::Load(Stream& s)
 {
 	shutdown();
 	ImportPack(s);

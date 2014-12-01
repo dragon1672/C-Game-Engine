@@ -14,7 +14,7 @@
 
 #define resourceManager ResourceManager::getInstance()
 
-class ENGINE_SHARED ResourceManager : public Resource {
+class ENGINE_SHARED ResourceManager : StreamableObject {
 	DEFINE_SINGLETON(ResourceManager);
 private:
 	ObjectManager ShaderProgramObjs;		ConstVector<ShaderProgram> shaders;
@@ -89,14 +89,11 @@ public:
 
 	void update();
 
-	virtual bool isValid();
-
-	virtual std::vector<std::string> getErrors();
 	void shutdown();
 
-	virtual void ChildSave(Stream& s);
+	virtual void Save(Stream& s);
 
-	virtual void ChildLoad(Stream& s);
+	virtual void Load(Stream& s);
 	void ImportPack(Stream& s);
 
 };
