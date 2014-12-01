@@ -204,7 +204,7 @@ void ShaderProgram::update()
 }
 
 ShaderProgram::ShaderProgram(std::string name)
-	: Resource(name) { }
+	: Resource_CRTP(name) { }
 
 bool ShaderProgram::isValid()
 {
@@ -240,12 +240,6 @@ bool ShaderProgram::equals(ShaderProgram& that) const
 		if(!currentFile) return false;
 	}
 	return true;
-}
-
-bool ShaderProgram::equals(ShaderProgram * that) const
-{
-	if(this == that) return true;
-	return equals(*that);
 }
 
 void ShaderProgram::shutdown()

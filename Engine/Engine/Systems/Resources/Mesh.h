@@ -10,7 +10,7 @@
 
 class MatrixInfo;
 
-class ENGINE_SHARED Mesh : public Resource {
+class ENGINE_SHARED MAKE_RESOURCE_CLASS(Mesh) {
 	GeometryInfo geo;
 	glm::vec3 min;
 	glm::vec3 max;
@@ -53,5 +53,7 @@ public:
 	virtual void ChildLoad(Stream& s);
 
 	virtual void shutdown();
+
+	bool equals(Mesh& that) const {return false;}
 
 };

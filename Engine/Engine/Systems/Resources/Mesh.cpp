@@ -186,7 +186,7 @@ void Mesh::PassDownToHardWare()
 }
 
 Mesh::Mesh(std::string name)
-	: Resource(name), inHardware(false)
+	: Resource_CRTP(name), inHardware(false)
 {
 	drawStyle = GL_TRIANGLES;
 }

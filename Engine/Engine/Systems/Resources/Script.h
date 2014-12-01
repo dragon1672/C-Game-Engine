@@ -7,7 +7,7 @@
 
 
 class ScriptPrivates;
-class ENGINE_SHARED	Script : public Resource {
+class ENGINE_SHARED	MAKE_RESOURCE_CLASS(Script) {
 	ScriptPrivates * privates;
 	std::string getUniqueName();
 	std::string src;
@@ -38,5 +38,7 @@ public:
 	virtual void ChildSave(Stream& s);
 
 	virtual void ChildLoad(Stream& s);
+
+	bool equals(Script& that) const {return false;}
 
 };

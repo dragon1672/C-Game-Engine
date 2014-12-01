@@ -7,7 +7,7 @@
 
 class QImage;
 
-class ENGINE_SHARED TextureInfo : public Resource {
+class ENGINE_SHARED MAKE_RESOURCE_CLASS(TextureInfo) {
 private:
 	static int NumTextures;
 public:
@@ -35,5 +35,7 @@ public:
 	virtual void ChildSave(Stream& s);
 
 	virtual void ChildLoad(Stream& s);
+
+	bool equals(TextureInfo& that) const {return false;}
 
 };

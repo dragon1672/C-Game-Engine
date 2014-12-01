@@ -15,7 +15,7 @@
 #include <Engine\Systems\Resource.h>
 #include <Engine\Systems\Resources\Shaders\ShaderObject.h>
 
-class ENGINE_SHARED ShaderProgram : public Resource {
+class ENGINE_SHARED MAKE_RESOURCE_CLASS(ShaderProgram) {
 private:
 	static GLuint currentProgram;
 	
@@ -98,7 +98,6 @@ public:
 
 	virtual void ChildLoad(Stream& s);
 	bool equals(ShaderProgram& that) const;
-	bool equals(ShaderProgram * that) const;
 
 	virtual void shutdown();
 

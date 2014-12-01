@@ -6,7 +6,7 @@
 
 
 
-TextureInfo::TextureInfo(std::string name) : data(nullptr), type((GLenum)GL_RGBA), type2((GLenum)-1), slotID((uint)-1), bufferID((uint)-1), Resource(name) { }
+TextureInfo::TextureInfo(std::string name) : data(nullptr), type((GLenum)GL_RGBA), type2((GLenum)-1), slotID((uint)-1), bufferID((uint)-1), Resource_CRTP(name) { }
 
 void TextureInfo::PassDownToHardWare()
 {
