@@ -147,15 +147,24 @@ TextureInfo * ResourceManager::add2DTexture(std::string name, std::string& fileP
 }
 TextureInfo * ResourceManager::add2DTexture(std::string name, ubyte * data, uint sizeofData, uint width, uint height, GLenum type, GLenum type2)
 {
-	textures.push_back(TextureInfo(name));
-	textures.back().data = new ubyte[sizeofData];
-	FileIO::myMemCopy(data,textures.back().data,sizeofData);
+	TextureInfo toAdd(name);
+	toAdd.data = new ubyte[sizeofData];
+	FileIO::myMemCopy(data,toAdd.data,sizeofData);
 
-	textures.back().width  = width;
-	textures.back().height = height;
-	textures.back().numOfBytes = sizeofData;
-	textures.back().type   = type;
-	textures.back().type2  = type2;
+	toAdd.width  = width;
+	toAdd.height = height;
+	toAdd.numOfBytes = sizeofData;
+	toAdd.type   = type;
+	toAdd.type2  = type2;
+	
+	for (uint i = 0; i < textures.size(); i++) {
+		if(textures[i].equals(toAdd)) {
+			delete toAdd.data;
+			return &textures[i];
+		}
+	}
+
+	textures.push_back(toAdd);
 	TextureInfoObjs.Register(textures.back());
 	emitEvent(new ResourceLoadedEvent(&textures.back()));
 	return &textures.back();
