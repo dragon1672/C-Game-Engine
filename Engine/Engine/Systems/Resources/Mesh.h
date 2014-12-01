@@ -54,6 +54,5 @@ public:
 
 	virtual void shutdown();
 
-	bool equals(Mesh& that) const {return false;}
-
+	bool equals(Mesh& that) const;
 };

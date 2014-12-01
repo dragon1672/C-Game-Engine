@@ -258,3 +258,13 @@ void Mesh::shutdown()
 {
 	inHardware = false;
 }
+
+bool Mesh::equals(Mesh& that) const
+{
+	if(drawStyle != that.drawStyle) return false;
+	if(verts.size() != that.verts.size()) return false;
+	if(indices.size() != that.indices.size()) return false;
+	for (uint i = 0; i < verts.size();   i++) { if(verts[i]   != that.verts[i])   return false; }
+	for (uint i = 0; i < indices.size(); i++) { if(indices[i] != that.indices[i]) return false; }
+	return true;
+}

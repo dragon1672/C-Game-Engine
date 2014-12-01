@@ -135,3 +135,8 @@ void Script::ChildLoad(Stream& s)
 {
 	s >> src;
 }
+
+bool Script::equals(Script& that) const
+{
+	return src == that.src;
+}

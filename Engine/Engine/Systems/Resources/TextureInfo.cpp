@@ -63,4 +63,12 @@ void TextureInfo::resetAll()
 	NumTextures = 0;
 }
 
+bool TextureInfo::equals(TextureInfo& that) const
+{
+	if(width      != that.width)      return false;
+	if(height     != that.height)     return false;
+	if(numOfBytes != that.numOfBytes) return false;
+	return FileIO::equalBits(data,that.data,numOfBytes);
+}
+
 int TextureInfo::NumTextures = 0;

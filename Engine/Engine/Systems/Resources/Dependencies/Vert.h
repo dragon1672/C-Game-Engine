@@ -21,5 +21,13 @@ public:
 	static int * getAtribs();
 	static int getNumOfAtribs();
 	static int stride();
-
 };
+inline bool operator==(const Vert& lhs, const Vert& rhs){
+	if(lhs.pos  != rhs.pos ) return false;
+	if(lhs.col  != rhs.col ) return false;
+	if(lhs.norm != rhs.norm) return false;
+	if(lhs.tan  != rhs.tan ) return false;
+	if(lhs.uv   != rhs.uv  ) return false;
+	return true;
+}
+inline bool operator!=(const Vert& lhs, const Vert& rhs){return !(lhs == rhs);}

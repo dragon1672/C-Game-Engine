@@ -36,6 +36,6 @@ public:
 
 	virtual void ChildLoad(Stream& s);
 
-	bool equals(TextureInfo& that) const {return false;}
+	bool equals(TextureInfo& that) const;
 
 };
