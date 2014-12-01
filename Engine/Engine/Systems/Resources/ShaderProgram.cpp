@@ -226,6 +226,28 @@ void ShaderProgram::ChildLoad(Stream& s)
 	s >> files;
 }
 
+bool ShaderProgram::equals(ShaderProgram& that) const
+{
+	for (uint i = 0; i < that.files.size(); i++)
+	{
+		bool currentFile = false;
+		for (uint j = 0; j < this->files.size() && !currentFile; j++)
+		{
+			if(this->files[j].type == that.files[i].type
+				&& this->files[j].code == that.files[i].code)
+				currentFile = true;
+		}
+		if(!currentFile) return false;
+	}
+	return true;
+}
+
+bool ShaderProgram::equals(ShaderProgram * that) const
+{
+	if(this == that) return true;
+	return equals(*that);
+}
+
 void ShaderProgram::CodeBlock::Save(Stream&s)
 {
 	s << code << type;

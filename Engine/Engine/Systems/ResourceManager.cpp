@@ -87,9 +87,19 @@ ShaderProgram * ResourceManager::addShader_src (std::string name, std::string ve
 }
 ShaderProgram * ResourceManager::addShader_src (std::string name, const char * vert, const char * frag)
 {
-	shaders.push_back(ShaderProgram(name));
+	ShaderProgram toAdd(name);
+	toAdd.buildBasicProgram(vert,frag);
+	return addShader(toAdd);
+}
+ShaderProgram * ResourceManager::addShader     (ShaderProgram& toAdd)
+{
+	for (uint i = 0; i < shaders.size(); i++) {// checking if already contained
+		if(shaders[i].equals(toAdd)) {
+			return &shaders[i];
+		}
+	}
+	shaders.push_back(toAdd);
 	ShaderProgramObjs.Register(shaders.back());
-	shaders.back().buildBasicProgram(vert,frag);
 	emitEvent(new ResourceLoadedEvent(&shaders.back()));
 	return &shaders.back();
 }
@@ -208,6 +218,7 @@ void ResourceManager::shutdown()
 	ShaderProgramObjs.ClearAll();
 	MeshObjs.ClearAll();
 	TextureInfoObjs.ClearAll();
+	TextureInfo::resetAll();
 	ScriptObjs.ClearAll();
 	foreachOnAll([](Resource&r){r.shutdown();});
 	shaders.clear();

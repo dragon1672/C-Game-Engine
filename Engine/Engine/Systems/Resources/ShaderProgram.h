@@ -97,6 +97,8 @@ public:
 	virtual void ChildSave(Stream& s);
 
 	virtual void ChildLoad(Stream& s);
+	bool equals(ShaderProgram& that) const;
+	bool equals(ShaderProgram * that) const;
 
 };
 

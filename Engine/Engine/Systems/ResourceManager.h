@@ -44,6 +44,7 @@ public:
 	ShaderProgram * addShader_file(std::string name, std::string  vertFilePath, std::string  fragFilePath, bool useRelPath = true);
 	ShaderProgram * addShader_src (std::string name, std::string vert, std::string frag);
 	ShaderProgram * addShader_src (std::string name, const char * vert, const char * frag);
+	ShaderProgram * addShader     (ShaderProgram& toAdd);
 
 	TextureInfo * add2DTexture(std::string name, QImage& image, GLenum type = GL_RGBA);
 	TextureInfo * add2DTexture(std::string name, QImage& image, GLenum type, GLenum type2);
