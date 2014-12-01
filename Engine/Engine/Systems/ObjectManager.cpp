@@ -29,20 +29,18 @@ public:
 ObjectManager::ObjectManager() : privates(nullptr)
 {
 	SAFE_NEW(privates,ObjectManagerPrivates());
-	eventManager.Subscribe<ObjectChangedNameEvent>([this](EventData*d,Object*o){
-		if(o==nullptr) return;
+	eventManager.Subscribe<ObjectChangedNameEvent>([this](EventData*d,Object*){
 		ObjectChangedNameEvent * data = (ObjectChangedNameEvent*)d;
 		if(!privates->Contains(data->oldName)) return;
-		if(removeName(data->oldName,o)) {
-			addName(data->newName,o);
+		if(removeName(data->oldName,data->dude)) {
+			addName(data->newName,data->dude);
 		}
 	});
-	eventManager.Subscribe<ObjectChangeIDEvent>([this](EventData*d,Object*o){
-		if(o==nullptr) return;
+	eventManager.Subscribe<ObjectChangeIDEvent>([this](EventData*d,Object*){
 		ObjectChangeIDEvent * data = (ObjectChangeIDEvent*)d;
 		if(!privates->Contains(data->old)) return;
 		if(removeId(data->old)) {
-			addId(data->n,o);
+			addId(data->n,data->o);
 		}
 	});
 	eventManager.Subscribe<EntityRemovedEvent>([this](EventData*d,Object*o){
