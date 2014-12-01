@@ -11,6 +11,7 @@ class ENGINE_SHARED TextureInfo : public Resource {
 private:
 	static int NumTextures;
 public:
+	static void resetAll();
 	uint width;
 	uint height;
 	ubyte * data;

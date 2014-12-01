@@ -56,8 +56,11 @@ void TextureInfo::ChildLoad(Stream& s)
 	s >> width >> height >> numOfBytes;
 	SAFE_NEW(data,ubyte[numOfBytes]);
 	s.readAndMoveForwardArray(data,numOfBytes);
-	slotID   = 0;
-	bufferID = 0;
+}
+
+void TextureInfo::resetAll()
+{
+	NumTextures = 0;
 }
 
 int TextureInfo::NumTextures = 0;
