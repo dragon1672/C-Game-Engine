@@ -31,8 +31,9 @@ public:
 		return -1;
 	}
 
-	inline void add(const T& toAdd) {
+	inline T& add(const T& toAdd) {
 		arrays.push_back(new T(toAdd));
+		return back();
 	}
 	inline T& get(int index)   { return (*this)[index]; }
 	inline T& ConstVector<T>::first() { return (*this)[0]; }
