@@ -248,6 +248,11 @@ bool ShaderProgram::equals(ShaderProgram * that) const
 	return equals(*that);
 }
 
+void ShaderProgram::shutdown()
+{
+	glDeleteProgram(programID);
+}
+
 void ShaderProgram::CodeBlock::Save(Stream&s)
 {
 	s << code << type;

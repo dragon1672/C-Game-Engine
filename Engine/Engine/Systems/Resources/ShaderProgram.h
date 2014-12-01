@@ -100,6 +100,8 @@ public:
 	bool equals(ShaderProgram& that) const;
 	bool equals(ShaderProgram * that) const;
 
+	virtual void shutdown();
+
 };
 
 #endif
