@@ -286,6 +286,7 @@ void GuiSkellyTon::LoadFromFile(Stream& s, bool backup, bool resources)
 	Stream backupStream;
 	if(backup) backupStream = ExportToStream(resources);
 	try {
+	gameManager.Disable();
 		if(resources) {
 			resourceManager.Load(s);
 		}
@@ -300,6 +301,7 @@ void GuiSkellyTon::LoadFromFile(Stream& s, bool backup, bool resources)
 		}
 	}
 	game->createEditorObjects();
+	gameManager.Enable();
 	this->gameObjectList->update();
 }
 
