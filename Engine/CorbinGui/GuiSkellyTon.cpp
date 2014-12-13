@@ -267,7 +267,7 @@ void GuiSkellyTon::ToggleGamePauseResume()
 {
 	if(myState == EditorStates::PlayingGame) { // hold the phone
 		myState = EditorStates::PlayingPaused;
-		gameManager.SelectorFunction([this](Object*o){
+		gameManager.SelectorFunction([this](Entity*o){
 			if(std::string(typeid(RenderableComponent).name()).compare(typeid(*o).name()) == 0)
 				return game->IsGameObject()(o);
 			return false;

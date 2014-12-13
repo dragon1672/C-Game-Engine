@@ -8,6 +8,11 @@ void BasicQGLGui::initializeGL()
 {
 	meGame.initGl();
 	connect(&timer,&QTimer::timeout,[this](){ this->update(); });
+	inputManager.MouseGetterFunction([this](){
+		auto tmp = this->mapFromGlobal(QCursor::pos());
+		return glm::vec2(tmp.x(),tmp.y());
+	});
+	inputManager.Context(this);
 	
 }
 

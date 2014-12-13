@@ -29,11 +29,14 @@ enum MouseCodes {
 	LEFT_MOUSE = 2, RIGHT_MOUSE = 1, MIDDLE_MOUSE = 4
 };
 
+class QWidget;
+
 class ENGINE_SHARED	 InputManager {
 	LUA_OBJECT(InputManager);
 public:
 	struct ENGINE_SHARED Mouse {
 	private:
+		InputManager * parent;
 		LUA_OBJECT(Mouse);
 
 		wrap::vec2 mouseDelta;
@@ -68,9 +71,16 @@ private:
 	inline bool getKeyUp_Lua(uchar key) { return getKeyUp((KeyCode)key); }
 	inline bool checkKeyClick_Lua(uchar key) { return checkKeyClick((KeyCode)key); }
 	std::unordered_map<KeyCode,SingleKeyManager> trackedKeys;
+	QWidget * context;
+	std::function<glm::vec2()> mouseGetterFunction;
 	DEFINE_SINGLETON(InputManager);
 public:
-	MAKE_DEFAULT_LUA_CONST_AND_DEST(InputManager);
+	std::function<glm::vec2()> MouseGetterFunction() const { return mouseGetterFunction; }
+	void MouseGetterFunction(std::function<glm::vec2()> val) { mouseGetterFunction = val; }
+	QWidget * Context() const { return context; }
+	void Context(QWidget * val) { context = val; }
+	InputManager();
+	~InputManager();
 	Mouse mouse;
 
 	bool getKeyDown(KeyCode key);
