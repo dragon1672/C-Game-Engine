@@ -68,10 +68,10 @@ void GameObjectManager::update() {
 	resourceManager.update();
 	eventManager.update(Timer::getInstance().deltaTime());
 	if(disable) return;
-	for (uint i = 0; i < entities.size(); i++) { if(entities[i].active && (!selectorFunction || selectorFunction && selectorFunction(&entities[i]))) entities[i].earlyUpdate(); }
+	for (uint i = 0; i < entities.size(); i++) { if(entities[i].GetActive() && (!selectorFunction || selectorFunction && selectorFunction(&entities[i]))) entities[i].earlyUpdate(); }
 	emitEvent(new GameUpdate());
-	for (uint i = 0; i < entities.size(); i++) { if(entities[i].active && (!selectorFunction || selectorFunction && selectorFunction(&entities[i]))) entities[i].update();      }
-	for (uint i = 0; i < entities.size(); i++) { if(entities[i].active && (!selectorFunction || selectorFunction && selectorFunction(&entities[i]))) entities[i].lateUpdate();  }
+	for (uint i = 0; i < entities.size(); i++) { if(entities[i].GetActive() && (!selectorFunction || selectorFunction && selectorFunction(&entities[i]))) entities[i].update();      }
+	for (uint i = 0; i < entities.size(); i++) { if(entities[i].GetActive() && (!selectorFunction || selectorFunction && selectorFunction(&entities[i]))) entities[i].lateUpdate();  }
 }
 
 void GameObjectManager::paint(std::function<void(int startX,int startY,int width,int height)> setViewPort) {
@@ -96,7 +96,7 @@ void GameObjectManager::paint(std::function<void(int startX,int startY,int width
 
 		for (uint i = 0; i < entities.size(); i++) {
 			Entity& currentEntity = entities[i];
-			if(currentEntity.active && (!selectorFunction || selectorFunction && selectorFunction(&currentEntity))) {
+			if(currentEntity.GetActive() && (!selectorFunction || selectorFunction && selectorFunction(&currentEntity))) {
 				auto renderables = currentEntity.getComponents<RenderableComponent>();
 				for (RenderableComponent * renderable : renderables) {
 					if(renderable != nullptr && renderable->visable && renderable->isValid()) {
@@ -162,7 +162,7 @@ void GameObjectManager::RemoveEntity(Entity * toRemove)
 		for (auto i : toRemove->Children()) {
 			RemoveEntity(i);
 		}
-		toKill->active = false;
+		toKill->SetActive(false);
 
 		toKill->Parent(nullptr);
 
@@ -187,7 +187,7 @@ std::function<bool(Entity*)> GameObjectManager::SelectorFunction() const
 bool GameObjectManager::Valid()
 {
 	for (uint i = 0; i < entities.size(); i++) {
-		if(entities[i].active && !entities[i].ComponentsAreReady())
+		if(entities[i].GetActive() && !entities[i].ComponentsAreReady())
 			return false;
 	}
 	return true;

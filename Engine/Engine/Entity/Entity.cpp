@@ -135,7 +135,7 @@ ScriptComponent * Entity::getScript(std::string name) {
 	return Collections::First<ScriptComponent*>(allScripts,[&name](ScriptComponent * toCheck) { return toCheck->getScriptName() == name || name == ""; });
 }
 
-Entity * Entity::Parent()
+Entity * Entity::Parent() const
 {
 	return gameManager.getEntity(parent);
 }
@@ -348,7 +348,7 @@ void Entity::SetActive(bool val)
 
 bool Entity::GetActive() const
 {
-	return active;
+	return active && (Parent() != nullptr ? Parent()->GetActive() : true);
 }
 
 bool Entity::hasScript(std::string name)

@@ -47,18 +47,19 @@ private:
 	LUA_GET_FUN_PTR(MatrixInfo,getTrans);
 	LuaUserdata<CameraComponent> getCam_LUA();
 
+	bool active;
+
 	friend GameObjectManager;
 public:
 	std::unordered_set<double> Children();
 	std::vector<std::function<void(Entity*me)>> StageChanged;
-	Entity * Parent();
+	Entity * Parent() const;
 	void Parent(Entity * newGuy, bool fireEvents = true);
 	void Parent(double   newGuy, bool fireEvents = true);
 
 	Entity * GetParent() { return Parent(); }
 	void SetParentFromID(double newGuy) { Parent(newGuy); }
 
-	bool active;
 	bool GetActive() const;
 	void SetActive(bool val);
 	int  Tag() const { return tag; }

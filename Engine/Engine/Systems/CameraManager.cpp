@@ -45,7 +45,7 @@ std::vector<CameraComponent *> CameraManager::getAllActiveCams()
 {
 	auto tmp = Collections::Where<Object*>(allCams.getAll(),[](Object*o){
 		CameraComponent * c = (CameraComponent*)o;
-		return c->Active() && c->Parent()->active && gameManager.SelectorFunction()(c->Parent());
+		return c->Active() && c->Parent()->GetActive() && gameManager.SelectorFunction()(c->Parent());
 	});
 	return Collections::RICVec<CameraComponent*,Object*>(tmp);
 }

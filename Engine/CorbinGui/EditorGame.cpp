@@ -107,7 +107,7 @@ void EditorGame::activateEditorObjects()
 	gameManager.SelectorFunction(isEditorObject);
 	//camManager.ActiveCam(EditorCamera->getComponent<CameraComponent>());
 	for(auto e : editorObjects) {
-		((Entity*)e)->active = true;
+		((Entity*)e)->SetActive(true);
 	}
 }
 
@@ -115,7 +115,7 @@ void EditorGame::deactiveEditorObjects()
 {
 	gameManager.SelectorFunction(isGameObject);
 	for(auto e : editorObjects) {
-		((Entity*)e)->active = false;
+		((Entity*)e)->SetActive(false);
 	}
 }
 
