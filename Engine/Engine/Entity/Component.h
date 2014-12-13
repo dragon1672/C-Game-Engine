@@ -29,8 +29,6 @@ public:
 	virtual void earlyUpdate() {}
 	virtual void update()      {}
 	virtual void lateUpdate()  {}
-	virtual void saveValues()  {}
-	virtual void restoreValues()  {}
 	virtual bool isValid() = 0;
 	virtual std::vector<std::string> getErrors() = 0;
 	void Save(Stream& s);

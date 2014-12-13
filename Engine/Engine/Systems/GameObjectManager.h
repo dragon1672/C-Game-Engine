@@ -71,7 +71,6 @@ public:
 	Entity * CloneFromEntity(Entity * e, bool recursive = true);
 	Entity * CloneFromID(double e, bool recursive = true);
 	LuaUserdata<Entity> CloneFromEntity_LUA(LuaUserdata<Entity> e, bool recursive = true) { return *CloneEntity(e->getID(),recursive); }
-	LuaUserdata<Entity> CloneFromID_LUA(double e, bool recursive = true) { return *CloneFromID(e,recursive); }
 	int width;
 	int height;
 

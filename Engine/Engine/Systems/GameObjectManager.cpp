@@ -294,7 +294,6 @@ GameObjectManager::operator LuaUserdata<GameObjectManager>()
 
 	ret.Bind("getEntityFromName",&GameObjectManager::getEntityFromName);
 	ret.Bind("getEntityFromId",&GameObjectManager::getEntityFromId);
-	ret.Bind("Clone",&GameObjectManager::CloneFromID_LUA);
 	ret.Bind("Clone",&GameObjectManager::CloneFromEntity_LUA);
 
 	return ret;
