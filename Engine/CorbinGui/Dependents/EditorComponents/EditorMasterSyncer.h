@@ -7,14 +7,16 @@
 
 
 class RenderableComponent;
+class EditorGame;
 class ENGINE_SHARED MAKE_COMPONENT_CLASS(EditorMasterSyncer) {
 	Entity * toSyncWith;
+	EditorGame * manager;
 	std::vector<RenderableComponent*> myRenderables;
 	EventManager::EventHandle SyncRemoveHandle;
 public:
 	EditorMasterSyncer();
 	~EditorMasterSyncer();
-	void init(Entity * that);
+	void init(Entity * that, EditorGame * manager);
 	void shutdown();
 	void lateUpdate();
 	virtual void ChildSave(Stream& s)

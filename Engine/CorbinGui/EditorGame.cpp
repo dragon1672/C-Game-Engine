@@ -39,7 +39,7 @@ void EditorGame::AddEntity(std::string name)
 {
 	auto curr = gameManager.AddEntity(name);
 	auto editorV = gameManager.AddEntity("Editor_"+curr->Name());
-	editorV->addComponent<EditorMasterSyncer>()->init(curr);
+	editorV->addComponent<EditorMasterSyncer>()->init(curr,this);
 	editorObjects.emplace(curr, editorV);
 	currentEntity.currentlySelectedEntity = curr;
 }
@@ -85,7 +85,7 @@ void EditorGame::createEditorObjects()
 	for (uint i = 0; i < ents.size(); i++)
 	{
 		auto editorV = gameManager.AddEntity("Editor_"+ents[i]->Name());
-		editorV->addComponent<EditorMasterSyncer>()->init(ents[i]);
+		editorV->addComponent<EditorMasterSyncer>()->init(ents[i],this);
 		editorObjects.emplace(ents[i],editorV);
 	}
 	activateEditorObjects();
@@ -110,6 +110,11 @@ void EditorGame::deactiveEditorObjects()
 {
 	gameManager.SelectorFunction(isGameObject);
 	editorObjects.foreachVal([](Entity*e){e->SetActive(false);});
+}
+
+Entity * EditorGame::getEditorVersion(Entity * gameEntity)
+{
+	return editorObjects.getVal(gameEntity);
 }
 
 template<>

@@ -2,6 +2,7 @@
 #include <Engine/Entity/Entity.h>
 #include <Engine/Entity/Components/RenderableComponent.h>
 #include <Engine/Systems/GameObjectManager.h>
+#include <CorbinGui/EditorGame.h>
 
 //events
 #include <Engine/Systems/Events/EventManager.h>
@@ -25,7 +26,7 @@ void EditorMasterSyncer::lateUpdate()
 		syncRens(theirRens[i],myRenderables[i]);
 	}
 	toSyncWith->getTrans()->CopyInto(Parent()->getTrans());
-	Parent()->Parent(toSyncWith->Parent());
+	Parent()->Parent(manager->getEditorVersion(toSyncWith->Parent()));
 }
 
 void EditorMasterSyncer::syncRens(RenderableComponent * gameRen, RenderableComponent * editorRen)
@@ -38,7 +39,7 @@ void EditorMasterSyncer::syncRens(RenderableComponent * gameRen, RenderableCompo
 	editorRen->Shader(resourceManager.getDefault<ShaderProgram>());
 }
 
-EditorMasterSyncer::EditorMasterSyncer() : toSyncWith(nullptr)
+EditorMasterSyncer::EditorMasterSyncer() : toSyncWith(nullptr), manager(nullptr)
 {
 	SyncRemoveHandle = eventManager.Subscribe<EntityRemovedEvent>([this](EventData*d,Object*) {
 		EntityRemovedEvent * data = (EntityRemovedEvent*)d;
@@ -53,9 +54,10 @@ EditorMasterSyncer::~EditorMasterSyncer()
 	eventManager.RemoveEvent(SyncRemoveHandle);
 }
 
-void EditorMasterSyncer::init(Entity * that)
+void EditorMasterSyncer::init(Entity * that,EditorGame * manager)
 {
 	toSyncWith = that;
+	this->manager = manager;
 }
 
 void EditorMasterSyncer::shutdown()

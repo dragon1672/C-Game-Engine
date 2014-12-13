@@ -65,6 +65,8 @@ public:
 	void AddEntity(std::string name);
 	void RemoveCurrentEntity();
 
+	Entity * getEditorVersion(Entity * gameEntity);
+
 	void deactiveEditorObjects();
 	void activateEditorObjects();
 	void destoryEditorObjects();
