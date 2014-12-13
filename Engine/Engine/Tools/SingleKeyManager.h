@@ -22,9 +22,12 @@ public:
 			framesClicked++;
 			secondsClicked += dt;
 		} else {//if the key isn't being pressed
-			framesClicked  = 0;
-			secondsClicked = 0;
+			reset();
 		}
+	}
+	inline void reset() {
+		framesClicked  = 0;
+		secondsClicked = 0;
 	}
 	inline bool  hasBeenClicked() {
 		return (framesClicked==1);
