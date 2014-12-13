@@ -14,6 +14,7 @@ private:
 	QTimer timer;
 public:
 	EditorGame meGame;
+	BasicQGLGui();
 	void init();
 
 	void initializeGL();

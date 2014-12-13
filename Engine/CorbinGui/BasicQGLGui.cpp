@@ -1,8 +1,13 @@
 #include <gl/glew.h>
 #include "BasicQGLGui.h"
+#include <Engine/Systems/InputManager.h>
 
 
 
+BasicQGLGui::BasicQGLGui()
+{
+	setFocusPolicy( Qt::StrongFocus );
+}
 
 void BasicQGLGui::initializeGL()
 {
