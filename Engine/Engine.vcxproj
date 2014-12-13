@@ -178,6 +178,7 @@
     <ClInclude Include="Engine\Systems\Resources\Script.h" />
     <ClInclude Include="Engine\Systems\Resources\ShaderProgram.h" />
     <ClInclude Include="Engine\Systems\Resources\TextureInfo.h" />
+    <ClInclude Include="Engine\Tools\BiHashMap.h" />
     <ClInclude Include="Engine\Tools\BinaryToShapeLoader.h" />
     <ClInclude Include="Engine\Tools\CollectionEditing.h" />
     <ClInclude Include="Engine\Tools\Console.h" />

@@ -8,19 +8,18 @@
 #include <Engine/Systems/Events/Events/EntityRemovedEvent.h>
 
 
-
 EditorGame::EditorGame()
 {
-	isEditorObject = [this](Object* o){
-		return editorObjects.find(o) != editorObjects.end();
+	isEditorObject = [this](Entity* o){
+		return editorObjects.containsValue(o);
 	};
-	isGameObject = [this](Object* o){
-		return editorObjects.find(o) == editorObjects.end();
+	isGameObject = [this](Entity* o){
+		return !isEditorObject(o);
 	};
 	eventManager.Subscribe<EntityRemovedEvent>([this](EventData*d,Object*) {
 		EntityRemovedEvent * data = (EntityRemovedEvent*)d;
-		if(editorObjects.find(data->entity) != editorObjects.end()) {
-			editorObjects.erase(data->entity);
+		if(editorObjects.containsValue(data->entity)) {
+			editorObjects.removeValue(data->entity);
 		}
 	});
 	gameManager.SelectorFunction(isEditorObject);
@@ -41,7 +40,7 @@ void EditorGame::AddEntity(std::string name)
 	auto curr = gameManager.AddEntity(name);
 	auto editorV = gameManager.AddEntity("Editor_"+curr->Name());
 	editorV->addComponent<EditorMasterSyncer>()->init(curr);
-	editorObjects.emplace(editorV);
+	editorObjects.emplace(curr, editorV);
 	currentEntity.currentlySelectedEntity = curr;
 }
 
@@ -82,12 +81,12 @@ void EditorGame::createEditorObjects()
 	auto ents = gameManager.getAllEntities();
 	EditorCamera = gameManager.AddEntity("Editor Cam");
 	EditorCamera->addComponent<CameraComponent>();
-	editorObjects.emplace(EditorCamera);
+	editorObjects.emplace(nullptr,EditorCamera);
 	for (uint i = 0; i < ents.size(); i++)
 	{
 		auto editorV = gameManager.AddEntity("Editor_"+ents[i]->Name());
 		editorV->addComponent<EditorMasterSyncer>()->init(ents[i]);
-		editorObjects.emplace(editorV);
+		editorObjects.emplace(ents[i],editorV);
 	}
 	activateEditorObjects();
 }
@@ -96,8 +95,7 @@ void EditorGame::destoryEditorObjects()
 {
 	deactiveEditorObjects();
 	while(editorObjects.size() > 0) {
-		std::unordered_set<Object*>::iterator itr = editorObjects.begin();
-		gameManager.RemoveEntity((Entity*)(*itr));
+		gameManager.RemoveEntity(editorObjects.getRandomValue());
 	}
 	editorObjects.clear();
 }
@@ -105,18 +103,13 @@ void EditorGame::destoryEditorObjects()
 void EditorGame::activateEditorObjects()
 {
 	gameManager.SelectorFunction(isEditorObject);
-	//camManager.ActiveCam(EditorCamera->getComponent<CameraComponent>());
-	for(auto e : editorObjects) {
-		((Entity*)e)->SetActive(true);
-	}
+	editorObjects.foreachVal([](Entity*e){e->SetActive(true);});
 }
 
 void EditorGame::deactiveEditorObjects()
 {
 	gameManager.SelectorFunction(isGameObject);
-	for(auto e : editorObjects) {
-		((Entity*)e)->SetActive(false);
-	}
+	editorObjects.foreachVal([](Entity*e){e->SetActive(false);});
 }
 
 template<>

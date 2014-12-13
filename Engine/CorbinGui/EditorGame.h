@@ -6,17 +6,19 @@
 #include <Engine/Entity/Components/RenderableComponent.h>
 #include <Engine/Entity/Components/ScriptComponent.h>
 #include <ExportHeader.h>
+#include <Engine/Tools/BiHashMap.h>
 
 class ENGINE_SHARED EditorGame {
 private:
 	Entity * currentlySelectedEntity;
 	Entity * EditorCamera;
-	std::unordered_set<Object*> editorObjects;
-	std::function<bool(Object*)> isEditorObject;
-	std::function<bool(Object*)> isGameObject;
+	//game entity,editor entity
+	BiHashMap<Entity *,Entity *> editorObjects;
+	std::function<bool(Entity*)> isEditorObject;
+	std::function<bool(Entity*)> isGameObject;
 public:
-	inline std::function<bool(Object*)>& IsEditorObject() { return isEditorObject; }
-	inline std::function<bool(Object*)>& IsGameObject() { return isGameObject; }
+	inline std::function<bool(Entity*)>& IsEditorObject() { return isEditorObject; }
+	inline std::function<bool(Entity*)>& IsGameObject()   { return isGameObject; }
 	int width,height;
 	EditorGame();
 	~EditorGame();
