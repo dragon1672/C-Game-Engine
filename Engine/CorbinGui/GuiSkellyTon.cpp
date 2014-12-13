@@ -175,7 +175,7 @@ void GuiSkellyTon::initBar()
 	fileMenu->addAction(action = new QAction("New Game Object", this));
 	connect(action, &QAction::triggered, [this](){
 		game->AddEntity("New Game Object");
-		gameObjectList->update();
+		gameObjectList->reload();
 	});
 
 
@@ -259,7 +259,7 @@ void GuiSkellyTon::ToggleGameStartStop()
 		
 		game->start();
 	}
-	gameObjectList->update();
+	gameObjectList->reload();
 	working = false;
 }
 
@@ -302,7 +302,7 @@ void GuiSkellyTon::LoadFromFile(Stream& s, bool backup, bool resources)
 	}
 	game->createEditorObjects();
 	gameManager.Enable();
-	this->gameObjectList->update();
+	this->gameObjectList->reload();
 }
 
 void GuiSkellyTon::SaveToStream(Stream& s, bool resources)
@@ -332,6 +332,6 @@ void GuiSkellyTon::Enable()
 {
 	myTimer.start();
 	gameManager.Enable();
-	gameObjectList->update();
+	gameObjectList->reload();
 	componentEditor->reload();
 }

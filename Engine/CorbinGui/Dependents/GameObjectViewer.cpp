@@ -18,7 +18,8 @@ GameObjectTree* GameObjectViewer::getItem(Entity * dude)
 	{
 		QList<QTreeWidgetItem *> items;
 		for (const auto& elem : kids) {
-			items.append(getItem(gameManager.getEntity(elem)));
+			if(game->IsGameObject()(gameManager.getEntity(elem)))
+				items.append(getItem(gameManager.getEntity(elem)));
 		}
 		ret->addChildren(items);
 	}
@@ -45,7 +46,7 @@ void GameObjectViewer::keyReleaseEvent(QKeyEvent *ev)
 	//printer.LogMessage(ev->text().toStdString().c_str());
 }
 
-void GameObjectViewer::update()
+void GameObjectViewer::reload()
 {
 	while(this->topLevelItemCount() > 0) delete takeTopLevelItem(0);
 
@@ -63,7 +64,7 @@ void GameObjectViewer::update()
 
 void GameObjectViewer::init()
 {
-	update();
+	reload();
 }
 
 #include <Engine/Systems/Events/Events/EntityParentChangedEvent.h>
@@ -76,7 +77,7 @@ GameObjectViewer::GameObjectViewer(EditorGame * game) : game(game)
 	setColumnCount(1);
 	setWindowTitle("Game Object List");
 	
-	eventManager.Subscribe<EntityParentChangedEvent>([this](EventData*d,Object*sender){this->update();});
+	eventManager.Subscribe<EntityParentChangedEvent>([this](EventData*d,Object*sender){this->reload();});
 	eventManager.Subscribe<ObjectChangedNameEvent>([this](EventData*d,Object*sender){
 		ObjectChangedNameEvent* data = (ObjectChangedNameEvent*)d;
 		if(data->fromCereal) return;
@@ -84,10 +85,10 @@ GameObjectViewer::GameObjectViewer(EditorGame * game) : game(game)
 			if(data->dude == ((GameObjectTree*)currentItem())->GameObj) {
 				currentItem()->setText(0,data->newName.c_str());
 			} else {
-				this->update();
+				this->reload();
 			}
 	});
-	eventManager.Subscribe<EntityListChangedEvent>([this](EventData*d,Object*sender){this->update();});
+	eventManager.Subscribe<EntityListChangedEvent>([this](EventData*d,Object*sender){this->reload();});
 }
 
 Entity * GameObjectViewer::convertTree2Entity(QTreeWidgetItem * treeItem)

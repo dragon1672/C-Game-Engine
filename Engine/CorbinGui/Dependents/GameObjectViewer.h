@@ -14,7 +14,7 @@ class ENGINE_SHARED GameObjectViewer : public QTreeWidget {
 public:
 	GameObjectViewer(EditorGame * game);
 	void init();
-	void update();
+	void reload();
 	void keyPressEvent(QKeyEvent *ev);
 
 	void renameCurrentObject();
