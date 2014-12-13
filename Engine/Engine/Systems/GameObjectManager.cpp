@@ -75,6 +75,10 @@ void GameObjectManager::update() {
 }
 
 void GameObjectManager::paint(std::function<void(int startX,int startY,int width,int height)> setViewPort) {
+	setViewPort(0,0,width,height);
+	glClearColor(.1f,.1f,.1f,1);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	auto cams = camManager.getAllActiveCams();
 	if(cams.size() == 0) {
 		printer.LogError("No camera in scene");
