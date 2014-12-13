@@ -13,7 +13,7 @@ public:
 	glm::vec2& ref_start() { return start; }
 	glm::vec2& ref_end()   { return end;   }
 
-	Dims() : hasChanged(true), percent(true), start(0,0), end(1,1) {}
+	Dims(bool percent = true, glm::vec2 start = glm::vec2(0,0), glm::vec2 end = glm::vec2(1,1)) : hasChanged(true), percent(percent), start(start), end(end) {}
 	void resetChanged() { hasChanged = false; }
 	void setChanged()   { hasChanged = true; }
 	bool HasChanged()      const { return hasChanged; }
@@ -52,14 +52,14 @@ public:
 
 	float Width()            const { return end.x; }
 	float Height()           const { return end.y; }
-	float WidthPercent()     const { return IsPercent() ? Width()  : Width()  / masterDims.x; }
-	float WidthPixel()       const { return IsPixel()   ? Width()  : Width()  * masterDims.x; }
-	float HeightPercent()    const { return IsPercent() ? Height() : Height() / masterDims.y; }
-	float HeightPixel()      const { return IsPixel()   ? Height() : Height() * masterDims.y; }
-	glm::vec2 StartPercent() const { return IsPercent() ? Start()  : Start()  / masterDims;   }
-	glm::vec2 StartPixel()   const { return IsPixel()   ? Start()  : Start()  * masterDims;   }
-	glm::vec2 EndPercent()   const { return IsPercent() ? End()    : End()    / masterDims;   }
-	glm::vec2 EndPixel()     const { return IsPixel()   ? End()    : End()    * masterDims;   }
+	float WidthPercent()     const { return IsPercent() ? Width()  : Width()  / MasterDims().x; }
+	float WidthPixel()       const { return IsPixel()   ? Width()  : Width()  * MasterDims().x; }
+	float HeightPercent()    const { return IsPercent() ? Height() : Height() / MasterDims().y; }
+	float HeightPixel()      const { return IsPixel()   ? Height() : Height() * MasterDims().y; }
+	glm::vec2 StartPercent() const { return IsPercent() ? Start()  : Start()  / MasterDims();   }
+	glm::vec2 StartPixel()   const { return IsPixel()   ? Start()  : Start()  * MasterDims();   }
+	glm::vec2 EndPercent()   const { return IsPercent() ? End()    : End()    / MasterDims();   }
+	glm::vec2 EndPixel()     const { return IsPixel()   ? End()    : End()    * MasterDims();   }
 
 	virtual void Save(Stream&s)
 	{

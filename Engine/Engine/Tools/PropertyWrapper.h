@@ -21,7 +21,7 @@ protected:
 public:
 	//prams(1/1) ref to val
 	//return something
-	std::function<T(T&)>getter;
+	std::function<T(T& internalValue)>getter;
 
 	explicit PropertyGet() { init(); }
 	explicit PropertyGet(T a) : val(a) { init(); }
@@ -40,7 +40,7 @@ private:
 public:
 	//prams(1/2) ref to val
 	//prams(2/2) value attempted to set
-	std::function<void(T&,T&)> setter;
+	std::function<void(T& internalValue,T& incomming)> setter;
 
 	PropertyGetSet() : PropertyGet() {init();};
 	PropertyGetSet(T a) : PropertyGet(a) {init();};
