@@ -474,7 +474,8 @@ void MasterLua::init()
 	auto global = lua.GetGlobalEnvironment();
 	global.Set("Timer",(LuaUserdata<Timer>)Timer::getInstance());
 	global.Set("Input",(LuaUserdata<InputManager>)InputManager::getInstance());
-	global.Set("GameManager",(LuaUserdata<GameObjectManager>)GameObjectManager::getInstance());
+	global.Set("GameManager",(LuaUserdata<GameObjectManager>)GameObjectManager::getInstance()); // operators defined for converting each of these, convert to explict use of functions?
+																								// see operator "LuaUserdata<GameObjectManager>();" in GameObjectManager
 }
 
 void MasterLua::runLua(std::string toRun)

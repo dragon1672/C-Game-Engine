@@ -14,6 +14,9 @@ public:
 	LuaTable context;
 	std::string uniqueName;
 	void runMethod(std::string methodName) {
+		//following checks if method exists, then executes if valid
+		//uniqueName+":"+methodName+"();" is what actually executes the method
+		//MasterLua::runLua handles printing out errors
 		MasterLua::runLua("if(type("+uniqueName+"."+methodName+") == 'function') then "+uniqueName+":"+methodName+"(); end");
 	}
 	ScriptComponentPrivates(LuaTable context,std::string uniqueName) : context(context),uniqueName(uniqueName) { }
@@ -23,14 +26,15 @@ void ScriptComponent::start() {
 	Script * meScript = myScript();
 	if(meScript == nullptr) return;
 	hasBeenInited = true;
-	std::string instancename = meScript->getInstanceName();
-	auto context = LUA_INSTANCE.GetGlobalEnvironment().Get<LuaTable>(instancename);
-	context.Set("parent",((LuaUserdata<Entity>)*parent));
+	std::string instancename = meScript->getInstanceName(); // gets random string of characters set to this class (runs all this in LUA)
+	auto context = LUA_INSTANCE.GetGlobalEnvironment().Get<LuaTable>(instancename); // extract table from LUA
+	context.Set("parent",((LuaUserdata<Entity>)*parent)); // hard set entity parent into extracted table
+	                                                      // access by self.parent.methods(), since this is an actual var set, not a method
 	SAFE_NEW(privates,ScriptComponentPrivates(context,instancename));
 	privates->runMethod("start");
 }
 void ScriptComponent::earlyUpdate() {
-	if(!hasBeenInited || privates == nullptr) start();
+	if(!hasBeenInited || privates == nullptr) start(); // included for classes created after update loop is already running
 	privates->runMethod("earlyUpdate");
 }
 void ScriptComponent::update() {
